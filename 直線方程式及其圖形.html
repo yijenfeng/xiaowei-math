@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-1 直線方程式及其圖形｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學1・第二章 直線與圓・2-1</span>
+    <h1>直線方程式及其圖形</h1>
+    <p class="sub">從無障礙坡道的法規坡度出發，推出斜率、直線方程式、直線的平移，以及兩條直線之間的關係。情境例子是重新設計的原創內容。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>這一節把「兩點之間的陡緩程度」抽象成一個數字——斜率，再用它寫出整條直線的方程式，最後討論直線的平移，以及兩條直線之間平行、垂直的關係。</p>
+    <ul class="toc">
+      <li><a href="#topic-slope"><b>1</b>直線的斜率</a></li>
+      <li><a href="#topic-line-eq"><b>2</b>直線方程式</a></li>
+      <li><a href="#topic-translate"><b>3</b>直線的平移</a></li>
+      <li><a href="#topic-two-lines"><b>4</b>兩直線的關係</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-slope">
+    <div class="part-kicker"><b>直線的斜率</b></div>
+    <h2>坡道多陡才合格？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">建築法規規定，公共場所的無障礙坡道，坡度不能超過 <span class="mono">1/12</span>（也就是每垂直上升 1 公分，水平長度至少要有 12 公分）。工地師傅蓋了一段坡道，起點在地面 <span class="mono">(0,0)</span>，終點在 <span class="mono">(300,20)</span>（單位：公分）。這段坡道合格嗎？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>要判斷「陡不陡」，關鍵是「垂直上升量」跟「水平前進量」的比值。從 <span class="mono">(0,0)</span> 走到 <span class="mono">(300,20)</span>：</p>
+      <div class="calc">垂直上升量 Δy = 20 − 0 = 20
+水平前進量 Δx = 300 − 0 = 300
+坡度 = Δy／Δx = 20／300 = 1／15</div>
+      <p>因為 <span class="mono">1/15 &lt; 1/12</span>（分母越大，坡度越平緩），這段坡道比法規要求更平緩，合格。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 320 180" role="img" aria-label="直角三角形示意圖，水平邊標示Δx，垂直邊標示Δy，斜邊為坡道，標示坡度等於Δy除以Δx">
+          <line x1="30" y1="150" x2="270" y2="150" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+          <line x1="30" y1="150" x2="30" y2="40" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+          <polyline points="30,150 270,150 270,60" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <line x1="30" y1="150" x2="270" y2="60" stroke="var(--accent)" stroke-width="2.5"/>
+          <circle cx="30" cy="150" r="4" fill="var(--accent)"/>
+          <circle cx="270" cy="60" r="4" fill="var(--accent)"/>
+          <text x="26" y="168" class="svg-label" fill="currentColor">(0,0)</text>
+          <text x="230" y="52" class="svg-label" fill="currentColor">(300,20)</text>
+          <text x="145" y="168" class="svg-label" fill="currentColor" text-anchor="middle">Δx = 300</text>
+          <text x="284" y="108" class="svg-label" fill="currentColor" text-anchor="middle" transform="rotate(90 284 108)">Δy = 20</text>
+        </svg>
+        <figcaption>坡度 = 垂直上升量 Δy ÷ 水平前進量 Δx</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式：斜率</span>
+      <p>把「坡度」這個概念一般化，用坐標平面上任意兩點 <span class="mono">A(x₁,y₁)</span>、<span class="mono">B(x₂,y₂)</span>（<span class="mono">x₁≠x₂</span>）定義<b>斜率</b>：</p>
+      <div class="formula"><span class="big">m = (y₂−y₁) ／ (x₂−x₁)</span></div>
+      <p>斜率的正負與大小，直接對應圖形的陡緩與方向：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>斜率 m</th><th>圖形意義</th></tr></thead>
+          <tbody>
+            <tr><td class="f">m &gt; 0</td><td>由左往右上升（越大越陡）</td></tr>
+            <tr><td class="f">m &lt; 0</td><td>由左往右下降（絕對值越大越陡）</td></tr>
+            <tr><td class="f">m = 0</td><td>水平線</td></tr>
+            <tr><td>不存在</td><td>鉛直線（<span class="mono">x₁=x₂</span>，垂直地面）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">法規講的「1/12」其實就是斜率的絕對值上限：<span class="mono">|m|≤1/12</span>。師傅蓋的坡道斜率 <span class="mono">m=1/15≈0.067</span>，比上限 <span class="mono">1/12≈0.083</span> 小，所以合格；斜率的分母越大（同樣上升高度，水平距離越長），坡道越平緩越安全。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">另一段坡道從 <span class="mono">(0,0)</span> 到 <span class="mono">(150,15)</span>，合格嗎？</p>
+      <div class="calc">m = (15−0)／(150−0) = 15／150 = 1／10</div>
+      <p><span class="mono">1/10 &gt; 1/12</span>（分母較小，坡度較陡），超過法規上限，<b>不合格</b>，必須把坡道加長或降低高度。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-line-eq">
+    <div class="part-kicker"><b>直線方程式</b></div>
+    <h2>怎麼寫出整條坡道的路徑？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">工地師傅想在圖面上，用一個方程式表示「恰好等於法規上限坡度」的坡道路徑，這樣只要代入任何一個水平位置 <span class="mono">x</span>，就能立刻查出這個位置的坡道高度該蓋多高，不用每次都重新畫圖。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>已知坡道起點 <span class="mono">(0,0)</span>，斜率 <span class="mono">m=1/12</span>。坐標平面上任何一點 <span class="mono">(x,y)</span>，只要跟起點連線的斜率也是 <span class="mono">1/12</span>，就會落在同一條坡道上：</p>
+      <div class="calc">(y−0)／(x−0) = 1／12　　⟹　　y = x／12</div>
+      <p>更一般地，如果直線通過已知點 <span class="mono">(x₁,y₁)</span>、斜率為 <span class="mono">m</span>，同樣的推理給出：</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula">
+        <div class="formula-title">點斜式（已知一點與斜率）</div>
+        <span class="big">y − y₁ = m(x − x₁)</span>
+      </div>
+      <p>把點斜式展開整理，可以化成幾種常見形式：</p>
+      <div class="formula">
+        <div class="formula-title">斜截式（已知斜率 m 與 y 截距 b）</div>
+        y = mx + b
+      </div>
+      <div class="formula">
+        <div class="formula-title">一般式（a, b 不同時為 0）</div>
+        ax + by + c = 0
+      </div>
+      <div class="formula">
+        <div class="formula-title">截距式（已知 x 截距 a、y 截距 b，且 a≠0, b≠0）</div>
+        x／a + y／b = 1
+      </div>
+      <p class="note">鉛直線（斜率不存在）沒辦法寫成斜截式或截距式（若鉛直線不過原點，它沒有 y 截距），但可以寫成一般式，例如 <span class="mono">x=5</span> 就是 <span class="mono">1·x+0·y−5=0</span>；這也是一般式比其他形式更「萬用」的原因。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">另一段坡道通過點 <span class="mono">(50,10)</span>，斜率為 <span class="mono">1/10</span>，求它的方程式，並化成一般式；如果這條坡道的 <span class="mono">x</span> 截距是 <span class="mono">−50</span>、<span class="mono">y</span> 截距是 <span class="mono">5</span>，寫出它的截距式。</p>
+      <div class="calc">點斜式：y−10 = (1/10)(x−50)
+展開：y−10 = x/10 − 5
+斜截式：y = x/10 + 5
+一般式：x − 10y + 50 = 0
+
+截距式（x截距−50，y截距5）：x／(−50) + y／5 = 1</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-translate">
+    <div class="part-kicker"><b>直線的平移</b></div>
+    <h2>扶手要架在坡道正上方，方程式怎麼變？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">設計單位想在原本的坡道（<span class="mono">y=x/12</span>）正上方 <span class="mono">1</span> 公尺處，加裝一條同坡度的扶手；另外，整條坡道又計畫整體往右平移 <span class="mono">2</span> 公尺（起點從 <span class="mono">(0,0)</span> 移到 <span class="mono">(2,0)</span>）。扶手跟新坡道的方程式該怎麼寫？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>把一條直線「垂直移動」，代表每個點的 <span class="mono">y</span> 坐標都加上同一個數；把它「水平移動」，代表每個點的 <span class="mono">x</span> 坐標都加上同一個數。扶手比坡道整體高 <span class="mono">1</span>，所以扶手上每一點的 <span class="mono">y</span> 都是坡道對應點的 <span class="mono">y</span> 再加 <span class="mono">1</span>：</p>
+      <div class="calc">坡道：y = x/12
+扶手（往上移 1）：y = x/12 + 1</div>
+      <p>新坡道則是整條線往右移 <span class="mono">2</span>，也就是「原本 <span class="mono">x</span> 位置」現在要用「新 <span class="mono">x</span> 減 <span class="mono">2</span>」去代入：</p>
+      <div class="calc">新坡道：y = (x−2)／12　（起點：x=2 時 y=0，符合 (2,0)）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>設 <span class="mono">h,k&gt;0</span>，直線 <span class="mono">y=mx+b</span>：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>平移方式</th><th>新方程式</th></tr></thead>
+          <tbody>
+            <tr><td>向上平移 k</td><td class="f">y = mx + b + k</td></tr>
+            <tr><td>向下平移 k</td><td class="f">y = mx + b − k</td></tr>
+            <tr><td>向右平移 h</td><td class="f">y = m(x − h) + b</td></tr>
+            <tr><td>向左平移 h</td><td class="f">y = m(x + h) + b</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">關鍵是：垂直平移直接對常數項加減；水平平移則是把方程式裡的 <span class="mono">x</span> 換成「<span class="mono">x</span> 減去（向右）」或「<span class="mono">x</span> 加上（向左）」平移量——很多人會弄反方向，可以代一個具體點驗證，例如新坡道令 <span class="mono">x=2</span> 應該要得到起點的 <span class="mono">y=0</span>。平移不會改變斜率，兩條直線仍然互相平行。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-two-lines">
+    <div class="part-kicker"><b>兩直線的關係</b></div>
+    <h2>新路要跟主幹道平行，還是垂直？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">都市計畫中，主幹道的方程式是 <span class="mono">y=2x+3</span>。現在要規劃一條新的巷道，通過點 <span class="mono">(4,1)</span>，並且要跟主幹道垂直（方便設計十字路口）。新巷道的方程式該怎麼寫？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>兩條直線的「平行」與「垂直」，本質上都是斜率之間的關係。想像把主幹道的方向繞原點旋轉 90°：斜率會從 <span class="mono">m</span> 變成 <span class="mono">−1/m</span>（正負對調、倒數）。可以驗證：主幹道斜率 <span class="mono">2</span>，垂直方向的斜率是 <span class="mono">−1/2</span>，兩者相乘 <span class="mono">2×(−1/2)=−1</span>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula">
+        <div class="formula-title">兩線平行、垂直的判定（斜率 m₁、m₂ 皆存在時）</div>
+        平行：<span class="big">m₁ = m₂</span>　　　　垂直：<span class="big">m₁ · m₂ = −1</span>
+      </div>
+      <p>用這個規律解決一開始的問題：主幹道斜率 <span class="mono">m₁=2</span>，垂直的新巷道斜率 <span class="mono">m₂=−1/2</span>，再用點斜式代入通過的點 <span class="mono">(4,1)</span>：</p>
+      <div class="calc">y − 1 = −(1/2)(x − 4)
+y = −x/2 + 2 + 1
+新巷道方程式：y = −x/2 + 3</div>
+      <p class="note">如果兩條路的斜率都不存在（都是鉛直線），也視為互相平行；一條鉛直線與一條水平線則必定互相垂直，這兩種情況不能直接套用「<span class="mono">m₁m₂=−1</span>」，因為鉛直線沒有斜率。下一節會接著討論這兩條路實際交會在哪裡、以及跟這條主幹道相關的距離問題。</p>
+    </div>
+  </section>
+
+  <!-- ================= 公式工具箱 ================= -->
+  <section class="toolbox prose">
+    <h2>收進工具箱：2-1 直線方程式及其圖形</h2>
+    <p class="lede-line">上面每一條都已經自己推導過一次，收錄在這裡，需要時隨時查。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>斜率</td><td class="f">m = (y₂−y₁)／(x₂−x₁)</td></tr>
+          <tr><td>點斜式</td><td class="f">y−y₁ = m(x−x₁)</td></tr>
+          <tr><td>斜截式</td><td class="f">y = mx+b</td></tr>
+          <tr><td>一般式</td><td class="f">ax+by+c = 0</td></tr>
+          <tr><td>截距式</td><td class="f">x／a + y／b = 1</td></tr>
+          <tr><td>向上／向右平移</td><td class="f">y=mx+b+k（上移k）；y=m(x−h)+b（右移h）</td></tr>
+          <tr><td>平行</td><td class="f">m₁ = m₂</td></tr>
+          <tr><td>垂直</td><td class="f">m₁·m₂ = −1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 練習題 ================= -->
+  <section class="practice prose">
+    <h2>換你動手做</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">情境</span></div>
+        <p>某段坡道從 <span class="mono">(0,0)</span> 到 <span class="mono">(400,30)</span>，是否符合「坡度不超過 1/12」的法規？</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">m = 30/400 = 3/40 = 0.075
+1/12 ≈ 0.083，0.075 < 0.083，合格</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">代數</span></div>
+        <p>求通過 <span class="mono">(2,−1)</span>、斜率為 <span class="mono">3</span> 的直線方程式（化為一般式）。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">y−(−1) = 3(x−2)
+y+1 = 3x−6
+一般式：3x−y−7 = 0</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">代數</span></div>
+        <p>直線 <span class="mono">y=3x</span> 向下平移 2、再向左平移 1，求新方程式。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">向下移 2：y=3x−2
+再向左移 1（x 換成 x+1）：y=3(x+1)−2=3x+1</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">情境</span></div>
+        <p>主幹道方程式 <span class="mono">y=−2x+5</span>，另一條巷道要與它平行，且通過 <span class="mono">(1,1)</span>，求巷道方程式。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">平行，斜率相同：m=−2
+y−1 = −2(x−1)
+y = −2x+3</div></div>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 結語 ================= -->
+  <section class="closing prose">
+    <div class="figure-card">
+      <h2>給筱葳的話</h2>
+      <p>這一節的核心心法是：先把「陡不陡」抽象成斜率這個數字，再用它寫出整條直線的方程式；平移、平行、垂直，都只是斜率跟截距的加減乘除運算。下一節（2-2）會接著討論兩條路實際交會在哪裡、離馬路多遠才安全，以及怎麼用不等式表示「哪一邊可以蓋房子」。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學1・第二章</span>
+    <span>2-1 直線方程式及其圖形</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

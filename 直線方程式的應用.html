@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-2 直線方程式的應用｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學1・第二章 直線與圓・2-2</span>
+    <h1>直線方程式的應用</h1>
+    <p class="sub">承 2-1 的主幹道與巷道：這一節討論兩條路實際交會在哪裡、離馬路多遠才安全，以及怎麼用不等式表示「哪一邊可以規劃座位」。情境例子是重新設計的原創內容。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>把「兩條路在哪裡交叉」翻譯成聯立方程式，把「離馬路多遠才安全」翻譯成點到直線的距離，再把「哪一邊可以規劃座位」翻譯成二元一次不等式。</p>
+    <ul class="toc">
+      <li><a href="#topic-system"><b>1</b>聯立方程式的幾何意義</a></li>
+      <li><a href="#topic-distance"><b>2</b>點到直線的距離</a></li>
+      <li><a href="#topic-inequality"><b>3</b>二元一次不等式</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-system">
+    <div class="part-kicker"><b>聯立方程式的幾何意義</b></div>
+    <h2>兩條路的交叉口在哪裡？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p>承上一節：主幹道 <span class="mono">y=2x+3</span>，垂直的新巷道 <span class="mono">y=−x/2+3</span>。這兩條路會在哪一點交會，好規劃紅綠燈？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>交叉口同時滿足兩條路的方程式，也就是聯立方程式的解。解聯立方程式，幾何上就是在找「兩條直線的共同點」：</p>
+      <div class="calc">2x+3 = −x/2+3
+2x + x/2 = 0
+(5/2)x = 0　⟹　x = 0，代回 y = 2(0)+3 = 3
+交點：(0, 3)</div>
+      <p>一般化來看，兩條直線 <span class="mono">a₁x+b₁y=c₁</span> 與 <span class="mono">a₂x+b₂y=c₂</span> 聯立後，會有三種可能：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>斜率關係</th><th>解的情況</th><th>幾何意義</th></tr></thead>
+          <tbody>
+            <tr><td>斜率不同</td><td class="f">恰有一組解</td><td>兩線相交於一點</td></tr>
+            <tr><td>斜率相同，截距不同</td><td class="f">無解</td><td>兩線平行不相交</td></tr>
+            <tr><td>斜率相同，截距也相同</td><td class="f">無限多組解</td><td>兩線其實是同一條線（重合）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">如果規劃單位改提議另一條巷道 <span class="mono">y=2x+7</span>，它會跟主幹道 <span class="mono">y=2x+3</span> 交會嗎？</p>
+      <div class="calc">兩式斜率皆為 2，但常數項不同（3 ≠ 7）
+⟹ 無解，兩條路互相平行，永遠不會相交</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-distance">
+    <div class="part-kicker"><b>點到直線的距離</b></div>
+    <h2>消防栓離馬路夠遠嗎？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">消防法規要求消防栓距離主幹道（中心線）至少 5 公尺。有一個消防栓設在 <span class="mono">(10,2)</span>，主幹道方程式是 <span class="mono">2x−y+3=0</span>，這個消防栓的位置合格嗎？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <div class="formula">
+        <div class="formula-title">點 (x₀,y₀) 到直線 ax+by+c=0 的距離</div>
+        <span class="big">d = |a·x₀ + b·y₀ + c| ／ √(a²+b²)</span>
+      </div>
+      <div class="calc">d = |2(10) − 2 + 3| ／ √(2²+(−1)²)
+  = |20 − 2 + 3| ／ √5
+  = 21 ／ √5 ≈ 9.39（公尺）</div>
+      <p><span class="mono">9.39 &gt; 5</span>，合格。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：兩條平行路之間的寬度</span>
+      <p>如果想知道主幹道 <span class="mono">2x−y+3=0</span> 跟另一條與它平行、方程式為 <span class="mono">2x−y−7=0</span> 的輔助道路之間相距多遠，可以直接用「兩平行線距離公式」，不必先找一個點：</p>
+      <div class="formula">
+        <div class="formula-title">兩平行線 ax+by+c₁=0 與 ax+by+c₂=0 的距離</div>
+        <span class="big">d = |c₁−c₂| ／ √(a²+b²)</span>
+      </div>
+      <div class="calc">d = |3−(−7)| ／ √(2²+(−1)²) = 10／√5 = 2√5 ≈ 4.47（公尺）</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-inequality">
+    <div class="part-kicker"><b>二元一次不等式</b></div>
+    <h2>候診區要畫在分隔線的哪一邊？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">診所大廳要用一條分隔線 <span class="mono">x+y=10</span>（單位：公尺）把地板分成兩區：靠近門口的一側放候診椅，另一側留給服務櫃檯。已知門口在原點 <span class="mono">(0,0)</span> 附近，候診椅該畫在哪一個不等式所代表的區域裡？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>一條直線 <span class="mono">ax+by+c=0</span> 會把平面切成兩半；每一半都可以用一個不等式表示，只要挑一個「不在線上」的點代入，看代入後是大於 0 還是小於 0，就知道那一側對應哪個不等式：</p>
+      <div class="calc">分隔線：x+y−10=0
+代入門口 (0,0)：0+0−10 = −10 < 0
+⟹ 門口這一側滿足 x+y−10<0，也就是 x+y<10</div>
+      <p>所以候診椅要畫在 <span class="mono">x+y&lt;10</span> 這一側。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>一般地，設 <span class="mono">a,b</span> 不同時為 0，直線 <span class="mono">L：ax+by+c=0</span> 把平面分成兩個半平面：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>不等式</th><th>邊界線</th><th>圖示</th></tr></thead>
+          <tbody>
+            <tr><td class="f">ax+by+c&gt;0 或 &lt;0</td><td>不含邊界</td><td>畫虛線</td></tr>
+            <tr><td class="f">ax+by+c≥0 或 ≤0</td><td>含邊界</td><td>畫實線</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">判斷哪一側對應哪個不等式，最簡單的方法就是「代一個不在線上的點」（不在線上的原點通常最方便），代入後的正負號就是那一整側的正負號——因為同一側的點，代入 <span class="mono">ax+by+c</span> 的正負號都相同。多個不等式同時成立（像「候診椅要在門口那一側，同時又要在櫃檯的另一條界線內」）時，答案就是每個不等式代表的區域「疊」起來的共同部分。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">候診椅除了要滿足 <span class="mono">x+y&lt;10</span>，還必須在櫃檯圍欄 <span class="mono">x−y=−2</span> 靠近門口（原點）的那一側，寫出這一側對應的不等式，並說明候診椅區域是哪兩個不等式的共同部分。</p>
+      <div class="calc">圍欄：x−y+2=0，代入 (0,0)：0−0+2=2>0
+⟹ 門口這一側滿足 x−y+2>0
+
+候診椅區域：{ x+y<10 且 x−y+2>0（不含邊界，用虛線）}</div>
+    </div>
+  </section>
+
+  <!-- ================= 公式工具箱 ================= -->
+  <section class="toolbox prose">
+    <h2>收進工具箱：2-2 直線方程式的應用</h2>
+    <p class="lede-line">上面每一條都已經自己推導過一次，收錄在這裡，需要時隨時查。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>聯立方程式的解</td><td class="f">斜率不同→一解；斜率同截距異→無解；完全相同→無限多解</td></tr>
+          <tr><td>點到直線距離</td><td class="f">d = |ax₀+by₀+c| ／ √(a²+b²)</td></tr>
+          <tr><td>兩平行線距離</td><td class="f">d = |c₁−c₂| ／ √(a²+b²)</td></tr>
+          <tr><td>二元一次不等式</td><td class="f">代一點入 ax+by+c 判正負，決定半平面</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 練習題 ================= -->
+  <section class="practice prose">
+    <h2>換你動手做</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">代數</span></div>
+        <p>求兩直線 <span class="mono">x+y=4</span> 與 <span class="mono">x−y=2</span> 的交點；並判斷 <span class="mono">x+y=4</span> 與 <span class="mono">x+y=9</span> 是否相交。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">兩式相加：2x=6 ⟹ x=3
+代回：3+y=4 ⟹ y=1
+交點 (3,1)
+
+x+y=4 與 x+y=9：斜率相同、常數不同 ⟹ 無解，兩線平行不相交</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">情境</span></div>
+        <p>路燈規定要距離道路中心線（<span class="mono">3x−4y+1=0</span>）至少 2 公尺，某路燈設於 <span class="mono">(1,2)</span>，是否合格？</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">d = |3(1)−4(2)+1| ／ √(3²+4²) = |3−8+1|／5 = 4／5 = 0.8（公尺）
+0.8 < 2，不合格，路燈離道路太近</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">情境</span></div>
+        <p>圖書館用分隔線 <span class="mono">x−y=4</span> 隔開閱覽區與走道，服務台在 <span class="mono">(0,0)</span> 這一側算走道，寫出閱覽區對應的不等式。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">分隔線：x−y−4=0，代入 (0,0)：0−0−4=−4<0（走道側）
+⟹ 閱覽區（另一側）：x−y−4>0，即 x−y>4</div></div>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 結語 ================= -->
+  <section class="closing prose">
+    <div class="figure-card">
+      <h2>給筱葳的話</h2>
+      <p>這一節把「相交、距離、哪一側」這些幾何問題，全部翻譯成代數計算：解聯立方程式、套距離公式、代點判正負。下一節（2-3）會把同樣的方法用在圓上，討論一個點、一條直線分別跟圓的位置關係。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學1・第二章</span>
+    <span>2-2 直線方程式的應用</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
