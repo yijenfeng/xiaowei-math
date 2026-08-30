@@ -197,6 +197,8 @@
   .pill.done{ background:var(--accent); color:var(--accent-ink); }
   .pill.ref{ background:var(--b2); color:var(--b2-ink); }
   .pill.todo{ background:var(--surface-2); color:var(--ink-muted); border:1px solid var(--line); }
+  .pill.draft{ background:var(--b2); color:var(--b2-ink); }
+  .legend i.draft{ background:var(--b2); }
 
   footer{
     padding-top:2rem; margin-top:1.5rem;
@@ -226,14 +228,15 @@
 
   <div class="stats-grid">
     <div class="stat-tile"><div class="stat-num muted">17</div><div class="stat-label">總主題數</div></div>
-    <div class="stat-tile"><div class="stat-num">4</div><div class="stat-label">生活情境教材</div></div>
+    <div class="stat-tile"><div class="stat-num">5</div><div class="stat-label">生活情境教材</div></div>
     <div class="stat-tile"><div class="stat-num" style="color:var(--b2);">0</div><div class="stat-label">基礎講義</div></div>
-    <div class="stat-tile"><div class="stat-num muted" style="color:var(--ink-muted);">13</div><div class="stat-label">規劃中</div></div>
+    <div class="stat-tile"><div class="stat-num muted" style="color:var(--ink-muted);">12</div><div class="stat-label">規劃中</div></div>
   </div>
 
   <div class="legend">
     <span><i class="done"></i>生活情境教材（可點開）</span>
     <span><i class="ref"></i>基礎講義（在專案文件中）</span>
+    <span><i class="draft"></i>已製作，章節編號待確認</span>
     <span><i class="todo"></i>規劃中，尚未製作</span>
   </div>
 
@@ -274,8 +277,14 @@
     </div>
     <div class="subnote">常用對數・對數的大小（依課本目錄編排）</div>
 
-    <div class="chapter-head"><span>第二章　直線與圓</span><span class="pill todo">規劃中</span></div>
-    <div class="subnote">坐標平面與直線方程式、直線方程式的應用、圓方程式、圓與直線的關係（實際章數尚待對照課本確認）</div>
+    <div class="chapter-head"><span>第二章　直線與圓</span><span class="pill draft">章節待確認</span></div>
+    <div class="topic-row">
+      <a class="topic-link" href="直線與圓.html">
+        <span class="name">直線與圓（坐標平面與斜率・直線方程式・兩直線關係・圓的方程式・圓與直線關係）</span><span class="go">→</span>
+      </a>
+      <span class="pill draft">已製作</span>
+    </div>
+    <div class="subnote">先依 108 課綱常見編排、用坡道／道路／灑水器／基地台等情境製作，尚未對照筱葳課本目錄，之後拿到課本會再調整章節、小節編號與例題</div>
 
     <div class="chapter-head"><span>第三章　多項式</span><span class="pill todo">規劃中</span></div>
     <div class="subnote">多項式的除法、多項式函數、多項不等式（實際章數尚待對照課本確認）</div>

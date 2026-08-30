@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二章 直線與圓（草稿）｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學1・第二章（章節編號待對照課本確認）・直線與圓</span>
+    <h1>直線與圓</h1>
+    <p class="sub">依 108 課綱常見編排先行製作（尚未對照筱葳課本目錄，章節與小節編號可能之後調整）：從無障礙坡道的法規坡度出發，推出斜率與直線方程式；從道路規劃推出兩直線的關係；從灑水器與基地台的涵蓋範圍，推出圓的方程式與圓、直線的位置關係。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>這一章把「數與式」學到的代數工具，搬到坐標平面上，用來描述兩種最基本的圖形：直線與圓。生活裡的坡道、道路、灑水範圍、基地台訊號，幾何上其實都是直線或圓，只要抓住幾個關鍵數字（斜率、圓心、半徑），複雜的空間問題就能變成代數計算。</p>
+    <ul class="toc">
+      <li><a href="#part-slope"><b>1</b>坐標平面與直線的斜率</a></li>
+      <li><a href="#part-line"><b>2</b>直線方程式</a></li>
+      <li><a href="#part-two-lines"><b>3</b>兩直線的關係</a></li>
+      <li><a href="#part-circle"><b>4</b>圓的方程式</a></li>
+      <li><a href="#part-line-circle"><b>5</b>圓與直線的關係</a></li>
+    </ul>
+  </section>
+
+  <!-- ================= PART 1：坐標平面與直線的斜率 ================= -->
+  <section class="part prose" id="part-slope">
+    <div class="part-kicker"><b>PART 1</b> ・ 坐標平面與直線的斜率</div>
+    <h2>坡道多陡才合格？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">建築法規規定，公共場所的無障礙坡道，坡度不能超過 <span class="mono">1/12</span>（也就是每垂直上升 1 公分，水平長度至少要有 12 公分）。工地師傅蓋了一段坡道，起點在地面 <span class="mono">(0,0)</span>，終點在 <span class="mono">(300,20)</span>（單位：公分）。這段坡道合格嗎？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>要判斷「陡不陡」，關鍵是「垂直上升量」跟「水平前進量」的比值。從 <span class="mono">(0,0)</span> 走到 <span class="mono">(300,20)</span>：</p>
+      <div class="calc">垂直上升量 Δy = 20 − 0 = 20
+水平前進量 Δx = 300 − 0 = 300
+坡度 = Δy／Δx = 20／300 = 1／15</div>
+      <p>因為 <span class="mono">1/15 &lt; 1/12</span>（分母越大，坡度越平緩），這段坡道比法規要求更平緩，合格。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 320 180" role="img" aria-label="直角三角形示意圖，水平邊標示Δx，垂直邊標示Δy，斜邊為坡道，標示坡度等於Δy除以Δx">
+          <line x1="30" y1="150" x2="270" y2="150" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+          <line x1="30" y1="150" x2="30" y2="40" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+          <polyline points="30,150 270,150 270,60" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <line x1="30" y1="150" x2="270" y2="60" stroke="var(--accent)" stroke-width="2.5"/>
+          <circle cx="30" cy="150" r="4" fill="var(--accent)"/>
+          <circle cx="270" cy="60" r="4" fill="var(--accent)"/>
+          <text x="26" y="168" class="svg-label" fill="currentColor">(0,0)</text>
+          <text x="230" y="52" class="svg-label" fill="currentColor">(300,20)</text>
+          <text x="145" y="168" class="svg-label" fill="currentColor" text-anchor="middle">Δx = 300</text>
+          <text x="284" y="108" class="svg-label" fill="currentColor" text-anchor="middle" transform="rotate(90 284 108)">Δy = 20</text>
+        </svg>
+        <figcaption>坡度 = 垂直上升量 Δy ÷ 水平前進量 Δx</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式：斜率</span>
+      <p>把「坡度」這個概念一般化，用坐標平面上任意兩點 <span class="mono">A(x₁,y₁)</span>、<span class="mono">B(x₂,y₂)</span>（<span class="mono">x₁≠x₂</span>）定義<b>斜率</b>：</p>
+      <div class="formula"><span class="big">m = (y₂−y₁) ／ (x₂−x₁)</span></div>
+      <p>斜率的正負與大小，直接對應圖形的陡緩與方向：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>斜率 m</th><th>圖形意義</th></tr></thead>
+          <tbody>
+            <tr><td class="f">m &gt; 0</td><td>由左往右上升（越大越陡）</td></tr>
+            <tr><td class="f">m &lt; 0</td><td>由左往右下降（絕對值越大越陡）</td></tr>
+            <tr><td class="f">m = 0</td><td>水平線</td></tr>
+            <tr><td>不存在</td><td>鉛直線（<span class="mono">x₁=x₂</span>，垂直地面）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">法規講的「1/12」其實就是斜率的絕對值上限：<span class="mono">|m|≤1/12</span>。師傅蓋的坡道斜率 <span class="mono">m=1/15≈0.067</span>，比上限 <span class="mono">1/12≈0.083</span> 小，所以合格；斜率的分母越大（同樣上升高度，水平距離越長），坡道越平緩越安全。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">另一段坡道從 <span class="mono">(0,0)</span> 到 <span class="mono">(150,15)</span>，合格嗎？</p>
+      <div class="calc">m = (15−0)／(150−0) = 15／150 = 1／10</div>
+      <p><span class="mono">1/10 &gt; 1/12</span>（分母較小，坡度較陡），超過法規上限，<b>不合格</b>，必須把坡道加長或降低高度。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 2：直線方程式 ================= -->
+  <section class="part prose" id="part-line">
+    <div class="part-kicker"><b>PART 2</b> ・ 直線方程式</div>
+    <h2>怎麼寫出整條坡道的路徑？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">工地師傅想在圖面上，用一個方程式表示「恰好等於法規上限坡度」的坡道路徑，這樣只要代入任何一個水平位置 <span class="mono">x</span>，就能立刻查出這個位置的坡道高度該蓋多高，不用每次都重新畫圖。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>已知坡道起點 <span class="mono">(0,0)</span>，斜率 <span class="mono">m=1/12</span>。坐標平面上任何一點 <span class="mono">(x,y)</span>，只要跟起點連線的斜率也是 <span class="mono">1/12</span>，就會落在同一條坡道上：</p>
+      <div class="calc">(y−0)／(x−0) = 1／12　　⟹　　y = x／12</div>
+      <p>更一般地，如果直線通過已知點 <span class="mono">(x₁,y₁)</span>、斜率為 <span class="mono">m</span>，同樣的推理給出：</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula">
+        <div class="formula-title">點斜式（已知一點與斜率）</div>
+        <span class="big">y − y₁ = m(x − x₁)</span>
+      </div>
+      <p>把點斜式展開整理，可以化成兩種常見形式：</p>
+      <div class="formula">
+        <div class="formula-title">斜截式（已知斜率 m 與 y 截距 b）</div>
+        y = mx + b
+      </div>
+      <div class="formula">
+        <div class="formula-title">一般式（a, b 不同時為 0）</div>
+        ax + by + c = 0
+      </div>
+      <p class="note">鉛直線（斜率不存在）沒辦法寫成斜截式，但可以寫成一般式，例如 <span class="mono">x=5</span> 就是 <span class="mono">1·x+0·y−5=0</span>；這也是一般式比斜截式更「萬用」的原因。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">另一段坡道通過點 <span class="mono">(50,10)</span>，斜率為 <span class="mono">1/10</span>，求它的方程式，並化成一般式。</p>
+      <div class="calc">點斜式：y−10 = (1/10)(x−50)
+展開：y−10 = x/10 − 5
+斜截式：y = x/10 + 5
+一般式：x − 10y + 50 = 0</div>
+    </div>
+  </section>
+
+  <!-- ================= PART 3：兩直線的關係 ================= -->
+  <section class="part prose" id="part-two-lines">
+    <div class="part-kicker"><b>PART 3</b> ・ 兩直線的關係</div>
+    <h2>新路要跟主幹道平行，還是垂直？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">都市計畫中，主幹道的方程式是 <span class="mono">y=2x+3</span>。現在要規劃一條新的巷道，通過點 <span class="mono">(4,1)</span>，並且要跟主幹道垂直（方便設計十字路口）。新巷道的方程式該怎麼寫？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>兩條直線的「平行」與「垂直」，本質上都是斜率之間的關係。想像把主幹道的方向繞原點旋轉 90°：斜率會從 <span class="mono">m</span> 變成 <span class="mono">−1/m</span>（正負對調、倒數）。可以驗證：主幹道斜率 <span class="mono">2</span>，垂直方向的斜率是 <span class="mono">−1/2</span>，兩者相乘 <span class="mono">2×(−1/2)=−1</span>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula">
+        <div class="formula-title">兩線平行、垂直的判定（斜率 m₁、m₂ 皆存在時）</div>
+        平行：<span class="big">m₁ = m₂</span>　　　　垂直：<span class="big">m₁ · m₂ = −1</span>
+      </div>
+      <p>用這個規律解決一開始的問題：主幹道斜率 <span class="mono">m₁=2</span>，垂直的新巷道斜率 <span class="mono">m₂=−1/2</span>，再用 PART 2 的點斜式代入通過的點 <span class="mono">(4,1)</span>：</p>
+      <div class="calc">y − 1 = −(1/2)(x − 4)
+y = −x/2 + 2 + 1
+新巷道方程式：y = −x/2 + 3</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：兩直線的交點</span>
+      <p>如果兩條路不平行，它們一定會相交在一點——這一點同時滿足兩條直線的方程式，也就是解聯立方程式。求主幹道 <span class="mono">y=2x+3</span> 與另一條路 <span class="mono">y=−x/2+3</span> 的交點：</p>
+      <div class="calc">2x+3 = −x/2+3
+2x + x/2 = 0
+(5/2)x = 0　⟹　x = 0，代回 y = 2(0)+3 = 3
+交點：(0, 3)</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：點到直線的距離</span>
+      <p class="quote">消防法規要求消防栓距離主幹道（中心線）至少 5 公尺。有一個消防栓設在 <span class="mono">(10,2)</span>，主幹道方程式是 <span class="mono">2x−y+3=0</span>，這個消防栓的位置合格嗎？</p>
+      <div class="formula">
+        <div class="formula-title">點 (x₀,y₀) 到直線 ax+by+c=0 的距離</div>
+        <span class="big">d = |a·x₀ + b·y₀ + c| ／ √(a²+b²)</span>
+      </div>
+      <div class="calc">d = |2(10) − 2 + 3| ／ √(2²+(−1)²)
+  = |20 − 2 + 3| ／ √5
+  = 21 ／ √5 ≈ 9.39（公尺）</div>
+      <p><span class="mono">9.39 &gt; 5</span>，合格。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 4：圓的方程式 ================= -->
+  <section class="part prose" id="part-circle">
+    <div class="part-kicker"><b>PART 4</b> ・ 圓的方程式</div>
+    <h2>灑水器能澆到多遠的花？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">公園中央的灑水器裝在坐標原點 <span class="mono">(0,0)</span>，出水射程是 8 公尺，只要花圃裡的花距離灑水器不超過 8 公尺，就澆得到水。花圃裡有一朵花種在 <span class="mono">(5,6)</span>，澆得到嗎？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>灑水器能澆到的所有位置，就是「跟圓心距離恰好等於（或小於）半徑」的所有點——這正是<b>圓</b>的定義。設圓上任一點 <span class="mono">(x,y)</span>，圓心 <span class="mono">(0,0)</span>，半徑 <span class="mono">8</span>，用兩點間距離公式：</p>
+      <div class="calc">√(x²+y²) = 8　　⟹　　x²+y² = 64</div>
+      <p>那朵花在 <span class="mono">(5,6)</span>，距離灑水器：</p>
+      <div class="calc">√(5²+6²) = √(25+36) = √61 ≈ 7.81（公尺）</div>
+      <p><span class="mono">7.81 &lt; 8</span>，澆得到。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 220 220" role="img" aria-label="圓的示意圖，圓心在原點，半徑線連到圓上一點">
+          <circle cx="110" cy="110" r="80" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <circle cx="110" cy="110" r="3" fill="currentColor"/>
+          <line x1="110" y1="110" x2="184" y2="60" stroke="var(--b2)" stroke-width="1.8" stroke-dasharray="4 3"/>
+          <circle cx="184" cy="60" r="3.5" fill="var(--b2)"/>
+          <text x="114" y="126" class="svg-label" fill="currentColor">圓心 (h,k)</text>
+          <text x="140" y="78" class="svg-label" fill="var(--b2)">半徑 r</text>
+        </svg>
+        <figcaption>圓上任一點到圓心的距離恆等於半徑 r</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>一般化：圓心在 <span class="mono">(h,k)</span>、半徑為 <span class="mono">r</span> 的圓：</p>
+      <div class="formula">
+        <div class="formula-title">標準式</div>
+        <span class="big">(x−h)² + (y−k)² = r²</span>
+      </div>
+      <p>把標準式展開，可以化成另一種常見形式：</p>
+      <div class="calc">(x−h)²+(y−k)² = r²
+x²−2hx+h² + y²−2ky+k² = r²
+x²+y² + (−2h)x + (−2k)y + (h²+k²−r²) = 0</div>
+      <div class="formula">
+        <div class="formula-title">一般式（D=−2h，E=−2k，F=h²+k²−r²）</div>
+        x² + y² + Dx + Ey + F = 0
+      </div>
+      <p class="note">一般式看起來跟標準式差很多，但只要用配方法「補回」被展開藏起來的 <span class="mono">(x−h)²</span>、<span class="mono">(y−k)²</span>，就能還原出圓心和半徑。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">某電信基地台訊號涵蓋範圍是圓心 <span class="mono">(3,4)</span>、半徑 <span class="mono">10</span> 公里的圓。寫出標準式與一般式。</p>
+      <div class="calc">標準式：(x−3)²+(y−4)² = 100
+
+展開：x²−6x+9 + y²−8y+16 = 100
+一般式：x²+y²−6x−8y−75 = 0</div>
+      <p class="quote">反過來，已知一般式 <span class="mono">x²+y²−6x−8y−75=0</span>，求圓心與半徑。</p>
+      <div class="calc">配方：(x²−6x+9) + (y²−8y+16) = 75+9+16
+(x−3)² + (y−4)² = 100
+圓心 (3,4)，半徑 √100 = 10</div>
+    </div>
+  </section>
+
+  <!-- ================= PART 5：圓與直線的關係 ================= -->
+  <section class="part prose" id="part-line-circle">
+    <div class="part-kicker"><b>PART 5</b> ・ 圓與直線的關係</div>
+    <h2>步道會不會切過水池？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">公園裡有一座圓形水池，圓心在 <span class="mono">(0,0)</span>，半徑 5 公尺。園方想蓋一條筆直的步道，方程式是 <span class="mono">x+y=8</span>。這條步道會不會穿過水池？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>關鍵在於比較「圓心到這條直線的距離」跟「半徑」的大小——這正好可以用 PART 3 學過的點到直線距離公式：</p>
+      <div class="calc">直線：x+y−8=0（即 a=1, b=1, c=−8）
+d = |1(0)+1(0)−8| ／ √(1²+1²) = 8／√2 = 4√2 ≈ 5.66（公尺）</div>
+      <p><span class="mono">5.66 &gt; 5</span>（半徑），圓心到步道的距離比半徑還遠，步道<b>不會</b>穿過水池。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 200 160" role="img" aria-label="相離：直線與圓沒有交點">
+          <circle cx="100" cy="80" r="45" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <line x1="10" y1="20" x2="150" y2="10" stroke="var(--b2)" stroke-width="2.2"/>
+        </svg>
+        <figcaption>相離：d &gt; r（0 個交點）</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <svg viewBox="0 0 200 160" role="img" aria-label="相切：直線剛好碰到圓一次">
+          <circle cx="100" cy="80" r="45" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <line x1="10" y1="35" x2="190" y2="35" stroke="var(--b2)" stroke-width="2.2"/>
+        </svg>
+        <figcaption>相切：d = r（恰有 1 個交點）</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <svg viewBox="0 0 200 160" role="img" aria-label="相交：直線穿過圓，有兩個交點">
+          <circle cx="100" cy="80" r="45" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <line x1="20" y1="50" x2="180" y2="110" stroke="var(--b2)" stroke-width="2.2"/>
+        </svg>
+        <figcaption>相交：d &lt; r（2 個交點）</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>設圓心到直線的距離為 <span class="mono">d</span>，圓半徑為 <span class="mono">r</span>：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>比較</th><th>位置關係</th><th>交點數</th></tr></thead>
+          <tbody>
+            <tr><td class="f">d &gt; r</td><td>相離</td><td>0</td></tr>
+            <tr><td class="f">d = r</td><td>相切</td><td>1</td></tr>
+            <tr><td class="f">d &lt; r</td><td>相交</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">如果園方改把步道規劃成 <span class="mono">x+y=6</span>，還有 <span class="mono">x+y=5√2</span>，這兩條步道分別跟水池是什麼關係？</p>
+      <div class="calc">x+y=6：d = |0+0−6|／√2 = 6/√2 = 3√2 ≈ 4.24 < 5　⟹　相交，會穿過水池
+
+x+y=5√2：d = |0+0−5√2|／√2 = 5√2/√2 = 5 = r　⟹　相切，恰好碰到水池邊緣</div>
+      <p class="note">相交代表步道會直接穿過水池中央區域，通常設計上會避開；相切則是「剛好貼著池邊」，實務上也常常會再留一點安全距離，不會真的設計成恰好相切。</p>
+    </div>
+  </section>
+
+  <!-- ================= 公式工具箱 ================= -->
+  <section class="toolbox prose">
+    <h2>收進工具箱：直線與圓</h2>
+    <p class="lede-line">上面每一條都已經自己推導過一次，收錄在這裡，需要時隨時查。</p>
+
+    <h3>直線</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>斜率</td><td class="f">m = (y₂−y₁)／(x₂−x₁)</td></tr>
+          <tr><td>點斜式</td><td class="f">y−y₁ = m(x−x₁)</td></tr>
+          <tr><td>斜截式</td><td class="f">y = mx+b</td></tr>
+          <tr><td>一般式</td><td class="f">ax+by+c = 0</td></tr>
+          <tr><td>平行</td><td class="f">m₁ = m₂</td></tr>
+          <tr><td>垂直</td><td class="f">m₁·m₂ = −1</td></tr>
+          <tr><td>點到直線距離</td><td class="f">d = |ax₀+by₀+c| ／ √(a²+b²)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>圓</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>標準式</td><td class="f">(x−h)²+(y−k)² = r²（圓心 (h,k)，半徑 r）</td></tr>
+          <tr><td>一般式</td><td class="f">x²+y²+Dx+Ey+F = 0</td></tr>
+          <tr><td>圓與直線關係</td><td class="f">d&gt;r 相離；d=r 相切；d&lt;r 相交</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 練習題 ================= -->
+  <section class="practice prose">
+    <h2>換你動手做</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">情境</span></div>
+        <p>某段坡道從 <span class="mono">(0,0)</span> 到 <span class="mono">(400,30)</span>，是否符合「坡度不超過 1/12」的法規？</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">m = 30/400 = 3/40 = 0.075
+1/12 ≈ 0.083，0.075 < 0.083，合格</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">代數</span></div>
+        <p>求通過 <span class="mono">(2,−1)</span>、斜率為 <span class="mono">3</span> 的直線方程式（化為一般式）。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">y−(−1) = 3(x−2)
+y+1 = 3x−6
+一般式：3x−y−7 = 0</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">情境</span></div>
+        <p>主幹道方程式 <span class="mono">y=−2x+5</span>，另一條巷道要與它平行，且通過 <span class="mono">(1,1)</span>，求巷道方程式。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">平行，斜率相同：m=−2
+y−1 = −2(x−1)
+y = −2x+3</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">代數</span></div>
+        <p>求兩直線 <span class="mono">x+y=4</span> 與 <span class="mono">x−y=2</span> 的交點。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">兩式相加：2x=6 ⟹ x=3
+代回：3+y=4 ⟹ y=1
+交點 (3,1)</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">情境</span></div>
+        <p>路燈規定要距離道路中心線（<span class="mono">3x−4y+1=0</span>）至少 2 公尺，某路燈設於 <span class="mono">(1,2)</span>，是否合格？</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">d = |3(1)−4(2)+1| ／ √(3²+4²) = |3−8+1|／5 = 4／5 = 0.8（公尺）
+0.8 < 2，不合格，路燈離道路太近</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">6</span><span class="qtag alg">代數</span></div>
+        <p>寫出圓心 <span class="mono">(−2,5)</span>、半徑 <span class="mono">6</span> 的圓的標準式與一般式。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">標準式：(x+2)²+(y−5)² = 36
+展開：x²+4x+4+y²−10y+25 = 36
+一般式：x²+y²+4x−10y−7 = 0</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">7</span><span class="qtag alg">代數</span></div>
+        <p>已知圓 <span class="mono">x²+y²+2x−4y−4=0</span>，求圓心與半徑。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">(x²+2x+1)+(y²−4y+4) = 4+1+4
+(x+1)²+(y−2)² = 9
+圓心 (−1,2)，半徑 3</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">8</span><span class="qtag">情境</span></div>
+        <p>灑水器覆蓋範圍是圓心 <span class="mono">(0,0)</span>、半徑 6 的圓。一條步道方程式是 <span class="mono">x=8</span>，步道會被灑到水嗎？</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">直線 x−8=0（a=1,b=0,c=−8）
+d = |1(0)+0(0)−8|／√(1²+0²) = 8
+8 > 6（半徑），相離，步道不會被灑到水</div></div>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 結語 ================= -->
+  <section class="closing prose">
+    <div class="figure-card">
+      <h2>給筱葳的話</h2>
+      <p>這一章的核心心法是：先把生活中的圖形（坡道、道路、水池、訊號範圍）抽象成「幾個關鍵數字」——兩點、一個斜率、一個圓心加半徑，再把幾何問題（陡不陡、平不平行、澆不澆得到水、切不切過水池）翻譯成代數計算（比較大小、解方程式、算距離）。只要能穩穩做到「幾何 ↔ 代數」的雙向翻譯，這一章的題目大多是同一套方法反覆套用。</p>
+      <p><b>提醒：</b>本教材的章節與小節編號（例如「第二章」）目前依 108 課綱常見的內容分組先行編寫，尚未對照筱葳實際課本目錄，之後若拿到課本頁面，會再依真實章節、例題、習題調整，屆時編號與細節可能會更動。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學1（章節編號待確認）</span>
+    <span>直線與圓</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
