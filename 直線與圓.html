@@ -111,12 +111,30 @@
 
   .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
   .lede p{ margin:0 0 1rem; }
-  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
-  .toc li{ font-size:0.92rem; }
-  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
-  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; }
+  .toc-group{ margin-bottom:1rem; }
+  .toc-group-title{ font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:var(--accent); letter-spacing:0.04em; margin-bottom:0.5rem; }
+  .toc-items{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc-items li{ font-size:0.92rem; }
+  .toc-items a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
 
-  .part{ padding:2.2rem 0 3rem; }
+  .section-head{ padding:2.6rem 0 0.8rem; margin-top:1.2rem; border-top:3px solid var(--accent); }
+  .section-head .kicker{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.8rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.75rem;
+    border-radius:4px;
+    margin-bottom:0.7rem;
+  }
+  .section-head h2{ font-size:1.7rem; margin-bottom:0.5rem; }
+  .section-head p{ color:var(--ink-muted); margin:0; font-size:0.98rem; }
+
+  .part{ padding:2.2rem 0 1.4rem; }
   .part-kicker{
     font-family:'JetBrains Mono',monospace;
     font-size:0.78rem;
@@ -125,7 +143,7 @@
     margin-bottom:0.5rem;
   }
   .part-kicker b{ color:var(--accent); }
-  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+  .part h2{ font-size:1.5rem; margin-bottom:1.6rem; }
 
   .step{
     position:relative;
@@ -312,26 +330,53 @@
 <div class="page">
 
   <header class="hero">
-    <span class="eyebrow">數學1・第二章（章節編號待對照課本確認）・直線與圓</span>
+    <span class="eyebrow">數學1・第四章 4-1～4-3・直線與圓</span>
     <h1>直線與圓</h1>
-    <p class="sub">依 108 課綱常見編排先行製作（尚未對照筱葳課本目錄，章節與小節編號可能之後調整）：從無障礙坡道的法規坡度出發，推出斜率與直線方程式；從道路規劃推出兩直線的關係；從灑水器與基地台的涵蓋範圍，推出圓的方程式與圓、直線的位置關係。</p>
+    <p class="sub">已對照筱葳課本目錄重新編排：課本第四章「直線與圓」分三節——「4-1 直線方程式及其圖形」（直線的斜率、直線方程式、直線的平移、兩直線關係）、「4-2 直線方程式的應用」（聯立方程式的幾何意義、點到直線的距離、二元一次不等式）與「4-3 圓與直線的關係」（圓的定義與方程式、圓與點的位置關係、圓與直線的關係、圓的切線）。情境例子是自己重新設計的（不是課本原題），從無障礙坡道、道路規劃、廣場與噴水池等生活情境出發，一路推出這一章的所有公式。</p>
     <div class="hero-rule"></div>
   </header>
 
   <section class="lede prose">
-    <p>這一章把「數與式」學到的代數工具，搬到坐標平面上，用來描述兩種最基本的圖形：直線與圓。生活裡的坡道、道路、灑水範圍、基地台訊號，幾何上其實都是直線或圓，只要抓住幾個關鍵數字（斜率、圓心、半徑），複雜的空間問題就能變成代數計算。</p>
+    <p>這一章把「數與式」學到的代數工具，搬到坐標平面上，用來描述兩種最基本的圖形：直線與圓。生活裡的坡道、道路、廣場、噴水池，幾何上其實都是直線或圓，只要抓住幾個關鍵數字（斜率、圓心、半徑），複雜的空間問題就能變成代數計算。</p>
     <ul class="toc">
-      <li><a href="#part-slope"><b>1</b>坐標平面與直線的斜率</a></li>
-      <li><a href="#part-line"><b>2</b>直線方程式</a></li>
-      <li><a href="#part-two-lines"><b>3</b>兩直線的關係</a></li>
-      <li><a href="#part-circle"><b>4</b>圓的方程式</a></li>
-      <li><a href="#part-line-circle"><b>5</b>圓與直線的關係</a></li>
+      <li class="toc-group">
+        <div class="toc-group-title">4-1　直線方程式及其圖形</div>
+        <ul class="toc-items">
+          <li><a href="#topic-slope">直線的斜率</a></li>
+          <li><a href="#topic-line-eq">直線方程式</a></li>
+          <li><a href="#topic-translate">直線的平移</a></li>
+          <li><a href="#topic-two-lines">兩直線的關係</a></li>
+        </ul>
+      </li>
+      <li class="toc-group">
+        <div class="toc-group-title">4-2　直線方程式的應用</div>
+        <ul class="toc-items">
+          <li><a href="#topic-system">聯立方程式的幾何意義</a></li>
+          <li><a href="#topic-distance">點到直線的距離</a></li>
+          <li><a href="#topic-inequality">二元一次不等式</a></li>
+        </ul>
+      </li>
+      <li class="toc-group">
+        <div class="toc-group-title">4-3　圓與直線的關係</div>
+        <ul class="toc-items">
+          <li><a href="#topic-circle-eq">圓的定義與方程式</a></li>
+          <li><a href="#topic-circle-point">圓與點的位置關係</a></li>
+          <li><a href="#topic-circle-line">圓與直線的關係</a></li>
+          <li><a href="#topic-tangent">圓的切線</a></li>
+        </ul>
+      </li>
     </ul>
   </section>
 
-  <!-- ================= PART 1：坐標平面與直線的斜率 ================= -->
-  <section class="part prose" id="part-slope">
-    <div class="part-kicker"><b>PART 1</b> ・ 坐標平面與直線的斜率</div>
+  <!-- ================= 4-1 直線方程式及其圖形 ================= -->
+  <div class="section-head prose" id="sec-4-1">
+    <span class="kicker">4-1</span>
+    <h2>直線方程式及其圖形</h2>
+    <p>從「坡道陡不陡」出發，一路推出斜率、直線方程式、直線的平移，以及兩條直線之間的關係。</p>
+  </div>
+
+  <section class="part prose" id="topic-slope">
+    <div class="part-kicker"><b>直線的斜率</b></div>
     <h2>坡道多陡才合格？</h2>
 
     <div class="step">
@@ -393,9 +438,8 @@
     </div>
   </section>
 
-  <!-- ================= PART 2：直線方程式 ================= -->
-  <section class="part prose" id="part-line">
-    <div class="part-kicker"><b>PART 2</b> ・ 直線方程式</div>
+  <section class="part prose" id="topic-line-eq">
+    <div class="part-kicker"><b>直線方程式</b></div>
     <h2>怎麼寫出整條坡道的路徑？</h2>
 
     <div class="step">
@@ -416,7 +460,7 @@
         <div class="formula-title">點斜式（已知一點與斜率）</div>
         <span class="big">y − y₁ = m(x − x₁)</span>
       </div>
-      <p>把點斜式展開整理，可以化成兩種常見形式：</p>
+      <p>把點斜式展開整理，可以化成幾種常見形式：</p>
       <div class="formula">
         <div class="formula-title">斜截式（已知斜率 m 與 y 截距 b）</div>
         y = mx + b
@@ -425,22 +469,63 @@
         <div class="formula-title">一般式（a, b 不同時為 0）</div>
         ax + by + c = 0
       </div>
-      <p class="note">鉛直線（斜率不存在）沒辦法寫成斜截式，但可以寫成一般式，例如 <span class="mono">x=5</span> 就是 <span class="mono">1·x+0·y−5=0</span>；這也是一般式比斜截式更「萬用」的原因。</p>
+      <div class="formula">
+        <div class="formula-title">截距式（已知 x 截距 a、y 截距 b，且 a≠0, b≠0）</div>
+        x／a + y／b = 1
+      </div>
+      <p class="note">鉛直線（斜率不存在）沒辦法寫成斜截式或截距式（若鉛直線不過原點，它沒有 y 截距），但可以寫成一般式，例如 <span class="mono">x=5</span> 就是 <span class="mono">1·x+0·y−5=0</span>；這也是一般式比其他形式更「萬用」的原因。</p>
     </div>
 
     <div class="step">
       <span class="step-tag">用一用</span>
-      <p class="quote">另一段坡道通過點 <span class="mono">(50,10)</span>，斜率為 <span class="mono">1/10</span>，求它的方程式，並化成一般式。</p>
+      <p class="quote">另一段坡道通過點 <span class="mono">(50,10)</span>，斜率為 <span class="mono">1/10</span>，求它的方程式，並化成一般式；如果這條坡道的 <span class="mono">x</span> 截距是 <span class="mono">−50</span>、<span class="mono">y</span> 截距是 <span class="mono">5</span>，寫出它的截距式。</p>
       <div class="calc">點斜式：y−10 = (1/10)(x−50)
 展開：y−10 = x/10 − 5
 斜截式：y = x/10 + 5
-一般式：x − 10y + 50 = 0</div>
+一般式：x − 10y + 50 = 0
+
+截距式（x截距−50，y截距5）：x／(−50) + y／5 = 1</div>
     </div>
   </section>
 
-  <!-- ================= PART 3：兩直線的關係 ================= -->
-  <section class="part prose" id="part-two-lines">
-    <div class="part-kicker"><b>PART 3</b> ・ 兩直線的關係</div>
+  <section class="part prose" id="topic-translate">
+    <div class="part-kicker"><b>直線的平移</b></div>
+    <h2>扶手要架在坡道正上方，方程式怎麼變？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">設計單位想在原本的坡道（<span class="mono">y=x/12</span>）正上方 <span class="mono">1</span> 公尺處，加裝一條同坡度的扶手；另外，整條坡道又計畫整體往右平移 <span class="mono">2</span> 公尺（起點從 <span class="mono">(0,0)</span> 移到 <span class="mono">(2,0)</span>）。扶手跟新坡道的方程式該怎麼寫？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>把一條直線「垂直移動」，代表每個點的 <span class="mono">y</span> 坐標都加上同一個數；把它「水平移動」，代表每個點的 <span class="mono">x</span> 坐標都加上同一個數。扶手比坡道整體高 <span class="mono">1</span>，所以扶手上每一點的 <span class="mono">y</span> 都是坡道對應點的 <span class="mono">y</span> 再加 <span class="mono">1</span>：</p>
+      <div class="calc">坡道：y = x/12
+扶手（往上移 1）：y = x/12 + 1</div>
+      <p>新坡道則是整條線往右移 <span class="mono">2</span>，也就是「原本 <span class="mono">x</span> 位置」現在要用「新 <span class="mono">x</span> 減 <span class="mono">2</span>」去代入：</p>
+      <div class="calc">新坡道：y = (x−2)／12　（起點：x=2 時 y=0，符合 (2,0)）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>設 <span class="mono">h,k&gt;0</span>，直線 <span class="mono">y=mx+b</span>：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>平移方式</th><th>新方程式</th></tr></thead>
+          <tbody>
+            <tr><td>向上平移 k</td><td class="f">y = mx + b + k</td></tr>
+            <tr><td>向下平移 k</td><td class="f">y = mx + b − k</td></tr>
+            <tr><td>向右平移 h</td><td class="f">y = m(x − h) + b</td></tr>
+            <tr><td>向左平移 h</td><td class="f">y = m(x + h) + b</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">關鍵是：垂直平移直接對常數項加減；水平平移則是把方程式裡的 <span class="mono">x</span> 換成「<span class="mono">x</span> 減去（向右）」或「<span class="mono">x</span> 加上（向左）」平移量——很多人會弄反方向，可以代一個具體點驗證，例如新坡道令 <span class="mono">x=2</span> 應該要得到起點的 <span class="mono">y=0</span>。平移不會改變斜率，兩條直線仍然互相平行。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-two-lines">
+    <div class="part-kicker"><b>兩直線的關係</b></div>
     <h2>新路要跟主幹道平行，還是垂直？</h2>
 
     <div class="step">
@@ -459,24 +544,69 @@
         <div class="formula-title">兩線平行、垂直的判定（斜率 m₁、m₂ 皆存在時）</div>
         平行：<span class="big">m₁ = m₂</span>　　　　垂直：<span class="big">m₁ · m₂ = −1</span>
       </div>
-      <p>用這個規律解決一開始的問題：主幹道斜率 <span class="mono">m₁=2</span>，垂直的新巷道斜率 <span class="mono">m₂=−1/2</span>，再用 PART 2 的點斜式代入通過的點 <span class="mono">(4,1)</span>：</p>
+      <p>用這個規律解決一開始的問題：主幹道斜率 <span class="mono">m₁=2</span>，垂直的新巷道斜率 <span class="mono">m₂=−1/2</span>，再用點斜式代入通過的點 <span class="mono">(4,1)</span>：</p>
       <div class="calc">y − 1 = −(1/2)(x − 4)
 y = −x/2 + 2 + 1
 新巷道方程式：y = −x/2 + 3</div>
+      <p class="note">如果兩條路的斜率都不存在（都是鉛直線），也視為互相平行；一條鉛直線與一條水平線則必定互相垂直，這兩種情況不能直接套用「<span class="mono">m₁m₂=−1</span>」，因為鉛直線沒有斜率。</p>
+    </div>
+  </section>
+
+  <!-- ================= 4-2 直線方程式的應用 ================= -->
+  <div class="section-head prose" id="sec-4-2">
+    <span class="kicker">4-2</span>
+    <h2>直線方程式的應用</h2>
+    <p>把「兩條路怎麼相交」翻譯成聯立方程式，把「離馬路多遠才安全」翻譯成點到直線的距離，再把「哪一邊可以蓋房子」翻譯成二元一次不等式。</p>
+  </div>
+
+  <section class="part prose" id="topic-system">
+    <div class="part-kicker"><b>聯立方程式的幾何意義</b></div>
+    <h2>兩條路的交叉口在哪裡？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p>承上一節：主幹道 <span class="mono">y=2x+3</span>，垂直的新巷道 <span class="mono">y=−x/2+3</span>。這兩條路會在哪一點交會，好規劃紅綠燈？</p>
     </div>
 
     <div class="step">
-      <span class="step-tag">延伸：兩直線的交點</span>
-      <p>如果兩條路不平行，它們一定會相交在一點——這一點同時滿足兩條直線的方程式，也就是解聯立方程式。求主幹道 <span class="mono">y=2x+3</span> 與另一條路 <span class="mono">y=−x/2+3</span> 的交點：</p>
+      <span class="step-tag">觀察 → 規律</span>
+      <p>交叉口同時滿足兩條路的方程式，也就是聯立方程式的解。解聯立方程式，幾何上就是在找「兩條直線的共同點」：</p>
       <div class="calc">2x+3 = −x/2+3
 2x + x/2 = 0
 (5/2)x = 0　⟹　x = 0，代回 y = 2(0)+3 = 3
 交點：(0, 3)</div>
+      <p>一般化來看，兩條直線 <span class="mono">a₁x+b₁y=c₁</span> 與 <span class="mono">a₂x+b₂y=c₂</span> 聯立後，會有三種可能：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>斜率關係</th><th>解的情況</th><th>幾何意義</th></tr></thead>
+          <tbody>
+            <tr><td>斜率不同</td><td class="f">恰有一組解</td><td>兩線相交於一點</td></tr>
+            <tr><td>斜率相同，截距不同</td><td class="f">無解</td><td>兩線平行不相交</td></tr>
+            <tr><td>斜率相同，截距也相同</td><td class="f">無限多組解</td><td>兩線其實是同一條線（重合）</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="step">
-      <span class="step-tag">延伸：點到直線的距離</span>
+      <span class="step-tag">用一用</span>
+      <p class="quote">如果規劃單位改提議另一條巷道 <span class="mono">y=2x+7</span>，它會跟主幹道 <span class="mono">y=2x+3</span> 交會嗎？</p>
+      <div class="calc">兩式斜率皆為 2，但常數項不同（3 ≠ 7）
+⟹ 無解，兩條路互相平行，永遠不會相交</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-distance">
+    <div class="part-kicker"><b>點到直線的距離</b></div>
+    <h2>消防栓離馬路夠遠嗎？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
       <p class="quote">消防法規要求消防栓距離主幹道（中心線）至少 5 公尺。有一個消防栓設在 <span class="mono">(10,2)</span>，主幹道方程式是 <span class="mono">2x−y+3=0</span>，這個消防栓的位置合格嗎？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
       <div class="formula">
         <div class="formula-title">點 (x₀,y₀) 到直線 ax+by+c=0 的距離</div>
         <span class="big">d = |a·x₀ + b·y₀ + c| ／ √(a²+b²)</span>
@@ -486,11 +616,70 @@ y = −x/2 + 2 + 1
   = 21 ／ √5 ≈ 9.39（公尺）</div>
       <p><span class="mono">9.39 &gt; 5</span>，合格。</p>
     </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：兩條平行路之間的寬度</span>
+      <p>如果想知道主幹道 <span class="mono">2x−y+3=0</span> 跟另一條與它平行、方程式為 <span class="mono">2x−y−7=0</span> 的輔助道路之間相距多遠，可以直接用「兩平行線距離公式」，不必先找一個點：</p>
+      <div class="formula">
+        <div class="formula-title">兩平行線 ax+by+c₁=0 與 ax+by+c₂=0 的距離</div>
+        <span class="big">d = |c₁−c₂| ／ √(a²+b²)</span>
+      </div>
+      <div class="calc">d = |3−(−7)| ／ √(2²+(−1)²) = 10／√5 = 2√5 ≈ 4.47（公尺）</div>
+    </div>
   </section>
 
-  <!-- ================= PART 4：圓的方程式 ================= -->
-  <section class="part prose" id="part-circle">
-    <div class="part-kicker"><b>PART 4</b> ・ 圓的方程式</div>
+  <section class="part prose" id="topic-inequality">
+    <div class="part-kicker"><b>二元一次不等式</b></div>
+    <h2>候診區要畫在分隔線的哪一邊？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">診所大廳要用一條分隔線 <span class="mono">x+y=10</span>（單位：公尺）把地板分成兩區：靠近門口的一側放候診椅，另一側留給服務櫃檯。已知門口在原點 <span class="mono">(0,0)</span> 附近，候診椅該畫在哪一個不等式所代表的區域裡？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>一條直線 <span class="mono">ax+by+c=0</span> 會把平面切成兩半；每一半都可以用一個不等式表示，只要挑一個「不在線上」的點代入，看代入後是大於 0 還是小於 0，就知道那一側對應哪個不等式：</p>
+      <div class="calc">分隔線：x+y−10=0
+代入門口 (0,0)：0+0−10 = −10 < 0
+⟹ 門口這一側滿足 x+y−10<0，也就是 x+y<10</div>
+      <p>所以候診椅要畫在 <span class="mono">x+y&lt;10</span> 這一側。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>一般地，設 <span class="mono">a,b</span> 不同時為 0，直線 <span class="mono">L：ax+by+c=0</span> 把平面分成兩個半平面：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>不等式</th><th>邊界線</th><th>圖示</th></tr></thead>
+          <tbody>
+            <tr><td class="f">ax+by+c&gt;0 或 &lt;0</td><td>不含邊界</td><td>畫虛線</td></tr>
+            <tr><td class="f">ax+by+c≥0 或 ≤0</td><td>含邊界</td><td>畫實線</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">判斷哪一側對應哪個不等式，最簡單的方法就是「代一個不在線上的點」（不在線上的原點通常最方便），代入後的正負號就是那一整側的正負號——因為同一側的點，代入 <span class="mono">ax+by+c</span> 的正負號都相同。多個不等式同時成立（像「候診椅要在門口那一側，同時又要在櫃檯的另一條界線內」）時，答案就是每個不等式代表的區域「疊」起來的共同部分。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">候診椅除了要滿足 <span class="mono">x+y&lt;10</span>，還必須在櫃檯圍欄 <span class="mono">x−y=−2</span> 靠近門口（原點）的那一側，寫出這一側對應的不等式，並說明候診椅區域是哪兩個不等式的共同部分。</p>
+      <div class="calc">圍欄：x−y+2=0，代入 (0,0)：0−0+2=2>0
+⟹ 門口這一側滿足 x−y+2>0
+
+候診椅區域：{ x+y<10 且 x−y+2>0（不含邊界，用虛線）}</div>
+    </div>
+  </section>
+
+  <!-- ================= 4-3 圓與直線的關係 ================= -->
+  <div class="section-head prose" id="sec-4-3">
+    <span class="kicker">4-3</span>
+    <h2>圓與直線的關係</h2>
+    <p>從噴水池、廣場的涵蓋範圍出發，推出圓的方程式，再討論一個點、一條直線分別跟圓的位置關係，最後學會求圓的切線方程式。</p>
+  </div>
+
+  <section class="part prose" id="topic-circle-eq">
+    <div class="part-kicker"><b>圓的定義與方程式</b></div>
     <h2>灑水器能澆到多遠的花？</h2>
 
     <div class="step">
@@ -536,7 +725,7 @@ x²+y² + (−2h)x + (−2k)y + (h²+k²−r²) = 0</div>
         <div class="formula-title">一般式（D=−2h，E=−2k，F=h²+k²−r²）</div>
         x² + y² + Dx + Ey + F = 0
       </div>
-      <p class="note">一般式看起來跟標準式差很多，但只要用配方法「補回」被展開藏起來的 <span class="mono">(x−h)²</span>、<span class="mono">(y−k)²</span>，就能還原出圓心和半徑。</p>
+      <p class="note">一般式看起來跟標準式差很多，但只要用配方法「補回」被展開藏起來的 <span class="mono">(x−h)²</span>、<span class="mono">(y−k)²</span>，就能還原出圓心和半徑。若配方後右邊等於 0，圖形只是「一個點」；若右邊是負數，就沒有實際的圓存在——並不是每個 <span class="mono">x²+y²+Dx+Ey+F=0</span> 的形式都真的代表一個圓。</p>
     </div>
 
     <div class="step">
@@ -553,9 +742,39 @@ x²+y² + (−2h)x + (−2k)y + (h²+k²−r²) = 0</div>
     </div>
   </section>
 
-  <!-- ================= PART 5：圓與直線的關係 ================= -->
-  <section class="part prose" id="part-line-circle">
-    <div class="part-kicker"><b>PART 5</b> ・ 圓與直線的關係</div>
+  <section class="part prose" id="topic-circle-point">
+    <div class="part-kicker"><b>圓與點的位置關係</b></div>
+    <h2>工人站在爆破警戒圈的哪裡？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">工地進行爆破作業，安全規定要求半徑 50 公尺內（含邊界）都算危險區，警戒圈圓心設在爆破點 <span class="mono">(0,0)</span>。三名工人分別站在 <span class="mono">(30,20)</span>、<span class="mono">(48,14)</span>、<span class="mono">(60,10)</span>，誰的位置是安全的？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>判斷一個點跟圓的位置關係，只要比較「這個點到圓心的距離」跟「半徑」的大小：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>比較</th><th>位置關係</th></tr></thead>
+          <tbody>
+            <tr><td class="f">距離 &lt; r</td><td>在圓內</td></tr>
+            <tr><td class="f">距離 = r</td><td>在圓上</td></tr>
+            <tr><td class="f">距離 &gt; r</td><td>在圓外</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="calc">警戒圓：x²+y²=2500（半徑 50）
+
+工人甲 (30,20)：30²+20²=900+400=1300<2500 ⟹ 在圓內（危險）
+工人乙 (48,14)：48²+14²=2304+196=2500=2500 ⟹ 在圓上（仍算危險，因為含邊界）
+工人丙 (60,10)：60²+10²=3600+100=3700>2500 ⟹ 在圓外（安全）</div>
+      <p class="note">如果圓是用一般式 <span class="mono">x²+y²+Dx+Ey+F=0</span> 給的，不需要先化成標準式：把點的坐標代入「<span class="mono">x²+y²+Dx+Ey+F</span>」這個式子，結果小於 0 表示在圓內、等於 0 表示在圓上、大於 0 表示在圓外——這跟直接比較距離和半徑的結論是一致的，只是省去先求圓心、半徑的步驟。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-circle-line">
+    <div class="part-kicker"><b>圓與直線的關係</b></div>
     <h2>步道會不會切過水池？</h2>
 
     <div class="step">
@@ -565,7 +784,7 @@ x²+y² + (−2h)x + (−2k)y + (h²+k²−r²) = 0</div>
 
     <div class="step">
       <span class="step-tag">觀察</span>
-      <p>關鍵在於比較「圓心到這條直線的距離」跟「半徑」的大小——這正好可以用 PART 3 學過的點到直線距離公式：</p>
+      <p>關鍵在於比較「圓心到這條直線的距離」跟「半徑」的大小——這正好可以用 4-2 學過的點到直線距離公式：</p>
       <div class="calc">直線：x+y−8=0（即 a=1, b=1, c=−8）
 d = |1(0)+1(0)−8| ／ √(1²+1²) = 8／√2 = 4√2 ≈ 5.66（公尺）</div>
       <p><span class="mono">5.66 &gt; 5</span>（半徑），圓心到步道的距離比半徑還遠，步道<b>不會</b>穿過水池。</p>
@@ -608,6 +827,7 @@ d = |1(0)+1(0)−8| ／ √(1²+1²) = 8／√2 = 4√2 ≈ 5.66（公尺）</di
           </tbody>
         </table>
       </div>
+      <p class="note">除了「幾何判別法」（比較 d 與 r），也可以把直線代入圓的方程式，消去一個變數後得到一個一元二次方程式，再看判別式 <span class="mono">D=B²−4AC</span> 的正負：<span class="mono">D&gt;0</span> 對應相交、<span class="mono">D=0</span> 對應相切、<span class="mono">D&lt;0</span> 對應相離——這種「代數判別法」跟幾何判別法會得到完全一致的結論，遇到直線是鉛直線（不能用斜率）時特別好用。</p>
     </div>
 
     <div class="step">
@@ -620,12 +840,48 @@ x+y=5√2：d = |0+0−5√2|／√2 = 5√2/√2 = 5 = r　⟹　相切，恰�
     </div>
   </section>
 
+  <section class="part prose" id="topic-tangent">
+    <div class="part-kicker"><b>圓的切線</b></div>
+    <h2>沿著廣場邊緣走的路要怎麼設計？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">社區有一座圓形廣場，圓心 <span class="mono">(2,3)</span>、半徑 5 公尺。廣場邊緣的入口在 <span class="mono">(5,7)</span>（可驗證：<span class="mono">(5−2)²+(7−3)²=9+16=25</span>，確實在圓上），設計單位想從入口拉一條「恰好貼著廣場邊緣、不切進廣場內部」的步道，這條步道（也就是圓在入口這一點的切線）方程式該怎麼求？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律：切線垂直半徑</span>
+      <p>圓上一點的切線，有一個很重要的幾何性質：<b>切線必定垂直於「圓心到這一點」的半徑</b>（因為切線是最貼近圓、但完全不切入圓內部的直線，唯一的接觸方式就是與半徑垂直）。先求圓心到入口的斜率，再用「垂直斜率乘積 <span class="mono">−1</span>」求切線斜率：</p>
+      <div class="calc">半徑方向斜率：(7−3)／(5−2) = 4／3
+切線斜率：−1 ÷ (4／3) = −3／4</div>
+      <p>再用點斜式，代入切點 <span class="mono">(5,7)</span>：</p>
+      <div class="calc">y − 7 = −(3/4)(x − 5)
+4(y−7) = −3(x−5)
+4y − 28 = −3x + 15
+切線方程式：3x + 4y − 43 = 0</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：從圓外一點拉切線</span>
+      <p class="quote">另一座圓形噴水池，圓心在原點、半徑 4 公尺。岸上有一座燈柱在 <span class="mono">(0,5)</span>（距圓心 5 公尺，因為 <span class="mono">5&gt;4</span> 所以燈柱在池外），想從燈柱架兩條筆直的護欄，恰好貼著水池邊緣（也就是兩條切線），這兩條護欄的方程式是什麼？</p>
+      <p>這次不知道切點在哪裡，但可以設護欄的方程式為「通過 <span class="mono">(0,5)</span>、斜率 <span class="mono">m</span>」，再用「圓心到這條線的距離＝半徑」來解出 <span class="mono">m</span>：</p>
+      <div class="calc">護欄：y = mx + 5　⟹　mx − y + 5 = 0
+圓心 (0,0) 到護欄的距離 = 半徑 4：
+|m(0) − 0 + 5| ／ √(m²+1) = 4
+5 ／ √(m²+1) = 4
+√(m²+1) = 5／4
+m² + 1 = 25／16
+m² = 9／16　⟹　m = ±3／4</div>
+      <p>所以兩條護欄分別是 <span class="mono">y = (3/4)x + 5</span> 與 <span class="mono">y = −(3/4)x + 5</span>（一個點在圓外，恰好可以拉出兩條不同的切線）。</p>
+    </div>
+  </section>
+
   <!-- ================= 公式工具箱 ================= -->
   <section class="toolbox prose">
     <h2>收進工具箱：直線與圓</h2>
     <p class="lede-line">上面每一條都已經自己推導過一次，收錄在這裡，需要時隨時查。</p>
 
-    <h3>直線</h3>
+    <h3>4-1　直線方程式及其圖形</h3>
     <div class="table-wrap">
       <table>
         <thead><tr><th>用途</th><th>公式</th></tr></thead>
@@ -634,21 +890,38 @@ x+y=5√2：d = |0+0−5√2|／√2 = 5√2/√2 = 5 = r　⟹　相切，恰�
           <tr><td>點斜式</td><td class="f">y−y₁ = m(x−x₁)</td></tr>
           <tr><td>斜截式</td><td class="f">y = mx+b</td></tr>
           <tr><td>一般式</td><td class="f">ax+by+c = 0</td></tr>
+          <tr><td>截距式</td><td class="f">x／a + y／b = 1</td></tr>
+          <tr><td>向上／向右平移</td><td class="f">y=mx+b+k（上移k）；y=m(x−h)+b（右移h）</td></tr>
           <tr><td>平行</td><td class="f">m₁ = m₂</td></tr>
           <tr><td>垂直</td><td class="f">m₁·m₂ = −1</td></tr>
-          <tr><td>點到直線距離</td><td class="f">d = |ax₀+by₀+c| ／ √(a²+b²)</td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>圓</h3>
+    <h3>4-2　直線方程式的應用</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>聯立方程式的解</td><td class="f">斜率不同→一解；斜率同截距異→無解；完全相同→無限多解</td></tr>
+          <tr><td>點到直線距離</td><td class="f">d = |ax₀+by₀+c| ／ √(a²+b²)</td></tr>
+          <tr><td>兩平行線距離</td><td class="f">d = |c₁−c₂| ／ √(a²+b²)</td></tr>
+          <tr><td>二元一次不等式</td><td class="f">代一點入 ax+by+c 判正負，決定半平面</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>4-3　圓與直線的關係</h3>
     <div class="table-wrap">
       <table>
         <thead><tr><th>用途</th><th>公式</th></tr></thead>
         <tbody>
           <tr><td>標準式</td><td class="f">(x−h)²+(y−k)² = r²（圓心 (h,k)，半徑 r）</td></tr>
           <tr><td>一般式</td><td class="f">x²+y²+Dx+Ey+F = 0</td></tr>
+          <tr><td>點與圓位置關係</td><td class="f">距離&lt;r 圓內；=r 圓上；&gt;r 圓外</td></tr>
           <tr><td>圓與直線關係</td><td class="f">d&gt;r 相離；d=r 相切；d&lt;r 相交</td></tr>
+          <tr><td>圓上一點的切線</td><td class="f">切線斜率 = −1 ÷（圓心到該點的斜率）</td></tr>
+          <tr><td>圓外一點的切線</td><td class="f">設過該點的直線，令圓心到直線距離＝半徑，解斜率</td></tr>
         </tbody>
       </table>
     </div>
@@ -681,7 +954,17 @@ y+1 = 3x−6
       </div>
 
       <div class="qcard">
-        <div class="qhead"><span class="qnum">3</span><span class="qtag">情境</span></div>
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">代數</span></div>
+        <p>直線 <span class="mono">y=3x</span> 向下平移 2、再向左平移 1，求新方程式。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">向下移 2：y=3x−2
+再向左移 1（x 換成 x+1）：y=3(x+1)−2=3x+1</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">情境</span></div>
         <p>主幹道方程式 <span class="mono">y=−2x+5</span>，另一條巷道要與它平行，且通過 <span class="mono">(1,1)</span>，求巷道方程式。</p>
         <details>
           <summary>查看解答</summary>
@@ -692,18 +975,20 @@ y = −2x+3</div></div>
       </div>
 
       <div class="qcard">
-        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">代數</span></div>
-        <p>求兩直線 <span class="mono">x+y=4</span> 與 <span class="mono">x−y=2</span> 的交點。</p>
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">代數</span></div>
+        <p>求兩直線 <span class="mono">x+y=4</span> 與 <span class="mono">x−y=2</span> 的交點；並判斷 <span class="mono">x+y=4</span> 與 <span class="mono">x+y=9</span> 是否相交。</p>
         <details>
           <summary>查看解答</summary>
           <div class="ans"><div class="calc">兩式相加：2x=6 ⟹ x=3
 代回：3+y=4 ⟹ y=1
-交點 (3,1)</div></div>
+交點 (3,1)
+
+x+y=4 與 x+y=9：斜率相同、常數不同 ⟹ 無解，兩線平行不相交</div></div>
         </details>
       </div>
 
       <div class="qcard">
-        <div class="qhead"><span class="qnum">5</span><span class="qtag">情境</span></div>
+        <div class="qhead"><span class="qnum">6</span><span class="qtag">情境</span></div>
         <p>路燈規定要距離道路中心線（<span class="mono">3x−4y+1=0</span>）至少 2 公尺，某路燈設於 <span class="mono">(1,2)</span>，是否合格？</p>
         <details>
           <summary>查看解答</summary>
@@ -713,7 +998,17 @@ y = −2x+3</div></div>
       </div>
 
       <div class="qcard">
-        <div class="qhead"><span class="qnum">6</span><span class="qtag alg">代數</span></div>
+        <div class="qhead"><span class="qnum">7</span><span class="qtag">情境</span></div>
+        <p>圖書館用分隔線 <span class="mono">x−y=4</span> 隔開閱覽區與走道，服務台在 <span class="mono">(0,0)</span> 這一側算走道，寫出閱覽區對應的不等式。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">分隔線：x−y−4=0，代入 (0,0)：0−0−4=−4<0（走道側）
+⟹ 閱覽區（另一側）：x−y−4>0，即 x−y>4</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">8</span><span class="qtag alg">代數</span></div>
         <p>寫出圓心 <span class="mono">(−2,5)</span>、半徑 <span class="mono">6</span> 的圓的標準式與一般式。</p>
         <details>
           <summary>查看解答</summary>
@@ -724,24 +1019,51 @@ y = −2x+3</div></div>
       </div>
 
       <div class="qcard">
-        <div class="qhead"><span class="qnum">7</span><span class="qtag alg">代數</span></div>
-        <p>已知圓 <span class="mono">x²+y²+2x−4y−4=0</span>，求圓心與半徑。</p>
+        <div class="qhead"><span class="qnum">9</span><span class="qtag alg">代數</span></div>
+        <p>已知圓 <span class="mono">x²+y²+2x−4y−4=0</span>，求圓心與半徑；並判斷點 <span class="mono">(3,3)</span> 在圓內、圓上還是圓外。</p>
         <details>
           <summary>查看解答</summary>
           <div class="ans"><div class="calc">(x²+2x+1)+(y²−4y+4) = 4+1+4
 (x+1)²+(y−2)² = 9
-圓心 (−1,2)，半徑 3</div></div>
+圓心 (−1,2)，半徑 3
+
+代入 (3,3)：9+9+2(3)−4(3)−4 = 18+6−12−4 = 8 > 0 ⟹ 在圓外</div></div>
         </details>
       </div>
 
       <div class="qcard">
-        <div class="qhead"><span class="qnum">8</span><span class="qtag">情境</span></div>
+        <div class="qhead"><span class="qnum">10</span><span class="qtag">情境</span></div>
         <p>灑水器覆蓋範圍是圓心 <span class="mono">(0,0)</span>、半徑 6 的圓。一條步道方程式是 <span class="mono">x=8</span>，步道會被灑到水嗎？</p>
         <details>
           <summary>查看解答</summary>
           <div class="ans"><div class="calc">直線 x−8=0（a=1,b=0,c=−8）
 d = |1(0)+0(0)−8|／√(1²+0²) = 8
 8 > 6（半徑），相離，步道不會被灑到水</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">11</span><span class="qtag alg">代數</span></div>
+        <p>圓 <span class="mono">x²+y²=25</span> 上有一點 <span class="mono">(3,4)</span>，求圓在這一點的切線方程式。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">半徑方向斜率：(4−0)/(3−0) = 4/3
+切線斜率：−1÷(4/3) = −3/4
+y−4 = −(3/4)(x−3)
+4y−16 = −3x+9
+切線：3x+4y−25 = 0</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">12</span><span class="qtag alg">代數</span></div>
+        <p>圓 <span class="mono">x²+y²=9</span> 外有一點 <span class="mono">(0,6)</span>，求從這一點所拉出兩條切線的方程式。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">設切線 y=mx+6，即 mx−y+6=0
+距離 = 半徑：|6|／√(m²+1) = 3
+√(m²+1) = 2　⟹　m²=3　⟹　m=±√3
+切線：y=√3x+6 與 y=−√3x+6</div></div>
         </details>
       </div>
 
@@ -752,14 +1074,14 @@ d = |1(0)+0(0)−8|／√(1²+0²) = 8
   <section class="closing prose">
     <div class="figure-card">
       <h2>給筱葳的話</h2>
-      <p>這一章的核心心法是：先把生活中的圖形（坡道、道路、水池、訊號範圍）抽象成「幾個關鍵數字」——兩點、一個斜率、一個圓心加半徑，再把幾何問題（陡不陡、平不平行、澆不澆得到水、切不切過水池）翻譯成代數計算（比較大小、解方程式、算距離）。只要能穩穩做到「幾何 ↔ 代數」的雙向翻譯，這一章的題目大多是同一套方法反覆套用。</p>
-      <p><b>提醒：</b>本教材的章節與小節編號（例如「第二章」）目前依 108 課綱常見的內容分組先行編寫，尚未對照筱葳實際課本目錄，之後若拿到課本頁面，會再依真實章節、例題、習題調整，屆時編號與細節可能會更動。</p>
+      <p>這一章的核心心法是：先把生活中的圖形（坡道、道路、廣場、噴水池）抽象成「幾個關鍵數字」——兩點、一個斜率、一個圓心加半徑，再把幾何問題（陡不陡、平不平行、在不在圓內、切不切過、貼不貼著邊緣）翻譯成代數計算（比較大小、解方程式、算距離）。只要能穩穩做到「幾何 ↔ 代數」的雙向翻譯，這一章的題目大多是同一套方法反覆套用。</p>
+      <p><b>版本說明：</b>本教材已對照筱葳課本目錄，確認屬於「第四章 直線與圓」，並依課本 4-1、4-2、4-3 的小節分類整理內容項目；情境例子（坡道、道路、廣場、噴水池等）是重新設計的原創內容，並未使用課本裡的情境或數字。</p>
     </div>
   </section>
 
   <footer>
-    <span>筱葳學測數學・數學1（章節編號待確認）</span>
-    <span>直線與圓</span>
+    <span>筱葳學測數學・數學1・第四章</span>
+    <span>直線與圓（4-1～4-3）</span>
   </footer>
 
 </div>
