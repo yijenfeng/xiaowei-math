@@ -405,7 +405,32 @@
       <div class="calc">f(1) = 30(1)+20 = 50　（元）
 f(2) = 30(2)+20 = 80　（元）
 f(3) = 30(3)+20 = 110　（元）</div>
-      <p>把 (x, f(x)) 這些點畫在坐標平面上、連起來，就是 f 的圖形——本節接下來會看到，f(x)=30x+20 的圖形是一條斜直線。</p>
+      <p>把 (x, f(x)) 這些點畫在坐標平面上、連起來，就是 f 的圖形：</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 190" role="img" aria-label="停車場收費函數f(x)=30x+20的圖形，是一條通過(0,20)、(1,50)、(2,80)、(3,110)的直線">
+          <line x1="30" y1="160" x2="245" y2="160" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="30" y1="160" x2="30" y2="15" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="30" y1="138" x2="210" y2="39" stroke="var(--accent)" stroke-width="2.5"/>
+          <circle cx="30" cy="138" r="3.5" fill="var(--b2)"/>
+          <text x="4" y="150" class="svg-label" fill="var(--b2)">(0,20)</text>
+          <circle cx="90" cy="105" r="3.5" fill="var(--accent)"/>
+          <text x="64" y="96" class="svg-label" fill="currentColor">(1,50)</text>
+          <circle cx="150" cy="72" r="3.5" fill="var(--accent)"/>
+          <text x="124" y="63" class="svg-label" fill="currentColor">(2,80)</text>
+          <circle cx="210" cy="39" r="3.5" fill="var(--accent)"/>
+          <text x="164" y="30" class="svg-label" fill="currentColor">(3,110)</text>
+          <text x="196" y="176" class="svg-label" fill="currentColor">x（小時）</text>
+          <text x="34" y="24" class="svg-label" fill="currentColor">f(x)（元）</text>
+        </svg>
+        <figcaption>f(x)=30x+20 的圖形：把每個(x,f(x))點連起來，是一條由左下往右上的直線</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <p>本節接下來會看到，f(x)=30x+20 這種「一條斜直線」的圖形，正是下一個主題要正式介紹的一次函數。</p>
     </div>
 
     <div class="step">
@@ -430,6 +455,33 @@ f(3) = 30(3)+20 = 110　（元）</div>
       <p>時租方案 <span class="mono">f(x)=30x+20</span>，圖形是一條斜直線，叫<b>一次函數</b>：</p>
       <div class="formula">f(x) = ax+b　（a≠0）——圖形是過 (0,b) 的斜直線，a 決定傾斜方向與陡緩</div>
       <p><span class="mono">a &gt; 0</span> 時，x 越大 f(x) 越大（線由左下往右上）；<span class="mono">a &lt; 0</span> 時則相反。b 是「x=0 時」的函數值，也就是圖形跟 y 軸的交點——在停車場的例子裡，b=20 元就是「還沒開始計時」也要付的清潔費。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 220 150" role="img" aria-label="常數函數f(x)=2000的圖形，是一條水平線">
+          <line x1="20" y1="120" x2="205" y2="120" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="20" y1="120" x2="20" y2="15" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="20" y1="55" x2="200" y2="55" stroke="var(--accent)" stroke-width="2.5"/>
+          <circle cx="20" cy="55" r="3.5" fill="var(--b2)"/>
+          <text x="4" y="45" class="svg-label" fill="var(--b2)">(0,c)</text>
+          <text x="150" y="45" class="svg-label" fill="var(--accent)">f(x)=c</text>
+          <text x="170" y="136" class="svg-label" fill="currentColor">x</text>
+        </svg>
+        <figcaption>常數函數 f(x)=c：不管 x 是多少，圖形都停在同一個高度</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <svg viewBox="0 0 220 150" role="img" aria-label="一次函數f(x)=ax+b（a大於0）的圖形，是一條由左下往右上的斜直線">
+          <line x1="20" y1="120" x2="205" y2="120" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="20" y1="120" x2="20" y2="15" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="20" y1="95" x2="195" y2="25" stroke="var(--accent)" stroke-width="2.5"/>
+          <circle cx="20" cy="95" r="3.5" fill="var(--b2)"/>
+          <text x="4" y="85" class="svg-label" fill="var(--b2)">(0,b)</text>
+          <text x="140" y="30" class="svg-label" fill="var(--accent)">f(x)=ax+b</text>
+          <text x="170" y="136" class="svg-label" fill="currentColor">x</text>
+        </svg>
+        <figcaption>一次函數 f(x)=ax+b（a&gt;0 時）：圖形是過(0,b)、由左下往右上的斜直線</figcaption>
+      </figure>
     </div>
 
     <div class="step">
@@ -485,6 +537,27 @@ g(3) = 25(3)+35 = 110（元）</div>
         f(x) = ax²+bx+c = a(x + b／2a)² + (4ac−b²)／4a　（a≠0）
       </div>
       <p>頂點坐標就是 <span class="mono">(−b／2a, (4ac−b²)／4a)</span>，圖形以 <span class="mono">x=−b／2a</span> 這條鉛垂線為對稱軸。這裡頂點是 <span class="mono">(25, 1250)</span>：當 x=25（垂直牆的邊長25公尺）時，面積最大，最大面積是1250平方公尺。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 170" role="img" aria-label="A(x)=-2x平方+100x的拋物線圖形，開口向下，頂點在(25,1250)">
+          <line x1="15" y1="140" x2="245" y2="140" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M20,140 Q130,-20 240,140" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <line x1="130" y1="55" x2="130" y2="140" stroke="var(--line)" stroke-width="1.4" stroke-dasharray="4 3"/>
+          <circle cx="130" cy="55" r="4" fill="var(--b2)"/>
+          <text x="136" y="50" class="svg-label" fill="var(--b2)">頂點(25,1250)</text>
+          <circle cx="20" cy="140" r="3" fill="currentColor"/>
+          <text x="4" y="156" class="svg-label" fill="currentColor">x=0</text>
+          <circle cx="240" cy="140" r="3" fill="currentColor"/>
+          <text x="216" y="156" class="svg-label" fill="currentColor">x=50</text>
+          <text x="108" y="160" class="svg-label" fill="currentColor">對稱軸 x=25</text>
+        </svg>
+        <figcaption>A(x)=−2x²+100x 的圖形：開口向下的拋物線，最高點就是頂點(25,1250)</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
       <p class="note">因為首項係數 <span class="mono">a=−2&lt;0</span>，圖形開口向下，頂點就是「最高點」，函數有<b>最大值</b>；如果 <span class="mono">a&gt;0</span>，圖形開口向上，頂點是「最低點」，函數則有<b>最小值</b>。</p>
     </div>
 
