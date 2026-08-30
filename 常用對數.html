@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-4 常用對數｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學1・第一章 數與式・1-4</span>
+    <h1>常用對數</h1>
+    <p class="sub">依照筱葳課本章節重新編寫：從細菌繁殖「要幾小時才會超過一百萬隻」開始，反推出常用對數的定義，再學會用它估計超大數字的位數。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>「指數」開頭那個每小時分裂成兩倍的細菌，其實還有一個問題沒問完：如果從 1 隻細菌開始，要經過幾個小時，數量才會超過一百萬隻？這種未知數卡在指數位置的方程式，正是這一節「對數」要解決的問題。</p>
+    <ul class="toc">
+      <li><a href="#part-def"><b>1</b>常用對數</a></li>
+      <li><a href="#part-size"><b>2</b>對數的大小</a></li>
+    </ul>
+  </section>
+
+  <!-- ================= PART 1：常用對數 ================= -->
+  <section class="part prose" id="part-def">
+    <div class="part-kicker"><b>PART 1</b> ・ 常用對數</div>
+    <h2>細菌要經過幾小時，才會超過一百萬隻？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">還記得那個每小時分裂成兩倍的細菌嗎？從 1 隻開始，經過 <span class="mono">n</span> 小時後，數量會變成 <span class="mono">2ⁿ</span> 隻。現在反過來問：數量要超過一百萬隻，至少要經過幾個小時？也就是要解方程式 <span class="mono">2ⁿ=1000000</span>——問題是，未知數 <span class="mono">n</span> 卡在指數的位置，目前學過的指數律完全幫不上忙。</p>
+      <p>要解開這種「未知數卡在指數位置」的方程式，需要指數的反向操作——這個反向操作，就是這一節要學的<b>對數</b>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>要解 <span class="mono">2ⁿ=1000000</span>，關鍵是先搞懂「10 的幾次方等於 2」——因為 10 是我們最熟悉的計數底數。每一個正數 <span class="mono">a</span> 都可以寫成 <span class="mono">10ˣ</span> 的形式（<span class="mono">x</span> 可以是小數），可以用逐步逼近的方式夾出這個 <span class="mono">x</span>：</p>
+      <div class="calc">10⁰     = 1　　　10¹ = 10　　（2 介於中間，x 介於 0、1 之間）
+10⁰·³    ≈ 1.995262315　　（比 2 小一點，x 要再大一點）
+10⁰·³⁰²  ≈ 2.004472000　　（比 2 大一點，x 落在 0.3 與 0.302 之間）
+10⁰·³⁰¹  ≈ 1.999861800　　（比 2 小一點，繼續夾……）
+10⁰·³⁰¹¹ ≈ 2.000322200
+10⁰·³⁰¹⁰³≈ 1.999999769　　（已經非常接近 2）</div>
+      <p>這樣不斷夾下去，可以找到一個唯一的 <span class="mono">x≈0.30103……</span>，滿足 <span class="mono">10ˣ=2</span>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 定義</span>
+      <p>把「滿足 <span class="mono">10ˣ=2</span> 的這個 <span class="mono">x</span>」直接取名字，記作 <span class="mono">log 2</span>（讀作「log 2」）。一般化：</p>
+      <div class="formula">
+        <div class="formula-title">常用對數的定義</div>
+        設 a 為正數，滿足 10ˣ=a 的實數 x，稱為 a 的<b>常用對數</b>，記作 x=log a，其中 a 稱為<b>真數</b>；也就是說 <span class="mono">10^(log a) = a</span> 恆成立。
+      </div>
+      <p>换句话说，<span class="mono">log a</span> 就是在問：「10 要自乘幾次，才會等於 a？」而 <span class="mono">log</span> 和「10 的次方」互為反向操作：</p>
+      <div class="formula">73 = 10^(log 73)　　　　10^(log 5566) = 5566　　　　log(10ᵃ) = a（a 為任意實數）</div>
+      <p class="note">實際計算 <span class="mono">log 2</span> 不需要真的一步步去夾，計算機上的 <span class="mono">log</span> 鍵可以直接算出更精確的值：<span class="mono">log 2 ≈ 0.301029996</span>，通常取 <span class="mono">log2≈0.301</span> 就夠用。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">回到情境：細菌要幾小時才超過一百萬隻？</span>
+      <p>現在有了 <span class="mono">log</span>，就能解開一開始的方程式 <span class="mono">2ⁿ=1000000</span>。兩邊同取 <span class="mono">log</span>：</p>
+      <div class="calc">log(2ⁿ) = log(1000000)
+n·log2 = log(10⁶) = 6
+n = 6/log2 ≈ 6/0.301 ≈ 19.93（小時）</div>
+      <p class="note">大約 19.93 小時後，細菌數量恰好超過一百萬隻；如果只能整點時間培養，就要等滿 20 個小時。這就是「對數」的威力：能直接把卡在指數位置的未知數解出來，不用一個一個小時去試。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 2：對數的大小 ================= -->
+  <section class="part prose" id="part-size">
+    <div class="part-kicker"><b>PART 2</b> ・ 對數的大小</div>
+    <h2>log 每增加 1，代表變成 10 倍</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>把幾個 10 的整數次方排在一起看：</p>
+      <div class="calc">log 1     = 0
+log 10    = 1
+log 100   = 2
+log 1000  = 3
+log 10000 = 4</div>
+      <p>每次 <span class="mono">a</span> 變成 10 倍，<span class="mono">log a</span> 就剛好增加 1。這代表「log」把乘法的世界，壓縮成加法的世界——原本要乘 10 倍才能移動的距離，在 log 的世界裡只需要「加 1」。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 680 130" role="img" aria-label="上排數線標示1、10、100、1000、10000，下排對應標示log值0、1、2、3、4，兩排用箭頭對齊">
+          <line x1="30" y1="45" x2="650" y2="45" stroke="currentColor" stroke-width="1.5"/>
+          <g class="svg-label" fill="currentColor">
+            <circle cx="60" cy="45" r="3" fill="currentColor"/><text x="60" y="30" text-anchor="middle">1</text>
+            <circle cx="140" cy="45" r="3" fill="currentColor"/><text x="140" y="30" text-anchor="middle">10</text>
+            <circle cx="300" cy="45" r="3" fill="currentColor"/><text x="300" y="30" text-anchor="middle">100</text>
+            <circle cx="460" cy="45" r="3" fill="currentColor"/><text x="460" y="30" text-anchor="middle">1000</text>
+            <circle cx="620" cy="45" r="3" fill="currentColor"/><text x="620" y="30" text-anchor="middle">10000</text>
+          </g>
+          <line x1="60" y1="55" x2="60" y2="95" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 2"/>
+          <line x1="140" y1="55" x2="140" y2="95" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 2"/>
+          <line x1="300" y1="55" x2="300" y2="95" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 2"/>
+          <line x1="460" y1="55" x2="460" y2="95" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 2"/>
+          <line x1="620" y1="55" x2="620" y2="95" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="60" y="112" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">0</text>
+          <text x="140" y="112" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">1</text>
+          <text x="300" y="112" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">2</text>
+          <text x="460" y="112" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">3</text>
+          <text x="620" y="112" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">4</text>
+        </svg>
+        <figcaption>上排是 a，下排是 log a：a 每變成 10 倍，log a 就加 1。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用①：log 的差，對應倍數關係</span>
+      <p class="quote">已知 <span class="mono">log a=2.7</span>，<span class="mono">log b=1.7</span>，<span class="mono">a</span> 是 <span class="mono">b</span> 的幾倍？</p>
+      <div class="calc">a = 10^(log a) = 10^2.7　　　b = 10^(log b) = 10^1.7
+a/b = 10^2.7 / 10^1.7 = 10^(2.7-1.7) = 10¹ = 10</div>
+      <p><span class="mono">a</span> 是 <span class="mono">b</span> 的 10 倍——一般地，只要知道兩個數的 <span class="mono">log</span> 差是多少，不用真的算出兩個數，就能直接知道它們差幾倍：<span class="mono">log</span> 差 <span class="mono">k</span>，倍數就是 <span class="mono">10ᵏ</span>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用②：估計位數（多位數）</span>
+      <p class="quote">已知 <span class="mono">log a=2.342</span>，<span class="mono">a</span> 大概長什麼樣子（幾位數）？</p>
+      <p>因為 <span class="mono">2&lt;2.342&lt;3</span>，而 <span class="mono">log</span> 是嚴格遞增的（<span class="mono">a</span> 越大 <span class="mono">log a</span> 也越大），所以：</p>
+      <div class="calc">log 100 &lt; log a &lt; log 1000
+     2   &lt; 2.342 &lt;   3
+⟹  100  &lt;   a   &lt;  1000</div>
+      <p><span class="mono">a</span> 介於 100 到 1000 之間，也就是<b>一個 3 位數</b>。一般化：</p>
+      <div class="formula"><span class="big">若正整數 N 滿足 n ≤ log N &lt; n+1（n 為整數），則 N 是 (n+1) 位數。</span></div>
+      <p>同樣的想法也能用在小於 1 的小數上。已知 <span class="mono">log a=-2.8</span>：</p>
+      <div class="calc">log 0.001 &lt; log a &lt; log 0.01
+   -3    &lt;  -2.8  &lt;   -2
+⟹ 0.001  &lt;   a    &lt;  0.01</div>
+      <p><span class="mono">a</span> 介於 0.001 到 0.01 之間，也就是小數點後第 2 位才第一次出現不是 0 的數字。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用③：兩個數相乘後的位數</span>
+      <p class="quote"><span class="mono">a</span> 是 5 位數，<span class="mono">b</span> 已知 <span class="mono">log a=4.8</span>、<span class="mono">log b=2.5</span>，<span class="mono">ab</span> 是幾位數？</p>
+      <div class="calc">log(ab) = log a + log b = 4.8 + 2.5 = 7.3
+7 ≤ 7.3 &lt; 8　⟹　ab 是 7+1 = 8 位數</div>
+      <p class="note">這裡直接用到「log(ab)=log a+log b」這個關係（本質上就是指數律 <span class="mono">10ᵐ·10ⁿ=10ᵐ⁺ⁿ</span> 反過來看），不需要真的把 <span class="mono">a、b</span> 相乘出來，就能知道乘積大概有幾位數。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">回到情境：細菌培養久一點，多的是幾倍？</span>
+      <p class="quote">同一種細菌（每小時倍增），甲培養皿已經培養了 30 小時，乙培養皿培養了 40 小時（起始隻數相同）。乙的細菌數量是甲的幾倍？</p>
+      <div class="calc">甲：數量 = 2³⁰，log(2³⁰) = 30×log2 ≈ 30×0.301 = 9.03
+乙：數量 = 2⁴⁰，log(2⁴⁰) = 40×log2 ≈ 40×0.301 = 12.04
+
+log(乙)−log(甲) = 12.04−9.03 = 3.01
+⟹ 乙/甲 = 10^3.01 ≈ 1023（倍）</div>
+      <p>只多培養 10 小時，數量卻多了一千多倍——這就是指數成長「差一點時間，差很多數量」的威力，而 <span class="mono">log</span> 讓我們不用真的算出 <span class="mono">2³⁰</span>、<span class="mono">2⁴⁰</span> 這種天文數字，就能直接算出兩者的倍數關係。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：其他也用對數尺度的例子</span>
+      <p>化學上的 <span class="mono">pH</span> 值定義為 <span class="mono">pH = -log[H⁺]</span>（<span class="mono">[H⁺]</span> 是氫離子濃度），所以 pH 每差 1，氫離子濃度就差 10 倍；地震規模、聲音的分貝（dB）也都是用類似的對數尺度定義。凡是「原始數字的範圍太懸殊」的現象，幾乎都會看到對數的身影。</p>
+    </div>
+  </section>
+
+  <!-- ================= 公式工具箱 ================= -->
+  <section class="toolbox prose">
+    <h2>收進工具箱：1-4 常用對數</h2>
+    <p class="lede-line">上面每一條都已經自己推導過一次，收錄在這裡，需要時隨時查。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>定義</td><td class="f">10ˣ=a（a&gt;0） ⟺ x=log a，且 10^(log a)=a</td></tr>
+          <tr><td>特殊值</td><td class="f">log 1=0，log 10=1，log(10ᵃ)=a</td></tr>
+          <tr><td>大小關係</td><td class="f">a 每變成 10 倍，log a 增加 1；log 遞增（a 越大 log a 越大）</td></tr>
+          <tr><td>位數估計（≥1 的數）</td><td class="f">n≤log N&lt;n+1 ⟹ N 是 (n+1) 位數</td></tr>
+          <tr><td>小數估計（&lt;1 的數）</td><td class="f">-n≤log a&lt;-(n-1) ⟹ a 的小數點後第 n 位才第一次出現非 0 數字</td></tr>
+          <tr><td>乘積的位數</td><td class="f">log(ab) = log a + log b（本質是指數律的反向操作）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 練習題 ================= -->
+  <section class="practice prose">
+    <h2>換你動手做</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">代數</span></div>
+        <p>把 22、10^(log 0.123) 分別用另一種等價的方式寫出來。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">22 = 10^(log 22)
+10^(log 0.123) = 0.123</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">代數</span></div>
+        <p>求 <span class="mono">log 1000</span>，以及 <span class="mono">log 0.01</span>（提示：<span class="mono">0.01=10⁻²</span>）。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">log 1000 = log(10³) = 3
+log 0.01 = log(10⁻²) = -2</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">情境</span></div>
+        <p>已知 <span class="mono">log a=4.3</span>，<span class="mono">log b=5.3</span>，<span class="mono">b</span> 是 <span class="mono">a</span> 的幾倍？</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">log b − log a = 5.3−4.3 = 1　⟹　b/a = 10¹ = 10</div>b 是 a 的 10 倍。</div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">代數</span></div>
+        <p>已知 <span class="mono">log a=1.2</span>，<span class="mono">log b=1.9</span>，求 <span class="mono">a²b</span> 是幾位數。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">log(a²b) = 2log a + log b = 2.4+1.9 = 4.3
+4 ≤ 4.3 &lt; 5　⟹　a²b 是 5 位數</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">情境</span></div>
+        <p>續「指數」的鈷-60 問題：<span class="mono">(1/2)^(n/5.2714)=0.12</span>，已知 <span class="mono">log2≈0.301</span>，求 <span class="mono">n</span>（精確到小數點後一位）。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">兩邊取 log：(n/5.2714)×log(1/2) = log 0.12
+log(1/2) = -log2 ≈ -0.301
+log 0.12 = log(12/100) = log12-2 = (log4+log3)-2 ≈ (0.602+0.477)-2 = -0.921
+
+(n/5.2714)×(-0.301) = -0.921
+n/5.2714 ≈ 3.06
+n ≈ 16.1（年）</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">6</span><span class="qtag alg">代數</span></div>
+        <p>判斷對錯：<span class="mono">a&gt;0</span> 時，<span class="mono">10^(2 log a) = a²</span>；<span class="mono">a&gt;0</span> 時，<span class="mono">1/a = 10^(-log a)</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans">都正確。<div class="calc">10^(2 log a) = (10^(log a))² = a²
+10^(-log a) = 1/10^(log a) = 1/a</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">7</span><span class="qtag">情境</span></div>
+        <p>已知 <span class="mono">log a=4.5</span>，下列何者最接近 <span class="mono">a</span> 的大小？(A) 90000　(B) 70000　(C) 50000　(D) 30000　(E) 10000</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans">10^4.5 = 10⁴×10^0.5 = 10000×√10 ≈ 10000×3.162 ≈ 31623，最接近 (D) 30000。</div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">8</span><span class="qtag">情境</span></div>
+        <p>某水溶液的氫離子濃度是 <span class="mono">10⁻¹·²</span>（莫耳/公升），已知 <span class="mono">pH=-log[H⁺]</span>，求這杯溶液的 pH 值。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">pH = -log(10⁻¹·²) = -(-1.2) = 1.2</div></div>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 結語 ================= -->
+  <section class="closing prose">
+    <div class="figure-card">
+      <h2>給筱葳的話</h2>
+      <p>指數在回答「10 連乘幾次」，對數則是反過來問「要連乘幾次，才能拼出這個數」——兩者是同一件事的正反面。細菌的爆炸性成長、地震規模、pH 值、分貝，這些看似不相關的現象，骨子裡都是同一個工具：把差距懸殊到不方便比較的數字，壓縮成方便閱讀、方便相減比較的尺度。</p>
+      <p>這份教材裡最實用的兩個結論，值得背熟：<b>log 的差對應倍數關係（log a − log b = k ⟹ a/b=10ᵏ）</b>，以及<b>位數估計（正整數 N 的位數 = ⌊log N⌋+1）</b>。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數1 第一章 數與式</span>
+    <span>1-4 常用對數</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-3 指數｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學1・第一章 數與式・1-3</span>
+    <h1>指數</h1>
+    <p class="sub">依照筱葳課本章節重新編寫：從細菌繁殖、放射性物質衰減，一路推出整數指數、有理數指數、實數指數，最後學會用科學記號紀錄超大或超小的數字。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>指數原本只是「連乘」的簡寫，但課本開頭就點出重點：人口成長、複利、地震規模、放射性衰減這些現象，數字動輒差到幾百萬倍，用指數描述才寫得下、算得動。這一節依課本順序，把指數的定義從整數一路擴展到所有實數。</p>
+    <ul class="toc">
+      <li><a href="#part-int"><b>1</b>整數指數與指數律</a></li>
+      <li><a href="#part-rational"><b>2</b>有理數指數與指數律</a></li>
+      <li><a href="#part-real"><b>3</b>實數指數與指數律</a></li>
+      <li><a href="#part-sci"><b>4</b>科學記號與有效數字</a></li>
+    </ul>
+  </section>
+
+  <!-- ================= PART 1：整數指數與指數律 ================= -->
+  <section class="part prose" id="part-int">
+    <div class="part-kicker"><b>PART 1</b> ・ 整數指數與指數律</div>
+    <h2>細菌一分為二，指數登場</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">生物實驗室裡有一種細菌，每經過 1 小時就會分裂一次，數量變成原來的 2 倍。老師在培養皿裡只放入 1 隻細菌，想知道：經過 10 個小時後，培養皿裡會有多少隻細菌？這個數字用一般記數法寫出來，會是一長串很難唸的數字。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>細菌數量是「每過 1 小時，乘以 2」：經過 1 小時變成 <span class="mono">2</span> 倍，經過 2 小時變成 <span class="mono">2×2=4</span> 倍，經過 3 小時變成 <span class="mono">2×2×2=8</span> 倍……經過 10 小時，就是 10 個 2 連乘。把 <span class="mono">2×2×2×……×2</span>（10 個 2）寫成 <span class="mono">2¹⁰</span>，就是指數記號存在的理由——把「連乘 n 次同一個數」壓縮成一個簡潔的符號：</p>
+      <div class="formula"><span class="big">aⁿ = a×a×a×……×a</span>（共 n 個 a）　　<span class="mono">a</span> 稱為<b>底數</b>，<span class="mono">n</span> 稱為<b>指數</b></div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式：正整數指數律</span>
+      <p>沿用細菌一小時一小時往後長的邏輯：如果先培養 <span class="mono">m</span> 小時（數量變成 <span class="mono">aᵐ</span> 倍），再繼續培養 <span class="mono">n</span> 小時（在此基礎上再變成 <span class="mono">aⁿ</span> 倍），總共培養了 <span class="mono">m+n</span> 小時，數量會變成原本的 <span class="mono">aᵐ⁺ⁿ</span> 倍：</p>
+      <div class="formula">
+        (1) aᵐ·aⁿ = aᵐ⁺ⁿ　　　(2) (aᵐ)ⁿ = aᵐⁿ　　　(3) aⁿ·bⁿ = (ab)ⁿ
+      </div>
+      <p class="note">(2) 的意思是「疊 m 階為一組，重複 n 組」；(3) 的意思是「兩個東西各自成長 n 次方，等於兩者相乘後再成長 n 次方」，例如兩個維度同時放大 n 倍，面積會放大 <span class="mono">nⁿ</span>… 不，是放大 <span class="mono">(邊長比)ⁿ</span> 倍，可以自己代小數字驗證。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：反向倒推，逼出 0 與負指數</span>
+      <p>指數律 <span class="mono">aᵐ·aⁿ=aᵐ⁺ⁿ</span> 反過來想，除法自然對應指數相減：</p>
+      <div class="calc">2⁴/2⁷ = (2×2×2×2)/(2×2×2×2×2×2×2) = 1/2³　　也可以直接寫成　2⁴⁻⁷=2⁻³</div>
+      <p>兩式必須相等，所以 <span class="mono">2⁻³ = 1/2³</span>。同樣的道理，如果分子分母指數相同：</p>
+      <div class="calc">2⁵/2⁵ = 1　　　但用指數律硬套：2⁵⁻⁵=2⁰　　⟹　　2⁰ = 1</div>
+      <p>推廣成一般規則：</p>
+      <div class="formula">
+        <div class="formula-title">整數指數的定義（a≠0，n 為正整數）</div>
+        aⁿ = a×a×……×a（n 個 a）　　　a⁰ = 1　　　a⁻ⁿ = 1/aⁿ
+      </div>
+      <p class="note">這裡特別限定 <span class="mono">a≠0</span>：<span class="mono">0ⁿ=0</span>（n 為正整數）沒問題，但 <span class="mono">0⁰</span> 和 <span class="mono">0⁻ⁿ</span> 都沒有意義（0 不能當分母）。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">回到應用：放射性物質的半衰期</span>
+      <p class="quote">鈷-60 是常見的放射性物質，每經過 5.2714 年，含量就會衰減成原本的一半（這段時間稱為<b>半衰期</b>）。如果一開始有 100 單位的鈷-60，經過 <span class="mono">n</span> 個半衰期後，會剩下多少？</p>
+      <div class="calc">經過 1 個半衰期：100 × (1/2)¹
+經過 2 個半衰期：100 × (1/2)²
+經過 n 個半衰期：100 × (1/2)ⁿ</div>
+      <p>如果已知衰減到只剩 12.5 單位（也就是剩下 <span class="mono">12.5/100=1/8</span>），要經過幾個半衰期？</p>
+      <div class="calc">(1/2)ⁿ = 1/8 = 1/2³　　⟹　　n = 3（個半衰期）
+時間 = 3 × 5.2714 = 15.8142（年）</div>
+      <p class="note">這裡的 <span class="mono">n=3</span> 剛好是整數，算起來很順。但如果題目問的是「剩下 12%」這種不是 2 的次方分之一的比例，<span class="mono">n</span> 就不會是整數——這正是 PART 2、PART 3 要解決的問題，也是後面「常用對數」真正派上用場的地方。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 2：有理數指數與指數律 ================= -->
+  <section class="part prose" id="part-rational">
+    <div class="part-kicker"><b>PART 2</b> ・ 有理數指數與指數律</div>
+    <h2>經過「半個」半衰期，會剩下多少？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">同樣是鈷-60，如果只經過「半個」半衰期（也就是 2.6357 年），含量會變成原本的幾倍？換句話說：<span class="mono">2⁻¹</span> 是「衰減一次」，那「衰減半次」該怎麼寫、怎麼算？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>設「衰減半次」的倍率是 <span class="mono">r</span>。「連續衰減兩個半次」等於「衰減一整次」，所以 <span class="mono">r</span> 自己連乘兩次必須等於整個半衰期的倍率 <span class="mono">1/2</span>：</p>
+      <div class="calc">r × r = 1/2　　⟹　　r² = 1/2　　⟹　　r = 1/√2　（取正值，倍率不會是負的）</div>
+      <p>如果把「半次」寫成指數 <span class="mono">1/2</span>，這個倍率應該記成 <span class="mono">(1/2)^(1/2)</span>。反過來，也可以用純數字問同樣的問題：<span class="mono">2^(1/3)</span> 應該等於多少？設 <span class="mono">x=2^(1/3)</span>，也就是要找一個數，自己連乘 3 次等於 2。用逐步逼近試試看：</p>
+      <div class="calc">1.2³    = 1.728
+1.25³   = 1.953125
+1.259³  = 1.995616979
+1.2599³ ≈ 1.999899758
+1.25992³≈ 1.999995000 ……</div>
+      <p>越試越接近 2，這個數大約是 1.25992……，寫成根式就是 <span class="mono">³√2</span>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 定義</span>
+      <p>一般化：對 <span class="mono">a&gt;0</span>、正整數 <span class="mono">n</span>，滿足 <span class="mono">xⁿ=a</span> 的正數 <span class="mono">x</span>，稱為 <span class="mono">a</span> 的 <b>n 次方根</b>，記作 <span class="mono">x=a^(1/n)=ⁿ√a</span>（<span class="mono">n=2</span> 時就是熟悉的 <span class="mono">√a</span>）。再進一步，對任意整數 <span class="mono">m</span>：</p>
+      <div class="formula">
+        <div class="formula-title">有理數指數的定義（a&gt;0）</div>
+        a^(1/n) = ⁿ√a　　　　a^(m/n) = ⁿ√(aᵐ)
+      </div>
+      <p>用這個定義重新算「衰減半次」：<span class="mono">(1/2)^(1/2) = √(1/2) = 1/√2 ≈ 0.707</span>，跟剛剛推導的答案一致。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式：有理數指數律</span>
+      <p>可以證明（課本用「通分成相同分母」的技巧完整證過一次），整數指數律原封不動地推廣到有理數指數：</p>
+      <div class="formula">
+        <div class="formula-title">a, b &gt; 0，r, s 為有理數</div>
+        (1) aʳ·aˢ = aʳ⁺ˢ　　　(2) (aʳ)ˢ = aʳˢ　　　(3) aʳ·bʳ = (ab)ʳ
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">化簡 <span class="mono">2^(1/4)×4^(1/8)</span>，以及 <span class="mono">(27/8)^(-2/3)</span>。</p>
+      <div class="calc">2^(1/4)×4^(1/8) = 2^(1/4)×(2²)^(1/8) = 2^(1/4)×2^(1/4) = 2^(1/2) = √2
+
+(27/8)^(-2/3) = ((3/2)³)^(-2/3) = (3/2)^(-2) = 1/(3/2)² = 4/9</div>
+      <p class="note">解題關鍵：先把不同底數統一成同一個底數（例如都寫成 2 或 3/2 的次方），指數律才能派上用場。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">回到情境：精確算出鈷-60衰減時間</span>
+      <p>回到 PART 1 留下的問題：如果鈷-60 衰減到剩下 12% 這種不是整數個半衰期的比例，該怎麼精確算出經過的年數？現在有了分數指數，可以列出方程式：</p>
+      <div class="calc">(1/2)^(n/5.2714) = 0.12</div>
+      <p class="note">這個方程式裡，未知數 <span class="mono">n</span> 卡在指數的位置——這就是「常用對數」要解決的核心問題：怎麼從指數的位置，把未知數解出來。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 3：實數指數與指數律 ================= -->
+  <section class="part prose" id="part-real">
+    <div class="part-kicker"><b>PART 3</b> ・ 實數指數與指數律</div>
+    <h2>指數如果是無理數呢？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">前面定義了整數指數、有理數指數（分數指數）。那 <span class="mono">2^√2</span> 這種指數本身是無理數的式子，又該怎麼理解？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>用一系列越來越接近 <span class="mono">√2</span> 的有理數（<span class="mono">√2≈1.414213562……</span>）當指數，分別算出 <span class="mono">2</span> 的次方，看看會發生什麼事：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>指數 n</th><th>2ⁿ</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">1.4</td><td class="f">2¹·⁴ ≈ 2.639015822</td></tr>
+            <tr><td class="mono">1.41</td><td class="f">2¹·⁴¹ ≈ 2.657371628</td></tr>
+            <tr><td class="mono">1.414</td><td class="f">2¹·⁴¹⁴ ≈ 2.664749650</td></tr>
+            <tr><td class="mono">1.4142</td><td class="f">2¹·⁴¹⁴² ≈ 2.665119089</td></tr>
+            <tr><td class="mono">1.41421</td><td class="f">2¹·⁴¹⁴²¹ ≈ 2.665137562</td></tr>
+            <tr><td class="mono">1.414213</td><td class="f">2¹·⁴¹⁴²¹³ ≈ 2.665143104</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>指數越接近 <span class="mono">√2</span>，算出來的值就越接近同一個數：<span class="mono">2^√2 ≈ 2.665144143</span>。這個「不斷用有理數逼近」得到的極限值，就定義為 <span class="mono">2^√2</span>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 定義</span>
+      <p>一般化：對 <span class="mono">a&gt;0</span> 和任意實數 <span class="mono">u</span>（不管有理數還是無理數），都可以用同樣「取有理數逼近」的方式定義 <span class="mono">aᵘ</span>，而且之前推導的所有指數律，在實數範圍內全部繼續成立：</p>
+      <div class="formula">
+        <div class="formula-title">a, b &gt; 0，r, s 為任意實數</div>
+        aʳ·aˢ = aʳ⁺ˢ　　　(aʳ)ˢ = aʳˢ　　　aʳ·bʳ = (ab)ʳ
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">化簡 <span class="mono">4^√2 × 8^(-2√2/3)</span>，以及 <span class="mono">(2^√3×3^√3)^√3</span>。</p>
+      <div class="calc">4^√2 × 8^(-2√2/3) = (2²)^√2 × (2³)^(-2√2/3)
+                 = 2^(2√2) × 2^(-2√2)
+                 = 2^0 = 1
+
+(2^√3×3^√3)^√3 = ((2×3)^√3)^√3 = 6^(√3×√3) = 6³ = 216</div>
+      <p class="note">即使指數是無理數，「先統一底數、再合併指數」的解題套路完全不變——這正是把指數律推廣到實數範圍的意義：不用重新學一套新規則。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 4：科學記號與有效數字 ================= -->
+  <section class="part prose" id="part-sci">
+    <div class="part-kicker"><b>PART 4</b> ・ 科學記號與有效數字</div>
+    <h2>回到細菌：40 小時後到底有幾隻？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">回到 PART 1 的細菌。已知這種細菌每 1 小時分裂成 2 倍，如果從 1 隻細菌開始，連續培養 40 小時（現實中培養皿的養分早就不夠，這裡只是想像的極限情況），數量究竟會變成原本的幾倍？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <div class="calc">培養 40 小時 = 連續培養 4 段「10 小時」：每一段結束，數量變成 2¹⁰ 倍
+40 小時的倍率 = 2¹⁰·2¹⁰·2¹⁰·2¹⁰ = 2⁴⁰</div>
+      <p>那 <span class="mono">2⁴⁰</span> 寫成一般數字到底有多大？已知 <span class="mono">2²⁰≈1.05×10⁶</span>：</p>
+      <div class="calc">2⁴⁰ = (2²⁰)² ≈ (1.05×10⁶)² = 1.1025×10¹² ≈ 1.10×10¹²（倍）</div>
+      <p>寫成「1100000000000」這種原始數字，不但難唸也難比較大小；但寫成 <span class="mono">1.10×10¹²</span>，一眼就能看出這是「一兆多一點」倍——40 小時就能讓一隻細菌變成一兆多隻，這正是指數成長驚人的地方。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 定義</span>
+      <p>任何正數 <span class="mono">a</span> 都可以寫成「一個介於 1 到 10 之間的小數，乘上 10 的整數次方」，這種寫法叫做<b>科學記號</b>：</p>
+      <div class="formula"><span class="big">a = b × 10ⁿ</span>　　（1 ≤ b &lt; 10，n 為整數；b 稱為<b>係數</b>，其中的每個數字稱為<b>有效數字</b>）</div>
+      <div class="calc">15200000     = 1.52×10⁷
+0.0010246    = 1.0246×10⁻³
+6.02×10²³    （亞佛加厥常數，1 莫耳粒子數）
+PM2.5 粒子直徑 2.5 微米 = 2.5×10⁻⁶ 公尺</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：科學記號的四則運算，要顧著有效數字</span>
+      <p>用科學記號做加減乘除時，係數部分維持「有效數字該有幾位就取幾位」，不要憑空多寫或少寫幾位小數：</p>
+      <div class="calc">2.30×10⁴ − 8.10×10³ = 2.30×10⁴ − 0.81×10⁴ = (2.30−0.81)×10⁴ = 1.49×10⁴
+
+(5.10×10⁻²) × (4.50×10⁴) = (5.10×4.50)×10⁽⁻²⁺⁴⁾ = 22.95×10² ≈ 2.30×10³
+（5.10、4.50 都只有 3 位有效數字，答案也只保留 3 位）</div>
+      <p class="note">回到最初的問題：40 小時後細菌數量約為原本的 1.10×10¹² 倍——因為前面 <span class="mono">2²⁰≈1.05×10⁶</span> 這個已知值只給了 3 位有效數字，答案也就只能誠實地寫到 3 位，不能假裝算得更精確。</p>
+    </div>
+  </section>
+
+  <!-- ================= 公式工具箱 ================= -->
+  <section class="toolbox prose">
+    <h2>收進工具箱：1-3 指數</h2>
+    <p class="lede-line">上面每一條都已經自己推導過一次，收錄在這裡，需要時隨時查。</p>
+
+    <h3>指數律（a, b &gt; 0，r, s 為任意實數；整數指數只需 a, b ≠ 0）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>同底相乘</td><td class="f">aʳ · aˢ = aʳ⁺ˢ</td></tr>
+          <tr><td>指數的指數</td><td class="f">(aʳ)ˢ = aʳˢ</td></tr>
+          <tr><td>乘積的指數</td><td class="f">aʳ · bʳ = (ab)ʳ</td></tr>
+          <tr><td>零次方</td><td class="f">a⁰ = 1（a≠0）</td></tr>
+          <tr><td>負指數</td><td class="f">a⁻ⁿ = 1/aⁿ（a≠0）</td></tr>
+          <tr><td>分數指數（n 次方根）</td><td class="f">a^(1/n) = ⁿ√a，a^(m/n) = ⁿ√(aᵐ)（a&gt;0）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>科學記號</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式 / 說明</th></tr></thead>
+        <tbody>
+          <tr><td>科學記號</td><td class="f">a = b×10ⁿ（1≤b&lt;10，n 為整數）</td></tr>
+          <tr><td>有效數字</td><td class="f">係數 b 的每一位數字都是有效數字，運算後取位數以最少者為準</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 練習題 ================= -->
+  <section class="practice prose">
+    <h2>換你動手做</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">代數</span></div>
+        <p>化簡 <span class="mono">(-3)⁻²×(-3)⁻³</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">(-3)⁻²×(-3)⁻³ = (-3)⁻⁵ = -1/243</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">情境</span></div>
+        <p>某種細菌每半小時分裂成兩倍，經過「一小時又十五分鐘」（即 1.25 小時）後，數量是原本的幾倍？（提示：先寫成 2^(t/0.5) 的形式）</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">倍率 = 2^(1.25/0.5) = 2^2.5 = 2²×2^0.5 = 4√2 ≈ 5.657（倍）</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">代數</span></div>
+        <p>化簡 <span class="mono">9^(3/2)×4^(1/2)</span>，以及 <span class="mono">(0.064)^(-1/3)</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">9^(3/2)×4^(1/2) = (3²)^(3/2)×(2²)^(1/2) = 3³×2 = 54
+(0.064)^(-1/3) = (64/1000)^(-1/3) = ((4/10)³)^(-1/3) = (2/5)⁻¹ = 5/2</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">情境</span></div>
+        <p>鈷-60 半衰期 5.2714 年，若一開始有 100 單位，經過 100 年後大約還剩多少單位？（提示：100/5.2714 個半衰期，可用計算機估算 2 的負次方）</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">半衰期個數 = 100/5.2714 ≈ 18.97
+剩下比例 = (1/2)^18.97 ≈ 1.94×10⁻⁶
+剩下量 ≈ 100 × 1.94×10⁻⁶ ≈ 1.94×10⁻⁴（單位）</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">代數</span></div>
+        <p>化簡 <span class="mono">3^√3 × 9^(-√3/2)</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">3^√3 × 9^(-√3/2) = 3^√3 × (3²)^(-√3/2) = 3^√3 × 3^(-√3) = 3⁰ = 1</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">6</span><span class="qtag">情境</span></div>
+        <p>地球到太陽的距離約 <span class="mono">1.5×10⁸</span> 公里，光速約 <span class="mono">3×10⁵</span> 公里/秒。陽光從太陽到地球大約要幾秒？</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">時間 = (1.5×10⁸)/(3×10⁵) = 0.5×10³ = 5×10²（秒）＝ 500 秒 ≈ 8.3 分鐘</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">7</span><span class="qtag alg">代數</span></div>
+        <p>用科學記號表示並計算 <span class="mono">(1.71×10⁻³) × (2.50×10⁻²)</span>（結果取 3 位有效數字）。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">1.71×2.50 = 4.275 ≈ 4.28（取3位有效數字）
+(1.71×10⁻³)×(2.50×10⁻²) = 4.28×10⁻⁵</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">8</span><span class="qtag">情境</span></div>
+        <p>培養皿 A 中細菌數量約 <span class="mono">8×10⁴</span> 隻，培養皿 B 中細菌數量約 <span class="mono">2×10⁷</span> 隻，B 的數量是 A 的幾倍？</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">B/A = (2×10⁷)/(8×10⁴) = (2/8)×10³ = 0.25×10³ = 2.5×10² = 250（倍）</div></div>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 結語 ================= -->
+  <section class="closing prose">
+    <div class="figure-card">
+      <h2>給筱葳的話</h2>
+      <p>指數的故事，是一路「把定義擴大」的故事：先是連乘 n 次（正整數），接著往回除逼出 0 與負指數，再用「連乘幾次才能拼回整數次方」逼出分數指數，最後用逼近的方式，連無理數次方都定義出來了。每一次擴大，之前的指數律都完好保留——這是數學裡很重要的一種思考方式：新定義不能推翻舊規則，只能讓舊規則適用的範圍更大。</p>
+      <p>而科學記號和有效數字，是指數最直接的日常用途：不管是細菌的數量、地球到太陽的距離，還是原子的個數，指數讓我們能誠實地寫下「大概有多大」，不多算，也不少算。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數1 第一章 數與式</span>
+    <span>1-3 指數</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

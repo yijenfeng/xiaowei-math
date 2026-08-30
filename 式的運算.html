@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-2 式的運算｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學1・第一章 數與式・1-2</span>
+    <h1>式的運算</h1>
+    <p class="sub">依照筱葳課本的章節順序重新編寫：從老闆的心算絕活，到水管的注水效率，再到花圃圍籬的最大面積——把代數式的四大工具一次練齊。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>「1-1 數與數線」認識了數線上的數字；這一節換個方向，練習怎麼操作「式子」本身——乘法公式、分式、根式、以及一個看似陌生但很實用的算幾不等式。</p>
+    <ul class="toc">
+      <li><a href="#part-formula"><b>1</b>乘法公式</a></li>
+      <li><a href="#part-fraction"><b>2</b>分式的運算</a></li>
+      <li><a href="#part-radical"><b>3</b>根式的運算</a></li>
+      <li><a href="#part-amgm"><b>4</b>算幾不等式</a></li>
+    </ul>
+  </section>
+
+  <!-- ================= PART 1：乘法公式 ================= -->
+  <section class="part prose" id="part-formula">
+    <div class="part-kicker"><b>PART 1</b> ・ 乘法公式</div>
+    <h2>老闆的心算絕活</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">傳統市場的水果攤，老闆常常要瞬間算出總價。假設一斤水果 47 元，這次買了 53 斤，老闆要怎麼在心裡快速算出 <span class="mono">47 × 53</span>，而不用拿計算機慢慢按？</p>
+      <p>老闆的訣竅：把 47 和 53 都看成「50 上下加減一點」——<span class="mono">47 = 50 − 3</span>，<span class="mono">53 = 50 + 3</span>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>先老實把它展開看看：</p>
+      <div class="calc">(50 − 3)(50 + 3) = 50×50 + 50×3 − 3×50 − 3×3
+                 = 2500 + 150 − 150 − 9
+                 = 2500 − 9
+                 = 2491</div>
+      <p>有趣的事發生了：中間的 <span class="mono">+150</span> 和 <span class="mono">−150</span> 完全抵銷，只剩下 <span class="mono">50² − 3²</span>。拿計算機驗算 <span class="mono">47×53</span>，答案確實是 <b>2491</b>，分毫不差。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>這不是巧合。把 50 換成任何數 <span class="mono">a</span>，把 3 換成任何數 <span class="mono">b</span>，同樣的抵銷永遠會發生：</p>
+      <div class="formula"><span class="big">(a + b)(a − b) = a² − b²</span></div>
+      <p>這就是「平方差公式」——它把一個看起來很麻煩的乘法，變成兩個平方相減。再試一次：</p>
+      <div class="calc">998 × 1002 = (1000 − 2)(1000 + 2) = 1000² − 2² = 1000000 − 4 = 999996</div>
+      <p>三秒心算完成，比按計算機還快。</p>
+    </div>
+
+    <h3 style="margin-top:2.4rem; font-size:1.2rem;">擴建花園，推出完全平方公式</h3>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">筱葳家有一塊邊長 <span class="mono">a</span> 公尺的正方形花園。今年想擴建，把長和寬各加寬 <span class="mono">b</span> 公尺，變成一個邊長 <span class="mono">(a+b)</span> 的正方形花園。擴建後，總共增加了多少面積？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察（用圖形拆解）</span>
+      <p>把新花園拆成四塊：原本的花園、右邊多出來的長條、下面多出來的長條，還有右下角新增的小正方形。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 300 320" role="img" aria-label="邊長 a+b 的正方形被拆成四塊：左上 a 乘 a、右上 a 乘 b、左下 b 乘 a、右下 b 乘 b">
+          <g transform="translate(20,36)">
+            <rect x="0" y="0" width="190" height="190" fill="var(--a2)" stroke="var(--bg)" stroke-width="3"/>
+            <rect x="190" y="0" width="90" height="190" fill="var(--ab)" stroke="var(--bg)" stroke-width="3"/>
+            <rect x="0" y="190" width="190" height="90" fill="var(--ab)" stroke="var(--bg)" stroke-width="3"/>
+            <rect x="190" y="190" width="90" height="90" fill="var(--b2)" stroke="var(--bg)" stroke-width="3"/>
+            <rect x="0" y="0" width="280" height="280" fill="none" stroke="var(--ink)" stroke-width="2"/>
+
+            <text x="95" y="100" text-anchor="middle" class="svg-label-lg" fill="var(--a2-ink)">a²</text>
+            <text x="235" y="100" text-anchor="middle" class="svg-label-lg" fill="var(--ab-ink)">ab</text>
+            <text x="95" y="240" text-anchor="middle" class="svg-label-lg" fill="var(--ab-ink)">ab</text>
+            <text x="235" y="240" text-anchor="middle" class="svg-label-lg" fill="var(--b2-ink)">b²</text>
+
+            <text x="95" y="-10" text-anchor="middle" class="svg-label" fill="currentColor">a</text>
+            <text x="235" y="-10" text-anchor="middle" class="svg-label" fill="currentColor">b</text>
+            <text x="-12" y="100" text-anchor="middle" class="svg-label" fill="currentColor" transform="rotate(-90 -12 100)">a</text>
+            <text x="-12" y="240" text-anchor="middle" class="svg-label" fill="currentColor" transform="rotate(-90 -12 240)">b</text>
+          </g>
+        </svg>
+        <figcaption>大正方形面積 (a+b)² ＝ 四塊面積之和 a²+ab+ab+b²</figcaption>
+      </figure>
+
+      <figure class="figure-card">
+        <svg viewBox="0 0 300 320" role="img" aria-label="邊長 a 的正方形改用 (a減b) 加 b 的方式切分，四塊分別是 (a減b)平方、b乘(a減b) 兩塊、以及 b平方">
+          <g transform="translate(20,36)">
+            <rect x="0" y="0" width="150" height="150" fill="var(--a2)" stroke="var(--bg)" stroke-width="3"/>
+            <rect x="150" y="0" width="90" height="150" fill="var(--ab)" stroke="var(--bg)" stroke-width="3"/>
+            <rect x="0" y="150" width="150" height="90" fill="var(--ab)" stroke="var(--bg)" stroke-width="3"/>
+            <rect x="150" y="150" width="90" height="90" fill="var(--b2)" stroke="var(--bg)" stroke-width="3"/>
+            <rect x="0" y="0" width="240" height="240" fill="none" stroke="var(--ink)" stroke-width="2"/>
+
+            <text x="75" y="80" text-anchor="middle" class="svg-label-lg" fill="var(--a2-ink)">(a−b)²</text>
+            <text x="195" y="80" text-anchor="middle" class="svg-label" fill="var(--ab-ink)">b(a−b)</text>
+            <text x="75" y="200" text-anchor="middle" class="svg-label" fill="var(--ab-ink)">b(a−b)</text>
+            <text x="195" y="200" text-anchor="middle" class="svg-label-lg" fill="var(--b2-ink)">b²</text>
+
+            <text x="75" y="-10" text-anchor="middle" class="svg-label" fill="currentColor">a−b</text>
+            <text x="195" y="-10" text-anchor="middle" class="svg-label" fill="currentColor">b</text>
+            <text x="-12" y="80" text-anchor="middle" class="svg-label" fill="currentColor" transform="rotate(-90 -12 80)">a−b</text>
+            <text x="-12" y="200" text-anchor="middle" class="svg-label" fill="currentColor" transform="rotate(-90 -12 200)">b</text>
+          </g>
+        </svg>
+        <figcaption>同一張圖，換一種切法：把邊長 a 看成「(a−b) + b」，就能反過來推出 (a−b)²。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>四塊面積相加：<span class="mono">a² + ab + ab + b² = a² + 2ab + b²</span>。而整塊新花園的面積，也可以直接用邊長算：<span class="mono">(a+b)²</span>。同一塊地，兩種算法，答案必須相等：</p>
+      <div class="formula"><span class="big">(a + b)² = a² + 2ab + b²</span></div>
+      <p>這就是「完全平方公式」——不是要你死背，你隨時都能自己畫一個正方形，重新推導一次。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸</span>
+      <p>把邊長 <span class="mono">a</span> 的正方形，看成是先切掉一條寬度 <span class="mono">b</span> 的長條，剩下 <span class="mono">(a−b)</span>（就是上面第二張圖），用同樣的拆法可以得到：</p>
+      <div class="calc">a² = (a−b)² + 2b(a−b) + b²
+移項整理 →  (a−b)² = a² − 2ab + b²</div>
+      <div class="formula"><span class="big">(a − b)² = a² − 2ab + b²</span></div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">回到情境：工具的威力</span>
+      <p class="quote">如果我們知道 <span class="mono">a+b=5</span> 且 <span class="mono">ab=6</span>，可以不用先解出 a、b 各是多少，就直接求出 <span class="mono">a²+b²</span> 嗎？</p>
+      <div class="calc">a² + b² = (a+b)² − 2ab = 5² − 2×6 = 25 − 12 = 13</div>
+      <p>這就是代數工具的威力：有時候我們根本不需要知道每個變數的真實身分，只要善用公式，就能直接算出想要的組合值。</p>
+    </div>
+
+    <h3 style="margin-top:2.4rem; font-size:1.2rem;">把花園蓋成蓄水池：多一個維度會發生什麼事</h3>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">筱葳家後來決定不種花了，把那塊邊長 <span class="mono">a</span> 公尺的正方形地，改建成一座正立方體的蓄水池。同樣地，過幾年想擴建，把長、寬、高都各加大 <span class="mono">b</span> 公尺。這次多出來的「體積」該怎麼算？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察（用立體圖拆解）</span>
+      <p>把邊長 <span class="mono">(a+b)</span> 的大正立方體，想像成沿著長、寬、高三個方向都切一刀（切在 <span class="mono">a</span> 和 <span class="mono">b</span> 的交界），會切出 <span class="mono">2×2×2 = 8</span> 個小長方體：</p>
+    </div>
+
+    <div class="fig-grid" style="grid-template-columns:1.1fr 0.9fr;">
+      <figure class="figure-card">
+        <svg viewBox="0 0 420 300" role="img" aria-label="邊長 a 的小正立方體嵌在邊長 a+b 的大正立方體角落，代表 a 的三次方，周圍留白的殼代表其餘的體積">
+          <path d="M230,40 L343.1,94.6 L230,149.2 L116.9,94.6 Z" fill="none" stroke="var(--ink-muted)" stroke-width="1.5"/>
+          <path d="M116.9,94.6 L230,149.2 L230,279.2 L116.9,224.6 Z" fill="none" stroke="var(--ink-muted)" stroke-width="1.5"/>
+          <path d="M230,149.2 L343.1,94.6 L343.1,224.6 L230,279.2 Z" fill="none" stroke="var(--ink-muted)" stroke-width="1.5"/>
+
+          <path d="M230,77.8 L303.9,113.5 L230,149.2 L156.1,113.5 Z" fill="var(--a2)"/>
+          <path d="M230,149.2 L303.9,113.5 L303.9,198.5 L230,234.2 Z" fill="var(--a2)" fill-opacity="0.82"/>
+          <path d="M156.1,113.5 L230,149.2 L230,234.2 L156.1,198.5 Z" fill="var(--a2)" fill-opacity="0.62"/>
+
+          <text x="267" y="182" text-anchor="middle" class="svg-label-lg" fill="var(--a2-ink)">a³</text>
+
+          <line x1="244" y1="149.2" x2="244" y2="234.2" stroke="currentColor" stroke-width="1"/>
+          <text x="252" y="196" class="svg-label" fill="currentColor">a</text>
+          <line x1="244" y1="234.2" x2="244" y2="279.2" stroke="currentColor" stroke-width="1"/>
+          <text x="252" y="260" class="svg-label" fill="currentColor">b</text>
+        </svg>
+        <figcaption>藍色小方塊是 a×a×a＝a³，緊靠著大正立方體的一個角落。剩下的殼由 3 塊 a²b、3 塊 ab²、1 塊 b³ 組成。</figcaption>
+      </figure>
+
+      <figure class="figure-card" style="display:flex; flex-direction:column; justify-content:center;">
+        <table style="width:100%; border-collapse:collapse; font-size:0.92rem;">
+          <thead><tr><th style="text-align:left; padding:0.4rem; border-bottom:1px solid var(--line); color:var(--ink-muted); font-weight:500;">尺寸</th><th style="text-align:left; padding:0.4rem; border-bottom:1px solid var(--line); color:var(--ink-muted); font-weight:500;">體積</th><th style="text-align:right; padding:0.4rem; border-bottom:1px solid var(--line); color:var(--ink-muted); font-weight:500;">出現幾次</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:0.4rem;">a × a × a</td><td class="f" style="padding:0.4rem;">a³</td><td style="padding:0.4rem; text-align:right;" class="mono">1</td></tr>
+            <tr><td style="padding:0.4rem;">a × a × b</td><td class="f" style="padding:0.4rem;">a²b</td><td style="padding:0.4rem; text-align:right;" class="mono">3</td></tr>
+            <tr><td style="padding:0.4rem;">a × b × b</td><td class="f" style="padding:0.4rem;">ab²</td><td style="padding:0.4rem; text-align:right;" class="mono">3</td></tr>
+            <tr><td style="padding:0.4rem;">b × b × b</td><td class="f" style="padding:0.4rem;">b³</td><td style="padding:0.4rem; text-align:right;" class="mono">1</td></tr>
+          </tbody>
+        </table>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>八塊體積加起來：<span class="mono">a³ + 3a²b + 3ab² + b³</span>。這就是把 <span class="mono">(a+b)</span> 連乘三次的結果：</p>
+      <div class="formula"><span class="big">(a + b)³ = a³ + 3a²b + 3ab² + b³</span></div>
+      <p>「為什麼中間兩項的係數是 3？」——因為 <span class="mono">a²b</span> 這種尺寸的小方塊，在長寬高三個方向裡「哪一邊是 b」可以有 3 種選法，<span class="mono">ab²</span> 也是同樣的道理。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸</span>
+      <p>用同一招反過來切：把邊長 <span class="mono">a</span> 的蓄水池看成「先蓋 <span class="mono">(a−b)</span>，再加高 <span class="mono">b</span>」蓋成的，一樣可以拆成 8 塊，整理後可以得到：</p>
+      <div class="formula"><span class="big">(a − b)³ = a³ − 3a²b + 3ab² − b³</span></div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">回到情境：工具的威力（再一次）</span>
+      <p class="quote">如果兩座蓄水池的邊長和是 <span class="mono">a+b=4</span>，邊長乘積是 <span class="mono">ab=3</span>，可以不用先解出 a、b，就直接算出兩座水池的體積和 <span class="mono">a³+b³</span> 嗎？</p>
+      <p>把 <span class="mono">(a+b)³</span> 展開式重新排列：</p>
+      <div class="calc">(a+b)³ = a³ + 3ab(a+b) + b³
+移項 →  a³+b³ = (a+b)³ − 3ab(a+b)</div>
+      <div class="calc">a³+b³ = 4³ − 3×3×4 = 64 − 36 = 28</div>
+      <p>用同樣的方法整理 <span class="mono">(a−b)³</span>，還能推出立方差的因式分解：</p>
+      <div class="calc">(a−b)³ = a³ − 3ab(a−b) − b³
+移項 →  a³−b³ = (a−b)³ + 3ab(a−b) = (a−b)[(a−b)² + 3ab] = (a−b)(a²+ab+b²)</div>
+      <div class="formula">
+        a³+b³ = (a+b)(a²−ab+b²)　　　a³−b³ = (a−b)(a²+ab+b²)
+      </div>
+      <p class="note">這兩個因式分解公式，不是又要背一組新東西——它們就是從 (a+b)³ 和 (a−b)³ 這兩個已經蓋好的「工具」，重新排列零件生產出來的。</p>
+    </div>
+
+    <h3 style="margin-top:2.2rem; font-size:1.15rem;">延伸挑戰：三塊地合併</h3>
+    <div class="step">
+      <span class="step-tag">情境 → 規律</span>
+      <p>如果不是兩塊地合併，而是<b>三戶人家</b>把邊長 <span class="mono">a、b、c</span> 的正方形土地合併成一塊邊長 <span class="mono">(a+b+c)</span> 的正方形，邏輯完全一樣，只是切割方式從 2×2 變成 3×3：</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 270 270" role="img" aria-label="邊長 a+b+c 的正方形被切成 3 乘 3 共 9 塊，對角線三塊分別是 a平方、b平方、c平方，其餘六塊是兩兩相乘的交叉項">
+          <g transform="translate(24,24)">
+            <rect x="0" y="0" width="100" height="100" fill="var(--a2)" fill-opacity="0.55" stroke="var(--bg)" stroke-width="2"/>
+            <rect x="100" y="0" width="65" height="100" fill="var(--surface-2)" stroke="var(--bg)" stroke-width="2"/>
+            <rect x="165" y="0" width="40" height="100" fill="var(--surface-2)" stroke="var(--bg)" stroke-width="2"/>
+            <rect x="0" y="100" width="100" height="65" fill="var(--surface-2)" stroke="var(--bg)" stroke-width="2"/>
+            <rect x="100" y="100" width="65" height="65" fill="var(--ab)" fill-opacity="0.55" stroke="var(--bg)" stroke-width="2"/>
+            <rect x="165" y="100" width="40" height="65" fill="var(--surface-2)" stroke="var(--bg)" stroke-width="2"/>
+            <rect x="0" y="165" width="100" height="40" fill="var(--surface-2)" stroke="var(--bg)" stroke-width="2"/>
+            <rect x="100" y="165" width="65" height="40" fill="var(--surface-2)" stroke="var(--bg)" stroke-width="2"/>
+            <rect x="165" y="165" width="40" height="40" fill="var(--b2)" fill-opacity="0.55" stroke="var(--bg)" stroke-width="2"/>
+            <rect x="0" y="0" width="205" height="205" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+
+            <text x="50" y="55" text-anchor="middle" class="svg-label" fill="currentColor">a²</text>
+            <text x="132" y="55" text-anchor="middle" class="svg-label" fill="currentColor">ab</text>
+            <text x="185" y="55" text-anchor="middle" class="svg-label" fill="currentColor">ac</text>
+            <text x="50" y="137" text-anchor="middle" class="svg-label" fill="currentColor">ab</text>
+            <text x="132" y="137" text-anchor="middle" class="svg-label" fill="currentColor">b²</text>
+            <text x="185" y="137" text-anchor="middle" class="svg-label" fill="currentColor">bc</text>
+            <text x="50" y="188" text-anchor="middle" class="svg-label" fill="currentColor">ac</text>
+            <text x="132" y="188" text-anchor="middle" class="svg-label" fill="currentColor">bc</text>
+            <text x="185" y="188" text-anchor="middle" class="svg-label" fill="currentColor">c²</text>
+
+            <text x="50" y="-8" text-anchor="middle" class="svg-label" fill="currentColor">a</text>
+            <text x="132" y="-8" text-anchor="middle" class="svg-label" fill="currentColor">b</text>
+            <text x="185" y="-8" text-anchor="middle" class="svg-label" fill="currentColor">c</text>
+          </g>
+        </svg>
+        <figcaption>9 塊面積加總：3 個平方項（對角線）＋ 6 個交叉項（每一對各出現 2 次）。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">公式</span>
+      <div class="formula"><span class="big">(a+b+c)² = a²+b²+c²+2ab+2bc+2ca</span></div>
+    </div>
+  </section>
+
+  <!-- ================= PART 2：分式的運算 ================= -->
+  <section class="part prose" id="part-fraction">
+    <div class="part-kicker"><b>PART 2</b> ・ 分式的運算</div>
+    <h2>兩條水管一起注水，要多久？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">筱葳家的水池，只開 A 水管，<span class="mono">a</span> 小時可以裝滿；只開 B 水管，<span class="mono">b</span> 小時可以裝滿。如果兩條水管一起開，要多久才能裝滿？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>換個角度想「速度」而不是「時間」：A 水管每小時裝滿 <span class="mono">1/a</span> 個水池，B 水管每小時裝滿 <span class="mono">1/b</span> 個水池。一起開，速度直接相加：</p>
+      <div class="calc">兩管合併的注水速度 = 1/a + 1/b（水池／小時）</div>
+      <p>但 <span class="mono">1/a</span> 和 <span class="mono">1/b</span> 分母不一樣，不能直接把分子加起來。要先把兩個分式換成「同一種分母」，這個動作叫做<b>通分</b>——分母同乘對方缺少的因子：</p>
+      <div class="calc">1/a = b/(ab)　　　1/b = a/(ab)　　（分母都通成 ab）
+
+1/a + 1/b = b/(ab) + a/(ab) = (a+b)/(ab)</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula"><span class="big">c/a + d/b = (cb+ad) / (ab)</span>　　（先通分，分子才能相加）</div>
+      <p>算出合併速度後，裝滿一整個水池（1 個單位）所需的時間，就是速度的倒數：</p>
+      <div class="calc">合併時間 = 1 ÷ [(a+b)/(ab)] = ab/(a+b)（小時）</div>
+      <p>代入具體數字驗算：A 管 3 小時裝滿、B 管 6 小時裝滿：</p>
+      <div class="calc">合併時間 = 3×6/(3+6) = 18/9 = 2（小時）</div>
+      <p>兩管一起開，果然比單開任何一管都快（比 3 小時、比 6 小時都短），符合直覺。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：分式的乘除與約分</span>
+      <p>分式的乘除，規則跟一般分數一樣：乘法就是分子乘分子、分母乘分母；除法則是「除以一個分式」等於「乘上它的倒數」：</p>
+      <div class="formula">
+        (c/a) × (d/b) = cd/(ab)　　　　(c/a) ÷ (d/b) = (c/a) × (b/d) = cb/(ad)
+      </div>
+      <p>而分式的<b>約分</b>，常常要搬出上一節推導過的乘法公式，把分子、分母拆解成相同的因式再消去。例如：</p>
+      <div class="calc">(x²−4) / (x−2) = [(x+2)(x−2)] / (x−2) = x+2　（x≠2，用平方差公式拆解分子）
+
+(x²+4x+4) / (x+2) = [(x+2)²] / (x+2) = x+2　（x≠−2，用完全平方公式拆解分子）</div>
+      <p class="note">分式運算最容易出錯的地方，是漏看「分母不能是 0」這個限制——上面兩個例子分別要排除 x=2 和 x=−2。乘法公式不是只有 1-2 前半段有用，往後的分式、根式運算都會一直用到它。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 3：根式的運算 ================= -->
+  <section class="part prose" id="part-radical">
+    <div class="part-kicker"><b>PART 3</b> ・ 根式的運算</div>
+    <h2>花圃要訂多長的圍籬？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">筱葳家另一塊正方形花圃，面積是 72 平方公尺。五金行問她：「圍籬要訂多長？」她需要知道邊長。</p>
+      <p>邊長 = √<span class="radicand">72</span>，但這個數字不好想像有多長，能不能寫得更清楚一點？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>把 72 拆成一個完全平方數乘上剩下的部分：</p>
+      <div class="calc">72 = 36 × 2 = 6² × 2</div>
+      <p>而 <span class="mono">√<span class="radicand">(6²×2)</span></span> 其實就是 <span class="mono">√<span class="radicand">(6²)</span></span> 乘上 <span class="mono">√<span class="radicand">2</span></span>，也就是：</p>
+      <div class="calc">√<span class="radicand">72</span> = √<span class="radicand">(36×2)</span> = √<span class="radicand">36</span> × √<span class="radicand">2</span> = 6√<span class="radicand">2</span> ≈ 6×1.414 ≈ 8.49（公尺）</div>
+      <p>比起 √<span class="radicand">72</span> 這種寫法，「6√<span class="radicand">2</span>」讓人一眼就能估出大概是 8.5 公尺左右，五金行也比較好報價。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula"><span class="big">√<span class="radicand">a</span> · √<span class="radicand">b</span> = √<span class="radicand">(ab)</span>　　（a, b ≥ 0）</span></div>
+      <p>反過來用，就是根式化簡的方法：把根號內的數拆成「完全平方數 × 剩下的數」，完全平方數就能開根號跳出來。</p>
+      <div class="formula">
+        (√<span class="radicand">a</span>)² = a　　　√<span class="radicand">(a²)</span> = |a|　　　<span class="mono">√<span class="radicand">a</span>/√<span class="radicand">b</span> = √<span class="radicand">(a/b)</span></span>（b&gt;0）
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">回到情境：兩塊地合併</span>
+      <p class="quote">筱葳家隔壁也想合種花，兩塊地各自算出需要的圍籬長度是 √<span class="radicand">8</span> 公尺和 √<span class="radicand">18</span> 公尺。總共要訂多長？</p>
+      <p>不能直接把根號內的數字相加（√<span class="radicand">8</span>+√<span class="radicand">18</span> ≠ √<span class="radicand">26</span>！），要先各自化簡成同一種根式：</p>
+      <div class="calc">√<span class="radicand">8</span>  = √<span class="radicand">(4×2)</span>  = 2√<span class="radicand">2</span>
+√<span class="radicand">18</span> = √<span class="radicand">(9×2)</span>  = 3√<span class="radicand">2</span>
+
+√<span class="radicand">8</span> + √<span class="radicand">18</span> = 2√<span class="radicand">2</span> + 3√<span class="radicand">2</span> = 5√<span class="radicand">2</span> （公尺）</div>
+      <p class="note">關鍵觀念：只有「根號內的數字一樣」的根式，才能直接相加減（就像 2 個蘋果加 3 個蘋果，不能跟橘子加在一起）。</p>
+    </div>
+
+    <h3 style="margin-top:2.2rem; font-size:1.15rem;">分母有理化：師傅的捲尺，量不出根號</h3>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">木工師傅算出一塊木板該裁 <span class="mono">1/√<span class="radicand">2</span></span> 公尺寬。但捲尺上只有普通刻度，師傅該裁在哪裡？</p>
+      <p><span class="mono">1/√<span class="radicand">2</span></span> 這個寫法，沒辦法直接看出大概是多少公尺——分母帶根號，很難心算估計。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>把分子分母同時乘上 <span class="mono">√<span class="radicand">2</span></span>（相當於乘 1，數值不變）：</p>
+      <div class="calc">1/√<span class="radicand">2</span> = (1×√<span class="radicand">2</span>)/(√<span class="radicand">2</span>×√<span class="radicand">2</span>) = √<span class="radicand">2</span>/2</div>
+      <p>現在只要知道 <span class="mono">√<span class="radicand">2</span> ≈ 1.414</span>，馬上能算出：</p>
+      <div class="calc">√<span class="radicand">2</span>/2 ≈ 1.414/2 ≈ 0.707（公尺）</div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 400 90" role="img" aria-label="一條從0到1的數線，標示出0.707的位置，代表根號2除以2">
+          <line x1="30" y1="45" x2="370" y2="45" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="30" y1="38" x2="30" y2="52" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="370" y1="38" x2="370" y2="52" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="270" y1="35" x2="270" y2="55" stroke="var(--accent)" stroke-width="2.5"/>
+          <text x="30" y="72" text-anchor="middle" class="svg-label" fill="currentColor">0</text>
+          <text x="370" y="72" text-anchor="middle" class="svg-label" fill="currentColor">1</text>
+          <text x="270" y="25" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">√2/2 ≈ 0.707</text>
+        </svg>
+        <figcaption>有理化之後，一眼就能估出這個長度大約落在哪裡。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula"><span class="big">1/√<span class="radicand">a</span> = √<span class="radicand">a</span>/a</span>　　（分子分母同乘 √<span class="radicand">a</span>）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：分母有兩項時，搬出乘法公式</span>
+      <p>如果分母是 <span class="mono">√<span class="radicand">a</span>+√<span class="radicand">b</span></span> 這種兩項的根式呢？例如 <span class="mono">3/(√<span class="radicand">5</span>−√<span class="radicand">2</span>)</span>。這時候乘 <span class="mono">√<span class="radicand">5</span></span> 沒辦法一次消掉兩個根號，但還記得 PART 1 推導過的平方差公式嗎？</p>
+      <div class="formula">(A+B)(A−B) = A² − B²</div>
+      <p>把分母乘上「相反符號」的另一半，根號就會被平方消掉：</p>
+      <div class="calc">3/(√<span class="radicand">5</span>−√<span class="radicand">2</span>) = 3(√<span class="radicand">5</span>+√<span class="radicand">2</span>) / [(√<span class="radicand">5</span>−√<span class="radicand">2</span>)(√<span class="radicand">5</span>+√<span class="radicand">2</span>)]
+           = 3(√<span class="radicand">5</span>+√<span class="radicand">2</span>) / (5−2)
+           = 3(√<span class="radicand">5</span>+√<span class="radicand">2</span>) / 3
+           = √<span class="radicand">5</span>+√<span class="radicand">2</span></div>
+      <p class="note">分母有理化的本質，其實就是「製造一個平方差公式的機會」，把根號變成整數消掉。這就是為什麼乘法公式、分式、根式三個主題要一起熟練——它們常常互相合作。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 4：算幾不等式 ================= -->
+  <section class="part prose" id="part-amgm">
+    <div class="part-kicker"><b>PART 4</b> ・ 算幾不等式</div>
+    <h2>籬笆長度固定，怎麼圍面積最大？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">筱葳有 20 公尺長的籬笆，想圍出一塊長方形花圃（四邊都要圍）。長、寬各設計成多少，圍出來的面積會最大？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>設長方形的長、寬分別是 <span class="mono">x、y</span> 公尺，周長固定：<span class="mono">2x+2y=20</span>，也就是 <span class="mono">x+y=10</span>。把幾種可能的組合都算一次面積 <span class="mono">xy</span>：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="mono">x</th><th class="mono">y</th><th class="mono">x+y</th><th class="mono">面積 xy</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">1</td><td class="mono">9</td><td class="mono">10</td><td class="f">9</td></tr>
+            <tr><td class="mono">3</td><td class="mono">7</td><td class="mono">10</td><td class="f">21</td></tr>
+            <tr><td class="mono">5</td><td class="mono">5</td><td class="mono">10</td><td class="f">25 ← 最大</td></tr>
+            <tr><td class="mono">7</td><td class="mono">3</td><td class="mono">10</td><td class="f">21</td></tr>
+            <tr><td class="mono">9</td><td class="mono">1</td><td class="mono">10</td><td class="f">9</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>很明顯，<b>當長寬相等（都是 5）時，面積最大</b>，而且越往兩邊「拉不平均」，面積就掉得越快。這是巧合，還是規律？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>對任意兩個<b>非負實數</b> <span class="mono">a、b</span>，先看一個顯然成立的事實：平方一定不會是負的。</p>
+      <div class="calc">(√a − √b)² ≥ 0
+展開： a − 2√(ab) + b ≥ 0
+移項： a + b ≥ 2√(ab)
+兩邊除以 2：  (a+b)/2 ≥ √(ab)</div>
+      <p>左邊 <span class="mono">(a+b)/2</span> 是 <span class="mono">a、b</span> 的<b>算術平均數</b>，右邊 <span class="mono">√(ab)</span> 是 <span class="mono">a、b</span> 的<b>幾何平均數</b>。這個不等式就叫做<b>算幾不等式</b>：</p>
+      <div class="formula"><span class="big">(a+b)/2 ≥ √(ab)</span>　　（a,b≥0，等號成立 ⟺ a=b）</div>
+      <p>從推導過程可以直接看出：<b>等號成立的條件，剛好就是 <span class="mono">√a=√b</span>，也就是 a=b</span></b>——這正好解釋了花圃問題裡「長寬相等時面積最大」的現象。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">回到情境：用公式直接算出最大面積</span>
+      <p>把算幾不等式倒過來看：如果 <span class="mono">a+b</span>（和）固定，那麼 <span class="mono">√(ab)</span> 最大只能等於 <span class="mono">(a+b)/2</span>，也就是 <span class="mono">ab</span> 的最大值是 <span class="mono">[(a+b)/2]²</span>。代入花圃問題（<span class="mono">x+y=10</span> 固定）：</p>
+      <div class="calc">xy ≤ [(x+y)/2]² = (10/2)² = 25
+
+等號成立條件：x=y，也就是 x=y=5</div>
+      <p>不用一格一格試表格，公式直接告訴我們：<b>面積最大是 25 平方公尺，在長寬都是 5 公尺時發生</b>——跟剛剛觀察表格得到的結論完全吻合。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：反過來，積固定時「和」最小</span>
+      <p class="quote">如果換成「花圃面積固定要 36 平方公尺，籬笆該怎麼圍才能最省材料（周長最小）？」</p>
+      <p>這時候 <span class="mono">ab=36</span> 固定，算幾不等式反過來限制「和」的最小值：</p>
+      <div class="calc">(x+y)/2 ≥ √(xy) = √36 = 6
+所以 x+y ≥ 12，等號成立於 x=y=6</div>
+      <p>面積固定時，長寬相等（正方形）用的周長最省——這也是為什麼日常生活中很多「固定容量、最省材料」的包裝設計，常常會盡量做成接近正方形或正立方體的形狀。</p>
+      <p class="note">算幾不等式只有一個使用限制，但很容易忘記：<b>a、b 都必須是非負數</b>，而且套用之前最好先確認「和固定」還是「積固定」，才能判斷該找最大值還是最小值。</p>
+    </div>
+  </section>
+
+  <!-- ================= 公式工具箱 ================= -->
+  <section class="toolbox prose">
+    <h2>收進工具箱：1-2 式的運算</h2>
+    <p class="lede-line">上面每一條都已經自己推導過一次，不是憑空要背的規則——收錄在這裡，需要時隨時查。</p>
+
+    <h3>乘法公式</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>完全平方</td><td class="f">(a+b)² = a²+2ab+b²</td></tr>
+          <tr><td>完全平方</td><td class="f">(a−b)² = a²−2ab+b²</td></tr>
+          <tr><td>平方差</td><td class="f">(a+b)(a−b) = a²−b²</td></tr>
+          <tr><td>三項平方</td><td class="f">(a+b+c)² = a²+b²+c²+2ab+2bc+2ca</td></tr>
+          <tr><td>完全立方</td><td class="f">(a+b)³ = a³+3a²b+3ab²+b³</td></tr>
+          <tr><td>完全立方</td><td class="f">(a−b)³ = a³−3a²b+3ab²−b³</td></tr>
+          <tr><td>立方和</td><td class="f">a³+b³ = (a+b)(a²−ab+b²)</td></tr>
+          <tr><td>立方差</td><td class="f">a³−b³ = (a−b)(a²+ab+b²)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>分式運算</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>通分後相加</td><td class="f">c/a + d/b = (cb+ad)/(ab)</td></tr>
+          <tr><td>乘法</td><td class="f">(c/a)×(d/b) = cd/(ab)</td></tr>
+          <tr><td>除法</td><td class="f">(c/a)÷(d/b) = cb/(ad)</td></tr>
+          <tr><td>約分</td><td class="f">先用乘法公式拆解因式，再消去公因式（並排除使分母為 0 的值）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>根式運算</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>根式相乘</td><td class="f">√<span class="radicand">a</span> · √<span class="radicand">b</span> = √<span class="radicand">(ab)</span>　(a,b≥0)</td></tr>
+          <tr><td>根式相除</td><td class="f">√<span class="radicand">a</span> / √<span class="radicand">b</span> = √<span class="radicand">(a/b)</span>　(a≥0, b&gt;0)</td></tr>
+          <tr><td>平方還原</td><td class="f">(√<span class="radicand">a</span>)² = a　(a≥0)</td></tr>
+          <tr><td>開根還原</td><td class="f">√<span class="radicand">(a²)</span> = |a|</td></tr>
+          <tr><td>一項分母有理化</td><td class="f">1/√<span class="radicand">a</span> = √<span class="radicand">a</span>／a</td></tr>
+          <tr><td>兩項分母有理化</td><td class="f">1/(√<span class="radicand">a</span>+√<span class="radicand">b</span>) = (√<span class="radicand">a</span>−√<span class="radicand">b</span>)／(a−b)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>算幾不等式</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>算幾不等式</td><td class="f">(a+b)/2 ≥ √(ab)　(a,b≥0，等號⟺a=b)</td></tr>
+          <tr><td>和固定 ⟹ 積的最大值</td><td class="f">ab ≤ [(a+b)/2]²</td></tr>
+          <tr><td>積固定 ⟹ 和的最小值</td><td class="f">a+b ≥ 2√(ab)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 練習題 ================= -->
+  <section class="practice prose">
+    <h2>換你動手做</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">情境</span></div>
+        <p>老闆想心算 <span class="mono">99 × 101</span>，用平方差公式怎麼算？</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans">把 99、101 看成 100∓1：<div class="calc">99×101 = (100−1)(100+1) = 100²−1² = 10000−1 = 9999</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">代數</span></div>
+        <p>已知 <span class="mono">a+b=7</span>，<span class="mono">ab=10</span>，求 <span class="mono">a²+b²</span> 與 <span class="mono">a³+b³</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans">
+            <div class="calc">a²+b² = (a+b)²−2ab = 49−20 = 29
+a³+b³ = (a+b)³−3ab(a+b) = 343−3×10×7 = 343−210 = 133</div>
+          </div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">情境</span></div>
+        <p>A 水管 4 小時裝滿水池，B 水管 12 小時裝滿。兩管一起開，多久裝滿？</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">合併時間 = ab/(a+b) = 4×12/(4+12) = 48/16 = 3（小時）</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">代數</span></div>
+        <p>化簡 <span class="mono">(x²−9)/(x+3) + 1/(x+3)</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">(x²−9+1)/(x+3) = (x²−8)/(x+3)　（x≠−3）</div>提醒：分子 x²−9 雖然是平方差，但加了 1 之後不能再約分，要先合併同分母的分子。</div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">代數</span></div>
+        <p>化簡 <span class="mono">√<span class="radicand">27</span> + √<span class="radicand">48</span> − √<span class="radicand">12</span></span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">√<span class="radicand">27</span>=3√<span class="radicand">3</span>，√<span class="radicand">48</span>=4√<span class="radicand">3</span>，√<span class="radicand">12</span>=2√<span class="radicand">3</span>
+√<span class="radicand">27</span>+√<span class="radicand">48</span>−√<span class="radicand">12</span> = 3√<span class="radicand">3</span>+4√<span class="radicand">3</span>−2√<span class="radicand">3</span> = 5√<span class="radicand">3</span></div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">6</span><span class="qtag alg">代數</span></div>
+        <p>有理化 <span class="mono">5/(√<span class="radicand">7</span>−√<span class="radicand">3</span>)</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">5/(√<span class="radicand">7</span>−√<span class="radicand">3</span>) = 5(√<span class="radicand">7</span>+√<span class="radicand">3</span>)/[(√<span class="radicand">7</span>)²−(√<span class="radicand">3</span>)²] = 5(√<span class="radicand">7</span>+√<span class="radicand">3</span>)/4</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">7</span><span class="qtag">情境</span></div>
+        <p>用 40 公尺的籬笆圍長方形花圃，長寬各為多少時面積最大？最大面積是多少？</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans">周長 40 ⟹ x+y=20：<div class="calc">xy ≤ [(x+y)/2]² = 10² = 100
+等號成立於 x=y=10</div>長寬都是 10 公尺時，面積最大為 100 平方公尺。</div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">8</span><span class="qtag alg">代數</span></div>
+        <p>設 <span class="mono">x&gt;0</span>，用算幾不等式求 <span class="mono">x + 4/x</span> 的最小值。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans">把 x 和 4/x 看成算幾不等式裡的 a、b（乘積固定 <span class="mono">x×(4/x)=4</span>）：<div class="calc">x + 4/x ≥ 2√(x×4/x) = 2√4 = 4
+等號成立於 x = 4/x ⟹ x²=4 ⟹ x=2（因為 x&gt;0）</div>最小值是 4，在 x=2 時發生。</div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">9</span><span class="qtag alg">代數</span></div>
+        <p>因式分解 <span class="mono">x³ − 64</span>，並化簡 <span class="mono">(x³−64)/(x²+4x+16)</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">x³−64 = (x−4)(x²+4x+16)
+(x³−64)/(x²+4x+16) = x−4　（x²+4x+16 恆不為 0，可直接約分）</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">10</span><span class="qtag alg">代數</span></div>
+        <p>已知三戶人家合併土地後 <span class="mono">a+b+c=6</span>，兩兩乘積和 <span class="mono">ab+bc+ca=11</span>，求 <span class="mono">a²+b²+c²</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans">利用 <span class="mono">(a+b+c)²=a²+b²+c²+2(ab+bc+ca)</span>：<div class="calc">a²+b²+c² = (a+b+c)² − 2(ab+bc+ca) = 36 − 22 = 14</div></div>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 結語 ================= -->
+  <section class="closing prose">
+    <div class="figure-card">
+      <h2>給筱葳的話</h2>
+      <p>這一節推出的每一條公式，起點都不是課本上的一行字，而是一個你我都遇過的情境：分披薩、老闆心算、花園擴建、水管注水、圍籬笆。</p>
+      <p>乘法公式、分式、根式、算幾不等式看似四個獨立主題，其實常常互相合作——約分要用乘法公式拆因式，分母有理化要製造平方差公式，算幾不等式的推導本身就是一個完全平方式。下次遇到新公式，先別急著背，想想有沒有一個生活情境，或是一張圖，能幫你自己重新推導一次。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數1 第一章 數與式</span>
+    <span>1-2 式的運算</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

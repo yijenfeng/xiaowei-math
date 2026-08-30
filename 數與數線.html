@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-1 數與數線｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學1・第一章 數與式・1-1</span>
+    <h1>數與數線</h1>
+    <p class="sub">依照筱葳課本的章節順序重新編寫：從分披薩開始，把有理數、無理數、實數依序放上同一條數線，再學會怎麼精準描述數線上的每一個點、每一段距離。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>這一節其實在回答同一個問題的六個面向：「數線上，到底有哪些數？它們怎麼排列？我又該怎麼精準地指出數線上的一個點、一段範圍、一段距離？」</p>
+    <ul class="toc">
+      <li><a href="#part-rational"><b>1</b>有理數</a></li>
+      <li><a href="#part-irrational"><b>2</b>無理數</a></li>
+      <li><a href="#part-real"><b>3</b>實數</a></li>
+      <li><a href="#part-section"><b>4</b>分點公式</a></li>
+      <li><a href="#part-interval"><b>5</b>區間的表示法</a></li>
+      <li><a href="#part-abs"><b>6</b>絕對值的應用</a></li>
+    </ul>
+  </section>
+
+  <!-- ================= PART 1：有理數 ================= -->
+  <section class="part prose" id="part-rational">
+    <div class="part-kicker"><b>PART 1</b> ・ 有理數</div>
+    <h2>分披薩，分出一個新概念</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p>三個好朋友合買了一個披薩，說好要平分。每個人可以吃到整個披薩的幾分之幾？</p>
+      <p>直覺不難：每人 <span class="mono">1/3</span>。那如果換成四個人平分呢？每人 <span class="mono">1/4</span>。</p>
+      <p>換算成小數，這兩個分數分別長什麼樣子？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <div class="calc">1 ÷ 4 = 0.25            ← 除得乾淨，四位就結束
+1 ÷ 3 = 0.333333……   ← 除不盡，3 一直循環下去</div>
+      <p>再追問下去：如果是七個人分呢？</p>
+      <div class="calc">1 ÷ 7 = 0.142857142857……   ← 循環節變成 6 位數，一直重複出現</div>
+      <p>不管是乾脆除盡，還是無限循環，這些小數都有一個共同的「出身」：它們原本都是<b>整數除以整數</b>，也就是一個分數。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 520 250" role="img" aria-label="一個圓形披薩被平分成三等份，其中一份被標示出來代表 1/3">
+          <g stroke="var(--bg)" stroke-width="3">
+            <path d="M110,110 L200,110 A90,90 0 0,1 65,187.94 Z" fill="var(--accent)"/>
+            <path d="M110,110 L65,187.94 A90,90 0 0,1 65,32.06 Z" fill="var(--surface-2)"/>
+            <path d="M110,110 L65,32.06 A90,90 0 0,1 200,110 Z" fill="var(--surface-2)"/>
+          </g>
+          <circle cx="110" cy="110" r="90" fill="none" stroke="var(--ink-muted)" stroke-width="1.5"/>
+          <text x="110" y="225" text-anchor="middle" class="svg-label-lg" fill="currentColor">1/3・平分成 3 份，取 1 份</text>
+
+          <g stroke="var(--bg)" stroke-width="3">
+            <path d="M390,110 L480,110 A90,90 0 0,1 390,200 Z" fill="var(--accent)"/>
+            <path d="M390,110 L390,200 A90,90 0 0,1 300,110 Z" fill="var(--surface-2)"/>
+            <path d="M390,110 L300,110 A90,90 0 0,1 390,20 Z" fill="var(--surface-2)"/>
+            <path d="M390,110 L390,20 A90,90 0 0,1 480,110 Z" fill="var(--surface-2)"/>
+          </g>
+          <circle cx="390" cy="110" r="90" fill="none" stroke="var(--ink-muted)" stroke-width="1.5"/>
+          <text x="390" y="225" text-anchor="middle" class="svg-label-lg" fill="currentColor">1/4・平分成 4 份，取 1 份</text>
+        </svg>
+        <figcaption>不管切成幾份，「取其中一份」的比例永遠可以寫成「整數 ÷ 整數」。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 定義</span>
+      <p>幫這一類數字取個名字：只要能寫成 <span class="mono">p/q</span>（<span class="mono">p, q</span> 都是整數，且 <span class="mono">q ≠ 0</span>）的數，就叫做<b>「有理數」</b>（rational number，也就是「比例的數」），記作 <span class="mono">ℚ</span>。整數當然也是有理數（<span class="mono">n = n/1</span>），所以：</p>
+      <div class="formula"><span class="big">有理數 = 整數、有限小數、無限「循環」小數</span>（都可以寫成「整數÷整數」）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">再觀察：循環的部分怎麼寫？</span>
+      <p>像 <span class="mono">1/3 = 0.333……</span> 這種永遠寫不完的小數，總不能每次都打一串刪節號。數學上的寫法，是在重複出現的那一段數字上面畫一條橫線，叫做<b>循環節</b>：</p>
+      <div class="formula">1/3 = 0.<span class="ol">3</span>　　　　1/7 = 0.<span class="ol">142857</span></div>
+      <p>這條橫線就是在說：「底下這幾位數字，一直重複下去。」</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">反過來想：循環小數也能還原成分數</span>
+      <p class="quote">如果只看到 <span class="mono">x = 0.<span class="ol">27</span> = 0.272727……</span> 這樣的小數，能不能反推回原本的分數？</p>
+      <p>關鍵招式：把循環節「搬到小數點前面」，再兩式相減，循環的部分就會剛好完全抵銷：</p>
+      <div class="calc">設 x = 0.272727……
+兩邊同乘 100（循環節是 2 位數，就乘 10²）：
+    100x = 27.272727……
+
+用 100x 減去 x：
+    100x −  x = 27.272727…… − 0.272727……
+        99x  = 27
+          x  = 27/99 = 3/11</div>
+      <p>驗算一下：<span class="mono">3 ÷ 11 = 0.272727……</span>，完全吻合。這招對任何循環小數都管用——乘上「10 的循環節位數次方」，讓循環的尾巴對齊，相減就消失了。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：有理數多到「找不到縫隙」</span>
+      <p class="quote">數線上任兩個不同的有理數之間，還能不能再找到一個有理數？譬如 <span class="mono">1/3</span> 和 <span class="mono">1/2</span> 之間呢？</p>
+      <p>最簡單的做法：取兩者的中點。</p>
+      <div class="calc">(1/3 + 1/2) ÷ 2 = (5/6) ÷ 2 = 5/12　　（介於 1/3 ≈0.333 與 1/2=0.5 之間）</div>
+      <p>而 <span class="mono">5/12</span> 一樣是「整數÷整數」，還是有理數。同樣的招式可以無限重複下去——不管兩個有理數靠得多近，中間永遠還擠得下另一個有理數。這個性質叫做有理數的<b>稠密性</b>：數線上任兩個相異的有理數之間，都存在無窮多個有理數。</p>
+      <p class="note">小提醒：稠密性聽起來像是「有理數已經填滿整條數線」，但下一節會發現，數線上其實還藏著有理數完全碰不到的點——這就是無理數登場的原因。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 2：無理數 ================= -->
+  <section class="part prose" id="part-irrational">
+    <div class="part-kicker"><b>PART 2</b> ・ 無理數</div>
+    <h2>量一條對角線，量出一個新世界</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">筱葳家的花園是一塊邊長 1 公尺的正方形。她想沿著對角線鋪一條石板小路，該訂多長的石板？</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 240 240" role="img" aria-label="邊長為1的正方形，畫出對角線，兩股長度都是1，斜邊標示為問號">
+          <polygon points="40,40 200,40 200,200" fill="var(--accent-soft)"/>
+          <rect x="40" y="40" width="160" height="160" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <line x1="40" y1="40" x2="200" y2="200" stroke="var(--accent)" stroke-width="2.5"/>
+          <polyline points="188,40 188,52 200,52" fill="none" stroke="var(--ink-muted)" stroke-width="1.5"/>
+          <text x="120" y="30" text-anchor="middle" class="svg-label-lg" fill="currentColor">1</text>
+          <text x="214" y="124" text-anchor="middle" class="svg-label-lg" fill="currentColor">1</text>
+          <text x="105" y="115" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">?</text>
+        </svg>
+        <figcaption>兩股都是 1 的直角三角形，斜邊（對角線）該有多長？</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>用畢氏定理算對角線長度的平方：</p>
+      <div class="calc">對角線² = 1² + 1² = 2　　→　　對角線 = √<span class="radicand">2</span></div>
+      <p>好，那 √<span class="radicand">2</span> 到底是多長？用計算機十分逼近，可以得到一系列越來越準確的近似值：</p>
+      <div class="calc">1,  1.4,  1.41,  1.414,  1.4142,  1.41421,  ……</div>
+      <p>驗算看看，這些近似值的平方離 2 有多接近：</p>
+      <div class="calc">1.4²   = 1.96
+1.41²  = 1.9881
+1.414² = 1.999396
+1.4142²= 1.99996164 ……</div>
+      <p>不管加多少位小數，都只能「越來越接近」2，永遠對不準。更神奇的是：可以證明，<b>不存在任何一個分數，平方後剛好等於 2</b>。也就是說，這條對角線的長度，沒辦法用任何「整數÷整數」的形式寫出來。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 定義</span>
+      <p>這類數，小數位數不循環也不終止，稱為<b>無理數</b>（記作小數不循環、不終止的無限小數）。歷史上第一個被發現的無理數就是 √<span class="radicand">2</span>——相傳畢氏學派原本深信「萬物皆數（皆比例）」，發現這件事後大受衝擊，數學史上稱為「第一次數學危機」。</p>
+      <p>圓周率 <span class="mono">π = 3.14159265……</span> 也是無理數，古人取 3 當作近似值，現在通常取 3.14 或 3.14159 來估計。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：一階一階量出更多無理數</span>
+      <p>量完 √<span class="radicand">2</span> 之後，可以把它當作下一階的其中一股，再接一個直角三角形：一股是剛量出來的 √<span class="radicand">2</span>，另一股是 1，斜邊平方 <span class="mono">= (√<span class="radicand">2</span>)²+1² = 2+1 = 3</span>，量出 √<span class="radicand">3</span>。這樣一階一階接下去，就能在數線上「作圖」量出 √<span class="radicand">2</span>、√<span class="radicand">3</span>、√<span class="radicand">4</span>=2、√<span class="radicand">5</span>……這種階梯狀的圖形叫做「泰奧多勒斯螺線」。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 380 260" role="img" aria-label="以原點為中心，一連串直角三角形螺旋狀排列，斜邊長度依序是根號2、根號3、根號4、根號5，每個三角形的一股固定是1">
+          <g transform="translate(190,190)">
+            <line x1="0" y1="0" x2="70" y2="0" stroke="var(--ink-muted)" stroke-width="1.5"/>
+            <line x1="70" y1="0" x2="70" y2="-70" stroke="var(--ink-muted)" stroke-width="1.5"/>
+            <line x1="0" y1="0" x2="70" y2="-70" stroke="var(--accent)" stroke-width="2"/>
+            <text x="35" y="-4" text-anchor="middle" class="svg-label">1</text>
+            <text x="80" y="-35" text-anchor="middle" class="svg-label">1</text>
+            <text x="16" y="-40" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">√2</text>
+
+            <line x1="70" y1="-70" x2="70" y2="-140" stroke="var(--ink-muted)" stroke-width="1.5"/>
+            <line x1="0" y1="0" x2="70" y2="-140" stroke="var(--accent)" stroke-width="2"/>
+            <text x="80" y="-105" text-anchor="middle" class="svg-label">1</text>
+            <text x="16" y="-90" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">√3</text>
+
+            <line x1="70" y1="-140" x2="20" y2="-172" stroke="var(--ink-muted)" stroke-width="1.5"/>
+            <line x1="0" y1="0" x2="20" y2="-172" stroke="var(--accent)" stroke-width="2"/>
+            <text x="10" y="-127" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">√4=2</text>
+
+            <line x1="20" y1="-172" x2="-38" y2="-155" stroke="var(--ink-muted)" stroke-width="1.5"/>
+            <line x1="0" y1="0" x2="-38" y2="-155" stroke="var(--accent)" stroke-width="2"/>
+            <text x="-45" y="-110" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">√5</text>
+
+            <circle cx="0" cy="0" r="2.5" fill="currentColor"/>
+            <text x="10" y="16" class="svg-label" fill="currentColor">起點</text>
+          </g>
+        </svg>
+        <figcaption>每接一個「一股固定是 1」的直角三角形，斜邊就能量出下一個 √n。</figcaption>
+      </figure>
+    </div>
+
+    <details>
+      <summary>進階好奇：為什麼 √<span class="radicand">2</span> 一定不是分數？（點開看證明）</summary>
+      <div class="ans">
+        <p style="margin:0 0 0.6rem;">用反證法：假設 √<span class="radicand">2</span> 可以寫成最簡分數 <span class="mono">p/q</span>（p,q 是整數，且已經約到不能再約簡）。</p>
+        <div class="calc">√<span class="radicand">2</span> = p/q
+兩邊平方：2 = p²/q²
+移項：      p² = 2q²   ← 所以 p² 是偶數，p 也一定是偶數
+設 p = 2k： (2k)² = 2q²
+             4k² = 2q²
+              q² = 2k²  ← 所以 q² 也是偶數，q 也一定是偶數</div>
+        <p style="margin:0.6rem 0 0;">但 p、q 不是說好「已經約到不能再約」了嗎？現在卻發現兩個都是偶數，都還能再除以 2——矛盾！所以一開始的假設不成立，<span class="mono">√<span class="radicand">2</span></span> 不可能寫成分數。</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= PART 3：實數 ================= -->
+  <section class="part prose" id="part-real">
+    <div class="part-kicker"><b>PART 3</b> ・ 實數</div>
+    <h2>把兩種數合成一條完整的數線</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 定義</span>
+      <p>有理數與無理數合起來，稱為<b>實數</b>（記作 <span class="mono">ℝ</span>）。實數與數線之間有一個很重要的結論：<b>數線上每一個點，恰好對應一個實數；每一個實數，也恰好對應數線上一個點</b>——不多不少，一一對應，中間沒有縫隙。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 400 210" role="img" aria-label="實數這個大方框裡分成有理數與無理數兩個區塊，有理數裡包含整數、有限小數、循環小數，無理數裡包含根號2、根號3、圓周率">
+          <rect x="10" y="10" width="380" height="190" rx="6" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+          <text x="24" y="30" class="svg-label" fill="var(--ink-muted)">實數 ℝ</text>
+
+          <rect x="28" y="45" width="168" height="140" rx="4" fill="var(--accent-soft)"/>
+          <text x="112" y="70" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">有理數 ℚ</text>
+          <text x="112" y="100" text-anchor="middle" class="svg-label" fill="currentColor">整數 ℤ</text>
+          <text x="112" y="125" text-anchor="middle" class="svg-label" fill="currentColor">有限小數</text>
+          <text x="112" y="150" text-anchor="middle" class="svg-label" fill="currentColor">循環小數</text>
+
+          <rect x="208" y="45" width="164" height="140" rx="4" fill="var(--b2)" fill-opacity="0.22"/>
+          <text x="290" y="70" text-anchor="middle" class="svg-label-lg" fill="var(--b2-ink)">無理數</text>
+          <text x="290" y="100" text-anchor="middle" class="svg-label" fill="currentColor">√2 、 √3</text>
+          <text x="290" y="125" text-anchor="middle" class="svg-label" fill="currentColor">π（圓周率）</text>
+          <text x="290" y="150" text-anchor="middle" class="svg-label" fill="currentColor">不循環的無限小數</text>
+        </svg>
+        <figcaption>有理數、無理數合起來，才是完整的實數系統：N ⊂ Z ⊂ Q ⊂ R。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">為什麼要正式列出規則？</span>
+      <p>之後解方程式、解不等式，每一次移項、乘開、比大小，其實都在使用底下這幾條規則——只是我們平常寫得很快，沒有特別註明。先正式看過一次，之後才知道自己每一步「憑什麼可以這樣做」。</p>
+    </div>
+
+    <div class="formula">
+      <div class="formula-title">實數的運算性質（a, b, c 為任意實數）</div>
+      交換律：a+b=b+a，ab=ba　　　結合律：a+(b+c)=(a+b)+c，a(bc)=(ab)c
+      分配律：a(b+c)=ab+ac
+      消去律：a+c=b+c ⟹ a=b；c≠0 時，ac=bc ⟹ a=b
+      單位元素：a+0=a，a×1=a
+    </div>
+
+    <div class="formula">
+      <div class="formula-title">實數的大小關係（a, b, c 為任意實數）</div>
+      三一律：a&lt;b、a=b、a&gt;b 三者恰有一個成立
+      遞移律：a&lt;b 且 b&lt;c ⟹ a&lt;c
+      加法：a&lt;b ⟹ a+c&lt;b+c（兩邊同加一個數，不等號方向不變）
+      乘法：a&lt;b 且 c&gt;0 ⟹ ac&lt;bc；a&lt;b 且 c&lt;0 ⟹ ac&gt;bc（乘負數，不等號要反向！）
+      平方：a, b&gt;0 時，a²&gt;b² ⟺ a&gt;b
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：把無理數估計出大小</span>
+      <p class="quote">√<span class="radicand">13</span> 大概落在哪兩個整數之間？√<span class="radicand">8</span>+√<span class="radicand">7</span> 和 √<span class="radicand">10</span>+√<span class="radicand">5</span> 誰比較大？</p>
+      <div class="calc">因為 3² = 9 &lt; 13 &lt; 16 = 4²，由平方性質可知 3 &lt; √13 &lt; 4。
+
+比較 √8+√7 與 √10+√5：兩邊都是正數，可以比較平方
+(√8+√7)² = 15 + 2√56
+(√10+√5)² = 15 + 2√50
+因為 56 &gt; 50，所以 (√8+√7)² &gt; (√10+√5)²，
+兩邊開根號（平方性質的逆推）：√8+√7 &gt; √10+√5</div>
+      <p class="note">這正是上面「平方」那條規則在發揮作用：兩個正數，比大小可以先比平方。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 4：分點公式 ================= -->
+  <section class="part prose" id="part-section">
+    <div class="part-kicker"><b>PART 4</b> ・ 分點公式</div>
+    <h2>速度不同，會合點在哪裡？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">在一條筆直的道路上，以路口超商為原點（座標 0），筱葳家在座標 <span class="mono">−2</span>（公里），朋友家在座標 <span class="mono">4</span>（公里）。兩人同時出發、沿著這條路相向而行，準備在路上會合。筱葳騎腳踏車，朋友用跑的，兩人的速度比是 <span class="mono">3 : 5</span>。他們會在數線上哪個座標會合？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>因為兩人同時出發、花的時間一樣，走的距離就跟速度成正比：筱葳走的距離、朋友走的距離，比例也是 <span class="mono">3 : 5</span>。設會合點為 <span class="mono">P</span>，也就是：</p>
+      <div class="calc">AP : BP = 3 : 5　（A＝筱葳家 −2，B＝朋友家 4）</div>
+      <p>朋友速度比較快，所以朋友走的路比較長，會合點應該比較靠近筱葳家（A）這一側——這跟直覺是吻合的。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 420 110" role="img" aria-label="數線上A在負2，B在4，P在中間，AP與BP的比例是3比5" >
+          <line x1="30" y1="55" x2="390" y2="55" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="90" y1="47" x2="90" y2="63" stroke="var(--accent)" stroke-width="2.2"/>
+          <text x="90" y="86" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">A（−2）筱葳家</text>
+          <line x1="210" y1="47" x2="210" y2="63" stroke="var(--b2)" stroke-width="2.2"/>
+          <text x="210" y="26" text-anchor="middle" class="svg-label-lg" fill="var(--b2)">P（會合點）</text>
+          <line x1="330" y1="47" x2="330" y2="63" stroke="var(--accent)" stroke-width="2.2"/>
+          <text x="330" y="86" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">B（4）朋友家</text>
+          <path d="M90,55 Q150,30 210,55" fill="none" stroke="var(--ab)" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <text x="150" y="26" text-anchor="middle" class="svg-label" fill="var(--ab)">3</text>
+          <path d="M210,55 Q270,30 330,55" fill="none" stroke="var(--ab)" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <text x="270" y="26" text-anchor="middle" class="svg-label" fill="var(--ab)">5</text>
+        </svg>
+        <figcaption>AP : PB = 3 : 5，P 比較靠近走得慢的那一邊（A）。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">推導</span>
+      <p>設 P 點座標為 <span class="mono">x</span>，則 <span class="mono">AP = x−(−2) = x+2</span>，<span class="mono">BP = 4−x</span>（假設 P 在 A、B 之間，所以這兩段長度都是正的）：</p>
+      <div class="calc">(x+2)/(4−x) = AP/BP = 3/5
+
+交叉相乘：5(x+2) = 3(4−x)
+          5x+10 = 12−3x
+             8x = 2
+              x = 1/4</div>
+      <p>會合點在座標 <span class="mono">1/4</span>，也就是超商往筱葳家方向 0.25 公里處——確實比較靠近筱葳家（A 在 −2，比較近；B 在 4，比較遠）。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>把座標換成一般的字母：數線上兩點 <span class="mono">A(a)、B(b)</span>（不妨設 <span class="mono">a&lt;b</span>），P 點介於 A、B 之間，且 <span class="mono">AP : BP = m : n</span>，用同樣的交叉相乘可以推出：</p>
+      <div class="formula"><span class="big">P 點坐標 = (n·a + m·b) / (m+n)</span></div>
+      <p>這就是<b>分點公式</b>。特別注意：公式裡 A 的座標 <span class="mono">a</span> 配的是<b>後面</b>那個比例 <span class="mono">n</span>，B 的座標 <span class="mono">b</span> 配的是<b>前面</b>那個比例 <span class="mono">m</span>——因為離得比較「遠」的那一端，代表對方走得比較少，比例反而要交叉對調。</p>
+      <p>把公式套進剛剛的情境驗算一次：<span class="mono">a=−2, b=4, m:n=3:5</span></p>
+      <div class="calc">P = (5×(−2) + 3×4) / (3+5) = (−10+12) / 8 = 2/8 = 1/4 ✓ 與剛剛推導的答案一致</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">特例：中點公式</span>
+      <p>如果 <span class="mono">m:n = 1:1</span>（也就是兩人速度相同，一定在正中間會合），代入公式：</p>
+      <div class="formula"><span class="big">AB 中點坐標 = (a+b) / 2</span></div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：如果會合點不在中間，而在外側？</span>
+      <p class="quote">如果要找的不是「兩人之間」的點，而是在 B 的更外側，找一個點 Q，使得 <span class="mono">AQ : BQ</span> 仍然維持 <span class="mono">3 : 5</span>——這樣的 Q 在哪裡？</p>
+      <p>這種「跑到線段外面」的分法，叫做<b>外分點</b>。因為 Q 在 B 的外側，<span class="mono">BQ</span> 這段其實是「往回走」，方向跟 <span class="mono">AQ</span> 相反，所以式子裡要記得改成減法（或想成比例中出現負號）：</p>
+      <div class="calc">設 Q 座標為 x，AQ = x−(−2) = x+2， BQ = x−4（Q 在 B 右邊，x&gt;4）
+外分時 AQ : BQ 仍是 3 : 5，但 AQ 比 BQ 長，交叉相乘：
+   5(x+2) = 3(x−4)
+   5x+10 = 3x−12
+      2x = −22
+       x = −11</div>
+      <p class="note">算出來 x=−11 其實落在 A 的左邊更外側——這提醒我們，外分點的位置需要配合圖形仔細判斷在哪一側，不能只套公式蠻算，學測考題通常會搭配數線圖或給定範圍來確認。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 5：區間的表示法 ================= -->
+  <section class="part prose" id="part-interval">
+    <div class="part-kicker"><b>PART 5</b> ・ 區間的表示法</div>
+    <h2>電影院的票價，是怎麼分年齡的？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">某電影院的票價規則是這樣的：未滿 3 歲免費入場；3 歲以上、未滿 12 歲是兒童票；65 歲以上（含）享敬老優惠。設觀眾的年齡是 <span class="mono">x</span> 歲，這三種身分該怎麼用不等式寫出來？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>「未滿 3 歲」寫成 <span class="mono">x&lt;3</span>；「65 歲以上（含 65 歲）」寫成 <span class="mono">x≥65</span>；「3 歲以上、未滿 12 歲」寫成兩段夾在一起：<span class="mono">3≤x&lt;12</span>。每一種寫法背後，都在回答兩件事：<b>往哪個方向延伸（還是兩邊都有限）</b>，以及<b>端點本身算不算數（含或不含）</b>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 定義</span>
+      <p>把「不等式」直接寫成「一段範圍」的簡寫，就是<b>區間表示法</b>。端點<b>有包含</b>用方括號 <span class="mono">[ ]</span>，<b>不包含</b>用小括號 <span class="mono">( )</span>；往正無窮或負無窮延伸的一端，永遠用小括號（因為無窮大不是一個實際的數，不可能被「包含」）：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>不等式</th><th>區間表示</th><th>圖示</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">x ≥ 65</td><td class="f">[65, ∞)</td><td>65 歲以上（含），敬老票</td></tr>
+            <tr><td class="mono">x &lt; 3</td><td class="f">(−∞, 3)</td><td>未滿 3 歲，免費</td></tr>
+            <tr><td class="mono">3 ≤ x &lt; 12</td><td class="f">[3, 12)</td><td>3 歲以上未滿 12 歲，兒童票</td></tr>
+            <tr><td class="mono">2 ≤ x ≤ 3</td><td class="f">[2, 3]</td><td>兩端都包含，稱為閉區間</td></tr>
+            <tr><td class="mono">2 &lt; x &lt; 3</td><td class="f">(2, 3)</td><td>兩端都不包含，稱為開區間</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 380 90" role="img" aria-label="數線上65的位置畫實心圓點，往右延伸箭頭表示大於等於65的敬老票範圍">
+          <line x1="30" y1="45" x2="350" y2="45" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="150" y1="30" x2="350" y2="30" stroke="var(--accent)" stroke-width="6"/>
+          <path d="M340,24 L354,30 L340,36 Z" fill="var(--accent)"/>
+          <circle cx="150" cy="30" r="5" fill="var(--accent)"/>
+          <text x="150" y="66" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">65</text>
+          <text x="250" y="16" text-anchor="middle" class="svg-label" fill="var(--accent)">[65, ∞)　敬老票</text>
+        </svg>
+        <figcaption>實心圓點＝包含端點；箭頭方向表示一直延伸到無窮。</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <svg viewBox="0 0 380 90" role="img" aria-label="數線上3的位置畫空心圓圈，往左延伸箭頭表示小於3的免費範圍">
+          <line x1="30" y1="45" x2="350" y2="45" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="30" y1="30" x2="230" y2="30" stroke="var(--b2)" stroke-width="6"/>
+          <path d="M40,24 L26,30 L40,36 Z" fill="var(--b2)"/>
+          <circle cx="230" cy="30" r="5" fill="var(--surface)" stroke="var(--b2)" stroke-width="2.2"/>
+          <text x="230" y="66" text-anchor="middle" class="svg-label-lg" fill="var(--b2)">3</text>
+          <text x="120" y="16" text-anchor="middle" class="svg-label" fill="var(--b2)">(−∞, 3)　免費入場</text>
+        </svg>
+        <figcaption>空心圓圈＝不包含端點（3 歲當天已經滿 3 歲，不算免費了）。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">延伸：多段合併，用「聯集」符號</span>
+      <p class="quote">如果售票機要一次篩出「享優惠」的觀眾（免費或敬老，但不含一般兒童票），這個身分範圍該怎麼寫？</p>
+      <p>這時候的範圍是兩段互不相連的區間，中間用聯集符號 <span class="mono">∪</span> 連接：</p>
+      <div class="formula"><span class="big">x&lt;3 或 x≥65　　⟺　　(−∞, 3) ∪ [65, ∞)</span></div>
+      <p class="note">「或」對應「∪（聯集）」；「且」則對應區間的重疊部分（交集）。之後在絕對值不等式、分段討論裡，這套區間語言會一直重複出現。</p>
+    </div>
+  </section>
+
+  <!-- ================= PART 6：絕對值的應用 ================= -->
+  <section class="part prose" id="part-abs">
+    <div class="part-kicker"><b>PART 6</b> ・ 絕對值的應用</div>
+    <h2>電梯裡的樓層，量出「距離」這個概念</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">你在捷運共構大樓的 3 樓等朋友。第一個朋友在 7 樓，第二個朋友在地下 2 樓（−2 樓）。你跟這兩個朋友之間，各隔了幾層樓？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>直覺算法是「大的樓層減小的樓層」：</p>
+      <div class="calc">你（3樓）到朋友甲（7樓）：7 − 3 = 4（層）
+你（3樓）到朋友乙（−2樓）：3 − (−2) = 5（層）</div>
+      <p>但如果沒注意順序，隨手寫成 <span class="mono">3−7=−4</span>，樓層數變成負的——「隔了 −4 層樓」聽起來就很奇怪。距離這種量，不管往上還是往下數，答案都應該是正的。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 280 260" role="img" aria-label="一條垂直的樓層數線，標出7樓、3樓、地下2樓，並標示3樓到7樓相距4層，3樓到地下2樓相距5層">
+          <line x1="140" y1="20" x2="140" y2="240" stroke="currentColor" stroke-width="1.5"/>
+
+          <line x1="134" y1="44" x2="146" y2="44" stroke="currentColor" stroke-width="1.5"/>
+          <text x="118" y="48" text-anchor="end" class="svg-label" fill="currentColor">7</text>
+          <text x="150" y="48" class="svg-label-lg" fill="currentColor">7樓（朋友甲）</text>
+
+          <line x1="134" y1="116" x2="146" y2="116" stroke="var(--accent)" stroke-width="2"/>
+          <text x="118" y="120" text-anchor="end" class="svg-label" fill="var(--accent)">3</text>
+          <text x="150" y="120" class="svg-label-lg" fill="var(--accent)">3樓（你）</text>
+
+          <line x1="134" y1="206" x2="146" y2="206" stroke="currentColor" stroke-width="1.5"/>
+          <text x="112" y="210" text-anchor="end" class="svg-label" fill="currentColor">−2</text>
+          <text x="150" y="210" class="svg-label-lg" fill="currentColor">地下2樓（朋友乙）</text>
+
+          <line x1="100" y1="44" x2="100" y2="116" stroke="var(--ab)" stroke-width="1.5"/>
+          <line x1="94" y1="44" x2="106" y2="44" stroke="var(--ab)" stroke-width="1.5"/>
+          <line x1="94" y1="116" x2="106" y2="116" stroke="var(--ab)" stroke-width="1.5"/>
+          <text x="70" y="83" text-anchor="middle" class="svg-label" fill="var(--ab-ink)" style="fill:var(--ab)">距離=4</text>
+
+          <line x1="180" y1="116" x2="180" y2="206" stroke="var(--b2)" stroke-width="1.5"/>
+          <line x1="174" y1="116" x2="186" y2="116" stroke="var(--b2)" stroke-width="1.5"/>
+          <line x1="174" y1="206" x2="186" y2="206" stroke="var(--b2)" stroke-width="1.5"/>
+          <text x="215" y="164" text-anchor="middle" class="svg-label" fill="var(--b2)">距離=5</text>
+        </svg>
+        <figcaption>不管朋友在樓上還是樓下，「隔了幾層」永遠是正數。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 定義</span>
+      <p>把「去掉負號、只留下大小」這件事，寫成一個符號：</p>
+      <div class="formula">
+        |7−3| = |4| = 4　　　|3−(−2)| = |5| = 5
+      </div>
+      <p>正式定義：</p>
+      <div class="formula"><span class="big">|x| = x（x ≥ 0 時）　　|x| = −x（x &lt; 0 時）</span></div>
+      <p>幾何意義：<span class="mono">|x|</span> 是 <span class="mono">x</span> 在數線上到 0 的距離；<span class="mono">|x−a|</span> 是 <span class="mono">x</span> 到 <span class="mono">a</span> 的距離——跟樓層問題完全是同一件事。舉例來說，<span class="mono">|2+3|</span> 可以看成 <span class="mono">|2−(−3)|</span>，表示 2 與 −3 在數線上的距離。</p>
+      <div class="formula">
+        |x| ≥ 0　　　|x|² = x²　　　|xy| = |x||y|　　　|x/y| = |x|／|y|（y≠0）
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">應用一：含絕對值的方程式與不等式</span>
+      <p class="quote">螺絲工廠規定，螺絲長度標準是 10 mm，機器容許的誤差是正負 0.2 mm。品管員要怎麼用一個式子，寫出「這根螺絲合格」？</p>
+      <div class="calc">9.8 ≤ x ≤ 10.2
+兩邊同時減 10：
+−0.2 ≤ x−10 ≤ 0.2</div>
+      <p>而「x−10 的值介於 −0.2 到 0.2 之間」，用距離的語言來說，就是「x 跟 10 之間的距離，不超過 0.2」：</p>
+      <div class="formula"><span class="big">|x−10| ≤ 0.2</span>　　解集合寫成區間：<span class="mono">[9.8, 10.2]</span></div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 420 100" role="img" aria-label="一條數線，中心是10，標示出9.8到10.2這段為合格範圍，範圍外標示為不合格">
+          <line x1="30" y1="55" x2="390" y2="55" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="170" y="47" width="80" height="16" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/>
+
+          <line x1="210" y1="47" x2="210" y2="63" stroke="var(--accent)" stroke-width="2"/>
+          <text x="210" y="82" text-anchor="middle" class="svg-label" fill="var(--accent)">10</text>
+
+          <line x1="170" y1="47" x2="170" y2="63" stroke="currentColor" stroke-width="1.5"/>
+          <text x="170" y="82" text-anchor="middle" class="svg-label" fill="currentColor">9.8</text>
+          <line x1="250" y1="47" x2="250" y2="63" stroke="currentColor" stroke-width="1.5"/>
+          <text x="250" y="82" text-anchor="middle" class="svg-label" fill="currentColor">10.2</text>
+
+          <text x="210" y="32" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">合格範圍</text>
+          <text x="90" y="32" text-anchor="middle" class="svg-label" fill="var(--ink-muted)">不合格</text>
+          <text x="330" y="32" text-anchor="middle" class="svg-label" fill="var(--ink-muted)">不合格</text>
+        </svg>
+        <figcaption>|x−10|≤0.2 畫在數線上，就是以 10 為中心，左右各 0.2 的一段區間 [9.8, 10.2]。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula"><span class="big">|x−a| &lt; b　⟺　a−b &lt; x &lt; a+b　⟺　x ∈ (a−b, a+b)</span></div>
+      <p>反過來，品管員要挑出<b>不合格</b>的螺絲（超出容許範圍）：</p>
+      <div class="calc">x < 9.8 或 x > 10.2　　　即　|x−10| > 0.2</div>
+      <div class="formula"><span class="big">|x−a| &gt; b　⟺　x &lt; a−b　或　x &gt; a+b　⟺　x ∈ (−∞,a−b) ∪ (a+b,∞)</span></div>
+      <p>而剛好卡在臨界值上（差一點就不合格）：</p>
+      <div class="formula">|x−a| = b　⟺　x = a+b　或　x = a−b</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">應用二：兩個絕對值加在一起</span>
+      <p class="quote">一條筆直的路上，超商 A 在座標 −2 的位置，超商 B 在座標 5 的位置。你想找一個地點 x，讓你走到 A 跟走到 B 的距離「加起來」剛好是 7。你會落在哪裡？</p>
+      <p>寫成算式：<span class="mono">|x−(−2)| + |x−5| = 7</span>，也就是 <span class="mono">|x+2| + |x−5| = 7</span>。這裡有兩個絕對值，不能直接套用剛剛的公式。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察①：為什麼要分段？</span>
+      <p>先看單獨一個 <span class="mono">|x+2|</span>：它到底等於 <span class="mono">x+2</span>，還是 <span class="mono">−(x+2)</span>，要看 <span class="mono">x+2</span> 是正是負——</p>
+      <div class="calc">如果 x+2 ≥ 0（也就是 x ≥ −2）：|x+2| = x+2
+如果 x+2 < 0（也就是 x <  −2）：|x+2| = −(x+2)</div>
+      <p>同樣道理，<span class="mono">|x−5|</span> 也有兩種寫法，切換點在 <span class="mono">x=5</span>。問題是：這一題兩個絕對值「切換的地方」不一樣（一個在 −2，一個在 5），所以沒辦法只切一刀，必須把數線切成<b>三段</b>，才能讓兩個絕對值在每一段裡都乖乖地只有一種寫法。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察②：找出分界點，切成三段</span>
+      <p>兩個分界點就是超商的位置本身：<span class="mono">x=−2</span>（超商 A）和 <span class="mono">x=5</span>（超商 B）。以這兩點為界，數線被切成三段：</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 420 100" role="img" aria-label="一條數線在負2和5兩個分界點被切成三段，分別標示①x小於負2、②x介於負2到5之間、③x大於等於5">
+          <rect x="30"  y="47" width="130" height="16" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1"/>
+          <rect x="160" y="47" width="175" height="16" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/>
+          <rect x="335" y="47" width="55"  height="16" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1"/>
+          <line x1="30" y1="55" x2="390" y2="55" stroke="currentColor" stroke-width="0"/>
+
+          <line x1="160" y1="43" x2="160" y2="67" stroke="var(--accent)" stroke-width="2.2"/>
+          <text x="160" y="86" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">−2</text>
+
+          <line x1="335" y1="43" x2="335" y2="67" stroke="var(--accent)" stroke-width="2.2"/>
+          <text x="335" y="86" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">5</text>
+
+          <text x="95"  y="32" text-anchor="middle" class="svg-label" fill="currentColor">① x&lt;−2</text>
+          <text x="247" y="32" text-anchor="middle" class="svg-label" fill="var(--accent)">② −2≤x&lt;5</text>
+          <text x="362" y="32" text-anchor="middle" class="svg-label" fill="currentColor">③ x≥5</text>
+        </svg>
+        <figcaption>兩個分界點把數線切成三段，每一段裡兩個絕對值都只有一種固定寫法。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察③：每一段先確認正負號</span>
+      <p>在動手解方程式之前，先搞清楚每一段裡 <span class="mono">x+2</span> 和 <span class="mono">x−5</span> 各是正是負。可以先挑一個段內的測試值代進去，直覺感受一下：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>區間</th><th>測試值</th><th>x+2</th><th>x−5</th><th>|x+2| 等於</th><th>|x−5| 等於</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">① x&lt;−2</td><td class="mono">x=−10</td><td class="mono">−8（負）</td><td class="mono">−15（負）</td><td class="f">−(x+2)</td><td class="f">−(x−5)</td></tr>
+            <tr><td class="mono">② −2≤x&lt;5</td><td class="mono">x=0</td><td class="mono">2（正）</td><td class="mono">−5（負）</td><td class="f">x+2</td><td class="f">−(x−5)</td></tr>
+            <tr><td class="mono">③ x≥5</td><td class="mono">x=10</td><td class="mono">12（正）</td><td class="mono">5（正）</td><td class="f">x+2</td><td class="f">x−5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">小技巧：不確定某一段的正負號時，代一個段內隨便的數字進去試試看，比死記規則更不容易出錯。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察④：把每一段的寫法代進方程式</span>
+      <p>有了上面的表，原本的方程式 <span class="mono">|x+2|+|x−5|=7</span> 在每一段就變成一個「沒有絕對值」的普通方程式，可以直接解：</p>
+
+      <p><b>第①段（x&lt;−2）</b>：</p>
+      <div class="calc">−(x+2) − (x−5) = 7
+        −x−2−x+5 = 7
+              −2x+3 = 7
+                 x = −2</div>
+      <p>但這一段的條件是 <span class="mono">x&lt;−2</span>，解出來的 <span class="mono">x=−2</span> 不符合（−2 不小於 −2）。所以<b>這段沒有解</b>。</p>
+
+      <p><b>第②段（−2≤x&lt;5）</b>：</p>
+      <div class="calc">(x+2) + (5−x) = 7
+     x+2+5−x = 7
+              7 = 7</div>
+      <p>x 竟然自己消掉了，剩下「7=7」——這句話不管 x 是多少都成立！代表<b>這一整段（−2 到 5 之間，含 −2）的每一個 x，全部都是解</b>。</p>
+
+      <p><b>第③段（x≥5）</b>：</p>
+      <div class="calc">(x+2) + (x−5) = 7
+        2x−3 = 7
+           x = 5</div>
+      <p>條件是 <span class="mono">x≥5</span>，<span class="mono">x=5</span> 剛好符合，是<b>這段唯一的解</b>。</p>
+
+      <p>把三段的結果收在一起：第①段沒有解，第②段整段都是解，第③段多一個 <span class="mono">x=5</span>（但 5 其實已經包含在第②段的範圍裡了）。合併起來：</p>
+      <div class="formula"><span class="big">−2 ≤ x ≤ 5</span>　　寫成區間：<span class="mono">[−2, 5]</span></div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 420 100" role="img" aria-label="一條數線，A在負2，B在5，兩點之間整段都用顏色標示為到A、B距離總和等於7的所有點" >
+          <line x1="30" y1="55" x2="390" y2="55" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="160" y="47" width="175" height="16" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/>
+
+          <line x1="160" y1="43" x2="160" y2="67" stroke="var(--accent)" stroke-width="2.2"/>
+          <text x="160" y="86" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">A（−2）</text>
+
+          <line x1="335" y1="43" x2="335" y2="67" stroke="var(--accent)" stroke-width="2.2"/>
+          <text x="335" y="86" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">B（5）</text>
+
+          <text x="247" y="32" text-anchor="middle" class="svg-label" fill="var(--accent)">到A、B距離總和＝7 的所有點</text>
+        </svg>
+        <figcaption>只要站在 A、B 之間任何一點，往兩邊走的距離加起來，都剛好等於 A 到 B 的距離。</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律：一個巧合，其實不是巧合</span>
+      <p>A 到 B 的距離本來就是 <span class="mono">5−(−2)=7</span>。只要 x 站在 A、B 中間，往左走到 A、往右走到 B 的距離加起來，當然就是整段 AB 的長度——這不是湊出來的，是「兩點之間直線最短」的另一種說法：<b>繞路（分開走去 A 再去 B）不會比直接走 AB 短</b>。</p>
+      <p class="note">這正是絕對值裡「三角不等式」<span class="mono">|x+y| ≤ |x|+|y|</span> 的幾何意義：等號成立，剛好對應「x 站在中間，沒有繞路」的情況。</p>
+    </div>
+  </section>
+
+  <!-- ================= 公式工具箱 ================= -->
+  <section class="toolbox prose">
+    <h2>收進工具箱：1-1 數與數線</h2>
+    <p class="lede-line">上面每一條都已經自己推導過一次，不是憑空要背的規則——收錄在這裡，需要時隨時查。</p>
+
+    <h3>有理數・無理數・實數</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式 / 說明</th></tr></thead>
+        <tbody>
+          <tr><td>有理數</td><td class="f">p/q（p,q∈ℤ, q≠0）＝整數、有限小數、循環小數</td></tr>
+          <tr><td>循環小數→分數</td><td class="f">設 x=循環小數，乘 10ⁿ（n=循環節位數）後相減消去循環部分</td></tr>
+          <tr><td>稠密性</td><td class="f">任兩相異有理數之間必存在另一有理數，如取中點 (a+b)/2</td></tr>
+          <tr><td>實數大小</td><td class="f">a&lt;b, c&gt;0 ⟹ ac&lt;bc；c&lt;0 ⟹ ac&gt;bc（變號要反向）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>分點公式・區間表示法</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式 / 說明</th></tr></thead>
+        <tbody>
+          <tr><td>內分點</td><td class="f">AP:BP=m:n ⟹ P = (n·a+m·b)/(m+n)</td></tr>
+          <tr><td>中點</td><td class="f">m:n=1:1 ⟹ 中點 = (a+b)/2</td></tr>
+          <tr><td>區間符號</td><td class="f">[ ] 含端點、( ) 不含端點、∞ 一律用 ( )</td></tr>
+          <tr><td>聯集</td><td class="f">「或」⟺ ∪；「且」⟺ 交集（重疊部分）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>絕對值</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>用途</th><th>公式</th></tr></thead>
+        <tbody>
+          <tr><td>定義</td><td class="f">|x| = x（x≥0）；|x| = −x（x&lt;0）</td></tr>
+          <tr><td>基本性質</td><td class="f">|x|≥0，|x|²=x²，|xy|=|x||y|</td></tr>
+          <tr><td>三角不等式</td><td class="f">|x+y| ≤ |x|+|y|</td></tr>
+          <tr><td>等式</td><td class="f">|x−a|=b ⟺ x=a+b 或 x=a−b</td></tr>
+          <tr><td>小於型不等式</td><td class="f">|x−a|&lt;b ⟺ x∈(a−b,a+b)</td></tr>
+          <tr><td>大於型不等式</td><td class="f">|x−a|&gt;b ⟺ x∈(−∞,a−b)∪(a+b,∞)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 練習題 ================= -->
+  <section class="practice prose">
+    <h2>換你動手做</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">情境</span></div>
+        <p>把 <span class="mono">x = 0.4<span class="ol">18</span></span>（也就是 0.41818181818……，循環節是 18）還原成分數。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">x = 0.41818……
+100x = 41.8181……　（先讓非循環的「4」對齊，乘 10 移一位）
+1000x = 418.181818……　（再乘 10²，讓循環節對齊）
+1000x − 10x = 418.1818… − 4.1818… = 414
+990x = 414　⟹　x = 414/990 = 23/55</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">情境</span></div>
+        <p>判斷 <span class="mono">1+√2</span>、<span class="mono">√2×√2</span>、<span class="mono">(1+√3)+(1−√3)</span> 各是有理數還是無理數。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans">
+            <div class="calc">1+√2：無理數（有理數＋無理數＝無理數，可用反證法說明）
+√2×√2 = 2：有理數
+(1+√3)+(1−√3) = 2：有理數（√3 互相抵銷）</div>
+          </div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">代數</span></div>
+        <p>判斷 √<span class="radicand">17</span> 落在哪兩個相鄰整數之間。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">4²=16 &lt; 17 &lt; 25=5²　⟹　4 &lt; √17 &lt; 5</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">情境</span></div>
+        <p>數線上 A 點坐標 −3，B 點坐標 7。P 在 AB 之間且 <span class="mono">AP:AB = 1:4</span>，求 P 的坐標。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans">AP:PB = 1:3（因為 AP:AB=1:4，所以 AP:PB=1:3）：<div class="calc">P = (3×(−3)+1×7)/(1+3) = (−9+7)/4 = −1/2</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">情境</span></div>
+        <p>用區間表示法寫出：<span class="mono">5&lt;x≤6</span>，以及 <span class="mono">x&lt;4 或 x≥1</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">5&lt;x≤6　⟹　(5, 6]
+x&lt;4 或 x≥1　⟹　全體實數 ℝ（因為兩段區間重疊涵蓋了所有數）</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">6</span><span class="qtag alg">代數</span></div>
+        <p>解不等式 <span class="mono">1≤|x|&lt;3</span>，並寫成區間聯集。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">|x|≥1 且 |x|&lt;3
+⟹ (x≤−1 或 x≥1) 且 (−3&lt;x&lt;3)
+⟹ x∈(−3,−1] ∪ [1,3)</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">7</span><span class="qtag">情境</span></div>
+        <p>某手工水餃包裝標示，每顆重量是 32 公克 ± 5%。設每顆水餃的實際重量為 x 公克，寫出 x 滿足的絕對值不等式。（提示：P公克±a%意指 P公克±P×a%公克）</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans">誤差範圍是 <span class="mono">32×5% = 1.6</span> 公克：<div class="calc">|x−32| ≤ 1.6</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">8</span><span class="qtag alg">代數</span></div>
+        <p>解方程式 <span class="mono">|x|+|x−5|≥1</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans">分界點 x=0, x=5，分三段討論：
+            <div class="calc">x&lt;0：−x−(x−5)≥1 ⟹ −2x+5≥1 ⟹ x≤2，配合 x&lt;0 ⟹ x&lt;0（全部符合）
+0≤x&lt;5：x−(x−5)=5≥1（恆成立）⟹ 這段全部符合
+x≥5：x+(x−5)≥1 ⟹ 2x≥6 ⟹ x≥3，配合 x≥5 ⟹ x≥5（全部符合）</div>
+          合併：<span class="mono">x∈ℝ</span>（所有實數都滿足，因為 0、5 兩點距離已經是 5，加起來一定 ≥1）。</div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">9</span><span class="qtag alg">代數</span></div>
+        <p>解不等式 <span class="mono">|2x−1|≤3</span>。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">−3≤2x−1≤3 ⟹ −2≤2x≤4 ⟹ −1≤x≤2　⟹ x∈[−1,2]</div></div>
+        </details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">10</span><span class="qtag">情境</span></div>
+        <p>P、Q 是數線上兩點，坐標分別是 2、12。R 在 P、Q 之間，且 <span class="mono">PR:RQ=3:2</span>，求 R 的坐標，並求 R 到 P、Q 的距離和。</p>
+        <details>
+          <summary>查看解答</summary>
+          <div class="ans"><div class="calc">R = (2×2+3×12)/(3+2) = (4+36)/5 = 8
+PR = |8−2|=6，RQ=|12−8|=4，PR+RQ=10=PQ ✓</div></div>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 結語 ================= -->
+  <section class="closing prose">
+    <div class="figure-card">
+      <h2>給筱葳的話</h2>
+      <p>這一節走了一趟完整的路：先認識有理數（分披薩），再發現無理數（量對角線），合併成實數，接著學會用分點公式精準定位數線上的任何一點，用區間表示法描述一段範圍，最後用絕對值量出「距離」。</p>
+      <p>六個主題看似獨立，其實都在回答同一件事：怎麼把數線上的點、範圍、距離，講得又準確又簡潔。下一份教材「1-2 式的運算」會把這些數字工具，延伸到代數式的乘法公式、分式與根式運算、以及算幾不等式。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數1 第一章 數與式</span>
+    <span>1-1 數與數線</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
