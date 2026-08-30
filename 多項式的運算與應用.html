@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-1 多項式的運算與應用｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學1・第三章 多項式函數・3-1</span>
+    <h1>多項式的運算與應用</h1>
+    <p class="sub">從社區蓄水池的水位變化模型出發，認識多項式的定義、四則運算與綜合除法，並學會用餘式定理與因式定理快速求值、找根。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>多項式其實就是我們熟悉的「加減乘除」延伸——只是把數字換成了含有 x（或 t）的式子。這一節用社區蓄水池的水位模型，把定義、運算、餘式定理和因式定理串成同一條故事線。</p>
+    <ul class="toc">
+      <li><a href="#topic-definition"><b>1</b>多項式的定義</a></li>
+      <li><a href="#topic-operations"><b>2</b>多項式的四則運算</a></li>
+      <li><a href="#topic-remainder-factor"><b>3</b>餘式定理與因式定理</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-definition">
+    <div class="part-kicker"><b>多項式的定義</b></div>
+    <h2>蓄水池的水位，原來是一個多項式</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">社區蓄水池旁立著一塊「標準水位」紅色刻度線。維修工程師想知道：早上8點之後，水位會比標準線高還是低？他測了好幾個時間點，配出一條公式。設 t 為從早上8點起算的時數（小時），水位偏差（正值代表比標準線高，負值代表比標準線低，單位：公分）是：</p>
+      <div class="formula"><span class="big">f(t) = 2t³ − 9t² + 12t − 4</span></div>
+      <p>這是一個由「多項式」構成的函數——但多項式到底是什麼？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>把 f(t) 拆開來看，它是由四個部分「相加」組成：</p>
+      <div class="calc">2t³　　（t 的三次方乘以係數 2）
+−9t²　（t 的二次方乘以係數 −9）
+12t　　（t 的一次方乘以係數 12）
+−4　　（沒有 t，只是一個常數）</div>
+      <p>每一個像 <span class="mono">2t³</span> 這樣「係數 × t 的非負整數次方」的式子，叫做<b>單項式</b>；把幾個單項式用加減號連起來，就是<b>多項式</b>。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 160" role="img" aria-label="水位偏差隨時間變化的示意曲線">
+          <line x1="20" y1="140" x2="240" y2="140" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="20" y1="140" x2="20" y2="20" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M20,120 C60,40 90,150 130,90 C170,40 200,60 235,15" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <line x1="20" y1="95" x2="240" y2="95" stroke="var(--b2)" stroke-width="1.4" stroke-dasharray="4 3"/>
+          <text x="150" y="90" class="svg-label" fill="var(--b2)">標準水位線</text>
+          <text x="24" y="18" class="svg-label" fill="currentColor">水位偏差 f(t)</text>
+          <text x="205" y="155" class="svg-label" fill="currentColor">t（小時）</text>
+        </svg>
+        <figcaption>水位偏差會隨時間忽高忽低，f(t) 就是描述這條曲線的多項式</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>多項式裡最大的指數，叫做這個多項式的<b>次數</b>；次數最高的那一項叫<b>首項</b>，它的係數叫<b>首項係數</b>。把各項按指數由大到小排好，就是<b>標準式</b>：</p>
+      <div class="formula">
+        <div class="formula-title">多項式的標準式</div>
+        f(x) = a<sub>n</sub>x<sup>n</sup> + a<sub>n−1</sub>x<sup>n−1</sup> + ⋯ + a<sub>1</sub>x + a<sub>0</sub>　（a<sub>n</sub>≠0，稱為 n 次多項式）
+      </div>
+      <p>蓄水池的模型 <span class="mono">f(t)=2t³−9t²+12t−4</span> 已經是標準式：三次多項式，首項係數 2，常數項 −4。</p>
+      <p>「代 t = 某個時刻進去算出來的值」就是<b>函數值</b>，例如：</p>
+      <div class="calc">f(0) = 2(0)³−9(0)²+12(0)−4 = −4　（早上8點，水位比標準線低4公分）
+f(1) = 2(1)−9(1)+12(1)−4 = 1　　（9點，已回升到高1公分）
+f(2) = 2(8)−9(4)+12(2)−4 = 0　　（10點，水位恰好回到標準線）</div>
+      <p class="note">如果另一位工程師寫出 g(t)=2t³+at²+bt+c，而 g(t) 其實跟 f(t) 是同一條曲線，那麼兩個多項式「相等」，對應的係數必須完全一樣：a=−9、b=12、c=−4。這就是「兩多項式相等」的判斷法——次數相同，且每一項係數都對應相等。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">另一個蓄水池的水位偏差模型是 p(t) = 5 − 3t + t⁴。這是幾次多項式？首項係數、常數項各是多少？標準式怎麼寫？</p>
+      <div class="calc">整理成標準式（指數由大到小）：p(t) = t⁴ − 3t + 5
+次數：4（四次多項式）
+首項係數：1
+常數項：5</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-operations">
+    <div class="part-kicker"><b>多項式的四則運算</b></div>
+    <h2>兩座蓄水池，可以加減乘除嗎？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">社區其實有兩座蓄水池。池A的水位偏差是 f(t)=2t³−9t²+12t−4，池B的水位偏差是 g(t)=t³−4t²+3t+6。物業想知道：兩池「合計」的水位偏差是多少？兩池「相差」多少？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>多項式加減法，就是把「同類項」（次數相同的項）的係數相加減，其餘照抄——跟國中學過的合併同類項一樣：</p>
+      <div class="calc">f(t)+g(t) = (2+1)t³ + (−9−4)t² + (12+3)t + (−4+6)
+        = 3t³ − 13t² + 15t + 2
+
+f(t)−g(t) = (2−1)t³ + (−9−(−4))t² + (12−3)t + (−4−6)
+        = t³ − 5t² + 9t − 10</div>
+      <p>乘法則靠 <span class="mono">ax<sup>n</sup>·bx<sup>m</sup>=abx<sup>n+m</sup></span> 這個規則展開、再合併同類項；兩個多項式相乘，次數會相加：<span class="mono">deg(f·g)=deg(f)+deg(g)</span>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式：除法</span>
+      <p>如果想知道「f(t) 在某個時間點附近怎麼變化」，常常要把 f(t) 除以一個一次式，例如 <span class="mono">(t−2)</span>。就像整數除法 <span class="mono">17÷5=3 餘 2</span>，多項式除法也有同樣的架構：</p>
+      <div class="formula">
+        <div class="formula-title">除法原理</div>
+        f(x) = g(x)·q(x) + r(x)　，其中 deg(r(x)) &lt; deg(g(x))　或　r(x)=0
+      </div>
+      <p>當除式是一次式 <span class="mono">(x−c)</span> 時，可以用更快的<b>綜合除法</b>直接算出商式與餘式。用綜合除法算 <span class="mono">f(t)÷(t−2)</span>：</p>
+      <div class="calc">係數：  2    −9    12    −4
+        ×2    −10     4
+       ─────────────────
+        2    −5     2  |  0   ← 餘式
+
+商式：2t² − 5t + 2　　餘式：0</div>
+      <p>餘式是 0，代表 <span class="mono">(t−2)</span> 可以「整除」f(t)——這個線索，下一個主題會用因式定理再次確認。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">承上題，用綜合除法算出 g(t)=t³−4t²+3t+6 除以 (t−3) 的商式與餘式。</p>
+      <div class="calc">係數：  1    −4     3     6
+        ×3    −3     0
+       ─────────────────
+        1    −1     0  |  6   ← 餘式
+
+商式：t² − t　　餘式：6</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-remainder-factor">
+    <div class="part-kicker"><b>餘式定理與因式定理</b></div>
+    <h2>不用整個除完，也能知道餘數與根</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">物業想快速知道下午1點（t=5）時池A的水位偏差；也想知道：水位「剛好回到標準線」的時刻有哪些？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式：餘式定理</span>
+      <p>如果只是要「求某一點的函數值」，其實不必列出完整的除法算式。觀察除法原理：f(x)=(x−c)·q(x)+r，把 x=c 代進去，右邊 (x−c) 那項會變成 0，所以：</p>
+      <div class="calc">f(c) = (c−c)·q(c) + r = r</div>
+      <p>也就是說，<b>f(x) 除以 (x−c) 的餘式，就等於 f(c)</b>。要算 f(5)，可以直接用綜合除法除以 (t−5)，餘式就是答案：</p>
+      <div class="calc">係數：  2    −9    12    −4
+        ×5     5    85
+       ─────────────────
+        2     1    17  |  81   ← f(5)=81</div>
+      <p>驗算：f(5)=2(125)−9(25)+12(5)−4=250−225+60−4=81。與綜合除法的餘式完全一致。</p>
+      <div class="formula">
+        <div class="formula-title">餘式定理</div>
+        f(x) 除以 (ax−b) 的餘式 = f(b／a)
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式：因式定理</span>
+      <p>在「多項式的四則運算」裡，用綜合除法算出 <span class="mono">f(t)÷(t−2)</span> 餘式是 0，這代表 f(2)=0（由餘式定理），也代表 <span class="mono">(t−2)</span> 是 f(t) 的因式——這就是<b>因式定理</b>：</p>
+      <div class="formula">
+        <div class="formula-title">因式定理</div>
+        f(x) 有一次因式 (ax−b)　⟺　f(b／a)=0
+      </div>
+      <p>既然 <span class="mono">(t−2)</span> 是因式，商式是 <span class="mono">2t²−5t+2</span>（上一個主題已經除出來），繼續因式分解：</p>
+      <div class="calc">2t²−5t+2 = (2t−1)(t−2)</div>
+      <p>所以完整分解：</p>
+      <div class="formula"><span class="big">f(t) = (t−2)²(2t−1)</span></div>
+      <p>令 f(t)=0，解得 <span class="mono">t=2</span>（重根）或 <span class="mono">t=0.5</span>。也就是說，水位「剛好回到標準線」發生在上午8:30（t=0.5）與上午10:00（t=2）兩個時刻——其中 t=2 是重根，稍後在 3-3 討論圖形時，會看到這代表水位在那一刻只是「碰到」標準線，並沒有真正穿越過去。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">已知 h(x)=x³−2x²−5x+6 且 h(1)=0，利用因式定理將 h(x) 完全分解，並求出所有使 h(x)=0 的 x 值。</p>
+      <div class="calc">已知 (x−1) 是因式，綜合除法：
+係數：  1    −2    −5     6
+        ×1    −1    −6
+       ─────────────────
+        1    −1    −6  |  0
+
+商式：x²−x−6 = (x−3)(x+2)
+
+完整分解：h(x) = (x−1)(x−3)(x+2)
+h(x)=0 的解：x = 1, 3, −2</div>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：3-1 多項式的運算與應用</h2>
+    <p class="lede-line">這一節學到的定義與定理，之後每一節都會直接拿來用。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>標準式</td><td class="f">f(x)=aₙxⁿ+aₙ₋₁xⁿ⁻¹+⋯+a₁x+a₀（aₙ≠0，n次多項式）</td></tr>
+          <tr><td>加減法</td><td class="f">同次數的項（同類項）係數相加減，其餘照抄</td></tr>
+          <tr><td>乘法</td><td class="f">axⁿ·bxᵐ=abxⁿ⁺ᵐ；deg(f·g)=deg(f)+deg(g)</td></tr>
+          <tr><td>除法原理</td><td class="f">f(x)=g(x)q(x)+r(x)，deg(r)&lt;deg(g) 或 r(x)=0</td></tr>
+          <tr><td>綜合除法</td><td class="f">除式為一次式 (x−c) 時的簡便算法</td></tr>
+          <tr><td>餘式定理</td><td class="f">f(x)÷(ax−b) 的餘式 = f(b／a)</td></tr>
+          <tr><td>因式定理</td><td class="f">f(x) 有因式 (ax−b) ⟺ f(b／a)=0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">定義</span></div>
+        <p>若 f(x)=3x⁴−x²+2x−7，寫出次數、首項係數、常數項，並求 f(−1)。</p>
+        <details><summary>參考答案</summary><div class="ans">次數 4，首項係數 3，常數項 −7。
+          <div class="calc">f(−1) = 3(1) − 1 + (−2) − 7 = −7</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">四則運算</span></div>
+        <p>設 f(x)=2x³−9x²+12x−4，g(x)=x³−4x²+3x+6，求 f(x)−g(x)。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">f(x)−g(x) = x³ − 5x² + 9x − 10</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">綜合除法</span></div>
+        <p>求 f(x)=2x³−9x²+12x−4 除以 (x−1) 的商式與餘式（用綜合除法）。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">係數：  2    −9    12    −4
+        ×1    −7     5
+       ─────────────────
+        2    −7     5  |  1
+
+商式：2x²−7x+5　　餘式：1（即 f(1)=1）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">餘式定理</span></div>
+        <p>不用長除法，直接利用餘式定理求 f(x)=2x³−9x²+12x−4 除以 (x−4) 的餘式。</p>
+        <details><summary>參考答案</summary><div class="ans">餘式 = f(4) = 2(64)−9(16)+12(4)−4 = 128−144+48−4 = 28。</div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">因式定理</span></div>
+        <p>已知 k(x)=x³+2x²−5x−6 且 k(−1)=0，請完全分解 k(x) 並求所有的根。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">綜合除法（除以 x+1）：
+係數：  1     2    −5    −6
+        ×−1   −1     6
+       ─────────────────
+        1     1    −6  |  0
+
+商式：x²+x−6 = (x+3)(x−2)
+
+完整分解：k(x) = (x+1)(x+3)(x−2)
+根：x = −1, −3, 2</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：把水位畫成圖</h2>
+      <p>這一節建立的 f(t) = 2t³−9t²+12t−4 = (t−2)²(2t−1)，會在 3-3「多項式函數的圖形與多項式不等式」再度出現——到時候我們會把它畫成圖形，看看水位到底是怎麼升降的，並用這個模型解出多項式不等式。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學1・第三章</span>
+    <span>3-1 多項式的運算與應用</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

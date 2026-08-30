@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-2 簡單多項式函數及其圖形｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學1・第三章 多項式函數・3-2</span>
+    <h1>簡單多項式函數及其圖形</h1>
+    <p class="sub">從公園的對稱花圃、停車場的收費方式，到靠牆菜圃的最大面積，認識函數的圖形語言，並學會用配方法看懂二次函數的頂點與最大、最小值。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>函數的圖形，說穿了就是把「輸入與輸出的關係」畫成一條線。這一節從公園的對稱設計出發，經過停車場的收費方式，最後用配方法解決一個「怎麼圍出最大菜圃」的實際問題。</p>
+    <ul class="toc">
+      <li><a href="#topic-symmetry"><b>1</b>坐標圖形的對稱與中點</a></li>
+      <li><a href="#topic-function"><b>2</b>函數的概念與圖形</a></li>
+      <li><a href="#topic-linear"><b>3</b>常數函數與一次函數</a></li>
+      <li><a href="#topic-quadratic"><b>4</b>二次函數的圖形與應用</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-symmetry">
+    <div class="part-kicker"><b>坐標圖形的對稱與中點</b></div>
+    <h2>公園的對稱花圃，要蓋在哪裡？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">社區公園以大門為原點畫坐標，一座景觀水池蓋在 P(4,3)（單位：十公尺）。設計師想沿著幾條步道對稱增建：沿東西向的 x 軸步道對稱、沿南北向的 y 軸步道對稱、沿一條 45° 斜對角步道（y=x）對稱，還有以中央噴泉（原點）為中心對稱。新水池分別該蓋在哪裡？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>畫圖觀察就會發現：沿 x 軸對稱，左右的 x 坐標不變，上下翻過去，y 坐標變號；沿 y 軸對稱則反過來；沿 y=x 對稱，就是把 x、y 坐標「互換」；而以原點為中心對稱，x、y 都變號。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 220" role="img" aria-label="點P與其四種對稱點的坐標示意圖">
+          <line x1="20" y1="110" x2="240" y2="110" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="130" y1="10" x2="130" y2="210" stroke="currentColor" stroke-width="1.2"/>
+          <circle cx="190" cy="60" r="4" fill="var(--accent)"/>
+          <text x="196" y="58" class="svg-label" fill="var(--accent)">P(4,3)</text>
+          <circle cx="190" cy="160" r="4" fill="var(--b2)"/>
+          <text x="196" y="178" class="svg-label" fill="var(--b2)">對x軸(4,−3)</text>
+          <circle cx="70" cy="60" r="4" fill="var(--ab)"/>
+          <text x="6" y="58" class="svg-label" fill="var(--ab)">對y軸(−4,3)</text>
+          <circle cx="70" cy="160" r="4" fill="var(--a2)"/>
+          <text x="2" y="178" class="svg-label" fill="var(--a2)">對原點(−4,−3)</text>
+        </svg>
+        <figcaption>P(4,3) 沿不同步道對稱後的位置</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">公式</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>對稱方式</th><th>P(a,b) 的對稱點</th></tr></thead>
+          <tbody>
+            <tr><td>沿 x 軸對稱</td><td class="f">(a, −b)</td></tr>
+            <tr><td>沿 y 軸對稱</td><td class="f">(−a, b)</td></tr>
+            <tr><td>沿直線 y=x 對稱</td><td class="f">(b, a)</td></tr>
+            <tr><td>以原點對稱</td><td class="f">(−a, −b)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：中點坐標</span>
+      <p class="quote">水池 P(4,3) 和涼亭 Q(−2,7) 中間要設一張長椅，長椅應該放在坐標平面上的哪一點？</p>
+      <p>兩點 <span class="mono">P(a₁,b₁)、Q(a₂,b₂)</span> 連線的中點公式：</p>
+      <div class="formula">M = ((a₁+a₂)／2, (b₁+b₂)／2)</div>
+      <div class="calc">M = ((4+(−2))／2, (3+7)／2) = (1, 5)</div>
+      <p>長椅應該放在 (1,5)。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-function">
+    <div class="part-kicker"><b>函數的概念與圖形</b></div>
+    <h2>停車場的收費表，就是一個函數</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">社區地下停車場的計費看板寫著：清潔費20元，每停1小時再加收30元。停 x 小時，要付多少錢？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>不管 x 是多少，代進公式後都只會算出「唯一」一個收費金額——這種「每一個輸入，對應唯一一個輸出」的關係，就是<b>函數</b>。</p>
+      <div class="formula">
+        <div class="formula-title">函數的概念</div>
+        設 x、y 是兩個變數。若 x 每取一個值，y 都有<b>唯一確定</b>的值與它對應，就稱 y 是 x 的函數，記為 f，寫成 y=f(x)。
+      </div>
+      <p>停車場的收費公式是 <span class="mono">f(x)=30x+20</span>（x：小時，f(x)：元）。代入幾個時數：</p>
+      <div class="calc">f(1) = 30(1)+20 = 50　（元）
+f(2) = 30(2)+20 = 80　（元）
+f(3) = 30(3)+20 = 110　（元）</div>
+      <p>把 (x, f(x)) 這些點畫在坐標平面上、連起來，就是 f 的圖形——本節接下來會看到，f(x)=30x+20 的圖形是一條斜直線。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">若停車場改成「不管停多久，月租都是2000元」，這個月租方案是不是 x（天數）的函數？</p>
+      <p>是。因為不管 x 取哪一天，輸出永遠是唯一確定的 2000 元——只是這個函數的值「固定不變」，這正是下一個主題要介紹的常數函數。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-linear">
+    <div class="part-kicker"><b>常數函數與一次函數</b></div>
+    <h2>月租方案 vs. 時租方案，圖形差在哪？</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式：常數函數</span>
+      <p>月租方案 <span class="mono">f(x)=2000</span>，不管 x 是多少，函數值永遠是 2000。這種函數叫<b>常數函數</b>：</p>
+      <div class="formula">f(x) = c　（c 為常數）——圖形是一條通過 (0,c)、平行 x 軸的水平線</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式：一次函數</span>
+      <p>時租方案 <span class="mono">f(x)=30x+20</span>，圖形是一條斜直線，叫<b>一次函數</b>：</p>
+      <div class="formula">f(x) = ax+b　（a≠0）——圖形是過 (0,b) 的斜直線，a 決定傾斜方向與陡緩</div>
+      <p><span class="mono">a &gt; 0</span> 時，x 越大 f(x) 越大（線由左下往右上）；<span class="mono">a &lt; 0</span> 時則相反。b 是「x=0 時」的函數值，也就是圖形跟 y 軸的交點——在停車場的例子裡，b=20 元就是「還沒開始計時」也要付的清潔費。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">隔壁棟停車場的方案是 <span class="mono">g(x)=25x+35</span>。停 3 小時的話，兩個方案一樣嗎？停更久呢？</p>
+      <div class="calc">f(3) = 30(3)+20 = 110（元）
+g(3) = 25(3)+35 = 110（元）</div>
+      <p>停 3 小時兩者一樣；但 g 的斜率 25 小於 f 的斜率 30，代表每多停 1 小時，g 只多收 25 元、f 卻多收 30 元——停得越久，g 方案越划算。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-quadratic">
+    <div class="part-kicker"><b>二次函數的圖形與應用</b></div>
+    <h2>用100公尺的圍籬，圍出最大的菜圃</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">農夫家旁邊有一道長長的牆，他想用一段100公尺的圍籬，靠著牆圍出一個矩形菜圃（靠牆的那一邊不用圍）。要怎麼圍，面積才會最大？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>設垂直於牆的那兩邊各長 x 公尺，剩下的圍籬長度就是平行牆的那一邊：<span class="mono">100−2x</span> 公尺。面積：</p>
+      <div class="calc">A(x) = x(100−2x) = −2x² + 100x</div>
+      <p>A(x) 是 x 的二次函數，而且首項係數 <span class="mono">−2 &lt; 0</span>——代表它的圖形是一個開口向下的拋物線，會有一個「最高點」。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 170" role="img" aria-label="靠牆矩形菜圃的示意圖">
+          <rect x="30" y="20" width="200" height="10" fill="var(--ink-muted)"/>
+          <text x="118" y="15" class="svg-label" fill="currentColor">牆</text>
+          <rect x="30" y="30" width="200" height="90" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <line x1="30" y1="30" x2="30" y2="120" stroke="var(--b2)" stroke-width="3"/>
+          <line x1="230" y1="30" x2="230" y2="120" stroke="var(--b2)" stroke-width="3"/>
+          <text x="8" y="78" class="svg-label" fill="var(--b2)">x</text>
+          <text x="238" y="78" class="svg-label" fill="var(--b2)">x</text>
+          <text x="98" y="140" class="svg-label" fill="currentColor">100−2x</text>
+        </svg>
+        <figcaption>靠牆的一邊不用圍籬，圍籬只用在三邊</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式：配方法找頂點</span>
+      <p>要找拋物線的最高點，用<b>配方法</b>把 A(x) 湊成「完全平方＋常數」的形式：</p>
+      <div class="calc">A(x) = −2x²+100x
+     = −2(x²−50x)
+     = −2(x²−50x+625−625)
+     = −2(x−25)² + 1250</div>
+      <div class="formula">
+        <div class="formula-title">二次函數的配方法</div>
+        f(x) = ax²+bx+c = a(x + b／2a)² + (4ac−b²)／4a　（a≠0）
+      </div>
+      <p>頂點坐標就是 <span class="mono">(−b／2a, (4ac−b²)／4a)</span>，圖形以 <span class="mono">x=−b／2a</span> 這條鉛垂線為對稱軸。這裡頂點是 <span class="mono">(25, 1250)</span>：當 x=25（垂直牆的邊長25公尺）時，面積最大，最大面積是1250平方公尺。</p>
+      <p class="note">因為首項係數 <span class="mono">a=−2&lt;0</span>，圖形開口向下，頂點就是「最高點」，函數有<b>最大值</b>；如果 <span class="mono">a&gt;0</span>，圖形開口向上，頂點是「最低點」，函數則有<b>最小值</b>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">如果圍籬改成80公尺，一樣靠牆圍矩形，最大面積是多少？</p>
+      <div class="calc">A(x) = x(80−2x) = −2x²+80x = −2(x²−40x)
+     = −2(x²−40x+400−400) = −2(x−20)²+800</div>
+      <p>當 x=20 公尺時，面積最大，最大面積800平方公尺。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：3-2 簡單多項式函數及其圖形</h2>
+    <p class="lede-line">從對稱、函數概念，到二次函數配方求極值，這些是判斷圖形形狀的基本功。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>對稱點</td><td class="f">P(a,b) 對x軸(a,−b)、對y軸(−a,b)、對y=x(b,a)、對原點(−a,−b)</td></tr>
+          <tr><td>中點坐標</td><td class="f">M=((a₁+a₂)／2,(b₁+b₂)／2)</td></tr>
+          <tr><td>函數</td><td class="f">y=f(x)：x每取一值，y有唯一確定的值對應</td></tr>
+          <tr><td>常數函數</td><td class="f">f(x)=c，圖形為水平線</td></tr>
+          <tr><td>一次函數</td><td class="f">f(x)=ax+b（a≠0），圖形為過(0,b)的斜直線</td></tr>
+          <tr><td>二次函數配方</td><td class="f">f(x)=ax²+bx+c=a(x+b／2a)²+(4ac−b²)／4a</td></tr>
+          <tr><td>頂點與極值</td><td class="f">頂點(−b／2a,(4ac−b²)／4a)；a&gt;0有最小值，a&lt;0有最大值</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">對稱與中點</span></div>
+        <p>點 P(−3,5)，求其對 x 軸、y 軸、原點的對稱點，並求 P 與 Q(5,−1) 的中點。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">對x軸：(−3,−5)　對y軸：(3,5)　對原點：(3,−5)
+中點：((−3+5)／2,(5−1)／2) = (1,2)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">函數概念</span></div>
+        <p>停車場收費 f(x)=30x+20（x為小時），求 f(4)，並說明 f(0) 代表什麼意義。</p>
+        <details><summary>參考答案</summary><div class="ans">f(4)=30(4)+20=140（元）。f(0)=20，代表即使還沒開始計時，也要付的基本清潔費。</div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">常數函數與一次函數</span></div>
+        <p>判斷 y=2000 與 y=45x 哪一個是常數函數、哪一個是一次函數，並說明圖形差異。</p>
+        <details><summary>參考答案</summary><div class="ans">y=2000 是常數函數，圖形是水平線；y=45x 是一次函數（a=45,b=0），圖形是通過原點、由左下往右上的斜直線。</div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">二次函數配方</span></div>
+        <p>用配方法求 f(x)=−2x²+60x 的頂點坐標與最大值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">f(x) = −2x²+60x = −2(x²−30x)
+     = −2(x²−30x+225−225) = −2(x−15)²+450
+
+頂點 (15,450)，最大值 450</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">應用</span></div>
+        <p>若圍籬總長改為120公尺（一樣靠牆圍矩形），求最大面積。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">A(x) = x(120−2x) = −2x²+120x = −2(x²−60x)
+     = −2(x−30)²+1800
+
+當 x=30 公尺時，最大面積 1800 平方公尺</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：曲線也可能忽高忽低</h2>
+      <p>這一節看到的拋物線，只有一個最高點或最低點；到了3-3「多項式函數的圖形與多項式不等式」，我們會把目光轉向三次函數的圖形——那時候，同一條曲線可能同時出現局部的最高點和最低點。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學1・第三章</span>
+    <span>3-2 簡單多項式函數及其圖形</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
