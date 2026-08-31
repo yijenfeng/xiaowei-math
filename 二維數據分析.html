@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-2 二維數據分析｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學2・第三章 數據分析・3-2</span>
+    <h1>二維數據分析</h1>
+    <p class="sub">延續飲料店「珍煮丹」的故事，用氣溫與銷售量兩組數據，認識散布圖、相關係數，並學會用迴歸直線做預測。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>3-1 學到的工具，都是分析「一組資料」自己的特徵。這一節老闆丟出一個更有趣的問題：「氣溫會不會影響我們的銷售量？」要回答這種「兩組數據有沒有關係」的問題，就要進入二維數據分析。</p>
+    <ul class="toc">
+      <li><a href="#topic-scatter"><b>1</b>散布圖與相關性</a></li>
+      <li><a href="#topic-correlation"><b>2</b>相關係數 r</a></li>
+      <li><a href="#topic-regression"><b>3</b>最小平方法與迴歸直線</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-scatter">
+    <div class="part-kicker"><b>散布圖與相關性</b></div>
+    <h2>把兩組數據畫在同一張圖上</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">老闆記錄了連續5天中午的氣溫，以及當天「冰珍珠奶茶」和「熱美式咖啡」的銷售杯數：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>氣溫（°C）</th><th>28</th><th>30</th><th>32</th><th>34</th><th>36</th></tr></thead>
+          <tbody>
+            <tr><td>冰珍奶（杯）</td><td class="f">51</td><td class="f">53</td><td class="f">60</td><td class="f">67</td><td class="f">69</td></tr>
+            <tr><td>熱美式（杯）</td><td class="f">42</td><td class="f">38</td><td class="f">30</td><td class="f">25</td><td class="f">20</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>把「氣溫」當作 x 座標、「銷售杯數」當作 y 座標，每一天就對應一個點 (x, y)，畫在坐標平面上，就是<b>散布圖</b>。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 175" role="img" aria-label="氣溫與冰珍奶銷售杯數的散布圖，隨氣溫升高銷售杯數也上升，呈現正相關">
+          <line x1="30" y1="155" x2="30" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="20" y1="150" x2="245" y2="150" stroke="currentColor" stroke-width="1.2"/>
+          <circle cx="77.3" cy="96.0" r="4" fill="var(--accent)"/>
+          <circle cx="108.8" cy="89.2" r="4" fill="var(--accent)"/>
+          <circle cx="140.4" cy="65.6" r="4" fill="var(--accent)"/>
+          <circle cx="171.9" cy="42.0" r="4" fill="var(--accent)"/>
+          <circle cx="203.5" cy="35.2" r="4" fill="var(--accent)"/>
+          <text x="60" y="168" class="svg-label" fill="currentColor">28</text>
+          <text x="136" y="168" class="svg-label" fill="currentColor">32</text>
+          <text x="199" y="168" class="svg-label" fill="currentColor">36</text>
+          <text x="205" y="168" class="svg-label" fill="currentColor">氣溫(°C)</text>
+          <text x="34" y="22" class="svg-label" fill="currentColor">銷量(杯)</text>
+        </svg>
+        <figcaption>冰珍奶：氣溫越高，銷售杯數也越多——點的分布由左下到右上，是正相關</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 175" role="img" aria-label="氣溫與熱美式銷售杯數的散布圖，隨氣溫升高銷售杯數下降，呈現負相關">
+          <line x1="30" y1="155" x2="30" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="20" y1="150" x2="245" y2="150" stroke="currentColor" stroke-width="1.2"/>
+          <circle cx="77.3" cy="28.5" r="4" fill="var(--b2)"/>
+          <circle cx="108.8" cy="46.5" r="4" fill="var(--b2)"/>
+          <circle cx="140.4" cy="82.5" r="4" fill="var(--b2)"/>
+          <circle cx="171.9" cy="105.0" r="4" fill="var(--b2)"/>
+          <circle cx="203.5" cy="127.5" r="4" fill="var(--b2)"/>
+          <text x="60" y="168" class="svg-label" fill="currentColor">28</text>
+          <text x="136" y="168" class="svg-label" fill="currentColor">32</text>
+          <text x="199" y="168" class="svg-label" fill="currentColor">36</text>
+          <text x="205" y="168" class="svg-label" fill="currentColor">氣溫(°C)</text>
+          <text x="34" y="22" class="svg-label" fill="currentColor">銷量(杯)</text>
+        </svg>
+        <figcaption>熱美式：氣溫越高，銷售杯數反而越少——點的分布由左上到右下，是負相關</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>從散布圖的形狀，可以粗略判斷兩組數據的關聯方向：</p>
+      <div class="calc">正相關：點的分布由左下往右上，一個變數變大，另一個也跟著變大（例如：氣溫 vs 冰珍奶銷量）
+負相關：點的分布由左上往右下，一個變數變大，另一個反而變小（例如：氣溫 vs 熱美式銷量）
+零相關：點的分布沒有明顯方向，看不出關聯（例如：氣溫 vs 當天排班的店員人數——因為排班表是提前固定的，跟氣溫無關）</div>
+      <p class="note">散布圖只能「粗略判斷」關聯的方向與強弱，如果要精確衡量兩組數據的關聯程度，就需要下一個工具：相關係數。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-correlation">
+    <div class="part-kicker"><b>相關係數 r</b></div>
+    <h2>用一個數字，衡量關聯的強弱</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">老闆看著散布圖說：「冰珍奶跟氣溫看起來很有關係，但『很有關係』到底是多有關係？能不能給我一個具體的數字？」這正是<b>相關係數</b>要回答的問題。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>用冰珍奶的資料計算：先求出 x（氣溫）與 y（銷量）的平均數，再算出每筆資料的離均差、離均差的乘積、以及離均差的平方：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>x</th><th>y</th><th>x−μₓ</th><th>y−μᵧ</th><th>(x−μₓ)(y−μᵧ)</th><th>(x−μₓ)²</th><th>(y−μᵧ)²</th></tr></thead>
+          <tbody>
+            <tr><td class="f">28</td><td class="f">51</td><td class="f">−4</td><td class="f">−9</td><td class="f">36</td><td class="f">16</td><td class="f">81</td></tr>
+            <tr><td class="f">30</td><td class="f">53</td><td class="f">−2</td><td class="f">−7</td><td class="f">14</td><td class="f">4</td><td class="f">49</td></tr>
+            <tr><td class="f">32</td><td class="f">60</td><td class="f">0</td><td class="f">0</td><td class="f">0</td><td class="f">0</td><td class="f">0</td></tr>
+            <tr><td class="f">34</td><td class="f">67</td><td class="f">2</td><td class="f">7</td><td class="f">14</td><td class="f">4</td><td class="f">49</td></tr>
+            <tr><td class="f">36</td><td class="f">69</td><td class="f">4</td><td class="f">9</td><td class="f">36</td><td class="f">16</td><td class="f">81</td></tr>
+            <tr><td>總和</td><td></td><td></td><td></td><td class="f">100</td><td class="f">40</td><td class="f">260</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>其中 μₓ=32、μᵧ=60。把總和分別記作 S_xy=100（乘積和）、S_xx=40（x的平方和）、S_yy=260（y的平方和）。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">公式</span>
+      <div class="formula">
+        <div class="formula-title">相關係數（原始資料公式）</div>
+        <span class="big">r = S_xy ／ √(S_xx · S_yy)</span>
+      </div>
+      <div class="calc">r = 100 ÷ √(40×260) = 100 ÷ √10400 ≈ 100 ÷ 101.98 ≈ 0.98</div>
+      <p>r≈0.98 非常接近1，代表氣溫和冰珍奶銷量之間有非常強的正相關。（用同樣的方法算熱美式的資料，會得到 r≈−0.99，同樣非常接近−1，代表兩者是非常強的負相關。）</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律：相關係數的性質</span>
+      <div class="calc">(1) −1 ≤ r ≤ 1
+(2) r&gt;0 為正相關；r&lt;0 為負相關；r=0 為零相關（或稱不具線性相關）
+(3) r=1 表示完全正相關（所有點成一直線，往右上）；r=−1 表示完全負相關（所有點成一直線，往右下）
+(4) |r| 越接近1，代表兩組資料的線性關聯越強；越接近0，線性關聯越弱</div>
+      <p class="note">相關係數只衡量「線性」關聯的強弱。如果兩組資料呈現的是曲線關係（例如拋物線），就算關聯很明顯，r 也可能算出接近0的數值——因為它們不是「直線型」的關係。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-regression">
+    <div class="part-kicker"><b>最小平方法與迴歸直線</b></div>
+    <h2>畫出最貼近所有點的一條直線，拿來做預測</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">老闆接著問：「如果氣象預報說明天氣溫是33°C，那我大概該準備多少杯冰珍奶的材料？」相關係數只能告訴我們「關聯很強」，沒辦法直接給出預測值——這時候需要找一條能代表這些點的「最適直線」。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>用「讓所有點到直線的垂直距離平方和最小」的想法（最小平方法）求出的最適直線，稱為<b>迴歸直線</b>。它可以直接由相關係數和標準差算出斜率，或者更方便地直接用 S_xy、S_xx 計算：</p>
+      <div class="formula">
+        <div class="formula-title">迴歸直線</div>
+        y − μᵧ = (S_xy ／ S_xx)（x − μₓ）
+      </div>
+      <div class="calc">斜率 = S_xy ÷ S_xx = 100 ÷ 40 = 2.5
+y − 60 = 2.5（x − 32）
+y = 2.5x − 20</div>
+      <p>這條迴歸線告訴我們：氣溫每上升1°C，冰珍奶的銷量平均會增加2.5杯。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 175" role="img" aria-label="冰珍奶散布圖加上迴歸直線y=2.5x-20，並標出氣溫33度時預測銷量62.5杯的位置">
+          <line x1="30" y1="155" x2="30" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="20" y1="150" x2="245" y2="150" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="30.0" y1="124.7" x2="235.0" y2="15.0" stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 3"/>
+          <circle cx="77.3" cy="96.0" r="4" fill="var(--ink-muted)"/>
+          <circle cx="108.8" cy="89.2" r="4" fill="var(--ink-muted)"/>
+          <circle cx="140.4" cy="65.6" r="4" fill="var(--ink-muted)"/>
+          <circle cx="171.9" cy="42.0" r="4" fill="var(--ink-muted)"/>
+          <circle cx="203.5" cy="35.2" r="4" fill="var(--ink-muted)"/>
+          <circle cx="156.2" cy="57.2" r="5" fill="var(--b2)"/>
+          <text x="160" y="53" class="svg-label" fill="var(--b2)">33°C→62.5杯</text>
+          <text x="60" y="168" class="svg-label" fill="currentColor">28</text>
+          <text x="136" y="168" class="svg-label" fill="currentColor">32</text>
+          <text x="199" y="168" class="svg-label" fill="currentColor">36</text>
+          <text x="34" y="22" class="svg-label" fill="currentColor">銷量(杯)</text>
+        </svg>
+        <figcaption>灰點是原始資料，虛線是迴歸直線 y=2.5x−20，橘點是代入 x=33 得到的預測值</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">氣象預報明天氣溫33°C，預測冰珍奶大約會賣出幾杯？</p>
+      <div class="calc">y = 2.5×33 − 20 = 82.5 − 20 = 62.5（杯）</div>
+      <p>所以老闆大概可以準備<b>62～63杯</b>的材料。</p>
+      <p class="note">要注意：迴歸直線只在原始資料涵蓋的範圍（這裡是28°C～36°C）附近做預測比較可靠。如果拿這條線去預測氣溫10°C時的銷量（y=2.5×10−20=5杯），已經超出資料範圍太遠，兩者的關係不一定還是同一條直線，這種「過度外推」的預測要特別小心。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：3-2 二維數據分析</h2>
+    <p class="lede-line">從「畫出來看」到「算出一個數字」，再到「畫一條線來預測」，是二維數據分析的三個層次。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>散布圖</td><td class="f">把 (x,y) 資料點畫在坐標平面上，粗略判斷關聯方向</td></tr>
+          <tr><td>正／負／零相關</td><td class="f">點分布左下到右上為正相關；左上到右下為負相關；無明顯方向為零相關</td></tr>
+          <tr><td>相關係數</td><td class="f">r=S_xy／√(S_xx·S_yy)，−1≤r≤1，|r|越接近1線性關聯越強</td></tr>
+          <tr><td>迴歸直線</td><td class="f">y−μᵧ=(S_xy／S_xx)(x−μₓ)，可用來對資料範圍內的 x 做預測</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">散布圖判讀</span></div>
+        <p>某咖啡店記錄「每日氣溫」與「熱可可銷售杯數」，散布圖呈現由左上到右下的分布，這是正相關、負相關，還是零相關？</p>
+        <details><summary>參考答案</summary><div class="ans">負相關（氣溫越高，熱可可賣得越少）。</div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">相關係數</span></div>
+        <p>若一組資料的 S_xx=25、S_yy=64、S_xy=−36，求相關係數 r，並判斷正負相關。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">r = −36 ÷ √(25×64) = −36 ÷ √1600 = −36÷40 = −0.9</div>
+          r=−0.9，屬於很強的負相關。
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">相關係數的性質</span></div>
+        <p>若某組資料的相關係數 r=1，這代表所有的資料點在散布圖上會呈現什麼樣子？</p>
+        <details><summary>參考答案</summary><div class="ans">所有的點會恰好落在同一條直線上，且該直線的斜率為正（完全正相關）。</div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">迴歸直線</span></div>
+        <p>已知某組資料 μₓ=10、μᵧ=50、S_xx=20、S_xy=60，求迴歸直線方程式，並預測 x=15 時的 y 值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">斜率 = 60÷20 = 3
+y−50 = 3(x−10)　　y = 3x+20
+x=15 時，y = 3×15+20 = 65</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">迴歸直線的應用</span></div>
+        <p>為什麼不建議用第3節「氣溫 vs 冰珍奶銷量」的迴歸直線，去預測氣溫45°C時的銷量？</p>
+        <details><summary>參考答案</summary><div class="ans">因為原始資料的氣溫範圍只有28°C～36°C，45°C已經遠遠超出這個範圍（過度外推），兩者之間的線性關係在資料範圍之外不一定還成立，預測結果不可靠。</div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>從敘述統計到推論的第一步</h2>
+      <p>3-1、3-2 學到的平均數、標準差、相關係數、迴歸直線，合稱「敘述統計」——用來描述、整理手上已經有的資料。這一整章的工具，會在後面學到機率、排列組合時反覆出現，因為所有的統計推論，都是從「先看懂手上的數據」開始的。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學2・第三章</span>
+    <span>3-2 二維數據分析</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

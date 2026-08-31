@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-1 一維數據分析｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學2・第三章 數據分析・3-1</span>
+    <h1>一維數據分析</h1>
+    <p class="sub">用巷口手搖飲料店「珍煮丹」的銷售數據，認識三種平均數、百分位數、標準差，以及數據轉換與標準化的技巧。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>老闆最近想更了解自己的店，找上正在準備學測的筱葳幫忙——「這些每天的銷售數字，到底能告訴我什麼？」這一節就用這間飲料店的真實煩惱，把一維數據分析的工具一一介紹給你。</p>
+    <ul class="toc">
+      <li><a href="#topic-mean"><b>1</b>三種平均數</a></li>
+      <li><a href="#topic-percentile"><b>2</b>百分位數</a></li>
+      <li><a href="#topic-stddev"><b>3</b>標準差</a></li>
+      <li><a href="#topic-transform"><b>4</b>數據的轉換與標準化</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-mean">
+    <div class="part-kicker"><b>三種平均數</b></div>
+    <h2>「平均」其實不只一種算法</h2>
+
+    <div class="step">
+      <span class="step-tag">情境：算術平均數</span>
+      <p class="quote">老闆想知道招牌「珍珠奶茶」最近賣得如何，筱葳翻出過去10天的銷售紀錄（單位：杯）：</p>
+      <div class="calc">42, 38, 50, 46, 55, 40, 48, 52, 44, 45</div>
+      <p>要用一個數字代表這10天的銷售狀況，最直覺的做法就是把所有數字加起來，再除以天數。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <div class="calc">總和 = 42+38+50+46+55+40+48+52+44+45 = 460
+平均 = 460 ÷ 10 = 46（杯）</div>
+      <p>這就是<b>算術平均數</b>：把所有數值加總、除以個數。若資料為 x₁, x₂, …, xₙ，算術平均數記作 μ（讀作 mu）：</p>
+      <div class="formula">
+        <div class="formula-title">算術平均數</div>
+        <span class="big">μ = (x₁ + x₂ + ⋯ + xₙ) ／ n</span>
+      </div>
+      <p>結論：這10天平均每天賣出 <b>46杯</b>珍珠奶茶。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：加權平均數</span>
+      <p class="quote">老闆接著問：「那我們一杯飲料平均賣多少錢？」這天總共賣出三種杯型：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>杯型</th><th>單價（元）</th><th>賣出杯數</th></tr></thead>
+          <tbody>
+            <tr><td>大杯</td><td class="f">50</td><td class="f">30</td></tr>
+            <tr><td>中杯</td><td class="f">45</td><td class="f">50</td></tr>
+            <tr><td>小杯</td><td class="f">40</td><td class="f">20</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>如果直接把 50、45、40 三個價格加起來除以3，得到45元——但這樣算對嗎？中杯明明賣得最多，應該要「比較有份量」才對。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>正確的做法，是把每個價格乘上它的「銷售杯數」（權重），加總後再除以總杯數：</p>
+      <div class="calc">(50×30 + 45×50 + 40×20) ÷ (30+50+20)
+= (1500 + 2250 + 800) ÷ 100
+= 4550 ÷ 100 = 45.5（元）</div>
+      <p>這種「依重要性（權重）調整」的平均，叫做<b>加權平均數</b>。若資料 x₁,…,xₙ 對應的權重為 w₁,…,wₙ：</p>
+      <div class="formula">
+        <div class="formula-title">加權平均數</div>
+        <span class="big">W = (x₁w₁ + x₂w₂ + ⋯ + xₙwₙ) ／ (w₁ + w₂ + ⋯ + wₙ)</span>
+      </div>
+      <p>結論：這天每杯的平均客單價是 <b>45.5元</b>，比單純平均的45元更能反映真實營收——因為它把「賣得多的中杯」考慮進去了。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：幾何平均數</span>
+      <p class="quote">老闆很興奮地說：「我們開幕第一年營業額成長了21%，第二年又成長了44%！平均下來，我們每年到底成長了幾%？」</p>
+      <p>你可能會想直接算 (21%+44%)÷2=32.5%——但這其實是錯的！因為「成長率」是一年接著一年連乘上去的，不是直接相加的。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>設營業額原本是 100（萬元），兩年後變成：</p>
+      <div class="calc">100 × (1+21%) × (1+44%) = 100 × 1.21 × 1.44 = 174.24（萬元）</div>
+      <p>如果兩年都用「同一個成長率 r」來算，兩年後應該是 <span class="mono">100×(1+r)²</span>。要讓兩種算法結果一樣：</p>
+      <div class="calc">(1+r)² = 1.21 × 1.44 = 1.7424
+1+r = √1.7424 = 1.32
+r = 0.32 = 32%</div>
+      <p>驗算：100×1.32×1.32 = 174.24（萬元），跟原本的算法完全吻合！這種「連乘後開n次方根」的平均，叫做<b>幾何平均數</b>，最適合用在成長率、利率這種「一段接一段相乘」的情境：</p>
+      <div class="formula">
+        <div class="formula-title">幾何平均數（n個正數 x₁,…,xₙ）</div>
+        <span class="big">G = ⁿ√(x₁·x₂·⋯·xₙ)</span>
+      </div>
+      <p class="note">用在成長率時，要先把每年的成長率換成「(1+成長率)」的形式，取幾何平均後再減1，才是正確的「平均成長率」。這一點很容易跟算術平均數搞混，考試中常出這種陷阱。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">飲料店第三年營業額又成長了69%。那麼開幕以來這三年，平均每年的成長率大約是多少？（已知第一、二年分別成長21%與44%）</p>
+      <div class="calc">三年平均成長率 g 滿足：(1+g)³ = 1.21 × 1.44 × 1.69
+= 1.7424 × 1.69 = 2.945...</div>
+      <p>取三次方根：g = ³√2.945... − 1 ≈ 0.434，也就是平均每年大約成長 <b>43%</b>（實際上 1.21×1.44×1.69 恰好等於 1.3³=2.197 的情況才會是整數解，這裡刻意讓數字不是整數，提醒你：現實中的資料不會每次都剛好湊整，遇到開根號算不出整數時，用計算機取到適當的小數位即可）。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-percentile">
+    <div class="part-kicker"><b>百分位數</b></div>
+    <h2>模擬考的「百分等級」是怎麼算出來的？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">學測成績單上除了級分，還會有一個「百分等級（PR值）」，代表你打敗了全國考生的百分之幾。筱葳很好奇這是怎麼算出來的，於是先用班上一次模擬考的數學成績（20人，已由小到大排序）練習：</p>
+      <div class="calc">52, 55, 58, 60, 62, 64, 65, 66, 68, 70,
+71, 72, 74, 75, 76, 78, 80, 82, 85, 90</div>
+      <p>如果筱葳考了75分，能不能只看「排在第几名」就知道自己贏過幾成的人？資料只有20筆，但百分等級要換算成「贏過幾%」，需要更精確的算法。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>把資料由小到大排序後分成100等分，第 m 個百分位數 <span class="mono">P<sub>m</sub></span> 大致代表「有 m% 的資料在它（或與它相等）之下」。設共有 n 筆資料，計算：</p>
+      <div class="formula">
+        <div class="formula-title">第 m 百分位數 P<sub>m</sub> 的求法</div>
+        I = n × (m ／ 100)
+      </div>
+      <div class="calc">若 I 不是整數：取大於 I 的下一個整數 k，P_m = 由小到大排序的第 k 筆資料
+若 I 是整數：P_m = 由小到大排序的第 I 筆與第 (I+1) 筆資料的平均</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">求這20筆模擬考成績的 P₇₀（第70百分位數）。</p>
+      <div class="calc">I = 20 × (70/100) = 14　　（整數）
+取第14筆與第15筆資料的平均：
+第14筆 = 75，第15筆 = 76
+P₇₀ = (75+76) ÷ 2 = 75.5</div>
+      <p>也就是說，考75.5分左右的同學，大約贏過班上70%的人。用同樣的方法可以算出 P₉₀：I=20×0.9=18（整數），取第18、19筆的平均 (82+85)÷2=<b>83.5</b>。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 90" role="img" aria-label="20筆成績由小到大排列的數線示意，標出最小值52、P70為75.5、P90為83.5、最大值90四個位置">
+          <line x1="20" y1="45" x2="240" y2="45" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="30.5" cy="45" r="4" fill="var(--ink-muted)"/>
+          <text x="14" y="65" class="svg-label" fill="var(--ink-muted)">最小 52</text>
+          <circle cx="153.6" cy="45" r="4.5" fill="var(--accent)"/>
+          <text x="118" y="30" class="svg-label" fill="var(--accent)">P₇₀=75.5</text>
+          <circle cx="195.5" cy="45" r="4.5" fill="var(--b2)"/>
+          <text x="172" y="65" class="svg-label" fill="var(--b2)">P₉₀=83.5</text>
+          <circle cx="229.5" cy="45" r="4" fill="var(--ink-muted)"/>
+          <text x="212" y="30" class="svg-label" fill="var(--ink-muted)">最大 90</text>
+        </svg>
+        <figcaption>把20筆成績排成一條數線，P₇₀、P₉₀ 就是切在「贏過70%、90%資料」位置的分數</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察：I 不是整數的情況</span>
+      <p class="quote">如果要找 P₃₃ 呢？</p>
+      <div class="calc">I = 20 × (33/100) = 6.6　　（不是整數）
+取大於6.6的下一個整數：7
+P₃₃ = 由小到大排序的第7筆資料 = 65</div>
+      <p class="note">大考中心實際計算全國考生百分等級的公式跟這裡略有不同（會再做一些微調），但核心精神一致：都是先把資料排序，再算出「這個分數贏過百分之幾的人」。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-stddev">
+    <div class="part-kicker"><b>標準差</b></div>
+    <h2>平均數一樣，代表兩家店表現一樣穩定嗎？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">飲料店打算加盟展店，想從「車站店」和「公園店」中選一家當示範店。兩家店最近5天的銷售杯數如下，平均都是每天48杯——但老闆問：「平均一樣，是不是代表兩家店表現一樣穩定？」</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>分店</th><th colspan="5">最近5天銷售杯數</th></tr></thead>
+          <tbody>
+            <tr><td>車站店</td><td class="f">44</td><td class="f">48</td><td class="f">50</td><td class="f">52</td><td class="f">46</td></tr>
+            <tr><td>公園店</td><td class="f">46</td><td class="f">47</td><td class="f">49</td><td class="f">50</td><td class="f">48</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>兩家店的平均數確實都是48杯，但仔細看數字：車站店有44、52這種離48比較遠的天數；公園店的數字則都緊緊貼著48附近。光看平均數，完全看不出這個差異。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 100" role="img" aria-label="車站店與公園店銷售杯數的數線比較，兩者平均都在48，但車站店的點分散較開，公園店的點較集中">
+          <text x="8" y="16" class="svg-label" fill="currentColor">車站店</text>
+          <line x1="20" y1="30" x2="240" y2="30" stroke="var(--line)" stroke-width="1.2"/>
+          <circle cx="56.7" cy="30" r="4" fill="var(--accent)"/>
+          <circle cx="93.3" cy="30" r="4" fill="var(--accent)"/>
+          <circle cx="130" cy="30" r="4" fill="var(--accent)"/>
+          <circle cx="166.7" cy="30" r="4" fill="var(--accent)"/>
+          <circle cx="203.3" cy="30" r="4" fill="var(--accent)"/>
+          <line x1="130" y1="20" x2="130" y2="40" stroke="var(--b2)" stroke-width="1.6"/>
+
+          <text x="8" y="76" class="svg-label" fill="currentColor">公園店</text>
+          <line x1="20" y1="90" x2="240" y2="90" stroke="var(--line)" stroke-width="1.2"/>
+          <circle cx="93.3" cy="90" r="4" fill="var(--ab)"/>
+          <circle cx="111.7" cy="90" r="4" fill="var(--ab)"/>
+          <circle cx="148.3" cy="90" r="4" fill="var(--ab)"/>
+          <circle cx="166.7" cy="90" r="4" fill="var(--ab)"/>
+          <circle cx="130" cy="90" r="4" fill="var(--ab)"/>
+          <line x1="130" y1="80" x2="130" y2="100" stroke="var(--b2)" stroke-width="1.6"/>
+          <text x="133" y="52" class="svg-label" fill="var(--b2)">μ=48</text>
+        </svg>
+        <figcaption>兩排的橘色直線都對齊在平均數48的位置：車站店的藍點分布比較開，公園店的綠點比較集中</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>要用一個數字量化「資料離平均數有多分散」，作法是：先算出每筆資料與平均數的差（<b>離均差</b>），再取平方（避免正負互相抵消）、加總、除以個數，最後開根號拉回原本的單位。</p>
+      <div class="formula">
+        <div class="formula-title">變異數與標準差（資料 x₁,…,xₙ，平均數 μ）</div>
+        變異數 σ² = [(x₁−μ)² + (x₂−μ)² + ⋯ + (xₙ−μ)²] ／ n
+        <br>標準差 σ = √σ²
+      </div>
+      <p>標準差越大，代表資料越分散；標準差越小，代表資料越集中、越穩定。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">車站店：μ=48
+離均差：−4, 0, 2, 4, −2
+平方和：16+0+4+16+4 = 40
+σ² = 40÷5 = 8　　σ = √8 = 2√2 ≈ 2.83（杯）
+
+公園店：μ=48
+離均差：−2, −1, 1, 2, 0
+平方和：4+1+1+4+0 = 10
+σ² = 10÷5 = 2　　σ = √2 ≈ 1.41（杯）</div>
+      <p>結論：雖然兩家店平均銷量相同，但公園店的標準差（≈1.41）比車站店（≈2.83）小很多，代表<b>公園店的銷售更穩定</b>——如果老闆想選一家「表現最可預期」的店當示範店，公園店會是更好的選擇。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-transform">
+    <div class="part-kicker"><b>數據的轉換與標準化</b></div>
+    <h2>換算單位後，平均數和標準差會怎麼變？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境：伸縮與平移</span>
+      <p class="quote">飲料店推出會員點數活動：「每消費1元累積2點，開幕禮再送50點」。也就是說，如果某位顧客消費金額是 x 元，他得到的點數是 <span class="mono">y = 2x + 50</span>。已知某天5位顧客的消費金額（元）分別是：</p>
+      <div class="calc">30, 50, 70, 90, 60</div>
+      <p>這5筆消費金額的平均數是60元、標準差是20元。換算成點數後，點數的平均數與標準差會變成多少？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>直接算算看：5位顧客的點數分別是 <span class="mono">y=2x+50</span> 代入後得到 110, 150, 190, 230, 170。</p>
+      <div class="calc">點數平均 = (110+150+190+230+170)÷5 = 850÷5 = 170
+點數的離均差：−60, −20, 20, 60, 0
+平方和：3600+400+400+3600+0 = 8000
+點數變異數 = 8000÷5 = 1600　　點數標準差 = √1600 = 40</div>
+      <p>比較一下：消費金額 μ=60 變成點數 μ=170；消費金額 σ=20 變成點數 σ=40。發現規律了嗎？<span class="mono">170 = 2×60+50</span>，跟 y=2x+50 的公式一模一樣；而 <span class="mono">40 = 2×20</span>，剛好是原本標準差乘上2（也就是乘上 x 前面的係數，且不受「+50」影響）。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>這不是巧合。只要是「乘上一個數再加上一個數」這種線性轉換，資料的平均數和標準差都會照著規律變化：</p>
+      <div class="formula">
+        <div class="formula-title">伸縮與平移對 μ 與 σ 的影響</div>
+        資料 x₁,…,xₙ，令 y_i = a·x_i + b（a≠0）
+        <br><span class="big">μ_y = a·μ_x + b　　　σ_y = |a|·σ_x</span>
+      </div>
+      <p class="note">「平移」（加減一個常數 b）不會改變資料的分散程度，只會整批往同一個方向移動，所以標準差不受 b 影響；「伸縮」（乘上係數 a）則會把分散程度也跟著放大或縮小 |a| 倍，取絕對值是因為標準差不能是負的。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：標準化數據（Z分數）</span>
+      <p class="quote">筱葳這學期數學考了兩次段考：第一次段考全班平均70分、標準差10分，她考了82分；第二次段考全班平均75分、標準差15分，她考了90分。單看原始分數，第二次（90分）比第一次（82分）高，但這樣就能說她「這次考得比較好」嗎？</p>
+      <p>問題在於：兩次考試的難度、全班分布都不一樣，原始分數沒辦法直接比較——需要換算成「相對於全班的位置」才公平。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>把每個分數換算成「贏過平均數幾個標準差」，這個換算後的數值叫做 <b>Z分數（標準化數據）</b>：</p>
+      <div class="formula">
+        <div class="formula-title">標準化（資料 x₁,…,xₙ，平均數 μ，標準差 σ）</div>
+        <span class="big">Z = (x − μ) ／ σ</span>
+      </div>
+      <div class="calc">第一次段考：Z₁ = (82−70)÷10 = 1.2
+第二次段考：Z₂ = (90−75)÷15 = 1.0</div>
+      <p>結論：雖然第二次段考的原始分數（90）比第一次（82）高，但用Z分數比較，<b>第一次段考的 Z₁=1.2 大於第二次的 Z₂=1.0</b>，代表她在第一次段考「相對於全班的表現」其實更突出——因為那次考試整體分數比較集中（標準差只有10），她的82分顯得更加拉開差距。</p>
+      <p class="note">標準化之後的所有數據，平均數必為0、標準差必為1（可以驗證：把 x=μ 代入得 Z=0；把 μ_Z=(μ_x−μ)/σ=0、σ_Z=|1/σ|·σ_x=1 代入伸縮平移公式即可得證）。也因為如此，Z分數常用來比較「單位不同」或「難度不同」的兩組資料，例如不同科目、不同次考試的成績。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：3-1 一維數據分析</h2>
+    <p class="lede-line">這一節的每個工具都是「用一個數字，描述一整組資料」的方法，接下來會反覆用到。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>算術平均數</td><td class="f">μ=(x₁+x₂+⋯+xₙ)／n</td></tr>
+          <tr><td>加權平均數</td><td class="f">W=(x₁w₁+⋯+xₙwₙ)／(w₁+⋯+wₙ)</td></tr>
+          <tr><td>幾何平均數</td><td class="f">G=ⁿ√(x₁·x₂·⋯·xₙ)，用於成長率等連乘情境</td></tr>
+          <tr><td>百分位數</td><td class="f">I=n×(m/100)；I為整數取第I、I+1筆平均，否則取大於I的下一整數位置</td></tr>
+          <tr><td>變異數、標準差</td><td class="f">σ²=Σ(xᵢ−μ)²／n，σ=√σ²，衡量資料的離散程度</td></tr>
+          <tr><td>伸縮與平移</td><td class="f">y=ax+b ⟹ μ_y=aμ_x+b，σ_y=|a|σ_x</td></tr>
+          <tr><td>標準化（Z分數）</td><td class="f">Z=(x−μ)／σ，標準化後 μ=0，σ=1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">加權平均數</span></div>
+        <p>飲料店某天賣出大杯（50元）20杯、中杯（45元）40杯、小杯（40元）40杯，求這天的加權平均客單價。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">(50×20+45×40+40×40)÷(20+40+40)
+=(1000+1800+1600)÷100=4400÷100=44（元）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">幾何平均數</span></div>
+        <p>某分店營業額連續兩年分別成長44%與69%，求這兩年的平均年成長率。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">(1+r)²=1.44×1.69=2.4336
+1+r=√2.4336=1.56　　r=0.56=56%</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">百分位數</span></div>
+        <p>某次模擬考共有25位同學，由小到大排序。求 P₈₀。</p>
+        <details><summary>參考答案</summary><div class="ans">I=25×0.8=20（整數），P₈₀取第20筆與第21筆資料的平均數（需視實際資料代入計算）。</div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">標準差</span></div>
+        <p>某分店連續4天銷售杯數為 50, 54, 46, 50，求這組資料的平均數與標準差。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">μ=(50+54+46+50)÷4=200÷4=50
+離均差：0,4,−4,0　　平方和：0+16+16+0=32
+σ²=32÷4=8　　σ=√8=2√2≈2.83</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">標準化數據</span></div>
+        <p>已知某班數學平均分數60分、標準差12分，小明的Z分數是1.5，求小明的原始分數。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">Z=(x−μ)／σ
+1.5=(x−60)／12
+x−60=18　　x=78（分）</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：兩組數據之間有關係嗎？</h2>
+      <p>這一節的工具，都是分析「一組資料」本身的特徵。但老闆真正想知道的是：氣溫會不會影響銷售量？在 3-2「二維數據分析」，我們會延續這間飲料店的故事，學習如何用散布圖、相關係數，判斷兩組數據之間的關聯，甚至用迴歸直線做出銷售預測。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學2・第三章</span>
+    <span>3-1 一維數據分析</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
