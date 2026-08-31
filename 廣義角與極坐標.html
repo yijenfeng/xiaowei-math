@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-2 廣義角與極坐標｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學2・第四章 三角比的性質與應用・4-2</span>
+    <h1>廣義角與極坐標</h1>
+    <p class="sub">測量社這學期要辦一場「定向越野」活動，選手要靠「轉的角度」加上「走的距離」找到藏在校園裡的檢查點。這一節延續這個情境，把三角比的定義從0°~90°的銳角，擴展到任意大小、可正可負的「廣義角」，並認識用距離與方向描述位置的極坐標。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>定向越野比賽規定：選手一律面朝東方出發（這是量角度的起點），逆時針轉向找路。有些選手為了閃避花圃，會刻意繞一大圈甚至轉超過一圈才對準檢查點方向——這樣的角度已經超過0°到360°的範圍，也可能因為順時針轉而變成「負的」。這種不受0°~180°限制、可正可負、也不限旋轉圈數的角，就是這一節要介紹的<b>廣義角</b>。</p>
+    <ul class="toc">
+      <li><a href="#topic-generalized-angle"><b>1</b>廣義角</a></li>
+      <li><a href="#topic-generalized-ratio"><b>2</b>廣義角的三角比</a></li>
+      <li><a href="#topic-basic-relations"><b>3</b>廣義角三角比的基本關係</a></li>
+      <li><a href="#topic-line-angle"><b>4</b>直線的斜角</a></li>
+      <li><a href="#topic-polar"><b>5</b>極坐標</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-generalized-angle">
+    <div class="part-kicker"><b>廣義角</b></div>
+    <h2>角度不再限制在0°到180°之間</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">選手小磊出發時面朝正東方（射線OA，稱為<b>始邊</b>），逆時針轉了150°後面朝檢查點方向（射線OB，稱為<b>終邊</b>），這個轉動所形成的角就記為150°。裁判規定：逆時針旋轉記為正角，順時針旋轉記為負角，而且不限制轉的圈數。</p>
+      <p>把角看成「始邊繞頂點旋轉到終邊」所形成的角，這樣的角叫做<b>有向角</b>。像小磊這樣由OA逆時針轉到OB形成150°角；如果換一位選手為了躲避積水，反而順時針繞了一大圈再轉到同一個方向，形成的角就是150°+360°=510°，或甚至順時針轉到同一方向形成−210°角——這些都是合法的廣義角。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>把廣義角放在坐標平面上，頂點放在原點，始邊放在x軸正向，這樣的角稱為<b>標準位置角</b>；終邊落在第幾象限，就稱這個角為第幾象限角。當兩個廣義角θ與φ有共同的始邊與終邊時，稱θ與φ互為<b>同界角</b>——換句話說，同界角就是終邊轉到同一個位置的角，彼此角度差是360°的整數倍。</p>
+      <div class="formula">
+        <div class="formula-title">同界角</div>
+        θ與φ同界角　⟺　θ−φ = 360°・n（n為整數）
+      </div>
+      <p class="quote">小磊轉了510°找到檢查點，隊友小雯則說她「只轉了150°」也找到同一個檢查點。驗證：510°−150°=360°=360°×1，兩人的角確實是同界角，難怪面對同一個方向。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">(1) 寫出680°的一個介於0°~360°之間的同界角。 (2) 求−100°的兩個正的同界角。</p>
+      <div class="calc">(1) 680° − 360° = 320°　→　320°與680°同界
+
+(2) −100°+360° = 260°
+    −100°+720° = 620°
+    260°、620° 都與 −100° 同界</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-generalized-ratio">
+    <div class="part-kicker"><b>廣義角的三角比</b></div>
+    <h2>用終邊上的一點，定義任意角的三角比</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">定向越野的地圖上，起點是原點O，東方是x軸正向。檢查點的位置可以直接用坐標(x,y)表示——例如檢查點A的坐標是(-3,4)。選手轉向面對A點時所形成的標準位置角θ，該怎麼求它的三角比？</p>
+      <p>把銳角三角比的定義搬過來：取終邊上任一點P(x,y)，令 <span class="mono">OP=√(x²+y²)=r（r&gt;0）</span>，仿照直角三角形的邊角關係，把「對邊」換成y、「鄰邊」換成x、「斜邊」換成r，就能定義出任意廣義角θ的三角比：</p>
+      <div class="formula">
+        <div class="formula-title">廣義角的三角比</div>
+        <span class="big">sinθ = y／r　　cosθ = x／r　　tanθ = y／x（x≠0）</span>
+      </div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 200" role="img" aria-label="坐標平面上標準位置角，終邊通過檢查點A(-3,4)，從原點到A的距離r=5">
+          <line x1="20" y1="100" x2="240" y2="100" stroke="currentColor" stroke-width="1"/>
+          <line x1="130" y1="10" x2="130" y2="190" stroke="currentColor" stroke-width="1"/>
+          <line x1="130" y1="100" x2="66" y2="36" stroke="var(--accent)" stroke-width="2"/>
+          <circle cx="66" cy="36" r="4" fill="var(--b2)"/>
+          <text x="35" y="30" class="svg-label" fill="var(--b2-ink)">A(−3,4)</text>
+          <text x="140" y="80" class="svg-label" fill="var(--ink-muted)">θ</text>
+          <text x="90" y="60" class="svg-label" fill="var(--ink-muted)">r=5</text>
+          <line x1="130" y1="100" x2="210" y2="100" stroke="var(--line)" stroke-width="1.5"/>
+          <text x="215" y="104" class="svg-label" fill="var(--ink-muted)">始邊(東)</text>
+        </svg>
+        <figcaption>檢查點A(−3,4)在θ的終邊上，r=OA=√((−3)²+4²)=5</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">r = OA = √((−3)²+4²) = 5
+
+sinθ = y／r = 4／5
+cosθ = x／r = −3／5
+tanθ = y／x = 4／(−3) = −4／3</div>
+      <p class="note">終邊上的點可以任意選取，因為x、y、r會等比例放大縮小，算出來的三角比不會改變——這也是廣義角三角比「跟選哪一點無關，只跟終邊方向有關」的關鍵原因。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律：象限與正負號</span>
+      <p>因為r恆為正，三角比的正負完全由x、y的正負決定，而x、y的正負又由終邊所在的象限決定：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>終邊所在象限</th><th>第一象限</th><th>第二象限</th><th>第三象限</th><th>第四象限</th></tr></thead>
+          <tbody>
+            <tr><td>(x,y)</td><td class="f">(+,+)</td><td class="f">(−,+)</td><td class="f">(−,−)</td><td class="f">(+,−)</td></tr>
+            <tr><td>sinθ</td><td class="f">+</td><td class="f">+</td><td class="f">−</td><td class="f">−</td></tr>
+            <tr><td>cosθ</td><td class="f">+</td><td class="f">−</td><td class="f">−</td><td class="f">+</td></tr>
+            <tr><td>tanθ</td><td class="f">+</td><td class="f">−</td><td class="f">+</td><td class="f">−</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="quote">求 sin150°、cos150°、tan150° 的值。</p>
+      <div class="calc">150°為第二象限角，終邊與30°的終邊對地面呈鏡射關係，可取終邊上一點使r=2，得P(−√3,1)
+
+sin150° = 1／2
+cos150° = −√3／2
+tan150° = 1／(−√3) = −√3／3</div>
+      <p>當角度的終邊剛好落在坐標軸上（0°、90°、180°、270°）時，可以直接在終邊上取(1,0)、(0,1)、(−1,0)、(0,−1)這樣的點來計算，此時tanθ在90°、270°會因為x=0而沒有定義。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-basic-relations">
+    <div class="part-kicker"><b>廣義角三角比的基本關係</b></div>
+    <h2>對稱關係：-θ、180°-θ、90°-θ</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>把終邊放在半徑為r的圓上，設終邊上一點為P(x,y)，由廣義角三角比定義可得圓上點坐標的公式，也能重新驗證商數關係與平方關係在任意角θ下依然成立：</p>
+      <div class="formula">
+        <div class="formula-title">圓上點的坐標 ／ 商數關係 ／ 平方關係</div>
+        P(x,y) = (r cosθ, r sinθ)　　　　tanθ = sinθ／cosθ　　　　sin²θ + cos²θ = 1
+      </div>
+      <p>接著討論θ與−θ、180°−θ、90°−θ的三角比之間的對稱關係。角θ與−θ的終邊對稱於x軸，角θ與180°−θ的終邊對稱於y軸，角θ與90°−θ的終邊對稱於直線y=x——由對稱點的坐標關係，可以直接推得：</p>
+      <div class="formula">
+        <div class="formula-title">對稱關係</div>
+        sin(−θ)=−sinθ　　cos(−θ)=cosθ　　tan(−θ)=−tanθ
+        <br>sin(180°−θ)=sinθ　　cos(180°−θ)=−cosθ　　tan(180°−θ)=−tanθ
+        <br>sin(90°−θ)=cosθ　　cos(90°−θ)=sinθ
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">已知 cosθ=0.6，求 (1) cos(−θ) (2) cos(180°−θ) (3) sin(θ−90°) 的值。</p>
+      <div class="calc">(1) cos(−θ) = cosθ = 0.6
+
+(2) cos(180°−θ) = −cosθ = −0.6
+
+(3) sin(θ−90°) = sin(−(90°−θ)) = −sin(90°−θ) = −cosθ = −0.6</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：化為銳角求值</span>
+      <p class="quote">求 sin750° 的值。</p>
+      <div class="calc">sin750° = sin(360°×2+30°) = sin30°　　（同界角，轉了整數圈不影響）
+
+sin30° = 1／2
+
+∴ sin750° = 1／2</div>
+      <p class="note">看到超過360°的角，第一步永遠是「先扣掉360°的整數倍」化成0°~360°之間的同界角；再視需要用 −θ、180°−θ、90°−θ的關係化成銳角，就能查表或用計算機求值。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-line-angle">
+    <div class="part-kicker"><b>直線的斜角</b></div>
+    <h2>直線的傾斜程度，也可以用角度描述</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">定向越野地圖上有一段路徑是直線，從x軸正向逆時針轉到這條路徑的方向，轉了60°。像這樣以x軸正向為始邊，直線向右上方（或右下方）的方向為終邊，且角度介於−90°到90°之間的有向角，稱為這條直線的<b>斜角</b>。水平方向的直線斜角規定為0°，鉛垂方向的直線斜角規定為90°。</p>
+      <p>設直線L不為鉛垂線，且通過原點與點P(x,y)，斜角為θ，由廣義角的正切定義可得：</p>
+      <div class="formula">
+        <div class="formula-title">直線斜角的性質</div>
+        <span class="big">tanθ = 直線L的斜率</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">已知路徑L的斜角為60°，且通過點(3,−2)，求L的方程式。</p>
+      <div class="calc">m = tan60° = √3
+
+L: y − (−2) = √3(x−3)
+
+y = √3x − 3√3 − 2</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：兩路徑的夾角</span>
+      <p class="quote">路徑L₁的斜角是45°，路徑L₂的斜角是30°，求兩條路徑的夾角。</p>
+      <div class="calc">兩路徑的夾角 = 45° − 30° = 15°
+
+（180°−15°=165°也是這兩條直線的夾角，通常取較小的那一個當作交叉角）</div>
+      <p class="quote">若改成路徑L的斜率為0.5，用計算機求L的斜角（取到小數點後一位）。</p>
+      <div class="calc">tanθ = 0.5
+
+θ = tan⁻¹(0.5) ≈ 26.6°</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-polar">
+    <div class="part-kicker"><b>極坐標</b></div>
+    <h2>用「距離＋方向」描述位置</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">裁判在對講機裡回報檢查點的位置，不是說坐標(x,y)，而是說：「檢查點在起點東偏北方向、距離40公尺處」，也就是「距離40公尺、標準位置角130°」。這種用「距離」與「角度」表示位置的方法，就是<b>極坐標</b>，記作 <span class="mono">P[r,θ]</span>。</p>
+      <div class="formula">
+        <div class="formula-title">極坐標</div>
+        以O為極點、射線OL為極軸，P點與O的距離OP=r，OP與OL的夾角為θ（廣義角），則P點的極坐標記為 [r,θ]（r&gt;0）
+      </div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 160" role="img" aria-label="極坐標示意圖，檢查點P的極坐標為40公尺、130度，從極軸逆時針轉130度後沿此方向走40公尺">
+          <line x1="30" y1="130" x2="230" y2="130" stroke="var(--line)" stroke-width="1.5"/>
+          <text x="235" y="134" class="svg-label" fill="var(--ink-muted)">極軸</text>
+          <line x1="30" y1="130" x2="80" y2="30" stroke="var(--accent)" stroke-width="2"/>
+          <circle cx="80" cy="30" r="4" fill="var(--b2)"/>
+          <text x="85" y="25" class="svg-label" fill="var(--b2-ink)">P[40, 130°]</text>
+          <text x="45" y="115" class="svg-label" fill="var(--ink-muted)">130°</text>
+          <circle cx="30" cy="130" r="3" fill="var(--ink)"/>
+          <text x="10" y="145" class="svg-label" fill="var(--ink-muted)">O（極點）</text>
+        </svg>
+        <figcaption>檢查點P的極坐標為[40, 130°]：距離極點40公尺，方向與極軸夾角130°</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式：直角坐標與極坐標的轉換</span>
+      <p>由圓上點坐標的公式 (x,y)=(r cosθ, r sinθ)，可以互相轉換直角坐標與極坐標：</p>
+      <div class="formula">
+        <div class="formula-title">直角坐標與極坐標的轉換</div>
+        由極坐標[r,θ]求直角坐標：(x,y) = (r cosθ, r sinθ)
+        <br>由直角坐標(x,y)求極坐標：r = √(x²+y²)，cosθ = x／r，sinθ = y／r
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">(1) 檢查點P的極坐標為[8,120°]，求P的直角坐標。 (2) 檢查點Q的直角坐標為(5,−5√3)，求Q的極坐標（角度介於0°~360°之間）。</p>
+      <div class="calc">(1) x = 8cos120° = 8×(−1／2) = −4
+    y = 8sin120° = 8×(√3／2) = 4√3
+
+    P的直角坐標為 (−4, 4√3)
+
+(2) r = √(5²+(−5√3)²) = √(25+75) = √100 = 10
+
+    cosθ = 5／10 = 1／2，sinθ = −5√3／10 = −√3／2
+
+    θ落在第四象限，θ = 300°
+
+    Q的極坐標為 [10, 300°]</div>
+      <p class="note">同一個點的極坐標並不唯一——角度可以換成任何一個同界角，題目通常會限定角度的範圍（例如0°~360°）來要求唯一的答案。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：4-2 廣義角與極坐標</h2>
+    <p class="lede-line">這一節把三角比的定義從銳角推廣到任意角，並用終邊上的點建立起坐標與三角比之間的橋樑，是4-3面積公式與正餘弦定理的重要基礎。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>廣義角</td><td class="f">逆時針為正、順時針為負，不限旋轉圈數；同界角相差360°的整數倍</td></tr>
+          <tr><td>廣義角的三角比</td><td class="f">終邊上一點P(x,y)，r=OP，sinθ=y/r，cosθ=x/r，tanθ=y/x</td></tr>
+          <tr><td>對稱關係</td><td class="f">sin(−θ)=−sinθ；sin(180°−θ)=sinθ；sin(90°−θ)=cosθ</td></tr>
+          <tr><td>圓上點坐標</td><td class="f">(x,y)=(r cosθ, r sinθ)</td></tr>
+          <tr><td>直線斜角</td><td class="f">tanθ=直線斜率（−90°&lt;θ&lt;90°）</td></tr>
+          <tr><td>極坐標</td><td class="f">P[r,θ]；(x,y)=(r cosθ, r sinθ)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">同界角</span></div>
+        <p>求−80°的兩個正的同界角，並求940°介於0°~360°之間的同界角。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">−80°+360°=280°，−80°+720°=640°
+
+940°−720°=220°</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">廣義角的三角比</span></div>
+        <p>設θ為標準位置角，其終邊上一點為(6,−8)，求sinθ、cosθ、tanθ的值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">r=√(6²+(−8)²)=10
+
+sinθ=−8／10=−4／5，cosθ=6／10=3／5，tanθ=−8／6=−4／3</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">對稱關係</span></div>
+        <p>求cos(−210°)的值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">cos(−210°) = cos210°　（利用cos(−θ)=cosθ）
+
+210°為第三象限角，與30°終邊對稱，cos210°=−cos30°=−√3／2
+
+∴ cos(−210°) = −√3／2</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">直線的斜角</span></div>
+        <p>路徑L₁的斜率為−1，路徑L₂的斜率為√3／3，求兩路徑的夾角。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">L₁斜角：tanθ₁=−1 → θ₁=135°
+L₂斜角：tanθ₂=√3／3 → θ₂=30°
+
+夾角 = 135°−30° = 105°（或180°−105°=75°也是夾角，通常取較小的75°為交叉角）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">極坐標</span></div>
+        <p>檢查點的直角坐標為(6,−6),求其極坐標(角度介於0°~360°之間)。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">r=√(6²+(−6)²)=6√2
+
+cosθ=6／6√2=√2／2，sinθ=−6／6√2=−√2／2
+
+θ落在第四象限，θ=315°
+
+極坐標為 [6√2, 315°]</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：用三角比算出面積與邊長</h2>
+      <p>學會了任意角的三角比與極坐標後，測量社終於有工具可以處理更複雜的測量任務——像是不規則三角形花圃的面積，或是無法直接走到的兩點間距離。在4-3「面積公式與正餘弦定理」，我們會延續測量社的故事，學習如何只靠角度和邊長，就算出三角形的面積、邊長與內角。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學2・第四章</span>
+    <span>4-2 廣義角與極坐標</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

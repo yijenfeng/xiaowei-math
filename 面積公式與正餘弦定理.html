@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-3 面積公式與正餘弦定理｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學2・第四章 三角比的性質與應用・4-3</span>
+    <h1>面積公式與正餘弦定理</h1>
+    <p class="sub">測量社接下了校慶園遊會的任務：在中庭空地規劃一塊三角形花圃，還要測出花圃外一棵大樹、涼亭之間走不到的距離。這一節延續測量社的故事，學習只靠邊長與角度，就能算出三角形的正射影長、面積，以及任意邊長與內角——這正是正弦定理與餘弦定理的用途。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>之前學過的三角比只能處理直角三角形。但花圃、水池、步道圍出來的三角形，通常沒有直角。這一節要把工具補齊：先認識「正射影長」，再推出兩個能處理任意三角形的公式——正弦定理（處理角與對邊的比例）與餘弦定理（處理三邊與一個夾角的關係）——外加面積公式，讓測量社能解決真正不規則的三角形測量問題。</p>
+    <ul class="toc">
+      <li><a href="#topic-projection"><b>1</b>正射影長</a></li>
+      <li><a href="#topic-area"><b>2</b>面積公式</a></li>
+      <li><a href="#topic-sine-law"><b>3</b>正弦定理</a></li>
+      <li><a href="#topic-cosine-law"><b>4</b>餘弦定理</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-projection">
+    <div class="part-kicker"><b>正射影長</b></div>
+    <h2>把斜的線段，投影到一條基準線上</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">花圃邊要搭一座遮陽棚，棚柱長5公尺，棚柱與地面（底邊）之間的夾角是60°。棚柱底端釘在地面的位置，離棚子與地面的交角有多遠？</p>
+      <p>把棚柱想成一條線段，從它的頂端往地面「垂直落下」，落點與棚柱底端之間的距離，就是這條線段在地面方向上的<b>正射影長</b>。設線段長為L，它與基準線的夾角為θ，則：</p>
+      <div class="formula">
+        <div class="formula-title">正射影長</div>
+        <span class="big">正射影長 = L・cosθ</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">正射影長 = 5 × cos60° = 5 × (1／2) = 2.5（公尺）</div>
+      <p class="note">θ越接近90°，正射影長越短（線段越「站得直」）；θ越接近0°，正射影長越接近線段本身的長度（線段越「躺得平」）。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律：推廣到整個三角形</span>
+      <p>接著測量社想知道花圃底邊的全長。花圃的兩腰恰好是8公尺與6公尺，且量出兩腰與底邊所夾的角，其中一個角的餘弦是4／5，另一個角的餘弦是3／5。把兩腰分別投影到底邊上，兩段投影長加起來，會不會剛好等於整條底邊？</p>
+      <div class="calc">腰8公尺那一側的投影長 = 8 × (4／5) = 6.4
+腰6公尺那一側的投影長 = 6 × (3／5) = 3.6
+
+兩段投影長之和 = 6.4 + 3.6 = 10（公尺）——與底邊全長一致！</div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 170" role="img" aria-label="三角形花圃，底邊由兩腰的正射影長相加組成，左段投影6.4公尺，右段投影3.6公尺，底邊共10公尺">
+          <line x1="20" y1="140" x2="240" y2="140" stroke="var(--line)" stroke-width="1.5"/>
+          <line x1="20" y1="140" x2="152" y2="140" stroke="currentColor" stroke-width="1" stroke-dasharray="3,3"/>
+          <circle cx="152" cy="140" r="3" fill="var(--ink)"/>
+          <line x1="20" y1="140" x2="152" y2="30" stroke="var(--accent)" stroke-width="2"/>
+          <line x1="240" y1="140" x2="152" y2="30" stroke="var(--b2)" stroke-width="2"/>
+          <text x="60" y="90" class="svg-label" fill="var(--accent)">6公尺</text>
+          <text x="185" y="90" class="svg-label" fill="var(--b2-ink)">8公尺</text>
+          <text x="65" y="155" class="svg-label" fill="var(--ink-muted)">投影 3.6</text>
+          <text x="165" y="155" class="svg-label" fill="var(--ink-muted)">投影 6.4</text>
+          <text x="120" y="20" class="svg-label" fill="var(--ink-muted)">花圃頂點</text>
+        </svg>
+        <figcaption>底邊全長 = 兩腰在底邊上的正射影長之和 = 6.4 + 3.6 = 10（公尺）</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式：投影公式</span>
+      <p>上面的結果不是巧合。在任意三角形ABC中，設三邊長為a、b、c（分別對邊角A、B、C），把邊a、邊b分別投影到邊c上，兩段投影長加起來一定等於整條邊c——這對銳角三角形、直角三角形、鈍角三角形都成立：</p>
+      <div class="formula">
+        <div class="formula-title">投影公式</div>
+        <span class="big">c = a・cosB + b・cosA</span>
+        （同理：a = b・cosC + c・cosB，b = c・cosA + a・cosC）
+      </div>
+      <p class="note">投影公式把「邊長」與「角度」直接連結在一起，是接下來推導餘弦定理的重要基礎。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-area">
+    <div class="part-kicker"><b>面積公式</b></div>
+    <h2>不用量高，也能算出三角形面積</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">花圃的兩邊長分別為10公尺、12公尺，兩邊的夾角是50°，測量社想知道要鋪多少花土，得先算出花圃的面積——但花圃是斜的，沒辦法直接用「底×高÷2」量出高。</p>
+      <p>回想「底×高÷2」的面積公式：把其中一邊當作底邊，另一邊的正射影方向的垂直分量就是高。設兩邊長為a、b，夾角為C，則高 = b・sinC，於是：</p>
+      <div class="formula">
+        <div class="formula-title">面積公式（兩邊夾一角）</div>
+        <span class="big">面積 = (1／2)・a・b・sinC</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">面積 = (1／2) × 10 × 12 × sin50°
+    ≈ (1／2) × 10 × 12 × 0.766
+    ≈ 45.96（平方公尺）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：只量得到三邊長</span>
+      <p class="quote">另一塊已經圍好的三角形花圃，沒辦法測角度，只能用皮尺沿邊量出三邊長：7公尺、8公尺、9公尺。這種情況下要怎麼算面積？</p>
+      <p>這時可以用只需要三邊長的<b>海龍公式</b>：設三邊長為a、b、c，令 s = (a+b+c)／2（半周長），則：</p>
+      <div class="formula">
+        <div class="formula-title">海龍公式</div>
+        <span class="big">面積 = √(s(s−a)(s−b)(s−c))</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">s = (7+8+9)／2 = 12
+
+面積 = √(12×(12−7)×(12−8)×(12−9))
+    = √(12×5×4×3)
+    = √720
+    = 12√5 ≈ 26.83（平方公尺）</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-sine-law">
+    <div class="part-kicker"><b>正弦定理</b></div>
+    <h2>角與對邊的比值，在同一個三角形中都相等</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">中庭水池的對岸有一棵老樹C，測量社沒辦法直接走過去量距離，只能在水池這一側選兩個點A、B，量出AB=20公尺（基線），再用量角器分別測得∠A=45°、∠B=100°（都是對樹C看過去的視角）。能不能算出A點到樹的距離AC？</p>
+      <p>先求出∠C：三角形內角和180°，所以∠C = 180°−45°−100° = 35°。接著要建立「角」與「對邊」之間的橋樑。利用投影公式與正射影的關係可以推得：在任意三角形ABC中，每個角的正弦與其對邊的比值都相等，這個共同比值還等於外接圓直徑：</p>
+      <div class="formula">
+        <div class="formula-title">正弦定理</div>
+        <span class="big">a／sinA = b／sinB = c／sinC = 2R</span>
+        （a、b、c為A、B、C的對邊，R為三角形外接圓半徑）
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p>AC是∠B的對邊，AB是∠C的對邊，代入正弦定理：</p>
+      <div class="calc">AC／sinB = AB／sinC
+
+AC = AB × sinB／sinC = 20 × sin100°／sin35° ≈ 20 × 0.985／0.574 ≈ 34.34（公尺）</div>
+      <p class="note">正弦定理裡的共同比值 2R 也能反過來求外接圓半徑：R = AB／(2sinC) = 20／(2×sin35°) ≈ 17.43（公尺）——雖然這裡的「外接圓」只是數學上的性質，不是花圃真的要挖一個圓，但它說明了三角形三邊與三個角之間，其實藏著一個共同的比例關係。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-cosine-law">
+    <div class="part-kicker"><b>餘弦定理</b></div>
+    <h2>知道兩邊與夾角，直接求出第三邊</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">花園裡有一條步道，先走12公尺，在轉角處轉了75°的角，再走18公尺才到涼亭。園遊會想直接開一條抄小路連接起點與涼亭，這條捷徑會有多長？</p>
+      <p>正弦定理需要至少一個「角－對邊」的對應關係，但這裡已知的是兩邊與夾角，對邊（捷徑）還不知道。把投影公式代入邊長平方展開，可以推出專門處理「兩邊夾一角」的公式：</p>
+      <div class="formula">
+        <div class="formula-title">餘弦定理</div>
+        <span class="big">c² = a² + b² − 2ab・cosC</span>
+        （同理：a² = b²+c²−2bc・cosA，b² = a²+c²−2ac・cosB）
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">捷徑² = 12² + 18² − 2×12×18×cos75°
+     = 144 + 324 − 432×cos75°
+     ≈ 468 − 432×0.259
+     ≈ 356.8
+
+捷徑 ≈ √356.8 ≈ 18.87（公尺）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律：判斷三角形的形狀</span>
+      <p class="quote">另一塊花圃只量得三邊長：6公尺、9公尺、11公尺。不量角度，能不能知道這是銳角、直角還是鈍角三角形？</p>
+      <p>把餘弦定理移項，可以直接用三邊長判斷最大邊所對的角：</p>
+      <div class="formula">
+        <div class="formula-title">用餘弦定理判斷形狀（c為最大邊）</div>
+        c² &lt; a²+b² → C為銳角（三角形為銳角三角形）
+        <br>c² = a²+b² → C為直角（三角形為直角三角形）
+        <br>c² &gt; a²+b² → C為鈍角（三角形為鈍角三角形）
+      </div>
+      <div class="calc">最大邊為11：11² = 121
+另兩邊平方和：6² + 9² = 36 + 81 = 117
+
+121 &gt; 117　→　cosC &lt; 0　→　∠C為鈍角
+
+∴ 這是鈍角三角形</div>
+      <p class="note">不必真的算出角度是幾度，只要比較「最大邊的平方」與「另外兩邊平方和」的大小，就能立刻判斷形狀——這是餘弦定理很實用的一個推論。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：4-3 面積公式與正餘弦定理</h2>
+    <p class="lede-line">這一節補齊了處理任意三角形的最後一塊拼圖：正射影長銜接了角度與邊長，面積公式、正弦定理、餘弦定理則讓測量社能只憑幾個量得到的數據，算出整個三角形的所有邊長、角度與面積。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>正射影長</td><td class="f">正射影長 = L・cosθ</td></tr>
+          <tr><td>投影公式</td><td class="f">c = a・cosB + b・cosA（另兩式同理輪換）</td></tr>
+          <tr><td>面積公式</td><td class="f">面積 = (1／2)ab・sinC；海龍公式：面積=√(s(s−a)(s−b)(s−c))，s=(a+b+c)／2</td></tr>
+          <tr><td>正弦定理</td><td class="f">a／sinA = b／sinB = c／sinC = 2R</td></tr>
+          <tr><td>餘弦定理</td><td class="f">c²=a²+b²−2ab・cosC；可用來判斷三角形形狀（銳角／直角／鈍角）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">正射影長</span></div>
+        <p>一根斜撐長6√2公尺，與底線的夾角為45°，求這根斜撐在底線上的正射影長。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">正射影長 = 6√2 × cos45° = 6√2 × (√2／2) = 6（公尺）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">面積公式</span></div>
+        <p>三角形兩邊長分別為8、15，夾角為30°，求此三角形的面積。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">面積 = (1／2) × 8 × 15 × sin30° = (1／2) × 8 × 15 × (1／2) = 30</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">海龍公式</span></div>
+        <p>三角形三邊長分別為5、6、7，求此三角形的面積。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">s = (5+6+7)／2 = 9
+
+面積 = √(9×(9−5)×(9−6)×(9−7)) = √(9×4×3×2) = √216 = 6√6</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">正弦定理</span></div>
+        <p>三角形ABC中，∠A=30°，∠C=105°，a=10（a為∠A的對邊），求c與此三角形外接圓半徑R。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">∠B = 180°−30°−105° = 45°
+
+由正弦定理：a／sinA = c／sinC
+c = a × sinC／sinA = 10 × sin105°／sin30° = 5√6+5√2 ≈ 19.32
+
+R = a／(2sinA) = 10／(2×(1／2)) = 10</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">餘弦定理</span></div>
+        <p>三角形三邊長分別為7、10、13，判斷這是銳角、直角還是鈍角三角形。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">最大邊為13：13² = 169
+另兩邊平方和：7² + 10² = 49 + 100 = 149
+
+169 &gt; 149　→　最大邊所對的角為鈍角
+
+∴ 這是鈍角三角形</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>第四章完成：從直角三角形到任意三角形</h2>
+      <p>從4-1的直角三角形邊角關係，到4-2把三角比推廣到任意角並認識極坐標，再到4-3的面積公式與正弦、餘弦定理，測量社終於補齊了處理任何三角形測量問題的完整工具箱——不管三角形有沒有直角、角度是銳角還是鈍角，都能算出邊長、角度與面積。這一章的三角比工具，之後在向量、平面幾何的許多單元裡都會再次派上用場。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學2・第四章</span>
+    <span>4-3 面積公式與正餘弦定理</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

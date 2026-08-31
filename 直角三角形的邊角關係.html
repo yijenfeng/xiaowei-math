@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-1 直角三角形的邊角關係｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學2・第四章 三角比的性質與應用・4-1</span>
+    <h1>直角三角形的邊角關係</h1>
+    <p class="sub">筱葳加入了學校的「測量社」，這學期社團的任務是用簡單的工具，量出校園裡各種量不到的高度與距離。這一節先從最基礎的直角三角形出發，認識三角比的定義、基本關係，以及如何用計算機求值並應用在仰角、俯角上。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>測量社的第一堂課，老師只發給每個人一條有刻度的繩子和一個量角器，說：「用這兩樣東西，就能算出攀岩牆的高度。」筱葳很疑惑——沒有捲尺，要怎麼量出高度？老師說，關鍵就在直角三角形裡，角度和邊長之間有著固定的比例關係，這就是這一節要學的「三角比」。</p>
+    <ul class="toc">
+      <li><a href="#topic-definition"><b>1</b>直角三角形的三角比</a></li>
+      <li><a href="#topic-relations"><b>2</b>三角比的基本關係</a></li>
+      <li><a href="#topic-calculator"><b>3</b>用計算機求三角比與角度・仰角與俯角</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-definition">
+    <div class="part-kicker"><b>直角三角形的三角比</b></div>
+    <h2>相似三角形裡，邊長的比例只跟角度有關</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">測量社的攀岩牆有一根三角形的斜撐架，最小的那一副（教具模型）斜邊長6公分、和地面夾30°角；社辦倉庫裡還有大一點的斜撐架，斜邊12公分，同樣和地面夾30°角。兩副撐架大小不同，但形狀一模一樣（都是30°-60°-90°的直角三角形）。</p>
+      <p>因為兩個三角形相似，對應邊長的比例一定相同。量出小撐架的三邊是3、3√3、6，大撐架的三邊是6、6√3、12——不管撐架多大，「30°的對邊長：30°的鄰邊長：斜邊長」永遠是 <span class="mono">1 : √3 : 2</span>。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 160" role="img" aria-label="30度60度90度直角三角形，30度角的對邊長3，鄰邊長3乘根號3，斜邊長6">
+          <polygon points="20,140 220,140 220,45" fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <rect x="205" y="125" width="15" height="15" fill="none" stroke="var(--ink-muted)" stroke-width="1"/>
+          <text x="45" y="132" class="svg-label" fill="var(--ink-muted)">30°</text>
+          <text x="115" y="155" class="svg-label" fill="var(--ink)">3√3（鄰邊）</text>
+          <text x="230" y="95" class="svg-label" fill="var(--ink)">3（對邊）</text>
+          <text x="100" y="85" class="svg-label" fill="var(--accent)">6（斜邊）</text>
+        </svg>
+        <figcaption>小撐架：斜邊6公分，30°角的對邊3公分、鄰邊3√3公分</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>把這個「比例只跟角度有關、跟大小無關」的性質推廣到任意銳角 θ：在直角三角形中，固定 θ 之後，「θ的對邊長」「θ的鄰邊長」「斜邊長」這三邊兩兩的比值就固定下來了，分別定義為<b>正弦、餘弦、正切</b>：</p>
+      <div class="formula">
+        <div class="formula-title">直角三角形的三角比</div>
+        sin θ = θ的對邊長 ／ 斜邊長　　（正弦）
+        <br>cos θ = θ的鄰邊長 ／ 斜邊長　　（餘弦）
+        <br>tan θ = θ的對邊長 ／ θ的鄰邊長　　（正切）
+      </div>
+      <p>用小撐架驗算：sin30° = 3／6 = 1／2，cos30° = 3√3／6 = √3／2，tan30° = 3／3√3 = 1／√3 = √3／3。這三個值不會因為換成大撐架而改變。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">社辦另一副斜撐架是等腰直角三角形（45°-45°-90°），兩股長都是5公分。求 sin45°、cos45°、tan45°。</p>
+      <div class="calc">斜邊 = √(5²+5²) = 5√2
+
+sin45° = 5／5√2 = 1／√2 = √2／2
+cos45° = 5／5√2 = √2／2
+tan45° = 5／5 = 1</div>
+      <p>把 30°、45°、60° 這三個常用角的三角比整理成表格，之後會反覆用到：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>θ</th><th>30°</th><th>45°</th><th>60°</th></tr></thead>
+          <tbody>
+            <tr><td>sin θ</td><td class="f">1／2</td><td class="f">√2／2</td><td class="f">√3／2</td></tr>
+            <tr><td>cos θ</td><td class="f">√3／2</td><td class="f">√2／2</td><td class="f">1／2</td></tr>
+            <tr><td>tan θ</td><td class="f">√3／3</td><td class="f">1</td><td class="f">√3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：一般的直角三角形</span>
+      <p class="quote">測量社在攀岩牆下方架設了一個三角形護欄，量出三邊長恰好是8公尺、15公尺、17公尺（8²+15²=17²）。設最短邊所對的角為 θ，求 sinθ、cosθ、tanθ。</p>
+      <div class="calc">斜邊（最長邊）= 17，θ的對邊 = 8，θ的鄰邊 = 15
+
+sinθ = 8／17，cosθ = 15／17，tanθ = 8／15</div>
+      <p class="note">三角比只是「兩邊長的比值」，所以不管三角形是用公分還是公尺量測，算出來的 sinθ、cosθ、tanθ 都是不帶單位的純數字。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">反過來想：由三角比求邊長</span>
+      <p class="quote">護欄的另一根樑柱，已知斜邊長20公尺，且其中一個銳角A滿足 sinA=3／5，求A的對邊長。</p>
+      <div class="calc">sinA = 對邊 ／ 斜邊
+
+3／5 = 對邊 ／ 20
+
+對邊 = 20 × 3／5 = 12 公尺</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-relations">
+    <div class="part-kicker"><b>三角比的基本關係</b></div>
+    <h2>sinθ、cosθ、tanθ 之間藏著三條恆等式</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律：商數關係</span>
+      <p>設直角三角形中 θ 的對邊、鄰邊、斜邊分別為 a、b、c，則 sinθ=a／c，cosθ=b／c。把兩者相除：</p>
+      <div class="calc">sinθ／cosθ = (a／c)／(b／c) = a／b = tanθ</div>
+      <div class="formula">
+        <div class="formula-title">商數關係（0°&lt;θ&lt;90°）</div>
+        <span class="big">sinθ／cosθ = tanθ</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律：平方關係</span>
+      <p>由畢氏定理 a²+b²=c²，兩邊同除以 c²：</p>
+      <div class="calc">(sinθ)² + (cosθ)² = a²／c² + b²／c² = (a²+b²)／c² = c²／c² = 1</div>
+      <div class="formula">
+        <div class="formula-title">平方關係（0°&lt;θ&lt;90°）</div>
+        <span class="big">sin²θ + cos²θ = 1</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律：餘角關係</span>
+      <p>直角三角形的兩個銳角互為餘角（一個是θ，另一個就是90°−θ）。對90°−θ這個角來說，原本θ的對邊變成了它的鄰邊，原本θ的鄰邊變成了它的對邊：</p>
+      <div class="formula">
+        <div class="formula-title">餘角關係（0°&lt;θ&lt;90°）</div>
+        <span class="big">sin(90°−θ) = cosθ　　cos(90°−θ) = sinθ</span>
+      </div>
+      <p class="note">這正是「正弦（sine）」與「餘弦（co-sine）」這兩個名字的由來——餘弦就是「餘角的正弦」。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">護欄斜撐的一個角θ滿足 sinθ=7／25，求 cosθ 與 tanθ 的值（θ為銳角）。</p>
+      <div class="calc">sin²θ + cos²θ = 1
+
+cos²θ = 1 − (7／25)² = 1 − 49／625 = 576／625
+
+cosθ = 24／25　（θ為銳角，cosθ取正值）
+
+tanθ = sinθ／cosθ = (7／25)／(24／25) = 7／24</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：綜合應用</span>
+      <p class="quote">已知 0°&lt;θ&lt;90°，且 sinθ−cosθ=7／17，求 sinθcosθ、sinθ+cosθ、sin³θ−cos³θ 的值。</p>
+      <div class="calc">(sinθ−cosθ)² = (7／17)²
+
+sin²θ+cos²θ − 2sinθcosθ = 49／289
+
+1 − 2sinθcosθ = 49／289
+
+sinθcosθ = 120／289
+
+(sinθ+cosθ)² = 1 + 2sinθcosθ = 1 + 240／289 = 529／289
+
+0°&lt;θ&lt;90°，sinθ、cosθ皆為正，故 sinθ+cosθ = 23／17
+
+sin³θ−cos³θ = (sinθ−cosθ)(sin²θ+sinθcosθ+cos²θ)
+             = (7／17)(1 + 120／289)
+             = (7／17)×(409／289)
+             = 2863／4913</div>
+      <p class="note">遇到「已知sinθ±cosθ求其他式子」的題型，第一步幾乎都是「把已知條件平方」——平方後會自動出現sin²θ+cos²θ，馬上就能用平方關係化簡出sinθcosθ。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-calculator">
+    <div class="part-kicker"><b>用計算機求三角比與角度・仰角與俯角</b></div>
+    <h2>不是特殊角，就交給計算機</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">30°、45°、60°這些特殊角很好算，但實際到攀岩牆下方測量時，量角器量出來的角度往往是35°、42°這種不整齊的角度。這時候就需要用計算機求出三角比的近似值。</p>
+      <p>使用計算機前，要先確認角度模式設定為「DEG」（degree，度），輸入角度後按下 sin、cos 或 tan 鍵，就能得到近似值；反過來，如果已知三角比要找角度，則要用 sin⁻¹、cos⁻¹、tan⁻¹（通常標示為 SHIFT+sin 等）。角度也可以用「度分秒」表示：1°=60′，1′=60″。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">已知 tanθ=0.6，用計算機求θ的度數（取到小數點後兩位），並轉換成度分秒表示。</p>
+      <div class="calc">按 tan⁻¹(0.6) ≈ 30.96°
+
+換算度分秒：0.96° × 60 ≈ 57.83′，0.83′ × 60 ≈ 50″
+
+θ ≈ 30°57′50″（四捨五入取到秒）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境延伸：仰角與俯角</span>
+      <p>從水平線往上看目標物的夾角，叫做<b>仰角</b>；從水平線往下看目標物的夾角，叫做<b>俯角</b>。測量社常利用仰角、俯角搭配已知的距離，求出量不到的高度。</p>
+      <div class="fig-grid">
+        <figure class="figure-card">
+          <svg viewBox="0 0 260 150" role="img" aria-label="測量社員在地面用測角器測攀岩牆頂端的仰角35度，攀岩牆底部距離測量點12公尺">
+            <line x1="20" y1="130" x2="240" y2="130" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="20" y1="130" x2="20" y2="30" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="20" y1="130" x2="200" y2="130" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="20" y1="130" x2="20" y2="45" stroke="var(--accent)" stroke-width="2"/>
+            <text x="30" y="120" class="svg-label" fill="var(--ink-muted)">35°</text>
+            <text x="100" y="145" class="svg-label" fill="var(--ink-muted)">12公尺</text>
+            <text x="10" y="42" class="svg-label" fill="var(--accent)">攀岩牆頂</text>
+            <circle cx="20" cy="130" r="3" fill="var(--ink)"/>
+            <text x="5" y="145" class="svg-label" fill="var(--ink-muted)">測量點</text>
+          </svg>
+          <figcaption>從距離攀岩牆底部12公尺處測得頂端的仰角為35°</figcaption>
+        </figure>
+      </div>
+      <p class="quote">測量社在距離攀岩牆底部12公尺處，用測角器測得牆頂的仰角為35°，求攀岩牆的高度（取到小數點後一位）。</p>
+      <div class="calc">tan35° = 高度 ／ 12
+
+高度 = 12 × tan35° ≈ 12 × 0.7002 ≈ 8.4 公尺</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：俯角應用</span>
+      <p class="quote">筱葳站在社辦大樓二樓陽台，離地面高度8公尺，往下看操場上的一個記號，測得俯角為25°，求筱葳與記號之間的水平距離（取到小數點後一位）。</p>
+      <div class="calc">俯角與水平線平行時所形成的直角三角形中，25°角的對邊是陽台高度8公尺，鄰邊是水平距離
+
+tan25° = 8 ／ 水平距離
+
+水平距離 = 8 ／ tan25° ≈ 8 ／ 0.4663 ≈ 17.2 公尺</div>
+      <p class="note">俯角的直角三角形，是把仰角的三角形「反過來看」——由於水平線互相平行，俯角在數值上會等於從下往上看的仰角，這是它們的內錯角相等。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：4-1 直角三角形的邊角關係</h2>
+    <p class="lede-line">這一節建立了三角比的定義與三條基本關係，之後4-2會把定義擴展到任意大小的角，4-3則會用三角比推導出面積與正弦、餘弦定理。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>三角比定義</td><td class="f">sinθ=對邊／斜邊，cosθ=鄰邊／斜邊，tanθ=對邊／鄰邊</td></tr>
+          <tr><td>商數關係</td><td class="f">sinθ／cosθ = tanθ</td></tr>
+          <tr><td>平方關係</td><td class="f">sin²θ + cos²θ = 1</td></tr>
+          <tr><td>餘角關係</td><td class="f">sin(90°−θ)=cosθ，cos(90°−θ)=sinθ</td></tr>
+          <tr><td>仰角／俯角</td><td class="f">水平線往上看／往下看目標物的夾角</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">特殊角</span></div>
+        <p>求 sin45°cos45° + tan60°sin30° 的值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">sin45°cos45° = (√2／2)×(√2／2) = 1／2
+tan60°sin30° = √3 × 1／2 = √3／2
+
+總和 = 1／2 + √3／2 = (1+√3)／2</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">三角比定義</span></div>
+        <p>直角三角形兩股長為9、12，斜邊長為15，求最短邊所對角θ的sinθ、cosθ、tanθ。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">sinθ=9／15=3／5，cosθ=12／15=4／5，tanθ=9／12=3／4</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">平方關係</span></div>
+        <p>設θ為銳角，若sinθ=5／13，求cosθ與tanθ的值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">cos²θ=1−(5／13)²=144／169，cosθ=12／13（θ為銳角取正值）
+
+tanθ=sinθ／cosθ=(5／13)／(12／13)=5／12</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">仰角應用</span></div>
+        <p>測量社在距離某建築物底部20公尺處，測得頂端仰角為40°，求建築物高度（取到小數點後一位）。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">高度 = 20 × tan40° ≈ 20 × 0.8391 ≈ 16.8 公尺</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">綜合應用</span></div>
+        <p>設0°&lt;θ&lt;90°，若sinθ+cosθ=6／5，求sinθcosθ的值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">(sinθ+cosθ)² = 1+2sinθcosθ
+
+(6／5)² = 1+2sinθcosθ
+
+36／25 − 1 = 2sinθcosθ
+
+sinθcosθ = 11／50</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：角度不再只限於0°到90°</h2>
+      <p>三角比的定義目前只適用於直角三角形裡的銳角，範圍是0°到90°。但現實中的角度常常超過這個範圍——體操選手轉體可以超過360°，方向也可以是任意角度。在4-2「廣義角與極坐標」，我們會延續測量社的故事，把三角比的定義擴展到任意大小的角，並學習用「距離＋方向」描述位置的極坐標。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學2・第四章</span>
+    <span>4-1 直角三角形的邊角關係</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
