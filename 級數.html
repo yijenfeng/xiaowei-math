@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-2 級數｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學2・第一章 數列與級數・1-2</span>
+    <h1>級數</h1>
+    <p class="sub">延續筱葳的「半馬訓練計畫」與「存錢買相機」計畫，學習等差級數、等比級數的求和公式，以及三個貫穿學測的常用求和公式與複利應用。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>知道數列怎麼一項一項排列之後，很自然會想問：把它們全部加起來，總和是多少？這一節就從筱葳「存錢買相機」的計畫出發，把 1-1 學過的等差、等比數列，變成能快速算出總和的工具。</p>
+    <ul class="toc">
+      <li><a href="#topic-series"><b>1</b>級數</a></li>
+      <li><a href="#topic-series-formula"><b>2</b>等差級數與等比級數</a></li>
+      <li><a href="#topic-sum-formulas"><b>3</b>常用的求和公式</a></li>
+      <li><a href="#topic-compound"><b>4</b>複利的應用</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-series">
+    <div class="part-kicker"><b>級數</b></div>
+    <h2>把數列的每一項加起來</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">筱葳想存錢買一台相機，訂了15週的存錢計畫：第1週存300元，之後每週都比前一週多存50元。她想知道：存到第5週為止，總共存了多少錢？</p>
+      <div class="calc">第1~5週各週存款：300, 350, 400, 450, 500</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>要回答「總共存了多少」，就是把數列的前幾項通通加起來：</p>
+      <div class="calc">300+350+400+450+500 = 2000（元）</div>
+      <p>像這樣把數列 a₁, a₂, a₃, …, aₙ 的前 n 項依序加總，叫做<b>級數</b>，n 稱為項數，總和記作 Sₙ：</p>
+      <div class="formula">
+        <div class="formula-title">級數（前 n 項和）</div>
+        <span class="big">Sₙ = a₁ + a₂ + a₃ + ⋯ + aₙ</span>
+      </div>
+      <p>所以筱葳存到第5週為止的總金額就是 S₅=2000元。但如果要問「存完整個15週計畫，總共會存到多少錢」，難道要把15個數字一個一個加起來嗎？下一個主題就是要找出更快的算法。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-series-formula">
+    <div class="part-kicker"><b>等差級數與等比級數</b></div>
+    <h2>不用一項一項加，也能算出總和</h2>
+
+    <div class="step">
+      <span class="step-tag">情境：等差級數</span>
+      <p class="quote">筱葳的存錢計畫是等差數列：a₁=300，公差d=50，共15週。第15週會存多少？整個計畫存滿15週，總共能存到多少錢，夠不夠買心儀的相機？</p>
+      <div class="calc">a₁₅ = a₁+(15−1)×50 = 300+700 = 1000（元）</div>
+      <p>如果照定義把15個數字全部加起來會很累。這裡有一個經典的技巧：把總和倒過來加一次，再跟原本的加起來。先用計畫裡前5週的存款（300, 350, 400, 450, 500）示範這個想法：</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 300 158" role="img" aria-label="高斯配對法示意圖，以前5週存款為例，藍色由左到右遞增的長條代表原本的存款序列，橘色由左到右遞減的長條疊在藍色上方，每一欄合起來高度都相等，形成一個完整的矩形">
+          <rect x="30" y="30" width="40" height="80" fill="var(--b2)"/>
+          <rect x="30" y="110" width="40" height="20" fill="var(--accent)"/>
+          <rect x="82" y="30" width="40" height="65" fill="var(--b2)"/>
+          <rect x="82" y="95" width="40" height="35" fill="var(--accent)"/>
+          <rect x="134" y="30" width="40" height="50" fill="var(--b2)"/>
+          <rect x="134" y="80" width="40" height="50" fill="var(--accent)"/>
+          <rect x="186" y="30" width="40" height="35" fill="var(--b2)"/>
+          <rect x="186" y="65" width="40" height="65" fill="var(--accent)"/>
+          <rect x="238" y="30" width="40" height="20" fill="var(--b2)"/>
+          <rect x="238" y="50" width="40" height="80" fill="var(--accent)"/>
+          <text x="35" y="22" class="svg-label" fill="currentColor">500</text>
+          <text x="87" y="22" class="svg-label" fill="currentColor">450</text>
+          <text x="139" y="22" class="svg-label" fill="currentColor">400</text>
+          <text x="191" y="22" class="svg-label" fill="currentColor">350</text>
+          <text x="243" y="22" class="svg-label" fill="currentColor">300</text>
+          <text x="33" y="145" class="svg-label" fill="var(--ink-muted)">300</text>
+          <text x="85" y="145" class="svg-label" fill="var(--ink-muted)">350</text>
+          <text x="137" y="145" class="svg-label" fill="var(--ink-muted)">400</text>
+          <text x="189" y="145" class="svg-label" fill="var(--ink-muted)">450</text>
+          <text x="241" y="145" class="svg-label" fill="var(--ink-muted)">500</text>
+        </svg>
+        <figcaption>正著排的存款（藍）疊上倒著排的存款（橘），每一欄總高度都相等——這就是高斯配對法的幾何意義</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>圖中每一欄的藍＋橘都固定等於800（=300+500），這正是「首項＋末項」的概念。現在把同樣的想法套用到完整的15週計畫：用S代表S₁₅，把它倒過來寫一次，兩式對齊相加：</p>
+      <div class="calc">    S = 300 + 350 + 400 + ⋯ + 950 + 1000
++)  S = 1000 + 950 + 900 + ⋯ + 350 + 300
+------------------------------------------
+  2S = 1300 + 1300 + 1300 + ⋯ + 1300 + 1300　（共15個1300）
+  2S = 15 × 1300 = 19500
+   S = 9750</div>
+      <p>神奇的地方在於：每一組上下對齊的兩個數，加起來都固定是「首項+末項」=300+1000=1300，跟原本的公差 d 完全無關！這個技巧對任何等差數列都成立：</p>
+      <div class="formula">
+        <div class="formula-title">等差級數求和公式</div>
+        <span class="big">Sₙ = n(a₁+aₙ) ／ 2 　　（也可寫成 Sₙ = n[2a₁+(n−1)d] ／ 2）</span>
+      </div>
+      <p>結論：筱葳存滿15週後總共會有 <b>9750元</b>，足夠買下她心儀的相機了！</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：等比級數</span>
+      <p class="quote">回到1-1的社團迎新影片：第1天分享3人，之後每天變成前一天的3倍，連續5天。5天內，總共觸及了多少人次的分享？</p>
+      <div class="calc">S = 3+9+27+81+243</div>
+      <p>等差級數的「倒過來加」在這裡沒有用（因為規律是相乘，不是相加）。但有一個類似的技巧：把整個總和乘上公比，再跟原本的相減。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <div class="calc">    S = 3 + 9 + 27 + 81 + 243
+-)  3S =     9 + 27 + 81 + 243 + 729
+------------------------------------
+S − 3S = 3 − 729
+    −2S = −726
+      S = 363</div>
+      <p>關鍵在於：S 和 3S 中間有4項完全重複（9,27,81,243），相減後幾乎都消掉了，只剩頭尾兩項。這個技巧對任何等比數列（r≠1）都成立：</p>
+      <div class="formula">
+        <div class="formula-title">等比級數求和公式（r≠1）</div>
+        <span class="big">Sₙ = a₁(1−rⁿ) ／ (1−r)　　（r=1時，Sₙ=n·a₁）</span>
+      </div>
+      <div class="calc">驗算：S₅ = 3×(1−3⁵)／(1−3) = 3×(1−243)／(−2) = 3×(−242)／(−2) = 363　✓</div>
+      <p>結論：這支迎新影片5天內總共被分享了 <b>363人次</b>——這就是「病毒式擴散」的威力：即使每天只是乘上固定倍數，累積起來的總量成長得非常快。</p>
+    </div>
+  </section>
+
+  <section class="fig-grid prose" style="padding:0 0 1rem;">
+    <figure class="figure-card">
+      <svg viewBox="0 0 260 150" role="img" aria-label="社團迎新影片每日累積分享人次的長條圖，S1=3，S2=12，S3=39，S4=120，S5=363，顯示總和成長得越來越快">
+        <line x1="20" y1="130" x2="250" y2="130" stroke="currentColor" stroke-width="1.2"/>
+        <rect x="30" y="129.1" width="30" height="0.9" fill="var(--accent)"/>
+        <text x="32" y="126" class="svg-label" fill="var(--ink-muted)">S₁=3</text>
+        <rect x="78" y="126.4" width="30" height="3.6" fill="var(--accent)"/>
+        <text x="80" y="122" class="svg-label" fill="var(--ink-muted)">S₂=12</text>
+        <rect x="126" y="118.2" width="30" height="11.8" fill="var(--accent)"/>
+        <text x="128" y="114" class="svg-label" fill="var(--ink-muted)">S₃=39</text>
+        <rect x="174" y="93.6" width="30" height="36.4" fill="var(--accent)"/>
+        <text x="174" y="89" class="svg-label" fill="var(--ink-muted)">S₄=120</text>
+        <rect x="222" y="20.0" width="30" height="110.0" fill="var(--b2)"/>
+        <text x="220" y="16" class="svg-label" fill="var(--b2-ink)">S₅=363</text>
+      </svg>
+      <figcaption>累積總和 Sₙ 隨天數暴增——等比級數的總和成長速度遠比等差級數快得多</figcaption>
+    </figure>
+  </section>
+
+  <section class="part prose" id="topic-sum-formulas">
+    <div class="part-kicker"><b>常用的求和公式</b></div>
+    <h2>三個貫穿學測的求和公式</h2>
+
+    <div class="step">
+      <span class="step-tag">回顧：Σk</span>
+      <p>1-1的「疊杯挑戰」已經證明過：<span class="mono">1+2+3+⋯+n = n(n+1)／2</span>。這其實就是「首項1、公差1」的等差級數，代入等差級數公式 <span class="mono">Sₙ=n(a₁+aₙ)／2</span>，把 a₁=1、aₙ=n 代進去，一樣可以得到同樣的結果——兩種方法殊途同歸。</p>
+      <div class="formula">
+        <div class="formula-title">求和公式①</div>
+        <span class="big">1+2+3+⋯+n = Σk = n(n+1) ／ 2</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：Σk²</span>
+      <p class="quote">筱葳幫社刊設計封面，用邊長分別是1, 2, 3, …公分的正方形色紙貼成階梯圖案。如果貼了邊長1到6公分的色紙各一張，總共用掉多少面積的色紙？</p>
+      <div class="calc">面積依序：1²=1, 2²=4, 3²=9, 4²=16, 5²=25, 6²=36
+總面積 = 1+4+9+16+25+36 = 91（平方公分）</div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 150" role="img" aria-label="邊長1到4公分的正方形色紙由左到右並排，面積分別是1、4、9、16平方公分，示意Σk平方的幾何意義">
+          <rect x="20" y="124" width="16" height="16" fill="var(--accent)"/>
+          <text x="20" y="145" class="svg-label" fill="var(--ink-muted)">1²=1</text>
+          <rect x="50" y="108" width="32" height="32" fill="var(--ab)"/>
+          <text x="52" y="150" class="svg-label" fill="var(--ink-muted)">2²=4</text>
+          <rect x="96" y="92" width="48" height="48" fill="var(--accent)"/>
+          <text x="102" y="150" class="svg-label" fill="var(--ink-muted)">3²=9</text>
+          <rect x="158" y="76" width="64" height="64" fill="var(--ab)"/>
+          <text x="172" y="150" class="svg-label" fill="var(--ink-muted)">4²=16</text>
+        </svg>
+        <figcaption>邊長越來越大的正方形色紙並排——面積剛好是1², 2², 3², 4², …，加總就是Σk²</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式（數學歸納法證明）</span>
+      <p>這類「平方和」有一個現成公式，可以用數學歸納法證明對所有正整數 n 都成立：</p>
+      <div class="formula">
+        <div class="formula-title">求和公式②</div>
+        <span class="big">1²+2²+3²+⋯+n² = Σk² = n(n+1)(2n+1) ／ 6</span>
+      </div>
+      <div class="calc">(1) n=1：左式=1²=1，右式=1×2×3／6=1，相等，成立。
+
+(2) 假設 n=k 成立：1²+2²+⋯+k² = k(k+1)(2k+1)／6 ……①
+    n=k+1時，左式 = 1²+2²+⋯+k²+(k+1)²
+             = k(k+1)(2k+1)／6 + (k+1)²　　（代入①）
+             = (k+1)[k(2k+1)+6(k+1)]／6
+             = (k+1)(2k²+7k+6)／6
+             = (k+1)(k+2)(2k+3)／6
+             = (k+1)[(k+1)+1][2(k+1)+1]／6
+
+    正是 n=k+1 該有的形式，P(k+1) 成立。
+由(1)(2)，根據數學歸納法，此公式對所有正整數n成立。</div>
+      <p>驗算色紙例子：n=6時，Σk²=6×7×13／6=91，跟直接加總的結果一致。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：Σk³</span>
+      <p class="quote">筱葳後來把色紙立體化，改用邊長1, 2, 3, 4公分的正方體積木堆成裝置藝術。這4個正方體的總體積是多少？</p>
+      <div class="calc">體積依序：1³=1, 2³=8, 3³=27, 4³=64
+總體積 = 1+8+27+64 = 100（立方公分）</div>
+      <p>立方和也有現成公式，且它的形式跟公式①有巧妙的關聯：</p>
+      <div class="formula">
+        <div class="formula-title">求和公式③</div>
+        <span class="big">1³+2³+3³+⋯+n³ = Σk³ = [n(n+1)／2]²</span>
+      </div>
+      <p class="note">觀察公式③的右邊：n(n+1)／2 正是公式①（Σk）！也就是說「立方和＝（一次方和）的平方」，是一個很漂亮的巧合。驗算積木例子：n=4時，Σk³=[4×5／2]²=10²=100，跟直接加總一致。公式③同樣可以用數學歸納法證明，作法跟公式②完全一樣，留給你當作練習。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：混合應用</span>
+      <p class="quote">社課要用彩帶裝飾會場，依序需要 1×2, 2×3, 3×4, …, n×(n+1) 公分長的彩帶。若 n=10，總共需要多少公分的彩帶？</p>
+      <div class="calc">觀察：k×(k+1) = k²+k
+
+Σ[k×(k+1)]（k=1到10）= Σk² + Σk
+= [10×11×21／6] + [10×11／2]
+= 385 + 55
+= 440（公分）</div>
+      <p>這種「把複雜的求和式拆成已知公式的組合」，是求和公式最常見的應用方式——遇到 k²+k、2k+1 這類含 k 的多項式求和，先拆開成 Σk²、Σk、Σ常數項分別處理，再代公式加起來即可。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-compound">
+    <div class="part-kicker"><b>複利的應用</b></div>
+    <h2>把存到的錢放進銀行，複利會怎麼幫你增值？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">買了相機以後，筱葳把存錢計畫賺到的9750元先放進一個年利率2.4%（月利率0.2%）、每月複利一次的帳戶，準備存來買鏡頭。存滿12個月後，帳戶裡會有多少錢？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>複利的意思是：每個月的利息，會併入本金一起繼續生息（利滾利），而不是每個月都只用原始本金去算利息（那樣叫單利）。設本金 a、每期利率 r，經過1期後變成 a(1+r)；這筆錢再滾一期，變成 a(1+r)²……依此類推：</p>
+      <div class="formula">
+        <div class="formula-title">複利公式</div>
+        <span class="big">本金a、每期利率r，經過n期後本利和 = a(1+r)ⁿ</span>
+      </div>
+      <div class="calc">9750 × (1+0.2%)¹² = 9750 × (1.002)¹²
+≈ 9750 × 1.0243
+≈ 9986.6（元），取整數約 9987元</div>
+      <p>12個月只多了大約237元的利息，看起來不多。但如果每個月都「額外」再存一筆錢進去，會怎麼樣呢？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：定期定額（延伸）</span>
+      <p class="quote">筱葳的朋友怡君也想存錢，她跟筱葳約定：從第1個月起，每個月都存入500元到同一個帳戶（月利率一樣是0.2%，每次存入立刻開始計息）。存滿12個月後（即第12次存入的錢也已經計息一次），這個帳戶裡總共會有多少錢？</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>第1個月存的500元，會複利12次；第2個月存的500元，會複利11次；……第12個月存的500元，只複利1次。把每一筆都算出來再加總，其實就是一個等比級數：</p>
+      <div class="calc">總額 = 500(1+0.2%)¹ + 500(1+0.2%)² + ⋯ + 500(1+0.2%)¹²
+
+這是首項 a₁=500(1.002)、公比 r=1.002、項數n=12 的等比級數：
+S₁₂ = a₁(1−r¹²)／(1−r) ≈ 6078.6，取整數約 6079元</div>
+      <p>結論：怡君存滿12個月後，帳戶裡大約有 <b>6079元</b>——每月只存500元、共存入6000元本金，複利就多幫她賺了大約79元的利息。這說明「定期定額投入＋複利」用的正是等比級數求和的技巧，只是每一筆本金投入的時間點不同，複利的期數也各不相同。</p>
+      <p class="note">學測考複利、年金相關題目時，最常見的錯誤是搞混「單筆存入、放n期」跟「每期都存入一筆、各自複利不同期數」這兩種情境——前者直接用 a(1+r)ⁿ，後者則要用等比級數公式加總。動筆前先想清楚：錢是一次進場，還是分批進場？</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：1-2 級數</h2>
+    <p class="lede-line">這一節把數列「加總」的規律整理成公式，是往後排列組合、機率、甚至微積分都會用到的基本功。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>級數</td><td class="f">Sₙ=a₁+a₂+⋯+aₙ（數列前n項的和）</td></tr>
+          <tr><td>等差級數</td><td class="f">Sₙ=n(a₁+aₙ)／2＝n[2a₁+(n−1)d]／2</td></tr>
+          <tr><td>等比級數</td><td class="f">Sₙ=a₁(1−rⁿ)／(1−r)（r≠1）；r=1時Sₙ=na₁</td></tr>
+          <tr><td>求和公式①</td><td class="f">Σk＝n(n+1)／2</td></tr>
+          <tr><td>求和公式②</td><td class="f">Σk²＝n(n+1)(2n+1)／6</td></tr>
+          <tr><td>求和公式③</td><td class="f">Σk³＝[n(n+1)／2]²</td></tr>
+          <tr><td>複利</td><td class="f">本金a、每期利率r，n期後本利和＝a(1+r)ⁿ；定期定額則用等比級數加總</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">等差級數</span></div>
+        <p>等差數列 a₁=5，公差d=3，求前20項的和 S₂₀。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">a₂₀ = 5+(20−1)×3 = 5+57 = 62
+S₂₀ = 20×(5+62)／2 = 20×67／2 = 670</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">等比級數</span></div>
+        <p>等比數列 a₁=2，公比r=3，求前6項的和 S₆。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">S₆ = 2×(1−3⁶)／(1−3) = 2×(1−729)／(−2) = 2×(−728)／(−2) = 728</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">求和公式①</span></div>
+        <p>求 1+2+3+⋯+50 的值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">Σk（n=50）= 50×51／2 = 1275</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">求和公式②③</span></div>
+        <p>求 1²+2²+⋯+8² 以及 1³+2³+⋯+5³ 的值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">Σk²（n=8）= 8×9×17／6 = 204
+Σk³（n=5）= [5×6／2]² = 15² = 225</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">複利</span></div>
+        <p>筱葳把5000元存入年利率3.6%（月利率0.3%）、每月複利一次的帳戶，求6個月後的本利和（取到整數元，已知 1.003⁶≈1.01814）。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">本利和 = 5000×(1+0.3%)⁶ = 5000×1.003⁶
+≈ 5000×1.01814 ≈ 5090.7，取整數約 5091元</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>第一章小結：從一項到一整串的加總</h2>
+      <p>這一章從「怎麼描述一列數字」出發（數列的定義、等差、等比、遞迴），到「怎麼證明一個規律對所有情況都成立」（數學歸納法），最後學會「怎麼快速算出一整列數字的總和」（等差級數、等比級數、三個常用求和公式），並看到它們在複利這種真實情境中的應用。這些工具——尤其是Σk、Σk²的求和公式與數學歸納法——會在後面的章節（排列組合、機率）反覆出現，是很值得熟練的基本功。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學2・第一章</span>
+    <span>1-2 級數</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-1 數列｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學2・第一章 數列與級數・1-1</span>
+    <h1>數列</h1>
+    <p class="sub">用筱葳自己的「半馬訓練計畫」與社團「迎新影片」的分享數，認識數列的定義、等差數列、等比數列、遞迴數列，以及數學歸納法。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>暑假快結束了，筱葳決定挑戰人生第一場半程馬拉松，教練幫她排了訓練計畫；同時，她也在社團裡負責拍攝迎新影片，正緊張地盯著分享數字往上跳。這兩件事看似無關，其實都藏著同一種數學結構——把數字按照順序排成一列，就是這一節要介紹的「數列」。</p>
+    <ul class="toc">
+      <li><a href="#topic-definition"><b>1</b>數列的定義</a></li>
+      <li><a href="#topic-arithmetic"><b>2</b>等差數列</a></li>
+      <li><a href="#topic-geometric"><b>3</b>等比數列</a></li>
+      <li><a href="#topic-recursive"><b>4</b>遞迴數列</a></li>
+      <li><a href="#topic-induction"><b>5</b>數學歸納法</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-definition">
+    <div class="part-kicker"><b>數列的定義</b></div>
+    <h2>把數字按順序排成一列</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">社團學期末要選出「最佳幹部」，依過去6次社課的簽到人數決定：18, 20, 20, 23, 25, 25（依序是第1次到第6次社課）。筱葳想跟教練報告的時候說得精確一點，於是把「第幾次社課」跟「簽到人數」對應起來記錄。</p>
+      <p>像這樣把一群數依照固定的順序排成一列，就是<b>數列</b>。每個位置上的數叫做這個數列的<b>項</b>，若共有6項，就依序記作 a₁, a₂, a₃, a₄, a₅, a₆——這裡 a₁=18（稱為<b>首項</b>），a₆=25。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>因為簽到人數只記錄了6次，這是一個<b>有限數列</b>，項數為6。如果換成「訓練計畫第n週的目標里程」，理論上可以一直排下去（第1週、第2週、……沒有終點），這種數列就叫做<b>無窮數列</b>，記作：</p>
+      <div class="formula">
+        <div class="formula-title">數列的一般表示法</div>
+        a₁, a₂, a₃, …, aₙ, …
+      </div>
+      <p>其中 a₁ 是首項，第 n 項 <span class="mono">aₙ</span> 叫做這個數列的<b>一般項</b>——只要知道一般項的公式（用 n 表示的式子），就能算出數列中任何一項。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">如果一個數列的一般項是 <span class="mono">aₙ = 4n − 3</span>，寫出前5項；如果一般項是 <span class="mono">aₙ = (−1)ⁿ⁺¹ · 1／(2n)</span>，也寫出前5項。</p>
+      <div class="calc">aₙ = 4n−3：n=1,2,3,4,5 代入
+→ 1, 5, 9, 13, 17
+
+aₙ = (−1)ⁿ⁺¹ · 1／(2n)：n=1,2,3,4,5 代入
+→ 1/2, −1/4, 1/6, −1/8, 1/10</div>
+      <p class="note">第二個例子中 (−1)ⁿ⁺¹ 會讓正負號交替出現——這種數列稱為「交錯數列」，n為奇數時整體為正、n為偶數時整體為負。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-arithmetic">
+    <div class="part-kicker"><b>等差數列</b></div>
+    <h2>每次都多跑固定的距離</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">教練幫筱葳排了10週的訓練計畫：第1週先跑5公里當作暖身，之後每一週的「長距離訓練」都比前一週多跑2公里，直到第10週練到接近正式比賽的距離。</p>
+      <div class="calc">第1週：5　第2週：7　第3週：9　第4週：11　……</div>
+      <p>每一項跟前一項的差，都固定是同一個數（這裡是+2公里），這樣的數列就叫做<b>等差數列</b>，這個固定的差叫做<b>公差</b>，通常用 d 表示。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 360 140" role="img" aria-label="半馬訓練計畫各週長跑距離的長條圖，從第1週5公里開始，每週增加2公里，到第10週達到23公里">
+          <line x1="20" y1="130" x2="345" y2="130" stroke="currentColor" stroke-width="1.2"/>
+          <rect x="30" y="107.2" width="26" height="22.8" fill="var(--accent)"/>
+          <text x="34" y="105" class="svg-label" fill="var(--ink-muted)">5</text>
+          <text x="30" y="140" class="svg-label" fill="var(--ink-muted)">週1</text>
+          <rect x="72" y="98.0" width="26" height="32.0" fill="var(--accent)"/>
+          <text x="76" y="96" class="svg-label" fill="var(--ink-muted)">7</text>
+          <text x="72" y="140" class="svg-label" fill="var(--ink-muted)">週2</text>
+          <rect x="114" y="88.9" width="26" height="41.1" fill="var(--accent)"/>
+          <text x="118" y="86.9" class="svg-label" fill="var(--ink-muted)">9</text>
+          <text x="114" y="140" class="svg-label" fill="var(--ink-muted)">週3</text>
+          <rect x="156" y="79.8" width="26" height="50.2" fill="var(--accent)"/>
+          <text x="158" y="77.8" class="svg-label" fill="var(--ink-muted)">11</text>
+          <text x="156" y="140" class="svg-label" fill="var(--ink-muted)">週4</text>
+          <rect x="198" y="70.7" width="26" height="59.3" fill="var(--accent)"/>
+          <text x="200" y="68.7" class="svg-label" fill="var(--ink-muted)">13</text>
+          <text x="198" y="140" class="svg-label" fill="var(--ink-muted)">週5</text>
+          <rect x="240" y="61.5" width="26" height="68.5" fill="var(--accent)"/>
+          <text x="242" y="59.5" class="svg-label" fill="var(--ink-muted)">15</text>
+          <text x="240" y="140" class="svg-label" fill="var(--ink-muted)">週6</text>
+          <text x="286" y="115" class="svg-label" fill="var(--ink-muted)">⋯</text>
+          <rect x="315.6" y="25.0" width="26" height="105.0" fill="var(--b2)"/>
+          <text x="316" y="23" class="svg-label" fill="var(--b2-ink)">23</text>
+          <text x="312" y="140" class="svg-label" fill="var(--b2-ink)">週10</text>
+        </svg>
+        <figcaption>每週增加固定的2公里——這正是等差數列「公差固定」的樣子</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>設首項為 a₁、公差為 d，數列就是 a₁, a₁+d, a₁+2d, a₁+3d, …——第 n 項比首項多加了 (n−1) 次公差：</p>
+      <div class="formula">
+        <div class="formula-title">等差數列的一般項</div>
+        <span class="big">aₙ = a₁ + (n−1)d</span>
+      </div>
+      <p>套進訓練計畫：a₁=5，d=2，所以第 n 週的長跑距離是 <span class="mono">aₙ = 5+(n−1)·2 = 2n+3</span>。驗算第10週：a₁₀=2×10+3=23，跟原本規劃的一致。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：反推公差與首項</span>
+      <p class="quote">筱葳的隊友只記得自己訓練計畫的第3週跑9公里、第8週跑19公里，且知道整個計畫是等差數列，請幫她找出首項與公差，並寫出一般項。</p>
+      <div class="calc">設首項 a₁、公差 d：
+a₃ = a₁+2d = 9  … ①
+a₈ = a₁+7d = 19 … ②
+② − ①：5d = 10　→　d = 2
+代入①：a₁ = 9−2×2 = 5
+
+一般項：aₙ = 5+(n−1)×2 = 2n+3</div>
+      <p>結果跟筱葳自己的計畫完全一樣——兩人其實用的是同一套訓練表！只要知道等差數列中任兩項，就能用聯立方程式解出首項與公差，進而寫出整個數列的一般項。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-geometric">
+    <div class="part-kicker"><b>等比數列</b></div>
+    <h2>每次都變成前一次的固定倍數</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">筱葳幫社團剪了一支迎新影片，上傳後緊張地每天回來看分享數：第1天有3人分享，之後每天的分享數都變成前一天的3倍（同學越傳越開，呈現病毒式擴散）。</p>
+      <div class="calc">第1天：3　第2天：9　第3天：27　第4天：81　第5天：243</div>
+      <p>這裡每一項跟前一項的「比值」固定是同一個數（這裡是×3），這樣的數列叫做<b>等比數列</b>，這個固定的比值叫做<b>公比</b>，通常用 r 表示。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 140" role="img" aria-label="社團迎新影片分享數的長條圖，第1天3人、第2天9人、第3天27人、第4天81人，呈現爆炸性成長">
+          <line x1="20" y1="130" x2="250" y2="130" stroke="currentColor" stroke-width="1.2"/>
+          <rect x="40" y="125.9" width="30" height="4.1" fill="var(--ab)"/>
+          <text x="44" y="123" class="svg-label" fill="var(--ink-muted)">3</text>
+          <text x="42" y="140" class="svg-label" fill="var(--ink-muted)">第1天</text>
+          <rect x="95" y="117.8" width="30" height="12.2" fill="var(--ab)"/>
+          <text x="99" y="115" class="svg-label" fill="var(--ink-muted)">9</text>
+          <text x="97" y="140" class="svg-label" fill="var(--ink-muted)">第2天</text>
+          <rect x="150" y="93.3" width="30" height="36.7" fill="var(--ab)"/>
+          <text x="152" y="90.3" class="svg-label" fill="var(--ink-muted)">27</text>
+          <text x="152" y="140" class="svg-label" fill="var(--ink-muted)">第3天</text>
+          <rect x="205" y="20.0" width="30" height="110.0" fill="var(--b2)"/>
+          <text x="207" y="17" class="svg-label" fill="var(--b2-ink)">81</text>
+          <text x="207" y="140" class="svg-label" fill="var(--b2-ink)">第4天</text>
+        </svg>
+        <figcaption>每天都是前一天的3倍，短短4天就從3人暴增到81人（第5天更高達243人，超出圖表範圍）</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>設首項為 a₁、公比為 r（r≠0），數列就是 a₁, a₁r, a₁r², a₁r³, …——第 n 項是首項連乘了 (n−1) 次公比：</p>
+      <div class="formula">
+        <div class="formula-title">等比數列的一般項</div>
+        <span class="big">aₙ = a₁ · rⁿ⁻¹</span>
+      </div>
+      <p>套進分享數：a₁=3，r=3，所以第 n 天的分享數是 <span class="mono">aₙ = 3·3ⁿ⁻¹ = 3ⁿ</span>。驗算第5天：a₅=3⁵=243，跟原本記錄的一致。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：反推公比與首項</span>
+      <p class="quote">另一個社團的貼文，只知道第2天分享數是18、第5天分享數是486，且確定是等比數列，請找出首項、公比與一般項。</p>
+      <div class="calc">設首項 a₁、公比 r：
+a₂ = a₁r = 18   … ①
+a₅ = a₁r⁴ = 486 … ②
+② ÷ ①：r³ = 27　→　r = 3
+代入①：a₁ = 18÷3 = 6
+
+一般項：aₙ = 6·3ⁿ⁻¹</div>
+      <p class="note">如果題目給的是 aₙ 的偶數次方比（例如 a₂ 與 a₄ 的比），開根號時要記得正負兩種可能的公比都要考慮——這是等比數列最容易被扣分的地方。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-recursive">
+    <div class="part-kicker"><b>遞迴數列</b></div>
+    <h2>用「前一項」定義「這一項」</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">仔細想想，「每週比前一週多跑2公里」「每天變成前一天的3倍」這兩句話，其實都是在說：<b>下一項可以用「前一項」加減乘除算出來</b>，不需要另外硬記一個跟 n 有關的公式。這種「用初始值＋前後項關係」定義的數列，叫做<b>遞迴數列</b>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律 → 公式</span>
+      <p>一般的遞迴數列，是先給出首項 a₁=a，再給出一條規則，說明 aₙ 要怎麼從 aₙ₋₁ 算出來（n≥2）。前面兩個情境剛好對應兩種最基本的類型：</p>
+      <div class="formula">
+        <div class="formula-title">兩種基本遞迴型式</div>
+        等差型：a₁=a，aₙ=aₙ₋₁+d（n≥2） ——半馬計畫：a₁=5，aₙ=aₙ₋₁+2
+        <br>等比型：a₁=a，aₙ=r·aₙ₋₁（n≥2） ——分享數：a₁=3，aₙ=3aₙ₋₁
+      </div>
+      <p>但遞迴關係其實可以更複雜——不一定是「固定加」或「固定乘」，這時就沒辦法直接套等差、等比的公式，必須換一種方法找出一般項。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：疊杯挑戰</span>
+      <p class="quote">社課園遊會，筱葳的攤位在玩「疊杯挑戰」：把杯子疊成三角形的金字塔，最上面一層放1個杯子，第2層要比上一層「多疊2個」（也就是放2個），第3層要比上一層「多疊3個」（放3個），依此類推——第 n 層要比第 (n−1) 層多放 n 個杯子。設 aₙ 為疊到第 n 層為止，總共用掉的杯子數，請問 a₅ 是多少？有沒有辦法不用一層一層數，就直接算出 a₁₀？</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 300 190" role="img" aria-label="疊杯挑戰的三角形金字塔示意圖，共5層，第n層有n個圓圈代表杯子，由上到下層數依序增加">
+          <circle cx="150.0" cy="30" r="8" fill="var(--accent)"/>
+          <circle cx="137.0" cy="60" r="8" fill="var(--accent)"/><circle cx="163.0" cy="60" r="8" fill="var(--accent)"/>
+          <circle cx="124.0" cy="90" r="8" fill="var(--accent)"/><circle cx="150.0" cy="90" r="8" fill="var(--accent)"/><circle cx="176.0" cy="90" r="8" fill="var(--accent)"/>
+          <circle cx="111.0" cy="120" r="8" fill="var(--accent)"/><circle cx="137.0" cy="120" r="8" fill="var(--accent)"/><circle cx="163.0" cy="120" r="8" fill="var(--accent)"/><circle cx="189.0" cy="120" r="8" fill="var(--accent)"/>
+          <circle cx="98.0" cy="150" r="8" fill="var(--b2)"/><circle cx="124.0" cy="150" r="8" fill="var(--b2)"/><circle cx="150.0" cy="150" r="8" fill="var(--b2)"/><circle cx="176.0" cy="150" r="8" fill="var(--b2)"/><circle cx="202.0" cy="150" r="8" fill="var(--b2)"/>
+          <text x="215" y="34" class="svg-label" fill="var(--ink-muted)">第1層：1個</text>
+          <text x="215" y="64" class="svg-label" fill="var(--ink-muted)">第2層：多疊2個</text>
+          <text x="215" y="94" class="svg-label" fill="var(--ink-muted)">第3層：多疊3個</text>
+          <text x="215" y="124" class="svg-label" fill="var(--ink-muted)">第4層：多疊4個</text>
+          <text x="215" y="154" class="svg-label" fill="var(--b2-ink)">第5層：多疊5個</text>
+        </svg>
+        <figcaption>疊到第5層，總共用了 1+2+3+4+5=15 個杯子——橘色是第5層新增的部分</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>把「總杯數」的遞迴關係寫下來：a₁=1，且第 n 層比第 (n−1) 層多用 n 個杯子，所以 <span class="mono">aₙ = aₙ₋₁ + n</span>（n≥2）。逐項算出來：</p>
+      <div class="calc">a₁ = 1
+a₂ = a₁+2 = 3
+a₃ = a₂+3 = 6
+a₄ = a₃+4 = 10
+a₅ = a₄+5 = 15</div>
+      <p>把 1, 3, 6, 10, 15 這幾個數字跟 n 對照看看，會發現一個規律：a₁=1×2/2，a₂=2×3/2，a₃=3×4/2，a₄=4×5/2，a₅=5×6/2——每一項都等於「n×(n+1)÷2」！猜測一般項是：</p>
+      <div class="formula">
+        <div class="formula-title">猜測的一般項</div>
+        <span class="big">aₙ = n(n+1) ／ 2</span>
+      </div>
+      <p>照這個公式，a₁₀ = 10×11÷2 = <b>55</b>，不用真的疊到第10層去數。但這只是從5個例子「觀察」出來的規律，還沒有證明對所有的 n 都成立——這正是下一個主題「數學歸納法」要解決的事。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-induction">
+    <div class="part-kicker"><b>數學歸納法</b></div>
+    <h2>怎麼證明一個對「所有」n 都成立的規律？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">觀察5層、甚至觀察100層，都沒辦法保證第100萬層也一定符合 aₙ=n(n+1)/2——畢竟「觀察到目前為止都對」不等於「證明了以後永遠都對」。需要一種方法，一次證明「對所有正整數 n 都成立」。</p>
+      <p>想像一整排骨牌：只要確定「第1張骨牌會倒」，並且確定「只要前一張倒了、下一張就一定會跟著倒」，那麼不管骨牌排多長，最後全部都會倒下去。<b>數學歸納法</b>就是把這個想法應用在證明數學規律上。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 原理</span>
+      <div class="formula">
+        <div class="formula-title">數學歸納法原理</div>
+        若一個與正整數 n 有關的命題 P(n) 滿足：
+        <br>(1) 基礎步驟：P(1) 成立；
+        <br>(2) 歸納步驟：假設 P(k) 成立（k為任意正整數），可以推得 P(k+1) 也成立；
+        <br><span class="big">則 P(n) 對所有正整數 n 都成立。</span>
+      </div>
+      <p>套用到骨牌：(1) 就是「第1張會倒」，(2) 就是「前一張倒、下一張就跟著倒」——兩者都成立，骨牌才會一路倒到底。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：證明疊杯公式</span>
+      <p class="quote">用數學歸納法證明：疊杯挑戰中 a₁=1、aₙ=aₙ₋₁+n（n≥2）所定義的數列，一般項是 <span class="mono">aₙ = n(n+1)／2</span>，對所有正整數 n 都成立。</p>
+      <div class="calc">(1) 基礎步驟（n=1）：
+    a₁=1，且 1×2÷2=1，兩者相等，P(1) 成立。
+
+(2) 歸納步驟：假設 n=k 時成立，即 a_k = k(k+1)／2 ……①
+    要證明 n=k+1 時也成立，即 a_(k+1) = (k+1)(k+2)／2
+
+    由遞迴關係：a_(k+1) = a_k + (k+1)
+                       = k(k+1)／2 + (k+1)　　（代入①）
+                       = (k+1)・(k／2 + 1)
+                       = (k+1)(k+2)／2　　　（化簡）
+
+    這正是 n=k+1 時應該有的形式，所以 P(k+1) 成立。</div>
+      <p>由 (1)(2) 可知，根據數學歸納法，<span class="mono">aₙ = n(n+1)／2</span> 對所有正整數 n 都成立——這下就能放心地說，疊到第100層總共會用 100×101÷2=5050 個杯子，完全不用真的排排看。</p>
+      <p class="note">數學歸納法的關鍵在歸納步驟：一定要「假設 n=k 成立」當作已知條件，再想辦法從遞迴關係「推出」n=k+1 也成立，而不是直接把 n=k+1 代進猜測的公式驗算一次——那樣只是再驗證一個例子，並不是證明。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：1-1 數列</h2>
+    <p class="lede-line">這一節建立了描述「一列數字」的四種語言，之後在 1-2 級數會反覆用到它們的一般項公式。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>數列</td><td class="f">a₁,a₂,…,aₙ,…（有限／無窮），aₙ稱為一般項</td></tr>
+          <tr><td>等差數列</td><td class="f">公差d固定；aₙ=a₁+(n−1)d</td></tr>
+          <tr><td>等比數列</td><td class="f">公比r≠0固定；aₙ=a₁・rⁿ⁻¹</td></tr>
+          <tr><td>遞迴數列</td><td class="f">a₁=a，用aₙ₋₁定義aₙ（n≥2）</td></tr>
+          <tr><td>數學歸納法</td><td class="f">(1) 驗證n=1成立　(2) 假設n=k成立，推出n=k+1成立</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">等差數列</span></div>
+        <p>某數列為等差數列，a₁=8，公差d=3，求 a₁₂。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">a₁₂ = a₁+(12−1)d = 8+11×3 = 8+33 = 41</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">等比數列</span></div>
+        <p>某等比數列 a₂=6，a₄=54，求公比 r 與首項 a₁（提示：注意 r 可能有兩種答案）。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">a₄／a₂ = r² = 54／6 = 9　→　r = 3 或 r = −3
+若 r=3：a₁ = 6÷3 = 2
+若 r=−3：a₁ = 6÷(−3) = −2
+
+兩組答案：(a₁,r)=(2,3) 或 (−2,−3)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">遞迴數列與觀察規律</span></div>
+        <p>數列滿足 a₁=1，aₙ=aₙ₋₁+2n（n≥2）。先求出 a₂,a₃,a₄,a₅，觀察規律猜出一般項公式，再求 a₆。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">a₂=1+4=5　a₃=5+6=11　a₄=11+8=19　a₅=19+10=29
+
+觀察：1,5,11,19,29 對照 n²+n−1：
+n=1:1　n=2:5　n=3:11　n=4:19　n=5:29　　完全吻合！
+
+猜測一般項：aₙ = n²+n−1
+驗算 a₆ = 6²+6−1 = 41（也可直接用遞迴：a₆=a₅+12=29+12=41，一致）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">數學歸納法</span></div>
+        <p>用數學歸納法證明：a₁=2，aₙ=3aₙ₋₁+2（n≥2）所定義的數列，一般項為 aₙ=3ⁿ−1，對所有正整數 n 都成立。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">(1) n=1：a₁=2，且 3¹−1=2，兩者相等，成立。
+
+(2) 假設 n=k 成立：a_k = 3^k−1 ……①
+    n=k+1：a_(k+1) = 3a_k+2
+                    = 3(3^k−1)+2　　（代入①）
+                    = 3^(k+1)−3+2
+                    = 3^(k+1)−1
+
+    正是 n=k+1 該有的形式，故 P(k+1) 成立。
+由(1)(2)，根據數學歸納法，aₙ=3ⁿ−1 對所有正整數n成立。</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">數列的定義／觀察規律</span></div>
+        <p>一數列前5項為 4, 7, 12, 19, 28，觀察規律寫出一般項公式，並求第6項。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">觀察：每項減去3後，依序是 1,4,9,16,25，恰為 n² ！
+即 aₙ−3 = n²　→　aₙ = n²+3
+
+驗算：n=1:4　n=2:7　n=3:12　n=4:19　n=5:28　　吻合
+第6項：a₆ = 6²+3 = 39</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：把整個數列加起來</h2>
+      <p>知道了數列怎麼一項一項排下去之後，下一個自然的問題是：如果把這些項全部加起來，總和是多少？筱葳如果照計畫練完整個10週的訓練，總共會跑多少公里？社團的迎新影片5天內總共觸及了多少人次分享？在 1-2「級數」，我們會延續這兩個情境，學習等差級數、等比級數的求和公式，以及幾個貫穿整個學測的常用求和公式。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學2・第一章</span>
+    <span>1-1 數列</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
