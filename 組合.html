@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-3 組合｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學2・第二章 排列組合與古典機率・2-3</span>
+    <h1>組合</h1>
+    <p class="sub">延續畢業旅行的情境——選隊員、分關卡小隊、闖關的輸贏組合——認識組合的定義、分組問題、二項式定理，以及巴斯卡三角形。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>2-2排列在乎「排出的順序」；但畢業旅行還有很多情境，只在乎「選出哪些人」，完全不管順序——例如從全班選出一組人去闖關，只要決定「是這幾位」，不用管誰先被點到名。這一節要學的「組合」，就是把排列中「順序造成的重複」拿掉之後，剩下的計數方法。</p>
+    <ul class="toc">
+      <li><a href="#topic-comb-basic"><b>1</b>組合的定義與分組問題</a></li>
+      <li><a href="#topic-binomial"><b>2</b>二項式定理</a></li>
+      <li><a href="#topic-pascal"><b>3</b>巴斯卡三角形</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-comb-basic">
+    <div class="part-kicker"><b>組合的定義與分組問題</b></div>
+    <h2>選出一組人，不管排出什麼順序</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">畢業旅行安排了闖關遊戲，從10位同學中選出4人組成一隊，這4人之間不分棒次或職位，只要「是這4個人」就算同一隊。請問一共有幾種不同的組隊方式？</p>
+      <p>如果照排列的算法，選出4人並排出順序有 P⁴₁₀ 種；但因為組隊不管順序，同樣的4個人不管排成什麼順序都被排列法重複算了很多次——恰好重複算了「這4人自己排列」的 4! 次。所以只要把排列數除以這個重複次數：</p>
+      <div class="calc">P⁴₁₀ = 10×9×8×7 = 5040（排出順序的方法數）
+每組4人都被重複算了 4! = 24 次（因為4人自己有24種排法）
+
+5040 ／ 24 = 210 種組隊方式（不分順序）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>像這樣「從n個相異物中，選出r個、不管順序」的方法數，叫做<b>組合數</b>，記作 <span class="mono">Cʳₙ</span>（或寫成 C(n,r)）：</p>
+      <div class="formula">
+        <div class="formula-title">組合數公式</div>
+        <span class="big">Cʳₙ = Pʳₙ ／ r! = n! ／ [r!(n−r)!]</span>
+      </div>
+      <p>驗算：C⁴₁₀ = 10!／[4!×6!] = (10×9×8×7)／4! = 5040／24 = 210，跟剛才的算法一致。另一個小例子：從8位志工中選出3人負責布置場地（不分工作內容），C³₈ = 8×7×6／3! = 336／6 = 56 種選法。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境延伸：分組問題（大小不同）</span>
+      <p class="quote">12位同學要分成三隊，分別去闖三個「不同」的關卡：關卡甲需要5人、關卡乙需要4人、關卡丙需要3人。請問共有幾種分法？</p>
+      <p>因為三個關卡本身不同（不是隨便分成三堆，而是「這一隊」對應「那個關卡」），可以依序選：先從12人中選5人去甲，再從剩下7人中選4人去乙，剩下的3人自動去丙：</p>
+      <div class="calc">C⁵₁₂ × C⁴₇ × C³₃ = 792 × 35 × 1 = 27720 種分法</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境延伸：分組問題（大小相同、組別無差異）</span>
+      <p class="quote">如果換成：12位同學平均分成三組，每組4人，但三組之後做的事情完全一樣（只是分組討論，不對應到不同關卡），組與組之間沒有名稱或順序上的差異。請問共有幾種分法？</p>
+      <p>先跟前面一樣依序選出三組：C⁴₁₂×C⁴₈×C⁴₄ = 495×70×1 = 34650；但因為這次三組彼此毫無差異（不像「甲組、乙組、丙組」那樣可以分辨），同樣的分法會因為「哪一組先選」的順序不同，被重複算了 3! = 6 次，必須再除回來：</p>
+      <div class="calc">C⁴₁₂ × C⁴₈ × C⁴₄ = 495 × 70 × 1 = 34650（依序選三組，暫時當作三組有差異）
+但三組彼此無差異，重複算了 3! = 6 次
+
+34650 ／ 6 = 5775 種分法</div>
+      <div class="formula">
+        <div class="formula-title">分組問題的關鍵判斷</div>
+        各組「大小不同」或「用途不同」（可分辨）→ 依序相乘即可
+        <br>各組「大小相同」且「彼此無差異」（不可分辨）→ 依序相乘後，要再除以組數的階乘
+      </div>
+      <p class="note">判斷要不要除以組數階乘，關鍵是問：「如果把兩組整組互換，算出來的分法是同一種還是不同一種？」是同一種（組別不可分辨）就要除；是不同一種（組別對應到不同的關卡或名稱）就不用除。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-binomial">
+    <div class="part-kicker"><b>二項式定理</b></div>
+    <h2>展開 (x+y)ⁿ，係數其實就是組合數</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">畢業旅行的闖關遊戲一共有5場，每一場的結果只有「過關」（記作x）或「失敗」（記作y）兩種。如果把5場的結果依序寫成一串長度5的xy組合（例如xxyxy），想知道「恰好過關3場、失敗2場」的組合方式有幾種——這其實藏在 (x+y)⁵ 展開式的某一項係數裡。</p>
+      <p>把 (x+y)⁵ 想成5個括號 (x+y)(x+y)(x+y)(x+y)(x+y) 相乘，展開時每個括號都要選出x或y各一個相乘。展開式中 x³y² 這一項，就是「5個括號中，恰好有3個選x、2個選y」的所有選法全部加起來——這正是從5場比赛中選出3場「選x（過關）」的組合數：</p>
+      <div class="formula">
+        <div class="formula-title">x³y² 項的係數</div>
+        <span class="big">C³₅ = 10</span>　　也就是「5場中恰好過關3場」共有10種可能的過關場次組合
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>把這個想法推廣到一般的n，(x+y)ⁿ 展開式中 xⁿ⁻ᵏyᵏ 這一項的係數，就是「n個括號中選k個出y」的組合數 Cᵏₙ：</p>
+      <div class="formula">
+        <div class="formula-title">二項式定理</div>
+        <span class="big">(x+y)ⁿ = Σ Cᵏₙ · xⁿ⁻ᵏ · yᵏ　（k從0加到n）</span>
+        <br>= Cⁿ₀xⁿ + Cⁿ₁xⁿ⁻¹y + Cⁿ₂xⁿ⁻²y² + ⋯ + Cⁿₙyⁿ
+      </div>
+      <p>用 n=4 驗算完整展開：</p>
+      <div class="calc">(x+y)⁴ = C⁰₄x⁴ + C¹₄x³y + C²₄x²y² + C³₄xy³ + C⁴₄y⁴
+        = x⁴ + 4x³y + 6x²y² + 4xy³ + y⁴
+
+係數 1,4,6,4,1 恰好對應 C⁰₄=1, C¹₄=4, C²₄=6, C³₄=4, C⁴₄=1</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：取出指定項的係數</span>
+      <p class="quote">展開 (a+2b)⁴，求 a²b² 這一項的係數。</p>
+      <div class="calc">一般項：C²₄ · a² · (2b)² = C²₄ · a² · 4b² = 6 × 4 × a²b² = 24a²b²
+
+所以 a²b² 項的係數是 24</div>
+      <p class="note">遇到 (a+2b)ⁿ 這種「y前面帶有係數」的展開式，千萬別忘了把 (2b)² 裡的 2² 也一起乘進去，只算組合數 C²₄=6 而漏掉4倍，是最常見的扣分點。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-pascal">
+    <div class="part-kicker"><b>巴斯卡三角形</b></div>
+    <h2>把所有的組合數排成一個三角形</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p>把 Cᵏₙ（n=0,1,2,…，k=0,1,…,n）由上而下、由左而右排成一個三角形，就是<b>巴斯卡三角形</b>：</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 400 220" role="img" aria-label="巴斯卡三角形，從第0列到第6列，每個數字都等於它左上方與右上方兩個數字的和">
+          <text x="200" y="20" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="185" y="45" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="215" y="45" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="170" y="70" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="200" y="70" text-anchor="middle" class="svg-label" fill="var(--ink)">2</text>
+          <text x="230" y="70" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="155" y="95" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="185" y="95" text-anchor="middle" class="svg-label" fill="var(--ink)">3</text>
+          <text x="215" y="95" text-anchor="middle" class="svg-label" fill="var(--ink)">3</text>
+          <text x="245" y="95" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="140" y="120" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="170" y="120" text-anchor="middle" class="svg-label" fill="var(--ink)">4</text>
+          <text x="200" y="120" text-anchor="middle" class="svg-label" fill="var(--accent)" font-weight="700">6</text>
+          <text x="230" y="120" text-anchor="middle" class="svg-label" fill="var(--ink)">4</text>
+          <text x="260" y="120" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="125" y="145" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="155" y="145" text-anchor="middle" class="svg-label" fill="var(--ink)">5</text>
+          <text x="185" y="145" text-anchor="middle" class="svg-label" fill="var(--b2-ink)" font-weight="700">10</text>
+          <text x="215" y="145" text-anchor="middle" class="svg-label" fill="var(--b2-ink)" font-weight="700">10</text>
+          <text x="245" y="145" text-anchor="middle" class="svg-label" fill="var(--ink)">5</text>
+          <text x="275" y="145" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="110" y="170" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <text x="140" y="170" text-anchor="middle" class="svg-label" fill="var(--ink)">6</text>
+          <text x="170" y="170" text-anchor="middle" class="svg-label" fill="var(--ink)">15</text>
+          <text x="200" y="170" text-anchor="middle" class="svg-label" fill="var(--ink)">20</text>
+          <text x="230" y="170" text-anchor="middle" class="svg-label" fill="var(--ink)">15</text>
+          <text x="260" y="170" text-anchor="middle" class="svg-label" fill="var(--ink)">6</text>
+          <text x="290" y="170" text-anchor="middle" class="svg-label" fill="var(--ink)">1</text>
+          <line x1="185" y1="112" x2="200" y2="112" stroke="var(--accent)" stroke-width="1" opacity="0.5"/>
+          <text x="330" y="120" class="svg-label" fill="var(--ink-muted)">n=4列</text>
+          <text x="330" y="145" class="svg-label" fill="var(--ink-muted)">n=5列：10=4+6</text>
+          <text x="60" y="20" class="svg-label" fill="var(--ink-muted)">n=0</text>
+          <text x="60" y="45" class="svg-label" fill="var(--ink-muted)">n=1</text>
+          <text x="60" y="70" class="svg-label" fill="var(--ink-muted)">n=2</text>
+          <text x="60" y="95" class="svg-label" fill="var(--ink-muted)">n=3</text>
+          <text x="60" y="120" class="svg-label" fill="var(--ink-muted)">n=4</text>
+          <text x="60" y="145" class="svg-label" fill="var(--ink-muted)">n=5</text>
+          <text x="60" y="170" class="svg-label" fill="var(--ink-muted)">n=6</text>
+        </svg>
+        <figcaption>每個數字都等於它「左上方」與「右上方」兩數之和——例如第5列的10，來自第4列的4和6相加</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>觀察三角形有幾個明顯的性質：每一列頭尾都是1（Cⁿ₀=Cⁿₙ=1），且每一列本身左右對稱（Cᵏₙ=Cⁿ⁻ᵏₙ，因為「選k個」跟「選剩下的n−k個不選」是一體兩面）。最重要的規律，是每個數字都等於它正上方兩數之和：</p>
+      <div class="formula">
+        <div class="formula-title">巴斯卡公式</div>
+        <span class="big">Cᵏₙ = Cᵏ⁻¹ₙ₋₁ + Cᵏₙ₋₁</span>
+      </div>
+      <p>用闖關組隊的情境來解釋這個公式為什麼成立：從n位同學中選k人組隊，鎖定其中一位關鍵成員「小安」，分兩種情況討論——</p>
+      <div class="calc">情況①　小安「一定入選」：剩下的(k−1)個名額，要從其餘(n−1)人中選
+                → 方法數為 Cᵏ⁻¹ₙ₋₁
+
+情況②　小安「不入選」：k個名額全部要從其餘(n−1)人中選
+                → 方法數為 Cᵏₙ₋₁
+
+這兩種情況互斥（小安要嘛入選、要嘛不入選）且涵蓋了所有可能，
+根據加法原理，兩者相加就是「從n人選k人」的全部方法數 Cᵏₙ。</div>
+      <p class="note">這種「鎖定一個關鍵物件，分成『選它』與『不選它』兩種情況討論」的證明方式，叫做<b>組合式證明</b>——不用展開階乘硬算，直接從「選或不選」的意義上就能說明公式為什麼成立，是學測很喜歡考的證明手法之一。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：2-3 組合</h2>
+    <p class="lede-line">這一節拿掉了排列中的「順序」，換來組合數、分組問題、二項式定理與巴斯卡三角形這一整套彼此相關的工具，是2-4機率計算的重要基礎。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>組合數</td><td class="f">Cʳₙ = Pʳₙ／r! = n!／[r!(n−r)!]</td></tr>
+          <tr><td>分組（大小不同／有名稱）</td><td class="f">依序相乘：Cᵃₙ×Cᵇₙ₋ₐ×⋯</td></tr>
+          <tr><td>分組（大小相同／不可分辨）</td><td class="f">依序相乘後，再除以組數的階乘</td></tr>
+          <tr><td>二項式定理</td><td class="f">(x+y)ⁿ = ΣCᵏₙ xⁿ⁻ᵏyᵏ（k=0~n）</td></tr>
+          <tr><td>巴斯卡公式</td><td class="f">Cᵏₙ = Cᵏ⁻¹ₙ₋₁ + Cᵏₙ₋₁</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">組合數</span></div>
+        <p>從9位同學中選出4人組成代表隊（不分職位），請問共有幾種選法？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">C⁴₉ = (9×8×7×6)／4! = 3024／24 = 126 種</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">組合數</span></div>
+        <p>畢業旅行有7個候選景點，要從中選出2個排進行程（不分先後）。請問共有幾種選法？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">C²₇ = (7×6)／2! = 42／2 = 21 種</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">分組（大小不同）</span></div>
+        <p>9位同學分成三隊，分別去闖三個不同的關卡，每個關卡都需要3人。請問共有幾種分法？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">C³₉ × C³₆ × C³₃ = 84 × 20 × 1 = 1680 種
+（三個關卡不同，不用再除以3!）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">分組（大小相同）</span></div>
+        <p>8位同學平均分成兩組（每組4人）進行分組討論，兩組彼此沒有差異。請問共有幾種分法？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">C⁴₈ × C⁴₄ ／ 2! = 70 × 1 ／ 2 = 35 種
+（兩組無差異，要除以2!）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">二項式定理</span></div>
+        <p>展開 (a+b)⁶，求 a²b⁴ 這一項的係數。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">一般項：Cᵏ₆ aᵏb⁶⁻ᵏ，要 a²b⁴ 表示 k=2
+係數 = C²₆ = (6×5)／2! = 15</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：把「有幾種可能」變成「機率是多少」</h2>
+      <p>前面三節建立了「數數量」的完整工具箱——加法原理、乘法原理、排列數、組合數，都是在回答「總共有幾種可能」。在2-4「機率」，我們會延續畢業旅行的情境，把這些計數方法用來回答另一種問題：「某件事發生的可能性有多大？」這正是排列組合最終要服務的目標——古典機率。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學2・第二章</span>
+    <span>2-3 組合</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

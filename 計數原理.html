@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-1 計數原理｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學2・第二章 排列組合與古典機率・2-1</span>
+    <h1>計數原理</h1>
+    <p class="sub">用筱葳「畢業旅行」的規劃過程，認識邏輯與集合的基本語言，以及加法原理、乘法原理、取捨原理這三種「數數量」的基本方法。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>畢業旅行快到了，筱葳被選為班遊小組長，要處理各種「有幾種可能」的問題：全班有多少人想去海邊、多少人想去遊樂園？從家裡到集合地點有幾種交通方式？便當要怎麼搭配？才藝表演的意願怎麼統計？這些問題看似瑣碎，其實都能用同一套數學語言——集合與計數原理——有系統地算出來，而不用一個一個用手數。</p>
+    <ul class="toc">
+      <li><a href="#topic-logic"><b>1</b>邏輯與集合</a></li>
+      <li><a href="#topic-addmul"><b>2</b>加法原理與乘法原理</a></li>
+      <li><a href="#topic-inclusion"><b>3</b>取捨原理</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-logic">
+    <div class="part-kicker"><b>邏輯與集合</b></div>
+    <h2>先把「話」說精確，再把「群體」框清楚</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">籌備會議上，班長說了幾句話：「17是質數」「今天的氣溫是負的」「如果明天下雨，就改成室內的博物館行程」。老師提醒大家：在數學裡，第一句和第二句可以清楚判斷真假，叫做<b>命題</b>；但像「今天天氣真好」這種話，因為每個人標準不同，沒辦法判斷真假，就不是命題。</p>
+      <p>「17是質數」是<b>真命題</b>；如果今天氣溫是28°C，「今天的氣溫是負的」就是<b>假命題</b>。第三句「若P則Q」型的命題，寫成 <span class="mono">P⇒Q</span>（P：明天下雨，Q：改成室內博物館行程），代表「只要P成立，Q就一定成立」。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>再看一種說法：「這次段考兩科分數之和是偶數，若且唯若，這兩科分數同為奇數或同為偶數」。這句話其實包含兩個方向都成立：不只是「同奇偶⇒和為偶數」，反過來「和為偶數⇒同奇偶」也成立。這種雙向都成立的命題，記作 <span class="mono">P⇔Q</span>，讀作「P若且唯若Q」，也稱P、Q互為<b>充要條件</b>。</p>
+      <div class="formula">
+        <div class="formula-title">邏輯連接詞</div>
+        且（同時成立）、或（至少一個成立）、非～（否定）
+        <br>P⇒Q：P蘊含Q（若P則Q）　　P⇔Q：P與Q互為充要條件
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境延伸：把「群體」框成集合</span>
+      <p class="quote">班遊調查表統計出來了：全班40人中，想去海邊的有20人，想去遊樂園的有18人，兩個行程都想去的有8人。筱葳想知道：兩個行程「至少想去一個」的有幾人？「兩個都不想去」（可能只想留在飯店）的又有幾人？</p>
+      <p>把「想去海邊的人」看成一個<b>集合</b> A，「想去遊樂園的人」看成集合 B，全班40人是<b>宇集</b> U。A、B 的<b>聯集</b> A∪B 代表「至少想去一個行程」的人，A、B 的<b>交集</b> A∩B 代表「兩個都想去」的人，而 A 的<b>餘集</b> A′=U−A 則代表「不想去海邊」的人。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 320 200" role="img" aria-label="文氏圖：全班40人，想去海邊的集合A與想去遊樂園的集合B互相重疊，只想海邊12人，只想遊樂園10人，兩者都想去8人，都不想去10人">
+          <rect x="10" y="10" width="300" height="180" rx="8" fill="none" stroke="var(--line)" stroke-width="1.2"/>
+          <text x="20" y="28" class="svg-label" fill="var(--ink-muted)">U（全班40人）</text>
+          <circle cx="130" cy="110" r="70" fill="var(--accent)" opacity="0.25" stroke="var(--accent)" stroke-width="1.5"/>
+          <circle cx="200" cy="110" r="70" fill="var(--b2)" opacity="0.28" stroke="var(--b2)" stroke-width="1.5"/>
+          <text x="95" y="90" class="svg-label-lg" fill="var(--accent)">A</text>
+          <text x="225" y="90" class="svg-label-lg" fill="var(--b2-ink)">B</text>
+          <text x="95" y="115" class="svg-label" fill="var(--ink)">12</text>
+          <text x="160" y="115" class="svg-label" fill="var(--ink)">8</text>
+          <text x="222" y="115" class="svg-label" fill="var(--ink)">10</text>
+          <text x="20" y="185" class="svg-label" fill="var(--ink-muted)">都不想去：10人</text>
+        </svg>
+        <figcaption>A（海邊）只有的12人、B（遊樂園）只有的10人、交集8人，剩下的10人在圈外——加起來剛好40人</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">公式</span>
+      <div class="calc">n(A∪B) = n(A) + n(B) − n(A∩B) = 20 + 18 − 8 = 30 人 …… 至少想去一個
+n(全班) − n(A∪B) = 40 − 30 = 10 人 …… 兩個都不想去</div>
+      <p>這個「聯集人數＝兩集合人數相加，再扣掉重複算到的交集」的想法，是取捨原理最基本的形式，等一下會在第3小節正式介紹它的三集合版本。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：笛摩根定律</span>
+      <p>「兩個都不想去」用集合語言來說，就是「不想去海邊 且 不想去遊樂園」，也就是 A′∩B′；但我們也可以直接說成「不是（想去海邊或想去遊樂園）」，也就是 (A∪B)′。這兩種說法算出來的人數應該一樣：</p>
+      <div class="calc">A′ = 40−20 = 20（不想去海邊）
+B′ = 40−18 = 22（不想去遊樂園）
+(A∪B)′ = 40−30 = 10
+
+驗證：A′∩B′ 就是「不想去海邊」和「不想去遊樂園」的交集，
+      也等於 (A∪B)′ = 10 —— 兩種算法一致。</div>
+      <div class="formula">
+        <div class="formula-title">笛摩根定律</div>
+        (A∪B)′ = A′∩B′　　　　(A∩B)′ = A′∪B′
+      </div>
+      <p class="note">笛摩根定律的白話版：「不是（甲或乙）」等於「非甲 且 非乙」；「不是（甲且乙）」等於「非甲 或 非乙」——這跟日常說話的邏輯是一致的。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-addmul">
+    <div class="part-kicker"><b>加法原理與乘法原理</b></div>
+    <h2>「或者」用加的，「而且」用乘的</h2>
+
+    <div class="step">
+      <span class="step-tag">情境：加法原理</span>
+      <p class="quote">畢業旅行當天，從筱葳家到學校集合地點，可以搭公車（有3條路線可選）或搭捷運（有2條路線可選），兩種交通工具只會選一種。請問總共有幾種到達集合地點的方式？</p>
+      <p>因為「搭公車」和「搭捷運」是互斥的兩類方式（選了這個就不會同時選那個），只要把兩類的方法數<b>直接相加</b>：</p>
+      <div class="formula">
+        <div class="formula-title">加法原理</div>
+        <span class="big">3 + 2 = 5</span> 種方式
+        <br>一般化：若完成一件事有 k 個「互斥」的類別，各類別分別有 n₁,n₂,…,n_k 種方法，則總方法數為 n₁+n₂+…+n_k
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：乘法原理</span>
+      <p class="quote">遊覽車上，遊覽公司提供的畢旅餐盒可以自由搭配：主餐有4種（雞腿、排骨、魚排、素食），湯品有3種，飲料有2種，三個項目要各選一項組成一份餐盒。請問總共有幾種不同的餐盒組合？</p>
+      <p>這次不一樣：選主餐「之後還要」接著選湯品、再接著選飲料——三個步驟<b>依序都要做</b>，而不是「選這個就不選那個」。這種「一步接一步，每步都要完成」的情況，方法數要用<b>相乘</b>的：</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 380 210" role="img" aria-label="決策樹示意圖：第一層是4種主餐中選2種展示分支，每個主餐再分出3種湯品的分支，說明乘法原理如何逐層相乘">
+          <text x="10" y="18" class="svg-label" fill="var(--ink-muted)">主餐</text>
+          <text x="150" y="18" class="svg-label" fill="var(--ink-muted)">湯品</text>
+          <circle cx="20" cy="60" r="5" fill="var(--accent)"/>
+          <text x="30" y="64" class="svg-label" fill="var(--ink)">雞腿</text>
+          <circle cx="20" cy="150" r="5" fill="var(--accent)"/>
+          <text x="30" y="154" class="svg-label" fill="var(--ink)">排骨</text>
+          <text x="20" y="190" class="svg-label" fill="var(--ink-muted)">⋯（還有魚排、素食）</text>
+
+          <line x1="26" y1="60" x2="140" y2="30" stroke="var(--line)" stroke-width="1"/>
+          <line x1="26" y1="60" x2="140" y2="60" stroke="var(--line)" stroke-width="1"/>
+          <line x1="26" y1="60" x2="140" y2="90" stroke="var(--line)" stroke-width="1"/>
+          <circle cx="145" cy="30" r="4" fill="var(--ab)"/><text x="153" y="34" class="svg-label" fill="var(--ink)">湯1</text>
+          <circle cx="145" cy="60" r="4" fill="var(--ab)"/><text x="153" y="64" class="svg-label" fill="var(--ink)">湯2</text>
+          <circle cx="145" cy="90" r="4" fill="var(--ab)"/><text x="153" y="94" class="svg-label" fill="var(--ink)">湯3</text>
+
+          <line x1="26" y1="150" x2="140" y2="120" stroke="var(--line)" stroke-width="1"/>
+          <line x1="26" y1="150" x2="140" y2="150" stroke="var(--line)" stroke-width="1"/>
+          <line x1="26" y1="150" x2="140" y2="180" stroke="var(--line)" stroke-width="1"/>
+          <circle cx="145" cy="120" r="4" fill="var(--ab)"/><text x="153" y="124" class="svg-label" fill="var(--ink)">湯1</text>
+          <circle cx="145" cy="150" r="4" fill="var(--ab)"/><text x="153" y="154" class="svg-label" fill="var(--ink)">湯2</text>
+          <circle cx="145" cy="180" r="4" fill="var(--ab)"/><text x="153" y="184" class="svg-label" fill="var(--ink)">湯3</text>
+
+          <text x="230" y="105" class="svg-label" fill="var(--b2-ink)">4種主餐 × 3種湯品 = 12 條路徑</text>
+          <text x="230" y="130" class="svg-label" fill="var(--ink-muted)">每條路徑後面還能再接上</text>
+          <text x="230" y="150" class="svg-label" fill="var(--ink-muted)">2種飲料 → 12×2 = 24 種餐盒</text>
+        </svg>
+        <figcaption>每一步都要走，樹狀圖上的每一條完整路徑就是一種餐盒組合——路徑數＝逐層相乘</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">公式</span>
+      <div class="calc">主餐 × 湯品 × 飲料 = 4 × 3 × 2 = 24 種餐盒組合</div>
+      <div class="formula">
+        <div class="formula-title">乘法原理</div>
+        <span class="big">n₁ × n₂ × … × n_k</span>
+        <br>若完成一件事要「依序」完成 k 個步驟，各步驟分別有 n₁,n₂,…,n_k 種方法，則完成整件事的方法數為 n₁×n₂×…×n_k
+      </div>
+      <p class="note">分辨加法原理與乘法原理最快的方法：先問自己「這幾類方法是『或者選一種』，還是『每一種都要選』？」是「或者」用加的，是「而且都要」用乘的。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-inclusion">
+    <div class="part-kicker"><b>取捨原理</b></div>
+    <h2>算「至少一項」的人數，重複的部分要扣回來</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">畢業旅行的營火晚會要選才藝表演，班遊小組先做問卷：全班40人中，願意唱歌的有18人，願意跳舞的有15人，願意表演魔術的有10人；同時願意唱歌和跳舞的有6人，同時願意唱歌和魔術的有4人，同時願意跳舞和魔術的有3人，三種都願意的有2人。請問「至少願意表演一項」的共有幾人？「三項都不願意」的又有幾人？</p>
+      <p>設 A、B、C 分別是願意唱歌、跳舞、魔術的集合。如果直接把 18+15+10 加起來，會把「唱歌又跳舞」「唱歌又魔術」「跳舞又魔術」的人重複算了兩次，而「三項都願意」的2人甚至被算了三次又扣了三次，必須小心地「加加減減」回來，才會等於真正「至少一項」的人數。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula">
+        <div class="formula-title">取捨原理（三集合版本）</div>
+        n(A∪B∪C) = n(A)+n(B)+n(C) − n(A∩B) − n(A∩C) − n(B∩C) + n(A∩B∩C)
+      </div>
+      <p>代入數字驗算：</p>
+      <div class="calc">n(A∪B∪C) = 18+15+10 − 6−4−3 + 2
+                = 43 − 13 + 2
+                = 32 人 …… 至少願意表演一項
+
+40 − 32 = 8 人 …… 三項都不願意</div>
+      <p class="note">兩集合版本 n(A∪B)=n(A)+n(B)−n(A∩B) 其實是三集合版本的特例（把C想成空集合）；不管是兩個集合還是三個集合，核心想法都一樣：先全部加起來，再把「算重複」的部分扣掉，若扣過頭了（例如三者交集被扣了三次）就再加回來一次。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：2-1 計數原理</h2>
+    <p class="lede-line">這一節建立了「數數量」的基本語言，之後在2-2排列、2-3組合裡，加法原理與乘法原理會反覆出現，是整章的地基。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>命題 P⇒Q、P⇔Q</td><td class="f">P蘊含Q；P、Q互為充要條件</td></tr>
+          <tr><td>集合運算</td><td class="f">聯集A∪B、交集A∩B、餘集A′=U−A</td></tr>
+          <tr><td>笛摩根定律</td><td class="f">(A∪B)′=A′∩B′　(A∩B)′=A′∪B′</td></tr>
+          <tr><td>加法原理</td><td class="f">互斥的k類方法，總數＝n₁+n₂+…+n_k</td></tr>
+          <tr><td>乘法原理</td><td class="f">依序k個步驟，總數＝n₁×n₂×…×n_k</td></tr>
+          <tr><td>取捨原理</td><td class="f">n(A∪B)=n(A)+n(B)−n(A∩B)；三集合版本見上</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">邏輯</span></div>
+        <p>命題「若一個四邊形是正方形，則它是矩形」為真命題。請寫出它的逆命題「若一個四邊形是矩形，則它是正方形」，並判斷逆命題的真假。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">逆命題為假命題。
+反例：長方形（矩形）中，長與寬不相等的長方形是矩形，但不是正方形。
+（說明：原命題為真，逆命題不一定為真，兩者是不同的命題。）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">集合</span></div>
+        <p>某班50人問卷調查，喜歡籃球的有28人，喜歡羽球的有22人，兩種都喜歡的有12人。求「只喜歡籃球（不喜歡羽球）」的人數，以及「兩種都不喜歡」的人數。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">只喜歡籃球 = 28−12 = 16 人
+n(A∪B) = 28+22−12 = 38 人（至少喜歡一種）
+兩種都不喜歡 = 50−38 = 12 人</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">加法原理</span></div>
+        <p>從甲地到乙地，可以搭火車（3個班次可選）或搭客運（4個班次可選），兩者只選其一。請問共有幾種搭法？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">3 + 4 = 7 種搭法（火車、客運互斥，用加法原理）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">乘法原理</span></div>
+        <p>早餐店的組合餐提供4種主餐、3種湯品、2種飲料，三項各選一項組成一份組合餐。請問共有幾種不同的組合餐？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">4 × 3 × 2 = 24 種組合餐（三個步驟都要依序完成，用乘法原理）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">取捨原理</span></div>
+        <p>校慶園遊會問卷，60人中參觀甲攤位的有25人，參觀乙攤位的有20人，參觀丙攤位的有15人；甲乙都參觀的有8人，甲丙都參觀的有6人，乙丙都參觀的有5人，三者都參觀的有3人。求「至少參觀一個攤位」與「三個攤位都沒參觀」的人數。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">n(A∪B∪C) = 25+20+15 − 8−6−5 + 3
+          = 60 − 19 + 3 = 44 人 …… 至少一個
+
+三個都沒參觀 = 60 − 44 = 16 人</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：不只算「有幾種」，還要算「排成第幾個」</h2>
+      <p>計數原理告訴我們怎麼算出「總共有幾種可能」，但如果情境還在乎<b>順序</b>——例如接力賽誰先誰後上場、上台領獎的排隊順序——單靠加法、乘法原理還不夠精準。在2-2「排列」，我們會延續畢業旅行的情境，學習如何有系統地計算「排出順序」的方法數。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學2・第二章</span>
+    <span>2-1 計數原理</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-2 排列｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學2・第二章 排列組合與古典機率・2-2</span>
+    <h1>排列</h1>
+    <p class="sub">延續畢業旅行的情境——接力棒次、團體拍照、信號旗設計——認識排列的定義、相鄰與不相鄰的排法、相同物品的排列，以及重複排列。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>2-1介紹的加法原理、乘法原理，可以算出「總共有幾種可能」，但如果情境還在乎<b>順序</b>——例如接力賽誰先誰後上場、拍團體照時誰站在哪個位置——就需要更細緻的計數方法。這一節要學的「排列」，就是在乘法原理的基礎上，處理「有順序的排法」。</p>
+    <ul class="toc">
+      <li><a href="#topic-perm-basic"><b>1</b>排列的定義</a></li>
+      <li><a href="#topic-perm-constraint"><b>2</b>相鄰與不相鄰</a></li>
+      <li><a href="#topic-perm-same"><b>3</b>相同物品的排列</a></li>
+      <li><a href="#topic-repeat"><b>4</b>重複排列</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-perm-basic">
+    <div class="part-kicker"><b>排列的定義</b></div>
+    <h2>從一群人裡「選出並排出順序」</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">畢業旅行的營火晚會安排了大隊接力表演賽，班上推派出8位候選選手，教練要從中選出4人，並且排定「第1棒、第2棒、第3棒、第4棒」的上場順序。請問一共有幾種不同的棒次安排方式？</p>
+      <p>用乘法原理逐棒思考：第1棒可以從8人中任選一人，接著第2棒只能從剩下的7人中選，第3棒從剩下的6人中選，第4棒從剩下的5人中選：</p>
+      <div class="calc">第1棒：8種選擇
+第2棒：7種選擇（少了已上場的1人）
+第3棒：6種選擇
+第4棒：5種選擇
+
+8 × 7 × 6 × 5 = 1680 種安排方式</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>像這樣「從n個相異物中，選出r個並排出順序」的方法數，叫做<b>排列數</b>，記作 <span class="mono">Pʳₙ</span>（或寫成 P(n,r)）。把剛才的算法一般化：</p>
+      <div class="formula">
+        <div class="formula-title">排列數公式</div>
+        <span class="big">Pʳₙ = n×(n−1)×(n−2)×⋯×(n−r+1) = n! ／ (n−r)!</span>
+      </div>
+      <p>驗算接力賽：P⁴₈ = 8!／(8−4)! = 8!／4! = (8×7×6×5×4!)／4! = 8×7×6×5 = 1680，跟剛才逐棒相乘的結果一致。特別地，當 r=n（選出全部n個並排列）時，Pⁿₙ = n!／0! = n!。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">畢業旅行結束後，5位班級代表要上台領取「最佳團隊獎」，並排成一列拍照留念。請問這5人有幾種排列方式？</p>
+      <div class="calc">P⁵₅ = 5! = 5×4×3×2×1 = 120 種排法</div>
+      <p class="note">口訣：「有順序」是排列的關鍵字——只要題目在意「誰在第幾個位置」，就該想到排列數；如果只在意「選出哪些人」而不管順序，那是下一節「組合」要處理的問題。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-perm-constraint">
+    <div class="part-kicker"><b>相鄰與不相鄰</b></div>
+    <h2>「一定要在一起」用捆綁，「一定不能在一起」用插空</h2>
+
+    <div class="step">
+      <span class="step-tag">情境：相鄰（捆綁法）</span>
+      <p class="quote">畢業旅行拍團體照，6位同學（其中有一對雙胞胎姐妹）要排成一列，兩姐妹堅持要排在一起。請問共有幾種排法？</p>
+      <p>因為兩姐妹一定要相鄰，可以先把她們<b>捆成一包</b>，看成一個大單位——這樣原本6個人就變成「5個單位」（4位同學＋1個雙胞胎包）要排列；排好之後，包裡的兩姐妹自己還可以交換左右位置（2種排法）：</p>
+      <div class="calc">5個單位排列：5! = 120
+包內兩人互換：2! = 2
+
+120 × 2 = 240 種排法</div>
+      <div class="formula">
+        <div class="formula-title">相鄰問題（捆綁法）</div>
+        先把「一定相鄰」的k個物件捆成一個單位，與其餘物件一起排列，最後再乘上捆綁內部自身的排列數
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：不相鄰（插空法）</span>
+      <p class="quote">同樣是6位同學排成一列拍照，但這次其中兩位常常拌嘴的同學，老師要求他們不能排在一起。請問共有幾種排法？</p>
+      <p>「不相鄰」不好直接下手，換個角度想：<b>先排好其餘4人</b>，他們之間與頭尾會產生5個空隙，再從這5個空隙中選2個，把兩位常拌嘴的同學分別插進去（順序也算，因為插進哪個空、誰插哪邊都不同）：</p>
+      <div class="calc">先排其餘4人：4! = 24
+產生的空隙數：4人排好後有 4+1 = 5 個空隙（含頭尾）
+從5個空隙選2個並排入2人：P²₅ = 5×4 = 20
+
+24 × 20 = 480 種排法</div>
+      <p>也可以換一種驗算方式：先算6人「不受限」的全部排法，再扣掉「兩人一定相鄰」的排法（就是剛才捆綁法算出的240種）：</p>
+      <div class="calc">全部排法：6! = 720
+扣掉「兩人相鄰」：720 − 240 = 480 種
+
+跟插空法算出的480一致！</div>
+      <div class="formula">
+        <div class="formula-title">不相鄰問題（插空法／扣去法）</div>
+        插空法：先排其餘物件，再從產生的空隙中選位插入指定物件
+        <br>扣去法：全部排列數 − 「指定物件相鄰」的排列數
+      </div>
+      <p class="note">插空法與扣去法是同一個問題的兩種解法，答案一定相同——考試時哪一種算得快就用哪一種，也可以互相驗算對方是否算錯。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-perm-same">
+    <div class="part-kicker"><b>相同物品的排列</b></div>
+    <h2>排的東西如果有重複，要除掉重複算到的部分</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">畢業旅行的班服設計比賽中，筱葳想用色紙排一條彩帶裝飾攤位，手邊有5張紅色紙片和3張黃色紙片，紙片排成一列（同色紙片彼此看不出差異）。請問這條彩帶一共有幾種不同的排法？</p>
+      <p>如果8張紙片全部都不一樣，應該有8!種排法；但同色的紙片其實無法分辨彼此，原本8!裡「只是同色紙片互相交換位置」的排法，其實都被重複算成了不同的排法，必須除掉這些重複：</p>
+      <div class="calc">若8張紙片各不相同：8! 種排法
+但5張紅色彼此交換不影響外觀：要除以 5!
+且3張黃色彼此交換不影響外觀：要除以 3!
+
+8! ／ (5!×3!) = 40320 ／ (120×6) = 40320／720 = 56 種排法</div>
+      <div class="formula">
+        <div class="formula-title">相同物品的排列公式</div>
+        <span class="big">n! ／ (m₁!×m₂!×⋯×m_k!)</span>
+        <br>n個物件中有k種各自重複的種類，重複個數分別為m₁,m₂,…,m_k（m₁+m₂+⋯+m_k=n）
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：格子路徑當作應用</span>
+      <p class="quote">筱葳從家裡走到集合地點，路網是棋盤式街道，必須向右走3個街廓、向上走2個街廓，且只能往右或往上走（不能往左或往下繞路）。請問一共有幾種不同的走法？</p>
+      <p>把每一步走的方向寫成一列「動作」：向右記作R，向上記作U，走完全程就是把3個R和2個U排成一列，例如「RRURU」代表先右三步中的其中安排——這正好是「相同物品排列」的應用，5步中有3個相同的R和2個相同的U：</p>
+      <div class="calc">5! ／ (3!×2!) = 120／(6×2) = 120／12 = 10 種走法</div>
+      <p class="note">格子路徑問題的關鍵轉換：把「往右走一步」「往上走一步」看成兩種可以重複的「字母」，走法的總數就等於排出這串字母的方法數——用相同物品排列公式直接算，不需要真的把每條路線都畫出來。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-repeat">
+    <div class="part-kicker"><b>重複排列</b></div>
+    <h2>每個位置都能重新選，選項可以重複用</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">畢業旅行露營晚會，班上要設計一套「信號燈」系統，用紅、黃、綠三種顏色的燈，依序排出4個燈號組成一組信號（例如：紅黃紅綠），每個位置都可以任選三種顏色中的一種，顏色可以重複使用。請問一共可以排出幾種不同的信號？</p>
+      <p>這裡跟前面的排列不一樣：前面「選出的人不能重複被選」，但這裡每個位置都是「重新從3種顏色裡選」，同一個顏色可以連續用好幾次。用乘法原理逐個位置思考：</p>
+      <div class="calc">第1個燈：3種顏色可選
+第2個燈：3種顏色可選（顏色可以重複，不因前面用過而減少）
+第3個燈：3種顏色可選
+第4個燈：3種顏色可選
+
+3 × 3 × 3 × 3 = 3⁴ = 81 種信號</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula">
+        <div class="formula-title">重複排列公式</div>
+        <span class="big">nᵏ</span>
+        <br>從n個選項中，重複選出k次並排出順序（每次選擇互不影響、可重複），共有 nᵏ 種排法
+      </div>
+      <p class="note">分辨「排列」與「重複排列」的關鍵：問自己「同一個東西可以連續用兩次以上嗎？」——不行的話用 Pʳₙ = n!／(n−r)!；可以的話用 nᵏ。信號燈可以連續兩個位置都是紅色，所以是重複排列；但接力賽的4個棒次不能派同一位選手上場兩次，所以是一般排列。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：2-2 排列</h2>
+    <p class="lede-line">這一節在乘法原理的基礎上，加入「順序」與「重複使用」兩個變化，之後2-3組合會拿掉「順序」這個條件，兩者常常放在一起比較。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>排列數</td><td class="f">Pʳₙ = n!／(n−r)!（不可重複選用）</td></tr>
+          <tr><td>全部排列</td><td class="f">Pⁿₙ = n!</td></tr>
+          <tr><td>相鄰（捆綁法）</td><td class="f">捆成一單位排列，再乘內部排列數</td></tr>
+          <tr><td>不相鄰（插空法）</td><td class="f">先排其餘物件，再從空隙中選位插入；或用「全部−相鄰」</td></tr>
+          <tr><td>相同物品排列</td><td class="f">n！／(m₁!m₂!⋯m_k!)</td></tr>
+          <tr><td>重複排列</td><td class="f">nᵏ（可重複選用）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">排列數</span></div>
+        <p>畢業典禮要選出3位同學擔任司儀，依序負責開場、頒獎、閉幕三個環節，從6位候選人中選出並排定順序。請問共有幾種安排方式？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">P³₆ = 6×5×4 = 120 種</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">全部排列</span></div>
+        <p>6位同學排成一列拍畢業照，請問共有幾種排法？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">6! = 720 種</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">相鄰（捆綁法）</span></div>
+        <p>7位同學排成一列，其中3位是同一個表演團體的成員，要求這3人必須相鄰。請問共有幾種排法？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">先把3人捆成一單位，變成5個單位排列：5! = 120
+包內3人自己排列：3! = 6
+
+120 × 6 = 720 種</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">不相鄰（插空法）</span></div>
+        <p>5位同學排成一列，其中2位同學不能相鄰。請問共有幾種排法？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">插空法：先排其餘3人 3!=6，產生4個空隙，選2個插入2人 P²₄=4×3=12
+          6 × 12 = 72 種
+
+驗算（扣去法）：5! − (4!×2!) = 120 − 48 = 72 種　一致</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">相同物品排列</span></div>
+        <p>用3面紅旗和2面黃旗排成一列作為信號旗（同色旗子彼此無法分辨），請問共有幾種不同的排法？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">5! ／ (3!×2!) = 120／12 = 10 種</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：不管順序，只在乎「選出哪些人」</h2>
+      <p>排列在乎「誰站第幾個位置」；但很多情境其實不在乎順序——例如從全班選出一組人去參加闖關遊戲，只要決定「是哪幾個人」，不用管誰先被選到。在2-3「組合」，我們會延續畢業旅行的情境，學習如何計算「不排順序，只挑出一組人」的方法數，以及背後的二項式定理與巴斯卡三角形。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學2・第二章</span>
+    <span>2-2 排列</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

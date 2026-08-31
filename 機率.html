@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-4 機率｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數學2・第二章 排列組合與古典機率・2-4</span>
+    <h1>機率</h1>
+    <p class="sub">延續畢業旅行闖關遊戲的情境——轉盤遊戲、抽兌換券、摸彩箱——認識樣本空間、事件、古典機率，以及數學期望值。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>前面三節建立了「數數量」的工具箱：加法原理、乘法原理、排列數、組合數，都在回答「總共有幾種可能」。這一節要把這些工具用在一個更貼近生活的問題上：「某件事發生的可能性有多大？」畢業旅行的闖關遊戲攤位，正好是練習機率最自然的場景。</p>
+    <ul class="toc">
+      <li><a href="#topic-sample-space"><b>1</b>樣本空間</a></li>
+      <li><a href="#topic-event"><b>2</b>事件</a></li>
+      <li><a href="#topic-classical-prob"><b>3</b>古典機率</a></li>
+      <li><a href="#topic-expectation"><b>4</b>數學期望值</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-sample-space">
+    <div class="part-kicker"><b>樣本空間</b></div>
+    <h2>先把「所有可能發生的結果」列清楚</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">畢業旅行的闖關攤位有一個轉盤遊戲：轉盤平均分成紅、黃、綠三等份，玩家要轉兩次（兩次轉的結果互不影響）。想知道各種結果的可能性之前，得先把「所有可能出現的結果」一個不漏地列出來。</p>
+      <p>像轉轉盤這種「在相同條件下進行、結果無法事先確定」的過程，叫做<b>試驗</b>；一次試驗所有可能結果所成的集合，叫做<b>樣本空間</b>，通常記作 S；樣本空間裡的每一個結果，叫做一個<b>樣本點</b>。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>轉兩次轉盤，每次都有3種可能顏色，用乘法原理，樣本空間應該有 3×3=9 個樣本點。用表格把所有的「(第一次顏色, 第二次顏色)」列出來最清楚：</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>第一次 ＼ 第二次</th><th>紅</th><th>黃</th><th>綠</th></tr></thead>
+        <tbody>
+          <tr><td>紅</td><td class="f" style="background:var(--accent-soft);">(紅,紅)</td><td class="f">(紅,黃)</td><td class="f">(紅,綠)</td></tr>
+          <tr><td>黃</td><td class="f">(黃,紅)</td><td class="f" style="background:var(--accent-soft);">(黃,黃)</td><td class="f">(黃,綠)</td></tr>
+          <tr><td>綠</td><td class="f">(綠,紅)</td><td class="f">(綠,黃)</td><td class="f" style="background:var(--accent-soft);">(綠,綠)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">公式</span>
+      <div class="formula">
+        <div class="formula-title">樣本空間</div>
+        S = {(紅,紅),(紅,黃),(紅,綠),(黃,紅),(黃,黃),(黃,綠),(綠,紅),(綠,黃),(綠,綠)}　　n(S) = 9
+      </div>
+      <p class="note">列樣本空間最容易犯的錯，是漏掉「順序不同但顏色相同」的組合——例如(紅,黃)跟(黃,紅)是兩次轉盤先後不同、結果不同，必須當成兩個不同的樣本點，不能只列一次。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-event">
+    <div class="part-kicker"><b>事件</b></div>
+    <h2>樣本空間中，我們真正關心的那一部分</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">玩家其實只關心兩件事：「兩次轉出同一個顏色（可以兌換神秘獎品）」，還有「至少有一次轉到紅色（可以再抽一次）」。這兩種「我們關心的結果集合」，就是樣本空間 S 的子集合，稱為<b>事件</b>。</p>
+      <div class="calc">設 A = 兩次顏色相同 = {(紅,紅),(黃,黃),(綠,綠)}　　n(A) = 3
+設 B = 至少一次紅色 = {(紅,紅),(紅,黃),(紅,綠),(黃,紅),(綠,紅)}　　n(B) = 5</div>
+      <p>如果事件只包含樣本空間中的<b>一個</b>樣本點（例如「剛好轉出(紅,黃)」），叫做<b>基本事件</b>；包含兩個以上樣本點的事件（像A、B），叫做<b>複合事件</b>。而樣本空間 S 本身也是一個事件（代表「一定會發生」，稱<b>必然事件</b>），空集合 ∅ 也是一個事件（代表「不可能發生」，稱<b>不可能事件</b>）。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律：事件的運算</span>
+      <p>事件之間也可以做集合運算，意義非常直覺——「A 或 B 發生」對應聯集，「A 且 B 都發生」對應交集，「A 不發生」對應餘集：</p>
+      <div class="calc">A∪B（和事件）＝「顏色相同」或「至少一次紅色」至少一項發生
+                = {(紅,紅),(黃,黃),(綠,綠),(紅,黃),(紅,綠),(黃,紅),(綠,紅)}　　n(A∪B)=7
+
+A∩B（積事件）＝「顏色相同」且「至少一次紅色」同時發生
+                = {(紅,紅)}　　　n(A∩B)=1
+
+A′（餘事件）＝「兩次顏色不同」＝ S 中扣掉 A 的部分
+                n(A′) = n(S)−n(A) = 9−3 = 6</div>
+      <div class="formula">
+        <div class="formula-title">事件的運算</div>
+        和事件 A∪B：A 或 B 至少一個發生　　積事件 A∩B：A、B 同時發生
+        <br>互斥事件：A∩B=∅（A、B不可能同時發生）　　餘事件 A′=S−A：A 不發生
+      </div>
+      <p class="note">如果換一個事件 C = 兩次都轉到綠色以外的顏色 = 兩次都轉到紅或黃，可以驗證 A∩C 不是空集合（例如(紅,紅)同時屬於A和C），所以 A 與 C 不是互斥事件；但如果 D = 只有一次紅色一次綠色，D∩A=∅，A 與 D 才是互斥事件。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-classical-prob">
+    <div class="part-kicker"><b>古典機率</b></div>
+    <h2>「感興趣的結果數」佔「全部結果數」的比例</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">回到轉盤遊戲，如果樣本空間 S 裡的9個樣本點，因為轉盤三等份切割均勻，出現的機會是完全相同的，那麼「兩次顏色相同」這個事件 A 發生的機率，很自然地就是 A 佔 S 的比例。</p>
+      <div class="formula">
+        <div class="formula-title">古典機率的定義</div>
+        <span class="big">P(A) = n(A) ／ n(S)</span>
+        <br>條件：樣本空間 S 中每個樣本點發生的機會均等（等機率）
+      </div>
+      <div class="calc">P(A) = n(A)／n(S) = 3／9 = 1／3</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：不放回的抽取</span>
+      <p class="quote">另一個攤位用5張兌換券（編號1到5）讓玩家抽獎，玩家一次抽出2張（抽出後不放回）。請問「抽到的2張都是奇數編號」的機率是多少？</p>
+      <div class="calc">1~5中奇數編號有{1,3,5}共3張，偶數編號有{2,4}共2張
+
+n(S) = C²₅ = 10（從5張中抽2張，不管順序）
+n(都是奇數) = C²₃ = 3（從3張奇數中抽2張）
+
+P(都是奇數) = C²₃／C²₅ = 3／10</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 機率的性質</span>
+      <p>古典機率有幾條從定義就能直接看出來的性質，計算時常常用來檢查答案是否合理，或簡化計算：</p>
+      <div class="formula">
+        <div class="formula-title">機率的性質</div>
+        (1) 0 ≤ P(A) ≤ 1　　(2) P(S)=1，P(∅)=0　　(3) P(A′) = 1−P(A)
+        <br>(4) P(A∪B) = P(A)+P(B)−P(A∩B)
+      </div>
+      <p class="quote">60位同學參加畢業旅行問卷，玩迷宮遊戲攤位的有35人，玩套圈圈攤位的有20人，兩個攤位都玩的有10人。隨機抽問一位同學，求「至少玩過一個攤位」的機率，以及「兩個攤位都沒玩」的機率。</p>
+      <div class="calc">P(A) = 35／60，P(B) = 20／60，P(A∩B) = 10／60
+
+P(A∪B) = 35／60 + 20／60 − 10／60 = 45／60 = 3／4
+
+P(兩個都沒玩) = P((A∪B)′) = 1 − P(A∪B) = 1 − 3／4 = 1／4</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：反過來想——用餘事件簡化計算</span>
+      <p class="quote">闖關遊戲的休息區裡剛好聚集了10位同學，假設每個人的出生月份在1~12月中是等機率、且互相獨立的，求「這10人中至少有兩人在同一個月出生」的機率（取到小數點後兩位）。</p>
+      <p>「至少兩人同月」直接算很麻煩（要考慮兩人同月、三人同月……很多種情況），反過來想它的餘事件「10人生日月份全部不同」，只需要算一種情況就好：</p>
+      <div class="calc">n(S) = 12¹⁰（每人的出生月份各自獨立，有12種可能）
+n(10人月份全不同) = P¹⁰₁₂ = 12×11×10×⋯×3（12選10人排出順序，對應到10個不同月份）
+
+P(全不同) = P¹⁰₁₂ ／ 12¹⁰ ≈ 0.0039
+
+P(至少兩人同月) = 1 − P(全不同) ≈ 1 − 0.0039 ≈ 0.996</div>
+      <p class="note">「至少……」的機率問題，第一個該想到的策略永遠是「算它的餘事件」——只要餘事件（例如「全部不同」「一次都沒有」）比原事件單純，用 1 減掉餘事件的機率往往快得多。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-expectation">
+    <div class="part-kicker"><b>數學期望值</b></div>
+    <h2>把「可能得到的獎金」依機率加權平均</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">闖關遊戲的最後一關是個獎金轉盤：轉盤平均分成5等份，其中2等份可以得到150元的禮券，另外3等份可以得到450元的禮券。如果每個人都可以免費轉一次，平均每人「應該」拿到多少元的禮券？這個「長期玩下來的平均值」，就是<b>數學期望值</b>。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 200 200" role="img" aria-label="獎金轉盤示意圖，平均分成5等份，其中2等份標示150元，3等份標示450元">
+          <path d="M100,100 L100.0,10.0 A90,90 0 0 1 185.6,72.2 Z" fill="var(--b2)" opacity="0.75"/>
+          <path d="M100,100 L185.6,72.2 A90,90 0 0 1 152.9,172.8 Z" fill="var(--accent)" opacity="0.55"/>
+          <path d="M100,100 L152.9,172.8 A90,90 0 0 1 47.1,172.8 Z" fill="var(--accent)" opacity="0.55"/>
+          <path d="M100,100 L47.1,172.8 A90,90 0 0 1 14.4,72.2 Z" fill="var(--accent)" opacity="0.55"/>
+          <path d="M100,100 L14.4,72.2 A90,90 0 0 1 100.0,10.0 Z" fill="var(--b2)" opacity="0.75"/>
+          <circle cx="100" cy="100" r="90" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+          <text x="132" y="60" text-anchor="middle" class="svg-label" fill="var(--b2-ink)">150元</text>
+          <text x="152" y="122" text-anchor="middle" class="svg-label" fill="var(--accent-ink)">450元</text>
+          <text x="100" y="160" text-anchor="middle" class="svg-label" fill="var(--accent-ink)">450元</text>
+          <text x="68" y="122" text-anchor="middle" class="svg-label" fill="var(--accent-ink)">450元</text>
+          <text x="68" y="60" text-anchor="middle" class="svg-label" fill="var(--b2-ink)">150元</text>
+        </svg>
+        <figcaption>5等份轉盤：2份150元（機率各1/5）、3份450元（機率各1/5）</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>把樣本空間依「獎金金額」分成幾類，各類發生的機率分別是 p₁,p₂,…,pₙ，對應的獎金是 m₁,m₂,…,mₙ，數學期望值就是把每種獎金乘上它發生的機率，再全部加起來（也就是「加權平均」）：</p>
+      <div class="formula">
+        <div class="formula-title">數學期望值</div>
+        <span class="big">E = m₁p₁ + m₂p₂ + ⋯ + mₙpₙ</span>
+      </div>
+      <div class="calc">P(150元) = 2／5，P(450元) = 3／5
+
+E = 150×(2／5) + 450×(3／5)
+  = 60 + 270
+  = 330 元</div>
+      <p>這代表：如果有很多人輪流來轉，平均每人拿到的禮券金額會趨近330元——不是說真的有人剛好拿到330元（轉盤上根本沒有330元這個選項），而是「長期平均下來」的參考值。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：反推未知的獎金（公平遊戲）</span>
+      <p class="quote">另一個攤位設計了一款「積分挑戰」：參加者要先付出3點積分當作入場費，接著抽一張卡，1／4的機率贏得9點、1／2的機率贏得3點、1／4的機率贏得x點。老師希望這個遊戲設計成「公平遊戲」——長期玩下來，玩家平均不賺不賠，請問x應該設計成多少？</p>
+      <p>「公平遊戲」的意思是：贏得點數的期望值，要剛好等於入場費，玩家才不會長期虧損或佔便宜：</p>
+      <div class="calc">設贏得點數的期望值為 E，公平遊戲要求 E = 3（入場費）
+
+E = 9×(1／4) + 3×(1／2) + x×(1／4) = 3
+
+9／4 + 3／2 + x／4 = 3
+9／4 + 6／4 + x／4 = 12／4
+(15 + x)／4 = 12／4
+15 + x = 12
+x = −3</div>
+      <p class="note">期望值算出「x=−3」代表這張卡其實是「倒扣3點」——不是真的贏了負的獎品，而是代表玩家這次要多付出3點積分，這樣整體加權平均才會剛好打平，是公平遊戲設計常見的手法。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：2-4 機率</h2>
+    <p class="lede-line">這一節把整章的計數工具（加法原理、乘法原理、排列數、組合數）全部匯集到「機率」與「期望值」這兩個最終目標上，也是這一章壓軸的主題。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>樣本空間 S</td><td class="f">一次試驗所有可能結果所成的集合</td></tr>
+          <tr><td>事件</td><td class="f">樣本空間S的子集合；基本事件／複合事件／必然事件S／不可能事件∅</td></tr>
+          <tr><td>事件運算</td><td class="f">和事件A∪B、積事件A∩B、互斥A∩B=∅、餘事件A′=S−A</td></tr>
+          <tr><td>古典機率</td><td class="f">P(A)=n(A)／n(S)（前提：等機率）</td></tr>
+          <tr><td>機率性質</td><td class="f">0≤P(A)≤1；P(A′)=1−P(A)；P(A∪B)=P(A)+P(B)−P(A∩B)</td></tr>
+          <tr><td>數學期望值</td><td class="f">E = m₁p₁+m₂p₂+⋯+mₙpₙ</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag alg">樣本空間與古典機率</span></div>
+        <p>擲兩顆四面體骰子（每顆各有1~4點）各一次，求樣本空間的樣本點數，以及「兩顆點數相同」的機率。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">n(S) = 4×4 = 16
+兩顆相同的結果有(1,1),(2,2),(3,3),(4,4)共4種
+
+P(相同) = 4／16 = 1／4</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">古典機率（不放回）</span></div>
+        <p>從標號1到9的9張卡片中，一次抽出2張（不放回），求「兩張都是3的倍數」的機率。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">1~9中3的倍數有{3,6,9}共3張
+
+n(S) = C²₉ = 36　　n(都是3的倍數) = C²₃ = 3
+
+P = 3／36 = 1／12</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">事件運算與機率</span></div>
+        <p>60位同學問卷調查，玩迷宮遊戲的有35人，玩套圈圈遊戲的有20人，兩者都玩的有10人。隨機抽問一位同學，求P(至少玩過一項)與P(兩項都沒玩)。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">P(A∪B) = 35／60 + 20／60 − 10／60 = 45／60 = 3／4
+
+P(都沒玩) = 1 − 3／4 = 1／4</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">數學期望值</span></div>
+        <p>轉盤平均分成5等份，其中2等份可得80分，3等份可得20分。求轉一次的期望得分。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">E = 80×(2／5) + 20×(3／5) = 32 + 12 = 44 分</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">期望值的應用</span></div>
+        <p>某摸彩箱有10張籤，其中2張中30元、3張中10元、5張槓龜（0元），參加一次要先付5元。求玩一次的期望「淨」收益（獎金期望值減去參加費用），並判斷這個遊戲對玩家是否划算。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">E(獎金) = 30×(2／10) + 10×(3／10) + 0×(5／10) = 6 + 3 = 9 元
+
+淨收益 = E(獎金) − 參加費 = 9 − 5 = 4 元
+
+淨收益為正，長期而言對玩家是划算的遊戲。</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>第二章完成：從「數清楚」到「算準機率」</h2>
+      <p>這一章從最基本的邏輯與集合語言出發，建立了加法原理、乘法原理，再延伸出排列、組合這兩套處理「順序」與「不管順序」的計數工具，最後把它們全部匯集到古典機率與數學期望值——回答「這件事有多可能發生」「長期平均下來會怎樣」這兩個非常實用的問題。畢業旅行的規劃、闖關遊戲的設計，其實都藏著這整套數學。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>筱葳學測數學・數學2・第二章</span>
+    <span>2-4 機率</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
