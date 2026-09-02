@@ -586,6 +586,25 @@
       <p>兩管一起開，果然比單開任何一管都快（比 3 小時、比 6 小時都短），符合直覺。</p>
     </div>
 
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 420 190" role="img" aria-label="長條圖比較單開A管3小時、單開B管6小時、兩管一起開2小時，一起開的長條最短">
+          <line x1="140" y1="170" x2="140" y2="20" stroke="currentColor" stroke-width="1"/>
+          <line x1="140" y1="170" x2="400" y2="170" stroke="currentColor" stroke-width="1"/>
+          <rect x="140" y="34" width="120" height="24" fill="var(--ink-muted)" opacity="0.55"/>
+          <text x="130" y="50" text-anchor="end" class="svg-label" fill="currentColor">A管單開</text>
+          <text x="268" y="50" class="svg-label" fill="currentColor">3小時</text>
+          <rect x="140" y="84" width="240" height="24" fill="var(--ink-muted)" opacity="0.55"/>
+          <text x="130" y="100" text-anchor="end" class="svg-label" fill="currentColor">B管單開</text>
+          <text x="388" y="100" class="svg-label" fill="currentColor">6小時</text>
+          <rect x="140" y="134" width="80" height="24" fill="var(--accent)"/>
+          <text x="130" y="150" text-anchor="end" class="svg-label" fill="var(--accent)">兩管一起</text>
+          <text x="228" y="150" class="svg-label-lg" fill="var(--accent)">2小時</text>
+        </svg>
+        <figcaption>兩管一起開所需的時間，比單開任何一管都短——這是速度相加後的直接結果。</figcaption>
+      </figure>
+    </div>
+
     <div class="step">
       <span class="step-tag">延伸：分式的乘除與約分</span>
       <p>分式的乘除，規則跟一般分數一樣：乘法就是分子乘分子、分母乘分母；除法則是「除以一個分式」等於「乘上它的倒數」：</p>
@@ -717,6 +736,27 @@
       <p>很明顯，<b>當長寬相等（都是 5）時，面積最大</b>，而且越往兩邊「拉不平均」，面積就掉得越快。這是巧合，還是規律？</p>
     </div>
 
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 420 240" role="img" aria-label="橫軸是長方形的長x，縱軸是面積，畫出x+y=10時面積隨x變化的曲線，在x=5時面積達到最高點25">
+          <line x1="40" y1="220" x2="400" y2="220" stroke="currentColor" stroke-width="1"/>
+          <line x1="40" y1="220" x2="40" y2="10" stroke="currentColor" stroke-width="1"/>
+          <text x="405" y="224" class="svg-label" fill="currentColor">x</text>
+          <text x="30" y="14" text-anchor="end" class="svg-label" fill="currentColor">面積</text>
+          <polyline points="40,220 74,148 108,92 142,52 176,28 210,20 244,28 278,52 312,92 346,148 380,220"
+                    fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <line x1="210" y1="20" x2="210" y2="220" stroke="var(--b2)" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="40" y1="20" x2="210" y2="20" stroke="var(--b2)" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <circle cx="210" cy="20" r="5" fill="var(--b2)"/>
+          <text x="210" y="238" text-anchor="middle" class="svg-label" fill="currentColor">x=5</text>
+          <text x="40" y="238" text-anchor="middle" class="svg-label" fill="currentColor">0</text>
+          <text x="380" y="238" text-anchor="middle" class="svg-label" fill="currentColor">x=10</text>
+          <text x="216" y="14" class="svg-label-lg" fill="var(--b2)">最大面積 25</text>
+        </svg>
+        <figcaption>周長固定（x+y=10）時，面積隨長x變化的曲線在x=y=5處達到最高點——這正是算幾不等式要證明的規律。</figcaption>
+      </figure>
+    </div>
+
     <div class="step">
       <span class="step-tag">規律 → 公式</span>
       <p>對任意兩個<b>非負實數</b> <span class="mono">a、b</span>，先看一個顯然成立的事實：平方一定不會是負的。</p>
@@ -726,7 +766,7 @@
 兩邊除以 2：  (a+b)/2 ≥ √(ab)</div>
       <p>左邊 <span class="mono">(a+b)/2</span> 是 <span class="mono">a、b</span> 的<b>算術平均數</b>，右邊 <span class="mono">√(ab)</span> 是 <span class="mono">a、b</span> 的<b>幾何平均數</b>。這個不等式就叫做<b>算幾不等式</b>：</p>
       <div class="formula"><span class="big">(a+b)/2 ≥ √(ab)</span>　　（a,b≥0，等號成立 ⟺ a=b）</div>
-      <p>從推導過程可以直接看出：<b>等號成立的條件，剛好就是 <span class="mono">√a=√b</span>，也就是 a=b</span></b>——這正好解釋了花圃問題裡「長寬相等時面積最大」的現象。</p>
+      <p>從推導過程可以直接看出：<b>等號成立的條件，剛好就是 <span class="mono">√a=√b</span>，也就是 a=b</b>——這正好解釋了花圃問題裡「長寬相等時面積最大」的現象。</p>
     </div>
 
     <div class="step">
