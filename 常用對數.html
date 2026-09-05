@@ -83,7 +83,7 @@
   }
   a{ color:var(--accent); }
   .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
-  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
 
   .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
   .prose{ max-width:680px; margin-inline:auto; }
@@ -348,23 +348,23 @@
     <div class="fig-grid">
       <figure class="figure-card">
         <svg viewBox="0 0 420 160" role="img" aria-label="上排數線標示1到10，下排標示對應的指數0到1，2的位置往下對齊到大約0.301的位置，代表log2約等於0.301">
-          <line x1="40" y1="45" x2="380" y2="45" stroke="currentColor" stroke-width="1.5"/>
-          <line x1="40" y1="38" x2="40" y2="52" stroke="currentColor" stroke-width="1.5"/>
+          <text x="98" y="49" text-anchor="end" class="svg-label" fill="currentColor">a</text>
+          <line x1="110" y1="45" x2="380" y2="45" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="110" y1="38" x2="110" y2="52" stroke="currentColor" stroke-width="1.5"/>
           <line x1="380" y1="38" x2="380" y2="52" stroke="currentColor" stroke-width="1.5"/>
-          <text x="40" y="30" text-anchor="middle" class="svg-label" fill="currentColor">1</text>
+          <text x="110" y="30" text-anchor="middle" class="svg-label" fill="currentColor">1</text>
           <text x="380" y="30" text-anchor="middle" class="svg-label" fill="currentColor">10</text>
-          <circle cx="142" cy="45" r="5" fill="var(--b2)"/>
-          <text x="142" y="65" text-anchor="middle" class="svg-label-lg" fill="var(--b2)">2</text>
-          <line x1="142" y1="45" x2="142" y2="115" stroke="var(--b2)" stroke-width="1.5" stroke-dasharray="4,3"/>
-          <line x1="40" y1="115" x2="380" y2="115" stroke="currentColor" stroke-width="1.5"/>
-          <line x1="40" y1="108" x2="40" y2="122" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="191" cy="45" r="5" fill="var(--b2)"/>
+          <text x="191" y="65" text-anchor="middle" class="svg-label-lg" fill="var(--b2)">2</text>
+          <line x1="191" y1="45" x2="191" y2="115" stroke="var(--b2)" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="98" y="119" text-anchor="end" class="svg-label" fill="currentColor">x=log a</text>
+          <line x1="110" y1="115" x2="380" y2="115" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="110" y1="108" x2="110" y2="122" stroke="currentColor" stroke-width="1.5"/>
           <line x1="380" y1="108" x2="380" y2="122" stroke="currentColor" stroke-width="1.5"/>
-          <text x="40" y="140" text-anchor="middle" class="svg-label" fill="currentColor">0</text>
+          <text x="110" y="140" text-anchor="middle" class="svg-label" fill="currentColor">0</text>
           <text x="380" y="140" text-anchor="middle" class="svg-label" fill="currentColor">1</text>
-          <circle cx="142" cy="115" r="5" fill="var(--b2)"/>
-          <text x="142" y="100" text-anchor="middle" class="svg-label-lg" fill="var(--b2)">log2≈0.301</text>
-          <text x="10" y="49" class="svg-label" fill="currentColor">a</text>
-          <text x="10" y="119" class="svg-label" fill="currentColor">x=log a</text>
+          <circle cx="191" cy="115" r="5" fill="var(--b2)"/>
+          <text x="191" y="100" text-anchor="middle" class="svg-label-lg" fill="var(--b2)">log2≈0.301</text>
         </svg>
         <figcaption>上排是真數a，下排是它對應的常用對數x：2落在1到10之間偏左的地方，log2就落在0到1之間偏左的0.301附近。</figcaption>
       </figure>
