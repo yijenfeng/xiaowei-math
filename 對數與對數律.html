@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-2 對數與對數律｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第三冊・第二章 指數與對數函數・2-2</span>
+    <h1>對數與對數律</h1>
+    <p class="sub">筱葳幫單車社經營社群帳號，追蹤人數每個月大約變成 1.5 倍。社長問：「照這速度，幾個月後會變成現在的 10 倍？」這是一個「已知倍數、求次數」的問題。這一節把數學1的常用對數推廣到任意底數，學會對數律與換底公式，並用它們解出這類指數方程式。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>指數回答「乘 x 次之後變多少」，對數回答「要乘幾次才會變成這麼多」。數學1學的 log 都是以 10 為底，因為我們用十進位。但生活中的「倍數」不一定是 10：減半是 1／2、每月成長 50% 是 1.5、翻倍是 2。這一節讓 log 接受任何正數當底數，並整理出三條對數律——它們把乘法變加法、除法變減法、次方變乘法，讓原本很難算的式子變得可以手算。</p>
+    <ul class="toc">
+      <li><a href="#topic-def"><b>1</b>對數的定義</a></li>
+      <li><a href="#topic-laws"><b>2</b>對數律</a></li>
+      <li><a href="#topic-base"><b>3</b>換底公式</a></li>
+      <li><a href="#topic-eq"><b>4</b>解指數與對數方程式</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-def">
+    <div class="part-kicker"><b>對數的定義</b></div>
+    <h2>「a 要幾次方才等於 b？」答案叫 logₐb</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">追蹤人數每月變成 1.5 倍，x 個月後變成原本的 1.5ˣ 倍。要變成 10 倍，就要解 1.5ˣ = 10。</p>
+      <p>1.5¹ = 1.5、1.5⁵ ≈ 7.6、1.5⁶ ≈ 11.4，所以 x 在 5 和 6 之間。這個「1.5 要幾次方才等於 10」的數，就記作 log<sub>1.5</sub>10。</p>
+      <div class="formula">
+        <div class="formula-title">對數的定義</div>
+        <span class="big">aˣ = b ⟺ x = logₐb</span>
+        <br>底數 a &gt; 0 且 a ≠ 1，真數 b &gt; 0
+      </div>
+      <p class="note">底數的限制和指數函數相同。真數必須是正數，因為 aˣ 永遠大於 0——不存在任何 x 讓 2ˣ = −4 或 2ˣ = 0。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：直接翻成指數</span>
+      <div class="calc">log₂8 = 3　　　　因為 2³ = 8
+log₃(1／9) = −2　　因為 3^(−2) = 1／9
+log₄2 = 1／2　　　 因為 4^(1／2) = 2
+logₐ1 = 0，logₐa = 1（任何合法底數 a）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">兩條恆等式</span>
+      <div class="formula">
+        <div class="formula-title">指數與對數互相抵銷</div>
+        <span class="big">a^(logₐb) = b　　logₐ(aˣ) = x</span>
+      </div>
+      <p class="note">這兩條就是定義本身換個寫法：logₐb 是「讓 a 變成 b 的指數」，把它放回 a 的指數位置，當然得到 b。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-laws">
+    <div class="part-kicker"><b>對數律</b></div>
+    <h2>乘變加、除變減、次方變乘</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>設 logₐM = m、logₐN = n，也就是 aᵐ = M、aⁿ = N。用指數律：</p>
+      <div class="calc">MN = aᵐ・aⁿ = a^(m+n)　⟹ logₐ(MN) = m + n
+M／N = aᵐ ÷ aⁿ = a^(m−n) ⟹ logₐ(M／N) = m − n
+Mᵖ = (aᵐ)ᵖ = a^(pm)　　⟹ logₐ(Mᵖ) = pm</div>
+      <div class="formula">
+        <div class="formula-title">對數律（M、N &gt; 0）</div>
+        <span class="big">logₐ(MN) = logₐM + logₐN</span>
+        <br><span class="big">logₐ(M／N) = logₐM − logₐN</span>
+        <br><span class="big">logₐ(Mᵖ) = p・logₐM</span>
+      </div>
+      <p class="note">對數律只是指數律「翻譯」過來的。常見錯誤：logₐ(M + N) ≠ logₐM + logₐN——對數律處理的是乘除，不是加減。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">log₂12 − log₂3 = log₂(12／3) = log₂4 = 2
+log 2 + log 5 = log 10 = 1
+log₃√<span class="radicand">27</span> = log₃(3^(3／2)) = 3／2
+
+已知 log 2 ≈ 0.3010，log 3 ≈ 0.4771：
+log 72 = log(2³ × 3²) = 3 log 2 + 2 log 3 ≈ 0.9030 + 0.9542 = 1.8572
+log 1.5 = log(3／2) = log 3 − log 2 ≈ 0.1761</div>
+      <p class="note">只背 log 2 和 log 3，就能用對數律算出 log 4、log 5（= 1 − log 2）、log 6、log 8、log 9、log 1.5……幾乎所有學測需要的值。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-base">
+    <div class="part-kicker"><b>換底公式</b></div>
+    <h2>任何底數的 log，都能換成以 10 為底</h2>
+
+    <div class="step">
+      <span class="step-tag">回到情境</span>
+      <p>x = log<sub>1.5</sub>10 要怎麼算出數值？計算機和對數表只有以 10 為底的 log。把 1.5ˣ = 10 兩邊取常用對數：</p>
+      <div class="calc">log(1.5ˣ) = log 10
+x・log 1.5 = 1
+x = 1 ÷ log 1.5 ≈ 1 ÷ 0.1761 ≈ 5.68
+
+∴ 大約 5.7 個月（第 6 個月時）追蹤人數就會超過現在的 10 倍</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>同樣的做法用在一般的 logₐb：設 x = logₐb，即 aˣ = b，兩邊取以 c 為底的對數，得到 x・log<sub>c</sub> a = log<sub>c</sub> b：</p>
+      <div class="formula">
+        <div class="formula-title">換底公式（c &gt; 0，c ≠ 1）</div>
+        <span class="big">logₐb = log<sub>c</sub> b ／ log<sub>c</sub> a</span>
+      </div>
+      <p>由換底公式可以推出兩個好用的結論：</p>
+      <div class="formula">
+        <div class="formula-title">換底的推論</div>
+        logₐb・log<sub>b</sub> c = logₐc（鏈鎖）
+        <br>logₐb = 1 ／ log<sub>b</sub> a（倒數）
+        <br>log<sub>aᵐ</sub> bⁿ = (n／m)・logₐb
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">log₂3・log₃8 = log₂8 = 3
+log₄8 = log<sub>2²</sub> 2³ = 3／2
+log₂5 = log 5 ／ log 2 ≈ 0.6990 ／ 0.3010 ≈ 2.32</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-eq">
+    <div class="part-kicker"><b>解指數與對數方程式</b></div>
+    <h2>化不了同底，就取 log；有 log，先看真數</h2>
+
+    <div class="step">
+      <span class="step-tag">情境：咖啡因降到 30 毫克</span>
+      <p class="quote">接續 2-1：200 毫克的咖啡因每 5 小時減半，幾小時後會降到 30 毫克？（log 2 ≈ 0.3010，log 3 ≈ 0.4771）</p>
+      <div class="calc">200 × (1／2)^(t／5) = 30 ⟹ (1／2)^(t／5) = 0.15
+
+兩邊取 log：(t／5)・log(1／2) = log 0.15
+log(1／2) = −log 2 ≈ −0.3010
+log 0.15 = log(3／20) = log 3 − log 2 − 1 ≈ −0.8239
+
+t／5 ≈ (−0.8239)／(−0.3010) ≈ 2.737 ⟹ t ≈ 13.7（小時）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：對數方程式</span>
+      <p class="quote">解 log₂(x − 1) + log₂(x + 1) = 3。</p>
+      <div class="calc">先寫限制：x − 1 &gt; 0 且 x + 1 &gt; 0 ⟹ x &gt; 1
+
+對數律：log₂((x − 1)(x + 1)) = 3 ⟹ x² − 1 = 2³ = 8 ⟹ x² = 9
+x = 3 或 x = −3（不符合 x &gt; 1，捨去）
+
+∴ x = 3</div>
+      <p class="note">解對數方程式的第一步永遠是<b>寫出真數大於 0 的限制</b>。合併成一個 log 後，原本不合法的解（像 x = −3）會混進來，最後要靠這個限制把它剔除。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：2-2 對數與對數律</h2>
+    <p class="lede-line">對數是指數的反問題。所有對數性質都由「aˣ = b ⟺ x = logₐb」和指數律推得，忘記時翻回指數想一遍就好。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>定義</td><td class="f">aˣ = b ⟺ x = logₐb（a &gt; 0，a ≠ 1，b &gt; 0）</td></tr>
+          <tr><td>特殊值</td><td class="f">logₐ1 = 0，logₐa = 1，a^(logₐb) = b</td></tr>
+          <tr><td>對數律</td><td class="f">logₐMN = logₐM + logₐN；logₐ(M／N) = logₐM − logₐN；logₐMᵖ = p logₐM</td></tr>
+          <tr><td>換底公式</td><td class="f">logₐb = log b ／ log a</td></tr>
+          <tr><td>換底推論</td><td class="f">logₐb・log<sub>b</sub> c = logₐc；log<sub>aᵐ</sub>bⁿ = (n／m)logₐb</td></tr>
+          <tr><td>常用值</td><td class="f">log 2 ≈ 0.3010，log 3 ≈ 0.4771，log 5 = 1 − log 2 ≈ 0.6990</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">定義</span></div>
+        <p>求 log₅125、log₉3、log₂(1／16) 的值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">log₅125 = 3（5³ = 125）
+log₉3 = 1／2（9^(1／2) = 3）
+log₂(1／16) = −4（2^(−4) = 1／16）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">對數律</span></div>
+        <p>化簡 log₆4 + log₆9。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">log₆4 + log₆9 = log₆36 = 2</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">換底</span></div>
+        <p>求 log₂9・log₃32 的值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">log₂9 = 2 log₂3，log₃32 = 5 log₃2
+乘積 = 10・log₂3・log₃2 = 10 × 1 = 10</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">估算</span></div>
+        <p>存款每年增加 20%，大約幾年會翻倍？（log 2 ≈ 0.3010，log 3 ≈ 0.4771）</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">1.2ⁿ = 2 ⟹ n = log 2 ／ log 1.2
+log 1.2 = log(12／10) = 2 log 2 + log 3 − 1 ≈ 0.6020 + 0.4771 − 1 = 0.0791
+n ≈ 0.3010 ／ 0.0791 ≈ 3.8（約 4 年）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">對數方程式</span></div>
+        <p>解 log₃x + log₃(x − 8) = 2。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">限制：x &gt; 0 且 x − 8 &gt; 0 ⟹ x &gt; 8
+x(x − 8) = 9 ⟹ x² − 8x − 9 = 0 ⟹ (x − 9)(x + 1) = 0
+x = 9 或 x = −1（捨去）⟹ x = 9</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：把 log 也畫成一條曲線</h2>
+      <p>對數是指數的反問題，那 y = logₐx 的圖形和 y = aˣ 有什麼關係？在 2-3「對數函數及其圖形」，我們會發現兩條曲線剛好對稱於直線 y = x，並用對數函數的單調性比較大小、解不等式，最後整理出一套處理「按比例成長」問題的通用模型——從碳-14 定年到存款翻倍都適用。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第三冊・第二章</span>
+    <span>2-2 對數與對數律</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

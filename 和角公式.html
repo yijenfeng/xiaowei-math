@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-3 和角公式｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第三冊・第一章 三角函數・1-3</span>
+    <h1>和角公式</h1>
+    <p class="sub">在摩天輪上，筱葳發現一件有趣的事：不管轉到哪裡，她和隔壁座艙之間的直線距離永遠不變。這個「只跟兩者夾角有關」的觀察，正好能推出三角函數最重要的一組公式——和角公式。這一節從它出發，一路推到正切的和差角、二倍角與半角公式。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>sin30°、sin45° 背得出來，那 sin75° 呢？75° = 45° + 30°，但 sin75° 絕對不是 sin45° + sin30°（那會超過 1）。三角函數不能「分配」進括號裡，我們需要真正的拆法。和角公式就是這把鑰匙：只要知道兩個角各自的 sin、cos，就能算出它們相加或相減之後的值。二倍角、半角公式都是它的直接推論。</p>
+    <ul class="toc">
+      <li><a href="#topic-sum"><b>1</b>正弦與餘弦的和差角</a></li>
+      <li><a href="#topic-tan"><b>2</b>正切的和差角</a></li>
+      <li><a href="#topic-double"><b>3</b>二倍角公式</a></li>
+      <li><a href="#topic-half"><b>4</b>半角公式</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-sum">
+    <div class="part-kicker"><b>正弦與餘弦的和差角</b></div>
+    <h2>兩個座艙的距離，只看它們差了多少角度</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">把摩天輪當成單位圓。筱葳的座艙 P 在角度 α 的位置，隔壁座艙 Q 在角度 β 的位置。摩天輪轉動時，P、Q 一起轉，兩者的直線距離不變。把整個輪子倒轉 β，讓 Q 轉回 (1, 0)，P 就轉到角度 α − β 的位置。</p>
+      <p>同一段距離，用兩種坐標各算一次：</p>
+      <div class="calc">轉之前：P(cosα, sinα)，Q(cosβ, sinβ)
+PQ² = (cosα − cosβ)² + (sinα − sinβ)²
+    = (cos²α + sin²α) + (cos²β + sin²β) − 2(cosα cosβ + sinα sinβ)
+    = 2 − 2(cosα cosβ + sinα sinβ)
+
+轉之後：P'(cos(α−β), sin(α−β))，Q'(1, 0)
+P'Q'² = (cos(α−β) − 1)² + sin²(α−β)
+      = 2 − 2cos(α−β)
+
+兩者相等 ⟹ cos(α−β) = cosα cosβ + sinα sinβ</div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 200 180" role="img" aria-label="單位圓上 P 在角度 α、Q 在角度 β，連線 PQ">
+          <circle cx="90" cy="90" r="65" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+          <line x1="15" y1="90" x2="175" y2="90" stroke="var(--line)" stroke-width="1"/>
+          <line x1="90" y1="15" x2="90" y2="165" stroke="var(--line)" stroke-width="1"/>
+          <line x1="90" y1="90" x2="112.23" y2="28.92" stroke="var(--ink-muted)" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="90" y1="90" x2="151.08" y2="67.77" stroke="var(--ink-muted)" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="112.23" y1="28.92" x2="151.08" y2="67.77" stroke="var(--accent)" stroke-width="2.5"/>
+          <circle cx="112.23" cy="28.92" r="3.5" fill="var(--accent)"/>
+          <circle cx="151.08" cy="67.77" r="3.5" fill="var(--accent)"/>
+          <text x="108" y="20" class="svg-label" fill="var(--accent)">P(α)</text>
+          <text x="156" y="64" class="svg-label" fill="var(--accent)">Q(β)</text>
+        </svg>
+        <figcaption>轉之前：P 在 α，Q 在 β</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <svg viewBox="0 0 200 180" role="img" aria-label="整個圓倒轉 β 之後，P 在角度 α 減 β，Q 在 (1,0)，連線長度不變">
+          <circle cx="90" cy="90" r="65" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+          <line x1="15" y1="90" x2="175" y2="90" stroke="var(--line)" stroke-width="1"/>
+          <line x1="90" y1="15" x2="90" y2="165" stroke="var(--line)" stroke-width="1"/>
+          <line x1="90" y1="90" x2="131.78" y2="40.21" stroke="var(--ink-muted)" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="131.78" y1="40.21" x2="155" y2="90" stroke="var(--b2)" stroke-width="2.5"/>
+          <circle cx="131.78" cy="40.21" r="3.5" fill="var(--b2)"/>
+          <circle cx="155" cy="90" r="3.5" fill="var(--b2)"/>
+          <text x="122" y="30" class="svg-label" fill="var(--b2)">P'(α−β)</text>
+          <text x="150" y="106" class="svg-label" fill="var(--b2)">Q'(1,0)</text>
+        </svg>
+        <figcaption>轉之後：P' 在 α−β，Q' 在 (1, 0)，連線一樣長</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式：一口氣推出四條</span>
+      <p>有了 cos(α−β)，把 β 換成 −β（cos(−β) = cosβ，sin(−β) = −sinβ）就得到 cos(α+β)；再利用 sinθ = cos(π／2 − θ)，就能推出 sin 的兩條：</p>
+      <div class="formula">
+        <div class="formula-title">和差角公式</div>
+        <span class="big">sin(α ± β) = sinα cosβ ± cosα sinβ</span>
+        <br><span class="big">cos(α ± β) = cosα cosβ ∓ sinα sinβ</span>
+      </div>
+      <p class="note">口訣：sin 是「sin cos、cos sin，符號照抄」；cos 是「cos cos、sin sin，符號相反」。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">sin75° = sin(45° + 30°) = sin45° cos30° + cos45° sin30°
+      = (√2／2)(√3／2) + (√2／2)(1／2)
+      = (√6 + √2)／4 ≈ 0.966
+
+cos15° = cos(45° − 30°) = cos45° cos30° + sin45° sin30°
+      = (√6 + √2)／4　← 和 sin75° 一樣，因為 15° + 75° = 90°</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-tan">
+    <div class="part-kicker"><b>正切的和差角</b></div>
+    <h2>用斜率算兩條路的夾角</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>tan = sin／cos，把上面兩條相除，分子分母同除以 cosα cosβ：</p>
+      <div class="formula">
+        <div class="formula-title">正切的和差角公式</div>
+        <span class="big">tan(α ± β) = (tanα ± tanβ)／(1 ∓ tanα tanβ)</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">單車社的路線圖畫在坐標方格上：A 路的斜率是 3，B 路的斜率是 1／2，兩條路在一個路口交叉。轉彎時車頭要轉多少度？</p>
+      <p>直線斜率 = tan（斜角）。設 tanα = 3、tanβ = 1／2，兩路夾角就是 α − β：</p>
+      <div class="calc">tan(α − β) = (3 − 1／2)／(1 + 3 × 1／2) = (5／2)／(5／2) = 1
+
+∴ α − β = 45°，兩條路的夾角是 45°</div>
+      <p class="note">這個做法可以推廣成「兩直線夾角」的公式：斜率 m₁、m₂ 的兩直線，夾角 θ 滿足 tanθ = |(m₁ − m₂)／(1 + m₁m₂)|。若 1 + m₁m₂ = 0，代表兩直線垂直。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-double">
+    <div class="part-kicker"><b>二倍角公式</b></div>
+    <h2>α = β 時，和角公式變成二倍角</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>在和角公式裡令 β = α：</p>
+      <div class="formula">
+        <div class="formula-title">二倍角公式</div>
+        <span class="big">sin2θ = 2sinθ cosθ</span>
+        <br><span class="big">cos2θ = cos²θ − sin²θ = 2cos²θ − 1 = 1 − 2sin²θ</span>
+        <br>tan2θ = 2tanθ／(1 − tan²θ)
+      </div>
+      <p class="note">cos2θ 的三種寫法都要熟：題目給 cosθ 就用 2cos²θ − 1，給 sinθ 就用 1 − 2sin²θ，不必再去求另一個。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：投多遠？</span>
+      <p class="quote">體育課測壘球擲遠。物理老師說：若不計空氣阻力、出手點與落地點同高，以初速 v、仰角 θ 拋出，水平射程 R = (2v² sinθ cosθ)／g。筱葳出手速度約 20 公尺／秒（g 取 10），仰角幾度投得最遠？</p>
+      <div class="calc">R = (2v² sinθ cosθ)／g = v² sin2θ／g
+
+sin2θ 最大是 1，發生在 2θ = 90°，即 θ = 45°
+最遠射程 = 20² × 1 ÷ 10 = 40（公尺）
+
+若仰角 30°：R = 40 × sin60° = 20√3 ≈ 34.6（公尺）
+若仰角 60°：R = 40 × sin120° = 20√3 ≈ 34.6（公尺）——一樣遠！</div>
+      <p class="note">二倍角公式把「兩個三角函數相乘」合成「一個三角函數」，最大值就一眼看出來。30° 與 60° 射程相同，因為 sin60° = sin120°（互補的兩個 2θ）。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-half">
+    <div class="part-kicker"><b>半角公式</b></div>
+    <h2>把二倍角倒過來用</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>把 cos2θ = 2cos²θ − 1 = 1 − 2sin²θ 裡的 θ 換成 θ／2，移項：</p>
+      <div class="formula">
+        <div class="formula-title">半角公式</div>
+        <span class="big">cos²(θ／2) = (1 + cosθ)／2</span>
+        <br><span class="big">sin²(θ／2) = (1 − cosθ)／2</span>
+        <br>tan(θ／2) = sinθ／(1 + cosθ) = (1 − cosθ)／sinθ
+      </div>
+      <p class="note">開根號時要看 θ／2 落在哪個象限，自己決定正負號。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">sin22.5° = sin(45°／2)，22.5° 在第一象限取正
+sin²22.5° = (1 − cos45°)／2 = (1 − √2／2)／2 = (2 − √2)／4
+sin22.5° = √(2 − √2)／2 ≈ 0.383
+
+tan22.5° = sin45°／(1 + cos45°) = (√2／2)／(1 + √2／2) = √2／(2 + √2) = √2 − 1</div>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：1-3 和角公式</h2>
+    <p class="lede-line">整節只有一條真正要推的公式：cos(α−β) = cosα cosβ + sinα sinβ。其他全部是它的換角、相除、令兩角相等。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>正弦和差角</td><td class="f">sin(α ± β) = sinα cosβ ± cosα sinβ</td></tr>
+          <tr><td>餘弦和差角</td><td class="f">cos(α ± β) = cosα cosβ ∓ sinα sinβ</td></tr>
+          <tr><td>正切和差角</td><td class="f">tan(α ± β) = (tanα ± tanβ)／(1 ∓ tanα tanβ)</td></tr>
+          <tr><td>二倍角</td><td class="f">sin2θ = 2sinθ cosθ；cos2θ = 2cos²θ − 1 = 1 − 2sin²θ；tan2θ = 2tanθ／(1 − tan²θ)</td></tr>
+          <tr><td>半角</td><td class="f">cos²(θ／2) = (1 + cosθ)／2；sin²(θ／2) = (1 − cosθ)／2</td></tr>
+          <tr><td>常用值</td><td class="f">sin75° = cos15° = (√6+√2)／4；sin15° = cos75° = (√6−√2)／4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">和差角</span></div>
+        <p>求 cos75° 的值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">cos75° = cos(45° + 30°) = cos45° cos30° − sin45° sin30°
+      = (√2／2)(√3／2) − (√2／2)(1／2) = (√6 − √2)／4</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">和差角</span></div>
+        <p>α、β 都是銳角，sinα = 3／5，cosβ = 5／13。求 sin(α + β) 與 cos(α + β)，並判斷 α + β 是銳角還是鈍角。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">cosα = 4／5，sinβ = 12／13（銳角取正）
+
+sin(α+β) = (3／5)(5／13) + (4／5)(12／13) = 15／65 + 48／65 = 63／65
+cos(α+β) = (4／5)(5／13) − (3／5)(12／13) = 20／65 − 36／65 = −16／65
+
+cos(α+β) &lt; 0 ⟹ α + β 是鈍角</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">正切</span></div>
+        <p>α、β 都是銳角，tanα = 2，tanβ = 3，求 α + β。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">tan(α+β) = (2 + 3)／(1 − 2 × 3) = 5／(−5) = −1
+
+α、β 都是銳角 ⟹ 0° &lt; α + β &lt; 180°，tan 值為 −1
+∴ α + β = 135°（即 3π／4）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">二倍角</span></div>
+        <p>已知 cosθ = 1／3，求 cos2θ。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">cos2θ = 2cos²θ − 1 = 2 × (1／9) − 1 = −7／9</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">二倍角應用</span></div>
+        <p>θ 為銳角且 sinθ = 4／5，求 sin2θ 與 cos2θ。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">cosθ = 3／5
+sin2θ = 2 × (4／5)(3／5) = 24／25
+cos2θ = 1 − 2sin²θ = 1 − 2 × (16／25) = −7／25</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：把 sin 和 cos 合成一個波</h2>
+      <p>和角公式把 sin(x + φ) 展開成 sinx 與 cosx 的組合。反過來讀，就是一個超實用的技巧：像 3sinx + 4cosx 這種「兩個波相加」的式子，其實可以合成一個單一的正弦波 5sin(x + φ)，最大值、最小值立刻看得出來。在 1-4「三角函數的疊合」，我們會用這招處理看板旋轉與潮汐模型。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第三冊・第一章</span>
+    <span>1-3 和角公式</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

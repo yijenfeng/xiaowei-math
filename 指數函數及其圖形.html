@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-1 指數函數及其圖形｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第三冊・第二章 指數與對數函數・2-1</span>
+    <h1>指數函數及其圖形</h1>
+    <p class="sub">期中考前一晚，筱葳下午四點喝了一大杯手搖奶茶，結果半夜還睡不著。她查了資料才知道：咖啡因在體內大約每 5 小時減半。這一節從「每隔固定時間就乘上同一個倍數」的現象出發，把數學1學過的指數 aˣ 看成函數，畫出它的圖形，並用它的單調性比較大小、解不等式。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>數學1的「指數」一節已經把 aˣ 的意義從正整數一路推廣到實數：2³ 是連乘、2^(1／2) 是開根號、2^√2 用逼近來定義。既然任何實數 x 都算得出 2ˣ，就可以把 y = 2ˣ 當成一個函數來研究。和上一章週期性的三角函數不同，指數函數描述的是「越長越快」或「越減越慢」的變化——病毒擴散、存款複利、藥物代謝，都屬於這一類。</p>
+    <ul class="toc">
+      <li><a href="#topic-def"><b>1</b>指數函數的定義</a></li>
+      <li><a href="#topic-graph"><b>2</b>圖形與性質</a></li>
+      <li><a href="#topic-compare"><b>3</b>比較大小與解不等式</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-def">
+    <div class="part-kicker"><b>指數函數的定義</b></div>
+    <h2>每過一段時間，就乘上同一個倍數</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">那杯奶茶大約含 200 毫克咖啡因。若每 5 小時體內殘留量減半，喝下去 t 小時後還剩多少？</p>
+      <p>每經過 5 小時乘一次 1／2，t 小時就經過了 t／5 個「5 小時」：</p>
+      <div class="calc">t = 0　 → 200
+t = 5　 → 200 × (1／2) = 100
+t = 10　→ 200 × (1／2)² = 50
+t = 7.5 → 200 × (1／2)^1.5 = 200 × (1／2)√<span class="radicand">(1／2)</span> ≈ 70.7
+
+一般地：C(t) = 200 × (1／2)^(t／5)</div>
+      <p>t 可以是任何正實數，所以 C(t) 是一個連續變化的函數，它的核心就是 (1／2)ˣ 這種「底數固定、指數是變數」的形式。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">規律 → 定義</span>
+      <div class="formula">
+        <div class="formula-title">指數函數</div>
+        <span class="big">f(x) = aˣ（a &gt; 0，a ≠ 1），定義域為全體實數</span>
+      </div>
+      <p class="note">為什麼要限制底數？若 a &lt; 0，像 (−2)^(1／2) 就不是實數，函數到處「破洞」；若 a = 1，1ˣ 永遠是 1，只是常數函數，沒有研究價值。所以規定 a &gt; 0 且 a ≠ 1。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-graph">
+    <div class="part-kicker"><b>圖形與性質</b></div>
+    <h2>永遠在 x 軸上方，而且都通過 (0, 1)</h2>
+
+    <div class="step">
+      <span class="step-tag">描點</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>x</th><th>−3</th><th>−2</th><th>−1</th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
+          <tbody>
+            <tr><td>2ˣ</td><td class="f">1／8</td><td class="f">1／4</td><td class="f">1／2</td><td class="f">1</td><td class="f">2</td><td class="f">4</td><td class="f">8</td></tr>
+            <tr><td>(1／2)ˣ</td><td class="f">8</td><td class="f">4</td><td class="f">2</td><td class="f">1</td><td class="f">1／2</td><td class="f">1／4</td><td class="f">1／8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">兩列剛好左右顛倒：(1／2)ˣ = 2^(−x)，所以 y = (1／2)ˣ 的圖形就是 y = 2ˣ 對 y 軸翻過去。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 320 200" role="img" aria-label="y=2^x（藍）、y=(1/2)^x（橘）與 y=3^x（虛線）的圖形，都通過 (0,1)，且都在 x 軸上方">
+<line x1="30.0" y1="145.9" x2="308.0" y2="145.9" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="128.3" x2="308.0" y2="128.3" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="93.1" x2="308.0" y2="93.1" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="22.8" x2="308.0" y2="22.8" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="42.6" y1="174.0" x2="42.6" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="84.8" y1="174.0" x2="84.8" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="126.9" y1="174.0" x2="126.9" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="211.1" y1="174.0" x2="211.1" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="253.2" y1="174.0" x2="253.2" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="295.4" y1="174.0" x2="295.4" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="163.5" x2="308.0" y2="163.5" stroke="var(--ink-muted)" stroke-width="1"/>
+<line x1="169.0" y1="174.0" x2="169.0" y2="14.0" stroke="var(--ink-muted)" stroke-width="1"/>
+<text x="42.6" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">−3</text>
+<text x="84.8" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">−2</text>
+<text x="126.9" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">−1</text>
+<text x="211.1" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">1</text>
+<text x="253.2" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2</text>
+<text x="295.4" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">3</text>
+<text x="165.0" y="149.4" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">1</text>
+<text x="165.0" y="131.8" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2</text>
+<text x="165.0" y="96.6" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">4</text>
+<text x="165.0" y="26.3" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">8</text>
+<path d="M30.0,161.7 L30.7,161.6 L31.4,161.6 L32.1,161.6 L32.8,161.6 L33.5,161.6 L34.2,161.5 L34.9,161.5 L35.6,161.5 L36.3,161.5 L37.0,161.4 L37.6,161.4 L38.3,161.4 L39.0,161.4 L39.7,161.4 L40.4,161.3 L41.1,161.3 L41.8,161.3 L42.5,161.3 L43.2,161.2 L43.9,161.2 L44.6,161.2 L45.3,161.2 L46.0,161.1 L46.7,161.1 L47.4,161.1 L48.1,161.0 L48.8,161.0 L49.5,161.0 L50.2,161.0 L50.9,160.9 L51.5,160.9 L52.2,160.9 L52.9,160.8 L53.6,160.8 L54.3,160.8 L55.0,160.8 L55.7,160.7 L56.4,160.7 L57.1,160.7 L57.8,160.6 L58.5,160.6 L59.2,160.6 L59.9,160.5 L60.6,160.5 L61.3,160.5 L62.0,160.4 L62.7,160.4 L63.4,160.4 L64.1,160.3 L64.8,160.3 L65.4,160.3 L66.1,160.2 L66.8,160.2 L67.5,160.1 L68.2,160.1 L68.9,160.1 L69.6,160.0 L70.3,160.0 L71.0,159.9 L71.7,159.9 L72.4,159.9 L73.1,159.8 L73.8,159.8 L74.5,159.7 L75.2,159.7 L75.9,159.7 L76.6,159.6 L77.3,159.6 L78.0,159.5 L78.7,159.5 L79.3,159.4 L80.0,159.4 L80.7,159.3 L81.4,159.3 L82.1,159.2 L82.8,159.2 L83.5,159.1 L84.2,159.1 L84.9,159.0 L85.6,159.0 L86.3,158.9 L87.0,158.9 L87.7,158.8 L88.4,158.8 L89.1,158.7 L89.8,158.7 L90.5,158.6 L91.2,158.6 L91.9,158.5 L92.6,158.5 L93.2,158.4 L93.9,158.3 L94.6,158.3 L95.3,158.2 L96.0,158.2 L96.7,158.1 L97.4,158.0 L98.1,158.0 L98.8,157.9 L99.5,157.8 L100.2,157.8 L100.9,157.7 L101.6,157.7 L102.3,157.6 L103.0,157.5 L103.7,157.5 L104.4,157.4 L105.1,157.3 L105.8,157.2 L106.5,157.2 L107.1,157.1 L107.8,157.0 L108.5,157.0 L109.2,156.9 L109.9,156.8 L110.6,156.7 L111.3,156.6 L112.0,156.6 L112.7,156.5 L113.4,156.4 L114.1,156.3 L114.8,156.2 L115.5,156.2 L116.2,156.1 L116.9,156.0 L117.6,155.9 L118.3,155.8 L119.0,155.7 L119.7,155.6 L120.4,155.6 L121.0,155.5 L121.7,155.4 L122.4,155.3 L123.1,155.2 L123.8,155.1 L124.5,155.0 L125.2,154.9 L125.9,154.8 L126.6,154.7 L127.3,154.6 L128.0,154.5 L128.7,154.4 L129.4,154.3 L130.1,154.2 L130.8,154.1 L131.5,154.0 L132.2,153.9 L132.9,153.8 L133.6,153.6 L134.2,153.5 L134.9,153.4 L135.6,153.3 L136.3,153.2 L137.0,153.1 L137.7,152.9 L138.4,152.8 L139.1,152.7 L139.8,152.6 L140.5,152.4 L141.2,152.3 L141.9,152.2 L142.6,152.1 L143.3,151.9 L144.0,151.8 L144.7,151.7 L145.4,151.5 L146.1,151.4 L146.8,151.3 L147.5,151.1 L148.2,151.0 L148.8,150.8 L149.5,150.7 L150.2,150.5 L150.9,150.4 L151.6,150.2 L152.3,150.1 L153.0,149.9 L153.7,149.8 L154.4,149.6 L155.1,149.5 L155.8,149.3 L156.5,149.1 L157.2,149.0 L157.9,148.8 L158.6,148.6 L159.3,148.5 L160.0,148.3 L160.7,148.1 L161.4,147.9 L162.1,147.8 L162.7,147.6 L163.4,147.4 L164.1,147.2 L164.8,147.0 L165.5,146.8 L166.2,146.7 L166.9,146.5 L167.6,146.3 L168.3,146.1 L169.0,145.9 L169.7,145.7 L170.4,145.5 L171.1,145.3 L171.8,145.0 L172.5,144.8 L173.2,144.6 L173.9,144.4 L174.6,144.2 L175.3,144.0 L176.0,143.7 L176.6,143.5 L177.3,143.3 L178.0,143.0 L178.7,142.8 L179.4,142.6 L180.1,142.3 L180.8,142.1 L181.5,141.8 L182.2,141.6 L182.9,141.3 L183.6,141.1 L184.3,140.8 L185.0,140.6 L185.7,140.3 L186.4,140.0 L187.1,139.8 L187.8,139.5 L188.5,139.2 L189.2,139.0 L189.9,138.7 L190.5,138.4 L191.2,138.1 L191.9,137.8 L192.6,137.5 L193.3,137.2 L194.0,136.9 L194.7,136.6 L195.4,136.3 L196.1,136.0 L196.8,135.7 L197.5,135.3 L198.2,135.0 L198.9,134.7 L199.6,134.4 L200.3,134.0 L201.0,133.7 L201.7,133.4 L202.4,133.0 L203.1,132.7 L203.8,132.3 L204.4,131.9 L205.1,131.6 L205.8,131.2 L206.5,130.8 L207.2,130.5 L207.9,130.1 L208.6,129.7 L209.3,129.3 L210.0,128.9 L210.7,128.5 L211.4,128.1 L212.1,127.7 L212.8,127.3 L213.5,126.9 L214.2,126.5 L214.9,126.0 L215.6,125.6 L216.3,125.2 L217.0,124.7 L217.7,124.3 L218.3,123.8 L219.0,123.4 L219.7,122.9 L220.4,122.5 L221.1,122.0 L221.8,121.5 L222.5,121.0 L223.2,120.5 L223.9,120.1 L224.6,119.6 L225.3,119.0 L226.0,118.5 L226.7,118.0 L227.4,117.5 L228.1,117.0 L228.8,116.4 L229.5,115.9 L230.2,115.3 L230.9,114.8 L231.6,114.2 L232.2,113.7 L232.9,113.1 L233.6,112.5 L234.3,111.9 L235.0,111.3 L235.7,110.7 L236.4,110.1 L237.1,109.5 L237.8,108.9 L238.5,108.3 L239.2,107.6 L239.9,107.0 L240.6,106.3 L241.3,105.7 L242.0,105.0 L242.7,104.4 L243.4,103.7 L244.1,103.0 L244.8,102.3 L245.5,101.6 L246.1,100.9 L246.8,100.2 L247.5,99.4 L248.2,98.7 L248.9,97.9 L249.6,97.2 L250.3,96.4 L251.0,95.7 L251.7,94.9 L252.4,94.1 L253.1,93.3 L253.8,92.5 L254.5,91.7 L255.2,90.8 L255.9,90.0 L256.6,89.2 L257.3,88.3 L258.0,87.4 L258.7,86.6 L259.4,85.7 L260.0,84.8 L260.7,83.9 L261.4,83.0 L262.1,82.0 L262.8,81.1 L263.5,80.2 L264.2,79.2 L264.9,78.2 L265.6,77.3 L266.3,76.3 L267.0,75.3 L267.7,74.2 L268.4,73.2 L269.1,72.2 L269.8,71.1 L270.5,70.1 L271.2,69.0 L271.9,67.9 L272.6,66.8 L273.2,65.7 L273.9,64.6 L274.6,63.4 L275.3,62.3 L276.0,61.1 L276.7,59.9 L277.4,58.8 L278.1,57.6 L278.8,56.3 L279.5,55.1 L280.2,53.9 L280.9,52.6 L281.6,51.3 L282.3,50.0 L283.0,48.7 L283.7,47.4 L284.4,46.1 L285.1,44.7 L285.8,43.4 L286.5,42.0 L287.2,40.6 L287.8,39.2 L288.5,37.7 L289.2,36.3 L289.9,34.8 L290.6,33.3 L291.3,31.8 L292.0,30.3 L292.7,28.8 L293.4,27.3 L294.1,25.7 L294.8,24.1 L295.5,22.5 L296.2,20.9 L296.9,19.2 L297.6,17.6 L298.3,15.9 L299.0,14.2 L299.7,12.5 L300.4,10.7 L301.1,9.0 L301.7,7.2" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M36.3,7.2 L37.0,9.0 L37.6,10.7 L38.3,12.5 L39.0,14.2 L39.7,15.9 L40.4,17.6 L41.1,19.2 L41.8,20.9 L42.5,22.5 L43.2,24.1 L43.9,25.7 L44.6,27.3 L45.3,28.8 L46.0,30.3 L46.7,31.8 L47.4,33.3 L48.1,34.8 L48.8,36.3 L49.5,37.7 L50.2,39.2 L50.9,40.6 L51.5,42.0 L52.2,43.4 L52.9,44.7 L53.6,46.1 L54.3,47.4 L55.0,48.7 L55.7,50.0 L56.4,51.3 L57.1,52.6 L57.8,53.9 L58.5,55.1 L59.2,56.3 L59.9,57.6 L60.6,58.8 L61.3,59.9 L62.0,61.1 L62.7,62.3 L63.4,63.4 L64.1,64.6 L64.8,65.7 L65.4,66.8 L66.1,67.9 L66.8,69.0 L67.5,70.1 L68.2,71.1 L68.9,72.2 L69.6,73.2 L70.3,74.2 L71.0,75.3 L71.7,76.3 L72.4,77.3 L73.1,78.2 L73.8,79.2 L74.5,80.2 L75.2,81.1 L75.9,82.0 L76.6,83.0 L77.3,83.9 L78.0,84.8 L78.7,85.7 L79.3,86.6 L80.0,87.4 L80.7,88.3 L81.4,89.2 L82.1,90.0 L82.8,90.8 L83.5,91.7 L84.2,92.5 L84.9,93.3 L85.6,94.1 L86.3,94.9 L87.0,95.7 L87.7,96.4 L88.4,97.2 L89.1,97.9 L89.8,98.7 L90.5,99.4 L91.2,100.2 L91.9,100.9 L92.6,101.6 L93.2,102.3 L93.9,103.0 L94.6,103.7 L95.3,104.4 L96.0,105.0 L96.7,105.7 L97.4,106.3 L98.1,107.0 L98.8,107.6 L99.5,108.3 L100.2,108.9 L100.9,109.5 L101.6,110.1 L102.3,110.7 L103.0,111.3 L103.7,111.9 L104.4,112.5 L105.1,113.1 L105.8,113.7 L106.5,114.2 L107.1,114.8 L107.8,115.3 L108.5,115.9 L109.2,116.4 L109.9,117.0 L110.6,117.5 L111.3,118.0 L112.0,118.5 L112.7,119.0 L113.4,119.6 L114.1,120.1 L114.8,120.5 L115.5,121.0 L116.2,121.5 L116.9,122.0 L117.6,122.5 L118.3,122.9 L119.0,123.4 L119.7,123.8 L120.4,124.3 L121.0,124.7 L121.7,125.2 L122.4,125.6 L123.1,126.0 L123.8,126.5 L124.5,126.9 L125.2,127.3 L125.9,127.7 L126.6,128.1 L127.3,128.5 L128.0,128.9 L128.7,129.3 L129.4,129.7 L130.1,130.1 L130.8,130.5 L131.5,130.8 L132.2,131.2 L132.9,131.6 L133.6,131.9 L134.2,132.3 L134.9,132.7 L135.6,133.0 L136.3,133.4 L137.0,133.7 L137.7,134.0 L138.4,134.4 L139.1,134.7 L139.8,135.0 L140.5,135.3 L141.2,135.7 L141.9,136.0 L142.6,136.3 L143.3,136.6 L144.0,136.9 L144.7,137.2 L145.4,137.5 L146.1,137.8 L146.8,138.1 L147.5,138.4 L148.2,138.7 L148.8,139.0 L149.5,139.2 L150.2,139.5 L150.9,139.8 L151.6,140.0 L152.3,140.3 L153.0,140.6 L153.7,140.8 L154.4,141.1 L155.1,141.3 L155.8,141.6 L156.5,141.8 L157.2,142.1 L157.9,142.3 L158.6,142.6 L159.3,142.8 L160.0,143.0 L160.7,143.3 L161.4,143.5 L162.1,143.7 L162.7,144.0 L163.4,144.2 L164.1,144.4 L164.8,144.6 L165.5,144.8 L166.2,145.0 L166.9,145.3 L167.6,145.5 L168.3,145.7 L169.0,145.9 L169.7,146.1 L170.4,146.3 L171.1,146.5 L171.8,146.7 L172.5,146.8 L173.2,147.0 L173.9,147.2 L174.6,147.4 L175.3,147.6 L176.0,147.8 L176.6,147.9 L177.3,148.1 L178.0,148.3 L178.7,148.5 L179.4,148.6 L180.1,148.8 L180.8,149.0 L181.5,149.1 L182.2,149.3 L182.9,149.5 L183.6,149.6 L184.3,149.8 L185.0,149.9 L185.7,150.1 L186.4,150.2 L187.1,150.4 L187.8,150.5 L188.5,150.7 L189.2,150.8 L189.9,151.0 L190.5,151.1 L191.2,151.3 L191.9,151.4 L192.6,151.5 L193.3,151.7 L194.0,151.8 L194.7,151.9 L195.4,152.1 L196.1,152.2 L196.8,152.3 L197.5,152.4 L198.2,152.6 L198.9,152.7 L199.6,152.8 L200.3,152.9 L201.0,153.1 L201.7,153.2 L202.4,153.3 L203.1,153.4 L203.8,153.5 L204.4,153.6 L205.1,153.8 L205.8,153.9 L206.5,154.0 L207.2,154.1 L207.9,154.2 L208.6,154.3 L209.3,154.4 L210.0,154.5 L210.7,154.6 L211.4,154.7 L212.1,154.8 L212.8,154.9 L213.5,155.0 L214.2,155.1 L214.9,155.2 L215.6,155.3 L216.3,155.4 L217.0,155.5 L217.7,155.6 L218.3,155.6 L219.0,155.7 L219.7,155.8 L220.4,155.9 L221.1,156.0 L221.8,156.1 L222.5,156.2 L223.2,156.2 L223.9,156.3 L224.6,156.4 L225.3,156.5 L226.0,156.6 L226.7,156.6 L227.4,156.7 L228.1,156.8 L228.8,156.9 L229.5,157.0 L230.2,157.0 L230.9,157.1 L231.6,157.2 L232.2,157.2 L232.9,157.3 L233.6,157.4 L234.3,157.5 L235.0,157.5 L235.7,157.6 L236.4,157.7 L237.1,157.7 L237.8,157.8 L238.5,157.8 L239.2,157.9 L239.9,158.0 L240.6,158.0 L241.3,158.1 L242.0,158.2 L242.7,158.2 L243.4,158.3 L244.1,158.3 L244.8,158.4 L245.5,158.5 L246.1,158.5 L246.8,158.6 L247.5,158.6 L248.2,158.7 L248.9,158.7 L249.6,158.8 L250.3,158.8 L251.0,158.9 L251.7,158.9 L252.4,159.0 L253.1,159.0 L253.8,159.1 L254.5,159.1 L255.2,159.2 L255.9,159.2 L256.6,159.3 L257.3,159.3 L258.0,159.4 L258.7,159.4 L259.4,159.5 L260.0,159.5 L260.7,159.6 L261.4,159.6 L262.1,159.7 L262.8,159.7 L263.5,159.7 L264.2,159.8 L264.9,159.8 L265.6,159.9 L266.3,159.9 L267.0,159.9 L267.7,160.0 L268.4,160.0 L269.1,160.1 L269.8,160.1 L270.5,160.1 L271.2,160.2 L271.9,160.2 L272.6,160.3 L273.2,160.3 L273.9,160.3 L274.6,160.4 L275.3,160.4 L276.0,160.4 L276.7,160.5 L277.4,160.5 L278.1,160.5 L278.8,160.6 L279.5,160.6 L280.2,160.6 L280.9,160.7 L281.6,160.7 L282.3,160.7 L283.0,160.8 L283.7,160.8 L284.4,160.8 L285.1,160.8 L285.8,160.9 L286.5,160.9 L287.2,160.9 L287.8,161.0 L288.5,161.0 L289.2,161.0 L289.9,161.0 L290.6,161.1 L291.3,161.1 L292.0,161.1 L292.7,161.2 L293.4,161.2 L294.1,161.2 L294.8,161.2 L295.5,161.3 L296.2,161.3 L296.9,161.3 L297.6,161.3 L298.3,161.4 L299.0,161.4 L299.7,161.4 L300.4,161.4 L301.1,161.4 L301.7,161.5 L302.4,161.5 L303.1,161.5 L303.8,161.5 L304.5,161.6 L305.2,161.6 L305.9,161.6 L306.6,161.6 L307.3,161.6 L308.0,161.7" fill="none" stroke="var(--b2)" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M30.0,163.0 L30.7,163.0 L31.4,163.0 L32.1,163.0 L32.8,162.9 L33.5,162.9 L34.2,162.9 L34.9,162.9 L35.6,162.9 L36.3,162.9 L37.0,162.9 L37.6,162.9 L38.3,162.9 L39.0,162.9 L39.7,162.8 L40.4,162.8 L41.1,162.8 L41.8,162.8 L42.5,162.8 L43.2,162.8 L43.9,162.8 L44.6,162.8 L45.3,162.8 L46.0,162.7 L46.7,162.7 L47.4,162.7 L48.1,162.7 L48.8,162.7 L49.5,162.7 L50.2,162.7 L50.9,162.6 L51.5,162.6 L52.2,162.6 L52.9,162.6 L53.6,162.6 L54.3,162.6 L55.0,162.6 L55.7,162.5 L56.4,162.5 L57.1,162.5 L57.8,162.5 L58.5,162.5 L59.2,162.4 L59.9,162.4 L60.6,162.4 L61.3,162.4 L62.0,162.4 L62.7,162.4 L63.4,162.3 L64.1,162.3 L64.8,162.3 L65.4,162.3 L66.1,162.2 L66.8,162.2 L67.5,162.2 L68.2,162.2 L68.9,162.2 L69.6,162.1 L70.3,162.1 L71.0,162.1 L71.7,162.1 L72.4,162.0 L73.1,162.0 L73.8,162.0 L74.5,162.0 L75.2,161.9 L75.9,161.9 L76.6,161.9 L77.3,161.8 L78.0,161.8 L78.7,161.8 L79.3,161.8 L80.0,161.7 L80.7,161.7 L81.4,161.7 L82.1,161.6 L82.8,161.6 L83.5,161.6 L84.2,161.5 L84.9,161.5 L85.6,161.5 L86.3,161.4 L87.0,161.4 L87.7,161.3 L88.4,161.3 L89.1,161.3 L89.8,161.2 L90.5,161.2 L91.2,161.1 L91.9,161.1 L92.6,161.1 L93.2,161.0 L93.9,161.0 L94.6,160.9 L95.3,160.9 L96.0,160.8 L96.7,160.8 L97.4,160.7 L98.1,160.7 L98.8,160.6 L99.5,160.6 L100.2,160.5 L100.9,160.5 L101.6,160.4 L102.3,160.4 L103.0,160.3 L103.7,160.3 L104.4,160.2 L105.1,160.1 L105.8,160.1 L106.5,160.0 L107.1,159.9 L107.8,159.9 L108.5,159.8 L109.2,159.8 L109.9,159.7 L110.6,159.6 L111.3,159.5 L112.0,159.5 L112.7,159.4 L113.4,159.3 L114.1,159.3 L114.8,159.2 L115.5,159.1 L116.2,159.0 L116.9,158.9 L117.6,158.9 L118.3,158.8 L119.0,158.7 L119.7,158.6 L120.4,158.5 L121.0,158.4 L121.7,158.3 L122.4,158.2 L123.1,158.1 L123.8,158.0 L124.5,157.9 L125.2,157.8 L125.9,157.7 L126.6,157.6 L127.3,157.5 L128.0,157.4 L128.7,157.3 L129.4,157.2 L130.1,157.1 L130.8,157.0 L131.5,156.8 L132.2,156.7 L132.9,156.6 L133.6,156.5 L134.2,156.3 L134.9,156.2 L135.6,156.1 L136.3,156.0 L137.0,155.8 L137.7,155.7 L138.4,155.5 L139.1,155.4 L139.8,155.2 L140.5,155.1 L141.2,154.9 L141.9,154.8 L142.6,154.6 L143.3,154.5 L144.0,154.3 L144.7,154.1 L145.4,154.0 L146.1,153.8 L146.8,153.6 L147.5,153.4 L148.2,153.2 L148.8,153.1 L149.5,152.9 L150.2,152.7 L150.9,152.5 L151.6,152.3 L152.3,152.1 L153.0,151.9 L153.7,151.7 L154.4,151.4 L155.1,151.2 L155.8,151.0 L156.5,150.8 L157.2,150.5 L157.9,150.3 L158.6,150.1 L159.3,149.8 L160.0,149.6 L160.7,149.3 L161.4,149.0 L162.1,148.8 L162.7,148.5 L163.4,148.2 L164.1,148.0 L164.8,147.7 L165.5,147.4 L166.2,147.1 L166.9,146.8 L167.6,146.5 L168.3,146.2 L169.0,145.9 L169.7,145.5 L170.4,145.2 L171.1,144.9 L171.8,144.5 L172.5,144.2 L173.2,143.8 L173.9,143.5 L174.6,143.1 L175.3,142.8 L176.0,142.4 L176.6,142.0 L177.3,141.6 L178.0,141.2 L178.7,140.8 L179.4,140.4 L180.1,140.0 L180.8,139.5 L181.5,139.1 L182.2,138.6 L182.9,138.2 L183.6,137.7 L184.3,137.3 L185.0,136.8 L185.7,136.3 L186.4,135.8 L187.1,135.3 L187.8,134.8 L188.5,134.2 L189.2,133.7 L189.9,133.2 L190.5,132.6 L191.2,132.0 L191.9,131.5 L192.6,130.9 L193.3,130.3 L194.0,129.7 L194.7,129.1 L195.4,128.4 L196.1,127.8 L196.8,127.1 L197.5,126.5 L198.2,125.8 L198.9,125.1 L199.6,124.4 L200.3,123.7 L201.0,123.0 L201.7,122.2 L202.4,121.5 L203.1,120.7 L203.8,119.9 L204.4,119.1 L205.1,118.3 L205.8,117.5 L206.5,116.7 L207.2,115.8 L207.9,114.9 L208.6,114.0 L209.3,113.1 L210.0,112.2 L210.7,111.3 L211.4,110.3 L212.1,109.4 L212.8,108.4 L213.5,107.4 L214.2,106.3 L214.9,105.3 L215.6,104.2 L216.3,103.1 L217.0,102.0 L217.7,100.9 L218.3,99.8 L219.0,98.6 L219.7,97.4 L220.4,96.2 L221.1,95.0 L221.8,93.7 L222.5,92.5 L223.2,91.2 L223.9,89.8 L224.6,88.5 L225.3,87.1 L226.0,85.7 L226.7,84.3 L227.4,82.8 L228.1,81.4 L228.8,79.9 L229.5,78.3 L230.2,76.8 L230.9,75.2 L231.6,73.6 L232.2,71.9 L232.9,70.3 L233.6,68.6 L234.3,66.8 L235.0,65.1 L235.7,63.3 L236.4,61.4 L237.1,59.6 L237.8,57.7 L238.5,55.7 L239.2,53.8 L239.9,51.7 L240.6,49.7 L241.3,47.6 L242.0,45.5 L242.7,43.3 L243.4,41.1 L244.1,38.9 L244.8,36.6 L245.5,34.3 L246.1,32.0 L246.8,29.5 L247.5,27.1 L248.2,24.6 L248.9,22.1 L249.6,19.5 L250.3,16.8 L251.0,14.2 L251.7,11.4 L252.4,8.6" fill="none" stroke="var(--a2)" stroke-width="1.4" stroke-dasharray="4,3" stroke-linejoin="round"/>
+<circle cx="169.0" cy="145.9" r="3" fill="var(--ink)"/>
+<text x="174.0" y="159.9" class="svg-label" font-size="10" fill="var(--ink)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(0, 1)</text>
+<circle cx="284.8" cy="45.2" r="3" fill="var(--accent)"/>
+<text x="290.8" y="49.2" class="svg-label" font-size="10" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2ˣ</text>
+<circle cx="53.2" cy="45.2" r="3" fill="var(--b2)"/>
+<text x="49.2" y="37.2" class="svg-label" font-size="10" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(1／2)ˣ</text>
+<circle cx="242.7" cy="43.2" r="3" fill="var(--a2)"/>
+<text x="220.7" y="43.2" class="svg-label" font-size="10" fill="var(--a2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">3ˣ</text>
+
+</svg>
+        <figcaption>底數大於 1 往右上升，介於 0 與 1 之間往右下降；底數越大，右邊爬得越陡</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">整理性質</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>性質</th><th>a &gt; 1</th><th>0 &lt; a &lt; 1</th></tr></thead>
+          <tbody>
+            <tr><td>定義域／值域</td><td class="f">全體實數／y &gt; 0</td><td class="f">全體實數／y &gt; 0</td></tr>
+            <tr><td>必過點</td><td class="f">(0, 1)</td><td class="f">(0, 1)</td></tr>
+            <tr><td>單調性</td><td class="f">嚴格遞增</td><td class="f">嚴格遞減</td></tr>
+            <tr><td>漸近線</td><td class="f">x → −∞ 時貼近 x 軸</td><td class="f">x → +∞ 時貼近 x 軸</td></tr>
+            <tr><td>生活意義</td><td class="f">指數成長（倍增）</td><td class="f">指數衰減（減半）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">回到咖啡因</span>
+      <p>C(t) = 200 × (1／2)^(t／5) 是一條指數衰減曲線：一開始降得很快，越往後越慢，但<b>永遠不會變成 0</b>。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 320 190" role="img" aria-label="咖啡因殘留量 200 乘以二分之一的 t/5 次方，每 5 小時減半">
+<line x1="30.0" y1="129.9" x2="308.0" y2="129.9" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="95.8" x2="308.0" y2="95.8" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="27.6" x2="308.0" y2="27.6" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="96.2" y1="164.0" x2="96.2" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="162.4" y1="164.0" x2="162.4" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="228.6" y1="164.0" x2="228.6" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="294.8" y1="164.0" x2="294.8" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="164.0" x2="308.0" y2="164.0" stroke="var(--ink-muted)" stroke-width="1"/>
+<line x1="30.0" y1="164.0" x2="30.0" y2="14.0" stroke="var(--ink-muted)" stroke-width="1"/>
+<text x="96.2" y="177.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">5</text>
+<text x="162.4" y="177.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">10</text>
+<text x="228.6" y="177.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">15</text>
+<text x="294.8" y="177.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">20</text>
+<text x="26.0" y="133.4" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">50</text>
+<text x="26.0" y="99.3" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">100</text>
+<text x="26.0" y="31.1" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">200</text>
+<line x1="30.0" y1="129.9" x2="308.0" y2="129.9" stroke="var(--b2)" stroke-width="1" stroke-dasharray="4,3"/>
+<path d="M30.0,27.6 L30.7,28.6 L31.4,29.6 L32.1,30.6 L32.8,31.5 L33.5,32.5 L34.2,33.5 L34.9,34.4 L35.6,35.3 L36.3,36.3 L37.0,37.2 L37.6,38.1 L38.3,39.0 L39.0,39.9 L39.7,40.8 L40.4,41.7 L41.1,42.6 L41.8,43.5 L42.5,44.4 L43.2,45.2 L43.9,46.1 L44.6,47.0 L45.3,47.8 L46.0,48.7 L46.7,49.5 L47.4,50.3 L48.1,51.1 L48.8,52.0 L49.5,52.8 L50.2,53.6 L50.8,54.4 L51.5,55.2 L52.2,56.0 L52.9,56.8 L53.6,57.5 L54.3,58.3 L55.0,59.1 L55.7,59.8 L56.4,60.6 L57.1,61.3 L57.8,62.1 L58.5,62.8 L59.2,63.6 L59.9,64.3 L60.6,65.0 L61.3,65.7 L62.0,66.4 L62.7,67.1 L63.4,67.8 L64.1,68.5 L64.8,69.2 L65.4,69.9 L66.1,70.6 L66.8,71.3 L67.5,72.0 L68.2,72.6 L68.9,73.3 L69.6,73.9 L70.3,74.6 L71.0,75.2 L71.7,75.9 L72.4,76.5 L73.1,77.2 L73.8,77.8 L74.5,78.4 L75.2,79.0 L75.9,79.7 L76.6,80.3 L77.3,80.9 L78.0,81.5 L78.6,82.1 L79.3,82.7 L80.0,83.3 L80.7,83.8 L81.4,84.4 L82.1,85.0 L82.8,85.6 L83.5,86.1 L84.2,86.7 L84.9,87.3 L85.6,87.8 L86.3,88.4 L87.0,88.9 L87.7,89.5 L88.4,90.0 L89.1,90.5 L89.8,91.1 L90.5,91.6 L91.2,92.1 L91.9,92.7 L92.5,93.2 L93.2,93.7 L93.9,94.2 L94.6,94.7 L95.3,95.2 L96.0,95.7 L96.7,96.2 L97.4,96.7 L98.1,97.2 L98.8,97.7 L99.5,98.1 L100.2,98.6 L100.9,99.1 L101.6,99.6 L102.3,100.0 L103.0,100.5 L103.7,101.0 L104.4,101.4 L105.1,101.9 L105.8,102.3 L106.5,102.8 L107.1,103.2 L107.8,103.6 L108.5,104.1 L109.2,104.5 L109.9,105.0 L110.6,105.4 L111.3,105.8 L112.0,106.2 L112.7,106.6 L113.4,107.1 L114.1,107.5 L114.8,107.9 L115.5,108.3 L116.2,108.7 L116.9,109.1 L117.6,109.5 L118.3,109.9 L119.0,110.3 L119.7,110.7 L120.3,111.1 L121.0,111.4 L121.7,111.8 L122.4,112.2 L123.1,112.6 L123.8,113.0 L124.5,113.3 L125.2,113.7 L125.9,114.1 L126.6,114.4 L127.3,114.8 L128.0,115.1 L128.7,115.5 L129.4,115.8 L130.1,116.2 L130.8,116.5 L131.5,116.9 L132.2,117.2 L132.9,117.6 L133.6,117.9 L134.2,118.2 L134.9,118.6 L135.6,118.9 L136.3,119.2 L137.0,119.5 L137.7,119.9 L138.4,120.2 L139.1,120.5 L139.8,120.8 L140.5,121.1 L141.2,121.4 L141.9,121.8 L142.6,122.1 L143.3,122.4 L144.0,122.7 L144.7,123.0 L145.4,123.3 L146.1,123.6 L146.8,123.9 L147.5,124.1 L148.2,124.4 L148.8,124.7 L149.5,125.0 L150.2,125.3 L150.9,125.6 L151.6,125.8 L152.3,126.1 L153.0,126.4 L153.7,126.7 L154.4,126.9 L155.1,127.2 L155.8,127.5 L156.5,127.7 L157.2,128.0 L157.9,128.3 L158.6,128.5 L159.3,128.8 L160.0,129.0 L160.7,129.3 L161.4,129.5 L162.0,129.8 L162.7,130.0 L163.4,130.3 L164.1,130.5 L164.8,130.8 L165.5,131.0 L166.2,131.3 L166.9,131.5 L167.6,131.7 L168.3,132.0 L169.0,132.2 L169.7,132.4 L170.4,132.7 L171.1,132.9 L171.8,133.1 L172.5,133.3 L173.2,133.6 L173.9,133.8 L174.6,134.0 L175.3,134.2 L175.9,134.4 L176.6,134.6 L177.3,134.9 L178.0,135.1 L178.7,135.3 L179.4,135.5 L180.1,135.7 L180.8,135.9 L181.5,136.1 L182.2,136.3 L182.9,136.5 L183.6,136.7 L184.3,136.9 L185.0,137.1 L185.7,137.3 L186.4,137.5 L187.1,137.7 L187.8,137.9 L188.5,138.1 L189.2,138.2 L189.8,138.4 L190.5,138.6 L191.2,138.8 L191.9,139.0 L192.6,139.2 L193.3,139.3 L194.0,139.5 L194.7,139.7 L195.4,139.9 L196.1,140.1 L196.8,140.2 L197.5,140.4 L198.2,140.6 L198.9,140.7 L199.6,140.9 L200.3,141.1 L201.0,141.2 L201.7,141.4 L202.4,141.6 L203.1,141.7 L203.8,141.9 L204.4,142.1 L205.1,142.2 L205.8,142.4 L206.5,142.5 L207.2,142.7 L207.9,142.8 L208.6,143.0 L209.3,143.1 L210.0,143.3 L210.7,143.4 L211.4,143.6 L212.1,143.7 L212.8,143.9 L213.5,144.0 L214.2,144.2 L214.9,144.3 L215.6,144.5 L216.3,144.6 L217.0,144.7 L217.7,144.9 L218.3,145.0 L219.0,145.2 L219.7,145.3 L220.4,145.4 L221.1,145.6 L221.8,145.7 L222.5,145.8 L223.2,146.0 L223.9,146.1 L224.6,146.2 L225.3,146.4 L226.0,146.5 L226.7,146.6 L227.4,146.7 L228.1,146.9 L228.8,147.0 L229.5,147.1 L230.2,147.2 L230.9,147.4 L231.5,147.5 L232.2,147.6 L232.9,147.7 L233.6,147.8 L234.3,148.0 L235.0,148.1 L235.7,148.2 L236.4,148.3 L237.1,148.4 L237.8,148.5 L238.5,148.6 L239.2,148.7 L239.9,148.9 L240.6,149.0 L241.3,149.1 L242.0,149.2 L242.7,149.3 L243.4,149.4 L244.1,149.5 L244.8,149.6 L245.4,149.7 L246.1,149.8 L246.8,149.9 L247.5,150.0 L248.2,150.1 L248.9,150.2 L249.6,150.3 L250.3,150.4 L251.0,150.5 L251.7,150.6 L252.4,150.7 L253.1,150.8 L253.8,150.9 L254.5,151.0 L255.2,151.1 L255.9,151.2 L256.6,151.3 L257.3,151.4 L258.0,151.5 L258.7,151.6 L259.3,151.7 L260.0,151.7 L260.7,151.8 L261.4,151.9 L262.1,152.0 L262.8,152.1 L263.5,152.2 L264.2,152.3 L264.9,152.3 L265.6,152.4 L266.3,152.5 L267.0,152.6 L267.7,152.7 L268.4,152.8 L269.1,152.8 L269.8,152.9 L270.5,153.0 L271.2,153.1 L271.9,153.2 L272.6,153.2 L273.2,153.3 L273.9,153.4 L274.6,153.5 L275.3,153.6 L276.0,153.6 L276.7,153.7 L277.4,153.8 L278.1,153.9 L278.8,153.9 L279.5,154.0 L280.2,154.1 L280.9,154.1 L281.6,154.2 L282.3,154.3 L283.0,154.4 L283.7,154.4 L284.4,154.5 L285.1,154.6 L285.8,154.6 L286.5,154.7 L287.1,154.8 L287.8,154.8 L288.5,154.9 L289.2,155.0 L289.9,155.0 L290.6,155.1 L291.3,155.2 L292.0,155.2 L292.7,155.3 L293.4,155.4 L294.1,155.4 L294.8,155.5 L295.5,155.5 L296.2,155.6 L296.9,155.7 L297.6,155.7 L298.3,155.8 L299.0,155.8 L299.7,155.9 L300.4,156.0 L301.1,156.0 L301.7,156.1 L302.4,156.1 L303.1,156.2 L303.8,156.2 L304.5,156.3 L305.2,156.4 L305.9,156.4 L306.6,156.5 L307.3,156.5 L308.0,156.6" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+<circle cx="96.2" cy="95.8" r="3" fill="var(--accent)"/>
+<text x="102.2" y="89.8" class="svg-label" font-size="10" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">5 小時 → 100</text>
+<circle cx="162.4" cy="129.9" r="3" fill="var(--b2)"/>
+<text x="168.4" y="121.9" class="svg-label" font-size="10" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">10 小時 → 50</text>
+
+</svg>
+        <figcaption>咖啡因殘留量：每 5 小時減半，曲線越來越平但不碰到 0</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-compare">
+    <div class="part-kicker"><b>比較大小與解不等式</b></div>
+    <h2>單調函數：比指數，就是比函數值</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>因為 aˣ 是嚴格單調的，「函數值的大小」和「指數的大小」可以互相轉換：</p>
+      <div class="formula">
+        <div class="formula-title">單調性的應用</div>
+        <span class="big">a &gt; 1：aᵐ &gt; aⁿ ⟺ m &gt; n</span>
+        <br><span class="big">0 &lt; a &lt; 1：aᵐ &gt; aⁿ ⟺ m &lt; n</span>（不等號反向）
+        <br>任何底數：aᵐ = aⁿ ⟺ m = n
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：睡前要降到多少？</span>
+      <p class="quote">營養師建議睡前體內咖啡因最好低於 50 毫克。筱葳喝下 200 毫克後，至少要等幾小時？</p>
+      <div class="calc">200 × (1／2)^(t／5) ≤ 50
+(1／2)^(t／5) ≤ 1／4 = (1／2)²
+
+底數 1／2 &lt; 1，不等號反向：t／5 ≥ 2 ⟹ t ≥ 10
+
+∴ 至少要 10 小時。下午 4 點喝，凌晨 2 點後才降到 50 毫克以下</div>
+      <p class="note">解指數不等式的關鍵一步：<b>化成同底數</b>，再依底數大於或小於 1 決定不等號方向。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：化同底比較</span>
+      <p class="quote">比較 √2、∛4、8^0.15 的大小。</p>
+      <div class="calc">√2 = 2^0.5
+∛4 = (2²)^(1／3) = 2^(2／3) ≈ 2^0.667
+8^0.15 = (2³)^0.15 = 2^0.45
+
+底數 2 &gt; 1，指數越大越大：0.45 &lt; 0.5 &lt; 0.667
+∴ 8^0.15 &lt; √2 &lt; ∛4</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：換元解方程式</span>
+      <p class="quote">解 4ˣ − 3・2ˣ − 4 = 0。</p>
+      <div class="calc">4ˣ = (2ˣ)²，令 t = 2ˣ（注意 t &gt; 0）
+t² − 3t − 4 = 0 ⟹ (t − 4)(t + 1) = 0 ⟹ t = 4 或 t = −1（不合，因 t &gt; 0）
+
+2ˣ = 4 = 2² ⟹ x = 2</div>
+      <p class="note">換元之後一定要記得 2ˣ &gt; 0，負的解要捨去——這是值域「y &gt; 0」的直接應用。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：2-1 指數函數及其圖形</h2>
+    <p class="lede-line">指數函數的兩件事最常用：圖形永遠在 x 軸上方，以及「嚴格單調」讓我們可以把比大小、解不等式轉成比指數。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>定義</td><td class="f">f(x) = aˣ，a &gt; 0 且 a ≠ 1</td></tr>
+          <tr><td>圖形</td><td class="f">過 (0, 1)；值域 y &gt; 0；x 軸為漸近線</td></tr>
+          <tr><td>單調性</td><td class="f">a &gt; 1 遞增；0 &lt; a &lt; 1 遞減</td></tr>
+          <tr><td>對稱</td><td class="f">y = aˣ 與 y = (1／a)ˣ 對稱於 y 軸</td></tr>
+          <tr><td>解題技巧</td><td class="f">化同底；底數小於 1 時不等號反向；換元 t = aˣ 時 t &gt; 0</td></tr>
+          <tr><td>衰減模型</td><td class="f">剩餘量 = 初始量 × (1／2)^(t／半衰期)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">比較大小</span></div>
+        <p>比較 (1／3)^(−2)、(1／3)^0.5、1 的大小。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">1 = (1／3)⁰
+底數 1／3 &lt; 1，指數越大函數值越小：−2 &lt; 0 &lt; 0.5
+∴ (1／3)^0.5 &lt; 1 &lt; (1／3)^(−2)（也就是 0.577… &lt; 1 &lt; 9）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">不等式</span></div>
+        <p>解不等式 (1／3)ˣ &gt; 9。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">9 = (1／3)^(−2)
+(1／3)ˣ &gt; (1／3)^(−2)，底數小於 1 不等號反向 ⟹ x &lt; −2</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">方程式</span></div>
+        <p>解 9ˣ − 10・3ˣ + 9 = 0。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">令 t = 3ˣ &gt; 0：t² − 10t + 9 = 0 ⟹ t = 1 或 t = 9
+3ˣ = 1 ⟹ x = 0；3ˣ = 9 ⟹ x = 2</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">衰減模型</span></div>
+        <p>某藥物在血液中的濃度每 6 小時減半。服藥後濃度為 80 單位，經過幾小時會降到 10 單位？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">80 × (1／2)^(t／6) = 10 ⟹ (1／2)^(t／6) = 1／8 = (1／2)³
+t／6 = 3 ⟹ t = 18（小時）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">圖形</span></div>
+        <p>y = 2ˣ 的圖形往右平移 1、往下平移 3，得到 y = 2^(x−1) − 3。這個新圖形的漸近線是什麼？和 y 軸交在哪一點？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">原漸近線 y = 0 往下移 3 ⟹ 新漸近線 y = −3
+x = 0：y = 2^(−1) − 3 = −5／2 ⟹ 交點 (0, −5／2)</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：反過來問「要幾小時」</h2>
+      <p>咖啡因從 200 降到 50 剛好是兩次減半，答案很漂亮。但如果問「降到 30 毫克要幾小時」，就得解 (1／2)^(t／5) = 0.15——沒辦法化成同底數。這種「已知結果、求指數」的問題，需要對數。數學1只學過以 10 為底的常用對數；在 2-2「對數與對數律」，我們會把底數推廣到任何正數，並學會換底與對數律。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第三冊・第二章</span>
+    <span>2-1 指數函數及其圖形</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

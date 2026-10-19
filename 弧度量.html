@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-1 弧度量｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第三冊・第一章 三角函數・1-1</span>
+    <h1>弧度量</h1>
+    <p class="sub">升上高二，筱葳加入了單車社。社長說：「騎車時真正重要的不是輪子轉了幾度，而是輪子往前滾了多遠。」這一節從車輪出發，認識用「長度」來量角度的新單位——弧度，學會度與弧度的換算，並用它輕鬆算出扇形的弧長與面積。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>到目前為止，我們都用「度」來量角：一圈切成360等份，每份叫1°。這個切法來自古代天文曆法，和圓的大小、長度完全無關。可是只要碰到「轉動」與「距離」的關係——車輪滾多遠、時鐘指針掃過多少面積——用度來算就會冒出一堆 π／180。數學家於是設計了另一種量角的方式：直接用「弧長是半徑的幾倍」來描述角度。這就是<b>弧度量</b>，也是接下來整章三角函數的標準語言。</p>
+    <ul class="toc">
+      <li><a href="#topic-radian"><b>1</b>弧度的定義</a></li>
+      <li><a href="#topic-convert"><b>2</b>度與弧度的換算</a></li>
+      <li><a href="#topic-sector"><b>3</b>扇形的弧長與面積</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-radian">
+    <div class="part-kicker"><b>弧度的定義</b></div>
+    <h2>用「弧長是半徑的幾倍」來量角</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">筱葳的車輪半徑是30公分。她在輪框上貼了一小片反光貼紙，牽著車慢慢往前走，發現：貼紙沿著輪框走過的弧長，剛好等於車子前進的距離。那麼輪子轉了「多少角度」，車子才會前進恰好一個半徑（30公分）？</p>
+      <p>車子前進30公分，代表貼紙在輪框上走過的弧長也是30公分，剛好等於半徑。數學上就把這樣的角度規定為<b>1弧度</b>（1 radian，簡寫 1 rad）。</p>
+      <div class="formula">
+        <div class="formula-title">弧度的定義</div>
+        <span class="big">在半徑為 r 的圓上，弧長為 r 的弧所對的圓心角 = 1 弧度</span>
+        <br>更一般地：圓心角的弧度數 θ = 弧長 ÷ 半徑 = s／r
+      </div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 200" role="img" aria-label="半徑為 r 的圓，弧長等於半徑的那段弧所對的圓心角是 1 弧度">
+          <circle cx="120" cy="110" r="75" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+          <line x1="120" y1="110" x2="195" y2="110" stroke="var(--ink)" stroke-width="1.5"/>
+          <line x1="120" y1="110" x2="160.5" y2="46.9" stroke="var(--ink)" stroke-width="1.5"/>
+          <path d="M195,110 A75,75 0 0 0 160.5,46.9" fill="none" stroke="var(--accent)" stroke-width="3.5"/>
+          <path d="M142,110 A22,22 0 0 0 131.9,91.5" fill="none" stroke="var(--b2)" stroke-width="2"/>
+          <text x="148" y="102" class="svg-label" fill="var(--b2)">1 rad</text>
+          <text x="150" y="126" class="svg-label" fill="var(--ink-muted)">r</text>
+          <text x="125" y="72" class="svg-label" fill="var(--ink-muted)">r</text>
+          <text x="190" y="72" class="svg-label" fill="var(--accent)">弧長 = r</text>
+          <circle cx="120" cy="110" r="2.5" fill="var(--ink)"/>
+        </svg>
+        <figcaption>弧長恰好等於半徑時，圓心角就是 1 弧度（約 57.3°）</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律：一整圈是幾弧度？</span>
+      <p>輪子轉一整圈，貼紙走過的弧長是整個圓周 2πr。用「弧長 ÷ 半徑」算弧度：</p>
+      <div class="calc">一整圈的弧度 = 2πr ÷ r = 2π
+
+∴ 360° = 2π 弧度，也就是 180° = π 弧度</div>
+      <p class="note">弧度數只看「弧長和半徑的比例」，跟圓有多大無關。不管是單車輪、摩天輪還是硬幣，轉一圈都是 2π 弧度。這正是弧度比度「更自然」的地方：它本身就是兩個長度的比值，沒有人為的360。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-convert">
+    <div class="part-kicker"><b>度與弧度的換算</b></div>
+    <h2>記住一句話：π 弧度 = 180°</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>由 180° = π 弧度，兩邊同除就得到單位換算：</p>
+      <div class="formula">
+        <div class="formula-title">換算公式</div>
+        <span class="big">1° = π／180 弧度　　1 弧度 = (180／π)° ≈ 57.3°</span>
+        <br>度 → 弧度：乘以 π／180　　弧度 → 度：乘以 180／π
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <p class="quote">社團練習繞操場，彎道處車頭總共轉了150°；下坡時前輪轉了2.5弧度。把它們分別換成另一種單位。</p>
+      <div class="calc">150° = 150 × π／180 = 5π／6（弧度）
+
+2.5 弧度 = 2.5 × 180／π ≈ 2.5 × 57.30 ≈ 143.2°</div>
+      <p class="note">習慣上，<b>角度後面沒有寫「°」時就代表弧度</b>。例如 sin(π／6) 指的是 sin30°，等於 1／2；而 sin2 指的是「2弧度」的正弦，不是 sin2°。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">常用角對照表</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>度</th><th>弧度</th><th>度</th><th>弧度</th></tr></thead>
+          <tbody>
+            <tr><td>0°</td><td class="f">0</td><td>120°</td><td class="f">2π／3</td></tr>
+            <tr><td>30°</td><td class="f">π／6</td><td>135°</td><td class="f">3π／4</td></tr>
+            <tr><td>45°</td><td class="f">π／4</td><td>150°</td><td class="f">5π／6</td></tr>
+            <tr><td>60°</td><td class="f">π／3</td><td>180°</td><td class="f">π</td></tr>
+            <tr><td>90°</td><td class="f">π／2</td><td>270°</td><td class="f">3π／2</td></tr>
+            <tr><td></td><td class="f"></td><td>360°</td><td class="f">2π</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">不用硬背整張表：只要記住 π／6、π／4、π／3、π／2 四個，其餘都是它們的倍數。例如 135° = 3 × 45° = 3π／4。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-sector">
+    <div class="part-kicker"><b>扇形的弧長與面積</b></div>
+    <h2>用弧度算扇形，公式短到只剩一行</h2>
+
+    <div class="step">
+      <span class="step-tag">情境：弧長</span>
+      <p class="quote">筱葳的車輪半徑30公分。下坡時前輪轉了 3π 弧度（一圈半），車子前進了多少公分？</p>
+      <p>由弧度的定義 θ = s／r，移項就得到弧長公式：</p>
+      <div class="formula">
+        <div class="formula-title">扇形弧長（θ 為弧度）</div>
+        <span class="big">s = rθ</span>
+      </div>
+      <div class="calc">s = 30 × 3π = 90π ≈ 282.7（公分）</div>
+      <p class="note">如果用度來算，公式會變成 s = 2πr × (θ°／360°)，多了一個比例要處理；弧度直接把這個比例「吃掉」了。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律：扇形面積</span>
+      <p>整個圓（圓心角 2π）的面積是 πr²。扇形面積和圓心角成正比，所以圓心角為 θ 的扇形面積是：</p>
+      <div class="calc">扇形面積 = πr² × (θ／2π) = (1／2)r²θ</div>
+      <div class="formula">
+        <div class="formula-title">扇形面積（θ 為弧度）</div>
+        <span class="big">A = (1／2)r²θ = (1／2)rs</span>
+      </div>
+      <p class="note">(1／2)rs 這個寫法很好記：把扇形想像成一個「底是弧長 s、高是半徑 r」的彎曲三角形，面積就是 底×高÷2。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：雨刷掃過的面積</span>
+      <p class="quote">雨天騎完車，筱葳坐上爸爸的車。她盯著擋風玻璃上的雨刷：雨刷臂長50公分，刷片從離轉軸10公分處一路裝到50公分處，每次來回擺動 120°。刷片每擺一次，能擦乾淨多大面積的玻璃？</p>
+      <p>擦到的區域是「大扇形挖掉小扇形」的環狀扇形。先把 120° 換成 2π／3 弧度：</p>
+      <div class="calc">大扇形面積 = (1／2) × 50² × (2π／3) = 2500π／3
+小扇形面積 = (1／2) × 10² × (2π／3) = 100π／3
+
+擦乾淨的面積 = 2500π／3 − 100π／3 = 800π ≈ 2513（平方公分）</div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 280 180" role="img" aria-label="雨刷擦過的區域：半徑 50 的扇形挖掉半徑 10 的扇形，圓心角 120 度">
+          <line x1="20" y1="165" x2="260" y2="165" stroke="var(--line)" stroke-width="1"/>
+          <path d="M157.32,155 L226.6,115 A100,100 0 0 0 53.4,115 L122.68,155 A20,20 0 0 1 157.32,155 Z" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          <line x1="140" y1="165" x2="157.32" y2="155" stroke="var(--ink)" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <line x1="140" y1="165" x2="122.68" y2="155" stroke="var(--ink)" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <circle cx="140" cy="165" r="3" fill="var(--ink)"/>
+          <text x="62" y="178" class="svg-label" fill="var(--ink-muted)">轉軸</text>
+          <text x="224" y="98" class="svg-label" fill="var(--accent)">50</text>
+          <text x="156" y="176" class="svg-label" fill="var(--ink-muted)">10</text>
+          <text x="126" y="135" class="svg-label" fill="var(--b2)">120°</text>
+        </svg>
+        <figcaption>環狀扇形面積 = 大扇形 − 小扇形 = (1／2)(R² − r²)θ</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：1-1 弧度量</h2>
+    <p class="lede-line">弧度把「角度」和「長度」接在一起：θ = s／r。之後畫三角函數圖形、算週期，橫軸用的都是弧度。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>弧度的定義</td><td class="f">θ = s／r（弧長 ÷ 半徑）；弧長等於半徑時 θ = 1 弧度</td></tr>
+          <tr><td>度與弧度</td><td class="f">π 弧度 = 180°；1 弧度 ≈ 57.3°</td></tr>
+          <tr><td>扇形弧長</td><td class="f">s = rθ</td></tr>
+          <tr><td>扇形面積</td><td class="f">A = (1／2)r²θ = (1／2)rs</td></tr>
+          <tr><td>扇形周長</td><td class="f">周長 = 2r + s（兩條半徑加一段弧）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">換算</span></div>
+        <p>把 225° 換成弧度，把 7π／12 換成度。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">225° = 225 × π／180 = 5π／4
+7π／12 = (7π／12) × (180／π) = 105°</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">弧長與面積</span></div>
+        <p>扇形半徑 6，圓心角 2π／3，求弧長與面積。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">弧長 s = 6 × (2π／3) = 4π
+面積 A = (1／2) × 6² × (2π／3) = 12π</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">生活應用</span></div>
+        <p>時鐘的分針長 12 公分。從 3:00 走到 3:20，分針尖端走了多遠？分針掃過的面積是多少？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">20 分鐘 = 1／3 圈，圓心角 = 2π／3
+
+弧長 = 12 × (2π／3) = 8π ≈ 25.1（公分）
+面積 = (1／2) × 12² × (2π／3) = 48π ≈ 150.8（平方公分）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">求最大值</span></div>
+        <p>用一條長 20 公尺的圍籬圍出一塊扇形花圃（圍籬包含兩條半徑和一段弧）。半徑取多少時花圃面積最大？此時圓心角是幾弧度？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">設半徑 r，弧長 s，則 2r + s = 20，s = 20 − 2r
+
+A = (1／2)rs = (1／2)r(20 − 2r) = r(10 − r) = −(r − 5)² + 25
+
+r = 5 時面積最大，為 25 平方公尺
+此時 s = 10，θ = s／r = 10／5 = 2（弧度）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">觀念</span></div>
+        <p>sin1 與 sin1° 哪一個比較大？說明理由。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">sin1 指 1 弧度 ≈ 57.3° 的正弦，sin1 ≈ sin57.3° ≈ 0.84
+sin1° ≈ 0.017
+
+∴ sin1 &gt; sin1°（在 0°～90° 間，角越大正弦越大）</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：讓角度變成函數的「輸入」</h2>
+      <p>有了弧度，角度就變成一個普通的實數：π／6、1、2.5、100 都可以。這讓我們能把 sinθ、cosθ 看成「輸入一個實數、輸出一個數」的函數，並且畫在坐標平面上。在 1-2「三角函數的圖形」，筱葳會在校外教學搭上摩天輪，記錄座艙高度隨時間的變化，親眼看到正弦曲線一圈一圈重複出現。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第三冊・第一章</span>
+    <span>1-1 弧度量</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

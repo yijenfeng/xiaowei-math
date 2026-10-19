@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-1 平面向量的表示法｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第三冊・第三章 平面向量・3-1</span>
+    <h1>平面向量的表示法</h1>
+    <p class="sub">測量社今年的定向越野升級了：地圖畫在坐標方格上，每張提示卡只寫「往哪個方向、走多遠」。筱葳發現，同一張提示卡從不同起點出發，走出來的路線形狀完全一樣。這一節用這個觀察認識向量——一個同時帶有「大小」與「方向」的量，學會用坐標表示它、算它的長度，並找出單位向量。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>溫度、身高、價錢只要一個數字就說得清楚，這類量叫<b>純量</b>。但「走 500 公尺」這句話沒說完——往哪走？位移、速度、力這類量同時需要大小與方向，叫做<b>向量</b>。向量是第三章的主角，之後的內積、面積、甚至 4A 的空間向量與矩陣，都建立在這一節的表示法上。</p>
+    <ul class="toc">
+      <li><a href="#topic-def"><b>1</b>有向線段與向量</a></li>
+      <li><a href="#topic-coord"><b>2</b>向量的坐標表示</a></li>
+      <li><a href="#topic-length"><b>3</b>向量的長度與方向</a></li>
+      <li><a href="#topic-unit"><b>4</b>單位向量</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-def">
+    <div class="part-kicker"><b>有向線段與向量</b></div>
+    <h2>只看「走多遠、往哪走」，不管從哪出發</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">提示卡寫著：「往右 3 格、往上 4 格」。筱葳從 A 點出發走到 B 點，學妹從 C 點出發走到 D 點。兩人的路線一樣嗎？</p>
+      <p>從 A 指向 B 的箭頭稱為<b>有向線段</b>，A 是始點、B 是終點，記作 <span class="vec">AB</span>。兩人起點不同，但箭頭的長度、方向完全相同，數學上把它們看成<b>同一個向量</b>：</p>
+      <div class="formula">
+        <div class="formula-title">相等向量</div>
+        <span class="big"><span class="vec">AB</span> = <span class="vec">CD</span> ⟺ 兩者長度相等且方向相同</span>
+        <br>向量可以自由平移，只要不改變長度和方向，就還是同一個向量
+      </div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 368 300" role="img" aria-label="向量 AB 從 (1,2) 到 (4,6)，向量 CD 從 (5,0) 到 (8,4)，兩者長度方向相同，是相等向量">
+<defs><marker id="ah1-0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="ah1-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--b2)"/></marker></defs>
+<line x1="14.0" y1="286.0" x2="14.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="48.0" y1="286.0" x2="48.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="82.0" y1="286.0" x2="82.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="116.0" y1="286.0" x2="116.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="150.0" y1="286.0" x2="150.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="184.0" y1="286.0" x2="184.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="218.0" y1="286.0" x2="218.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="252.0" y1="286.0" x2="252.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="286.0" y1="286.0" x2="286.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="320.0" y1="286.0" x2="320.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="354.0" y1="286.0" x2="354.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="286.0" x2="354.0" y2="286.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="252.0" x2="354.0" y2="252.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="218.0" x2="354.0" y2="218.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="184.0" x2="354.0" y2="184.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="150.0" x2="354.0" y2="150.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="116.0" x2="354.0" y2="116.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="82.0" x2="354.0" y2="82.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="48.0" x2="354.0" y2="48.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="14.0" x2="354.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="252.0" x2="354.0" y2="252.0" stroke="var(--ink-muted)" stroke-width="1.1"/>
+<line x1="48.0" y1="286.0" x2="48.0" y2="14.0" stroke="var(--ink-muted)" stroke-width="1.1"/>
+<line x1="82.0" y1="184.0" x2="184.0" y2="184.0" stroke="var(--ink-muted)" stroke-width="1.2" stroke-dasharray="3,3"/>
+<line x1="184.0" y1="184.0" x2="184.0" y2="48.0" stroke="var(--ink-muted)" stroke-width="1.2" stroke-dasharray="3,3"/>
+<line x1="82.0" y1="184.0" x2="184.0" y2="48.0" stroke="var(--accent)" stroke-width="2.4" marker-end="url(#ah1-0)"/>
+<line x1="218.0" y1="252.0" x2="320.0" y2="116.0" stroke="var(--b2)" stroke-width="2.4" marker-end="url(#ah1-1)"/>
+<circle cx="82.0" cy="184.0" r="3" fill="var(--accent)"/>
+<text x="24.0" y="188.0" class="svg-label" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">A(1, 2)</text>
+<circle cx="184.0" cy="48.0" r="3" fill="var(--accent)"/>
+<text x="192.0" y="52.0" class="svg-label" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">B(4, 6)</text>
+<circle cx="218.0" cy="252.0" r="3" fill="var(--b2)"/>
+<text x="224.0" y="266.0" class="svg-label" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">C(5, 0)</text>
+<circle cx="320.0" cy="116.0" r="3" fill="var(--b2)"/>
+<text x="296.0" y="106.0" class="svg-label" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">D(8, 4)</text>
+<text x="133.0" y="199.3" text-anchor="middle" class="svg-label" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">右 3</text>
+<text x="189.1" y="116.0" text-anchor="start" class="svg-label" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">上 4</text>
+</svg>
+        <figcaption>同一張提示卡「右 3、上 4」，從 A 或從 C 出發都是同一個向量</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">幾個特殊向量</span>
+      <div class="formula">
+        <div class="formula-title">名詞整理</div>
+        向量的長度（大小）記作 |<span class="vec">AB</span>|
+        <br><b>零向量</b> <span class="vec">0</span>：始點與終點重合，長度 0，方向不定
+        <br><b>反向量</b>：<span class="vec">BA</span> = −<span class="vec">AB</span>，長度相同、方向相反
+        <br>也常用小寫字母表示向量，例如 <span class="vec">a</span>、<span class="vec">v</span>
+      </div>
+      <p class="note">從 A 走到 B 再從 B 走回 A，等於沒動：<span class="vec">AB</span> + <span class="vec">BA</span> = <span class="vec">0</span>。下一節的向量加法會正式定義這個「接著走」。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-coord">
+    <div class="part-kicker"><b>向量的坐標表示</b></div>
+    <h2>終點減始點，就是向量的坐標</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>「右 3、上 4」其實就是兩個數字：x 方向變化 3、y 方向變化 4。把向量寫成坐標 (3, 4)：</p>
+      <div class="calc">A(1, 2)，B(4, 6)：<span class="vec">AB</span> = (4 − 1, 6 − 2) = (3, 4)
+C(5, 0)，D(8, 4)：<span class="vec">CD</span> = (8 − 5, 4 − 0) = (3, 4)
+
+坐標相同 ⟺ 兩向量相等</div>
+      <div class="formula">
+        <div class="formula-title">向量的坐標</div>
+        <span class="big">A(x₁, y₁)，B(x₂, y₂) ⟹ <span class="vec">AB</span> = (x₂ − x₁, y₂ − y₁)</span>
+      </div>
+      <p class="note">注意順序是「終點減始點」。<span class="vec">BA</span> = (x₁ − x₂, y₁ − y₂) = (−3, −4)，剛好是反向量。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">位置向量</span>
+      <p>以原點 O 為始點的向量 <span class="vec">OP</span> 稱為 P 的<b>位置向量</b>，它的坐標就是 P 點坐標。所以任一向量都能寫成「兩個位置向量相減」：</p>
+      <div class="formula">
+        <span class="big"><span class="vec">AB</span> = <span class="vec">OB</span> − <span class="vec">OA</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-length">
+    <div class="part-kicker"><b>向量的長度與方向</b></div>
+    <h2>長度用畢氏定理，方向用三角函數</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>向量 (3, 4) 的水平、垂直分量和箭頭本身構成直角三角形，長度由畢氏定理求得：</p>
+      <div class="formula">
+        <div class="formula-title">向量的長度</div>
+        <span class="big"><span class="vec">v</span> = (x, y) ⟹ |<span class="vec">v</span>| = √<span class="radicand">(x² + y²)</span></span>
+      </div>
+      <div class="calc">|(3, 4)| = √(9 + 16) = 5（格）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：只給方向和距離</span>
+      <p class="quote">下一張提示卡寫：「朝東偏北 30°，走 6 格。」換成坐標要怎麼走？（東為 x 軸正向、北為 y 軸正向）</p>
+      <p>這就是數學2學過的極坐標轉直角坐標：長度 r、方向角 θ 的向量是：</p>
+      <div class="formula">
+        <div class="formula-title">由長度與方向角寫出向量</div>
+        <span class="big"><span class="vec">v</span> = (r cosθ, r sinθ)</span>
+      </div>
+      <div class="calc"><span class="vec">v</span> = (6cos30°, 6sin30°) = (3√3, 3) ≈ (5.20, 3)</div>
+      <p class="note">反過來，已知 <span class="vec">v</span> = (x, y)，方向角 θ 滿足 cosθ = x／|<span class="vec">v</span>|、sinθ = y／|<span class="vec">v</span>|。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-unit">
+    <div class="part-kicker"><b>單位向量</b></div>
+    <h2>只保留方向，長度變成 1</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">社長想把「右 3、上 4」這個方向印成指北針上的標準刻度，規定刻度的長度一律是 1。這個方向的長度 1 向量是什麼？</p>
+      <p>長度是 5，要變成 1，就把每個分量都除以 5：</p>
+      <div class="calc">(3, 4) ÷ 5 = (3／5, 4／5)
+檢查長度：√((3／5)² + (4／5)²) = √(25／25) = 1 ✓</div>
+      <div class="formula">
+        <div class="formula-title">單位向量</div>
+        <span class="big">與 <span class="vec">v</span> 同方向的單位向量 = <span class="vec">v</span>／|<span class="vec">v</span>|</span>
+        <br>與 <span class="vec">v</span> 反方向的單位向量 = −<span class="vec">v</span>／|<span class="vec">v</span>|
+        <br>方向角為 θ 的單位向量 = (cosθ, sinθ)
+      </div>
+      <p class="note">單位向量 (cosθ, sinθ) 剛好就是單位圓上的點——第一章的三角函數和這一章的向量在這裡接上了。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：3-1 平面向量的表示法</h2>
+    <p class="lede-line">向量 = 大小 + 方向。坐標表示把它變成一對數字，之後所有運算都在這對數字上進行。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>相等向量</td><td class="f">長度相等且方向相同（與始點位置無關）</td></tr>
+          <tr><td>坐標表示</td><td class="f"><span class="vec">AB</span> = (x₂ − x₁, y₂ − y₁) = <span class="vec">OB</span> − <span class="vec">OA</span></td></tr>
+          <tr><td>長度</td><td class="f">|(x, y)| = √(x² + y²)</td></tr>
+          <tr><td>由長度與方向</td><td class="f">(r cosθ, r sinθ)</td></tr>
+          <tr><td>單位向量</td><td class="f">±<span class="vec">v</span>／|<span class="vec">v</span>|；方向角 θ 時為 (cosθ, sinθ)</td></tr>
+          <tr><td>反向量</td><td class="f"><span class="vec">BA</span> = −<span class="vec">AB</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">坐標與長度</span></div>
+        <p>A(−2, 5)，B(4, −3)，求 <span class="vec">AB</span> 與 |<span class="vec">AB</span>|。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc"><span class="vec">AB</span> = (4 − (−2), −3 − 5) = (6, −8)
+|<span class="vec">AB</span>| = √(36 + 64) = 10</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">相等向量</span></div>
+        <p>A(1, 3)，B(4, 7)，C(−2, 0)。若 <span class="vec">AB</span> = <span class="vec">CD</span>，求 D 點坐標。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc"><span class="vec">AB</span> = (3, 4)
+設 D(x, y)：(x + 2, y − 0) = (3, 4) ⟹ D(1, 4)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">單位向量</span></div>
+        <p>求與 <span class="vec">v</span> = (5, −12) 同方向的單位向量，以及與它反方向、長度為 26 的向量。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">|<span class="vec">v</span>| = 13，同方向單位向量 = (5／13, −12／13)
+反方向、長度 26：−26 × (5／13, −12／13) = (−10, 24)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">方向角</span></div>
+        <p>向量長度為 4，方向角為 135°，寫出它的坐標。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">(4cos135°, 4sin135°) = (−2√2, 2√2)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">平行四邊形</span></div>
+        <p>A(0, 0)、B(5, 1)、C(7, 4) 三點，求 D 點使 ABCD（依序）為平行四邊形。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">平行四邊形 ⟹ <span class="vec">AD</span> = <span class="vec">BC</span> = (7 − 5, 4 − 1) = (2, 3)
+D = A + (2, 3) = (2, 3)</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：把向量加起來</h2>
+      <p>定向越野的路線是一張接一張提示卡走出來的：先走一段，再走一段。兩段走完的「總位移」是什麼？在 3-2「平面向量的運算」，我們會定義向量的加法、減法與係數積，學會判斷兩向量是否平行，並用向量重新推出數學1的分點公式。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第三冊・第三章</span>
+    <span>3-1 平面向量的表示法</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
