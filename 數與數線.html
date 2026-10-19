@@ -18,7 +18,7 @@
     --accent-soft:#DEE9F6;
     --a2:#6E9FD8;      --a2-ink:#0F2038;
     --ab:#4E9C8C;      --ab-ink:#0B241F;
-    --b2:#E0973C;      --b2-ink:#3A2306;
+    --b2:#E0973C;      --b2-ink:#3A2306; --b2-text:#A35F14; --ab-text:#2F7568;
     --grid-line: rgba(42,93,168,0.07);
     --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
   }
@@ -35,7 +35,7 @@
       --accent-soft:#20304A;
       --a2:#3E6DA6;      --a2-ink:#EAF1FB;
       --ab:#3E8776;      --ab-ink:#E7F5F1;
-      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --b2:#C97E2E;      --b2-ink:#2A1A05; --b2-text:#E0A55A; --ab-text:#6CC0AD;
       --grid-line: rgba(134,174,230,0.07);
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
     }
@@ -52,7 +52,7 @@
     --accent-soft:#20304A;
     --a2:#3E6DA6;      --a2-ink:#EAF1FB;
     --ab:#3E8776;      --ab-ink:#E7F5F1;
-    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --b2:#C97E2E;      --b2-ink:#2A1A05; --b2-text:#E0A55A; --ab-text:#6CC0AD;
     --grid-line: rgba(134,174,230,0.07);
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
   }
@@ -530,7 +530,7 @@
           <text x="112" y="150" text-anchor="middle" class="svg-label" fill="currentColor">循環小數</text>
 
           <rect x="208" y="45" width="164" height="140" rx="4" fill="var(--b2)" fill-opacity="0.22"/>
-          <text x="290" y="70" text-anchor="middle" class="svg-label-lg" fill="var(--b2-ink)">無理數</text>
+          <text x="290" y="70" text-anchor="middle" class="svg-label-lg" fill="var(--ink)">無理數</text>
           <text x="290" y="100" text-anchor="middle" class="svg-label" fill="currentColor">√2 、 √3</text>
           <text x="290" y="125" text-anchor="middle" class="svg-label" fill="currentColor">π（圓周率）</text>
           <text x="290" y="150" text-anchor="middle" class="svg-label" fill="currentColor">不循環的無限小數</text>
@@ -599,7 +599,7 @@
           <line x1="90" y1="47" x2="90" y2="63" stroke="var(--accent)" stroke-width="2.2"/>
           <text x="90" y="86" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">A（−2）筱葳家</text>
           <line x1="210" y1="47" x2="210" y2="63" stroke="var(--b2)" stroke-width="2.2"/>
-          <text x="210" y="26" text-anchor="middle" class="svg-label-lg" fill="var(--b2)">P（會合點）</text>
+          <text x="210" y="26" text-anchor="middle" class="svg-label-lg" fill="var(--b2-text)">P（會合點）</text>
           <line x1="330" y1="47" x2="330" y2="63" stroke="var(--accent)" stroke-width="2.2"/>
           <text x="330" y="86" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">B（4）朋友家</text>
           <path d="M90,55 Q150,30 210,55" fill="none" stroke="var(--ab)" stroke-width="1.5" stroke-dasharray="3 3"/>
@@ -702,7 +702,7 @@
           <line x1="30" y1="30" x2="230" y2="30" stroke="var(--b2)" stroke-width="6"/>
           <path d="M40,24 L26,30 L40,36 Z" fill="var(--b2)"/>
           <circle cx="230" cy="30" r="5" fill="var(--surface)" stroke="var(--b2)" stroke-width="2.2"/>
-          <text x="230" y="66" text-anchor="middle" class="svg-label-lg" fill="var(--b2)">3</text>
+          <text x="230" y="66" text-anchor="middle" class="svg-label-lg" fill="var(--b2-text)">3</text>
           <text x="120" y="16" text-anchor="middle" class="svg-label" fill="var(--b2)">(−∞, 3)　免費入場</text>
         </svg>
         <figcaption>空心圓圈＝不包含端點（3 歲當天已經滿 3 歲，不算免費了）。</figcaption>
@@ -756,7 +756,7 @@
           <line x1="100" y1="44" x2="100" y2="116" stroke="var(--ab)" stroke-width="1.5"/>
           <line x1="94" y1="44" x2="106" y2="44" stroke="var(--ab)" stroke-width="1.5"/>
           <line x1="94" y1="116" x2="106" y2="116" stroke="var(--ab)" stroke-width="1.5"/>
-          <text x="70" y="83" text-anchor="middle" class="svg-label" fill="var(--ab-ink)" style="fill:var(--ab)">距離=4</text>
+          <text x="70" y="83" text-anchor="middle" class="svg-label" style="fill:var(--ab-text)">距離=4</text>
 
           <line x1="180" y1="116" x2="180" y2="206" stroke="var(--b2)" stroke-width="1.5"/>
           <line x1="174" y1="116" x2="186" y2="116" stroke="var(--b2)" stroke-width="1.5"/>

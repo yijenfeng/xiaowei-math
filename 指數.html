@@ -18,7 +18,7 @@
     --accent-soft:#DEE9F6;
     --a2:#6E9FD8;      --a2-ink:#0F2038;
     --ab:#4E9C8C;      --ab-ink:#0B241F;
-    --b2:#E0973C;      --b2-ink:#3A2306;
+    --b2:#E0973C;      --b2-ink:#3A2306; --b2-text:#A35F14; --ab-text:#2F7568;
     --grid-line: rgba(42,93,168,0.07);
     --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
   }
@@ -35,7 +35,7 @@
       --accent-soft:#20304A;
       --a2:#3E6DA6;      --a2-ink:#EAF1FB;
       --ab:#3E8776;      --ab-ink:#E7F5F1;
-      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --b2:#C97E2E;      --b2-ink:#2A1A05; --b2-text:#E0A55A; --ab-text:#6CC0AD;
       --grid-line: rgba(134,174,230,0.07);
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
     }
@@ -52,7 +52,7 @@
     --accent-soft:#20304A;
     --a2:#3E6DA6;      --a2-ink:#EAF1FB;
     --ab:#3E8776;      --ab-ink:#E7F5F1;
-    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --b2:#C97E2E;      --b2-ink:#2A1A05; --b2-text:#E0A55A; --ab-text:#6CC0AD;
     --grid-line: rgba(134,174,230,0.07);
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
   }
@@ -345,13 +345,13 @@
         <svg viewBox="0 0 440 210" role="img" aria-label="長條圖顯示細菌數量隨小時翻倍成長，第0小時1隻，第1小時2隻，第2小時4隻，第3小時8隻">
           <line x1="40" y1="200" x2="420" y2="200" stroke="currentColor" stroke-width="1"/>
           <rect x="60" y="185" width="50" height="15" fill="var(--ab)"/>
-          <text x="85" y="178" text-anchor="middle" class="svg-label-lg" fill="var(--ab)">1</text>
+          <text x="85" y="178" text-anchor="middle" class="svg-label-lg" fill="var(--ab-text)">1</text>
           <text x="85" y="216" text-anchor="middle" class="svg-label" fill="currentColor">第0小時</text>
           <rect x="160" y="170" width="50" height="30" fill="var(--ab)"/>
-          <text x="185" y="163" text-anchor="middle" class="svg-label-lg" fill="var(--ab)">2</text>
+          <text x="185" y="163" text-anchor="middle" class="svg-label-lg" fill="var(--ab-text)">2</text>
           <text x="185" y="216" text-anchor="middle" class="svg-label" fill="currentColor">第1小時</text>
           <rect x="260" y="140" width="50" height="60" fill="var(--ab)"/>
-          <text x="285" y="133" text-anchor="middle" class="svg-label-lg" fill="var(--ab)">4</text>
+          <text x="285" y="133" text-anchor="middle" class="svg-label-lg" fill="var(--ab-text)">4</text>
           <text x="285" y="216" text-anchor="middle" class="svg-label" fill="currentColor">第2小時</text>
           <rect x="360" y="80" width="50" height="120" fill="var(--accent)"/>
           <text x="385" y="73" text-anchor="middle" class="svg-label-lg" fill="var(--accent)">8</text>
@@ -441,7 +441,7 @@
           <line x1="90" y1="78.6" x2="90" y2="220" stroke="var(--b2)" stroke-width="1.5" stroke-dasharray="4,3"/>
           <circle cx="90" cy="78.6" r="5" fill="var(--b2)"/>
           <text x="90" y="240" text-anchor="middle" class="svg-label" fill="var(--b2)">0.5</text>
-          <text x="98" y="70" class="svg-label-lg" fill="var(--b2)">≈70.7</text>
+          <text x="98" y="70" class="svg-label-lg" fill="var(--b2-text)">≈70.7</text>
         </svg>
         <figcaption>半衰期不必是整數：曲線在0.5處的高度，就是「衰減半次」該剩下的比例。</figcaption>
       </figure>
@@ -530,7 +530,7 @@
           <text x="196" y="235" text-anchor="middle" class="svg-label" fill="currentColor">1.4</text>
           <text x="223" y="235" text-anchor="middle" class="svg-label" fill="var(--b2)">√2</text>
           <text x="205" y="140" text-anchor="middle" class="svg-label" fill="var(--ink-muted)">1.4→1.41→1.414…</text>
-          <text x="270" y="175" class="svg-label-lg" fill="var(--b2)">2^√2≈2.665144</text>
+          <text x="270" y="175" class="svg-label-lg" fill="var(--b2-text)">2^√2≈2.665144</text>
         </svg>
         <figcaption>x取1.4、1.41、1.414……一路逼近√2，對應的曲線高度也跟著逼近同一個值，這個極限值就是2^√2的定義。</figcaption>
       </figure>
@@ -597,7 +597,7 @@
           <text x="440" y="95" text-anchor="middle" class="svg-label" fill="currentColor">兆</text>
           <circle cx="455" cy="70" r="5" fill="var(--b2)"/>
           <text x="480" y="118" text-anchor="end" class="svg-label" fill="var(--b2)">40小時後</text>
-          <text x="480" y="136" text-anchor="end" class="svg-label-lg" fill="var(--b2)">≈1.10×10¹²倍</text>
+          <text x="480" y="136" text-anchor="end" class="svg-label-lg" fill="var(--b2-text)">≈1.10×10¹²倍</text>
         </svg>
         <figcaption>每往右移一格，數量級就乘上1000——科學記號讓我們一眼看出細菌成長跨越了多少個數量級。</figcaption>
       </figure>

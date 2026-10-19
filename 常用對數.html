@@ -18,7 +18,7 @@
     --accent-soft:#DEE9F6;
     --a2:#6E9FD8;      --a2-ink:#0F2038;
     --ab:#4E9C8C;      --ab-ink:#0B241F;
-    --b2:#E0973C;      --b2-ink:#3A2306;
+    --b2:#E0973C;      --b2-ink:#3A2306; --b2-text:#A35F14;
     --grid-line: rgba(42,93,168,0.07);
     --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
   }
@@ -35,7 +35,7 @@
       --accent-soft:#20304A;
       --a2:#3E6DA6;      --a2-ink:#EAF1FB;
       --ab:#3E8776;      --ab-ink:#E7F5F1;
-      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --b2:#C97E2E;      --b2-ink:#2A1A05; --b2-text:#E0A55A;
       --grid-line: rgba(134,174,230,0.07);
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
     }
@@ -52,7 +52,7 @@
     --accent-soft:#20304A;
     --a2:#3E6DA6;      --a2-ink:#EAF1FB;
     --ab:#3E8776;      --ab-ink:#E7F5F1;
-    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --b2:#C97E2E;      --b2-ink:#2A1A05; --b2-text:#E0A55A;
     --grid-line: rgba(134,174,230,0.07);
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
   }
@@ -355,7 +355,7 @@
           <text x="110" y="30" text-anchor="middle" class="svg-label" fill="currentColor">1</text>
           <text x="380" y="30" text-anchor="middle" class="svg-label" fill="currentColor">10</text>
           <circle cx="191" cy="45" r="5" fill="var(--b2)"/>
-          <text x="191" y="65" text-anchor="middle" class="svg-label-lg" fill="var(--b2)">2</text>
+          <text x="191" y="65" text-anchor="middle" class="svg-label-lg" fill="var(--b2-text)">2</text>
           <line x1="191" y1="45" x2="191" y2="115" stroke="var(--b2)" stroke-width="1.5" stroke-dasharray="4,3"/>
           <text x="98" y="119" text-anchor="end" class="svg-label" fill="currentColor">x=log a</text>
           <line x1="110" y1="115" x2="380" y2="115" stroke="currentColor" stroke-width="1.5"/>
@@ -364,7 +364,7 @@
           <text x="110" y="140" text-anchor="middle" class="svg-label" fill="currentColor">0</text>
           <text x="380" y="140" text-anchor="middle" class="svg-label" fill="currentColor">1</text>
           <circle cx="191" cy="115" r="5" fill="var(--b2)"/>
-          <text x="191" y="100" text-anchor="middle" class="svg-label-lg" fill="var(--b2)">log2≈0.301</text>
+          <text x="191" y="100" text-anchor="middle" class="svg-label-lg" fill="var(--b2-text)">log2≈0.301</text>
         </svg>
         <figcaption>上排是真數a，下排是它對應的常用對數x：2落在1到10之間偏左的地方，log2就落在0到1之間偏左的0.301附近。</figcaption>
       </figure>
