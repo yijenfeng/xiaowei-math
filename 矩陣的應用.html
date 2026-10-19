@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-3 矩陣的應用｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第四冊・第四章 矩陣・4-3</span>
+    <h1>矩陣的應用</h1>
+    <p class="sub">學期末，筱葳替學生會做了兩個小專題：一個是追蹤同學中午在「學餐」和「便當」之間怎麼換來換去，預測長期下來學餐會有多少人；另一個是幫測量社設計新社徽，要在繪圖軟體裡把圖形旋轉、放大、鏡射。兩件看似無關的事，背後都是同一個工具：用矩陣乘法描述「變化」。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>4-2 學會了矩陣乘法，這一節看它的兩個經典應用。第一個是<b>轉移矩陣</b>：描述一群人在幾種狀態之間的移動，每乘一次代表過了一天。第二個是<b>線性變換</b>：一個 2 × 2 矩陣乘上點的坐標，就把整個平面旋轉、伸縮或翻轉；而它的行列式，剛好告訴我們面積變成幾倍。</p>
+    <ul class="toc">
+      <li><a href="#topic-markov"><b>1</b>轉移矩陣</a></li>
+      <li><a href="#topic-steady"><b>2</b>穩定狀態</a></li>
+      <li><a href="#topic-linear"><b>3</b>線性變換</a></li>
+      <li><a href="#topic-area"><b>4</b>合成與面積</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-markov">
+    <div class="part-kicker"><b>轉移矩陣</b></div>
+    <h2>今天吃學餐，明天還吃學餐嗎？</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">筱葳調查發現：今天吃學餐的人，明天有 70% 繼續吃學餐、30% 改吃便當；今天吃便當的人，明天有 40% 改吃學餐、60% 繼續吃便當。今天學餐、便當各佔一半。明天、後天的比例是多少？</p>
+      <p>把比例寫成矩陣：第 1 行是「今天學餐」的人明天的去向，第 2 行是「今天便當」的人明天的去向：</p>
+      <div class="calc">轉移矩陣 A = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0.7</span><span>0.4</span><span>0.3</span><span>0.6</span></span>　（列：明天學餐、明天便當；行：今天學餐、今天便當）
+今天 X₀ = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>0.5</span><span>0.5</span></span>
+
+明天 X₁ = AX₀ = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>0.7 × 0.5 + 0.4 × 0.5</span><span>0.3 × 0.5 + 0.6 × 0.5</span></span> = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>0.55</span><span>0.45</span></span>
+後天 X₂ = AX₁ = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>0.385 + 0.18</span><span>0.165 + 0.27</span></span> = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>0.565</span><span>0.435</span></span></div>
+      <div class="formula">
+        <div class="formula-title">轉移矩陣</div>
+        每個元都是機率（0 到 1 之間），且<b>每一行的和為 1</b>
+        <br><span class="big">Xₙ₊₁ = AXₙ，所以 Xₙ = AⁿX₀</span>
+      </div>
+      <p class="note">每一行加起來是 1，因為「今天吃學餐的人」明天一定會選其中一個。n 天後的狀態，就是轉移矩陣自乘 n 次再乘以今天的狀態——這要用到 4-2 的結合律。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：兩步轉移</span>
+      <div class="calc">A² = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0.7</span><span>0.4</span><span>0.3</span><span>0.6</span></span><span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0.7</span><span>0.4</span><span>0.3</span><span>0.6</span></span> = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0.61</span><span>0.52</span><span>0.39</span><span>0.48</span></span>
+
+A² 的 (1, 2) 元 0.52 = 今天吃便當的人，後天吃學餐的機率
+X₂ = A²X₀ = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>0.61 × 0.5 + 0.52 × 0.5</span><span>0.39 × 0.5 + 0.48 × 0.5</span></span> = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>0.565</span><span>0.435</span></span> ✓</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-steady">
+    <div class="part-kicker"><b>穩定狀態</b></div>
+    <h2>長期下來，比例會停在哪裡？</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>0.5 → 0.55 → 0.565 → …，學餐比例越變越慢。如果某一天的狀態 X 再乘一次 A 仍然不變，就到達了<b>穩定狀態</b>：</p>
+      <div class="calc">設穩定狀態 X = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>p</span><span>1 − p</span></span>，AX = X：
+0.7p + 0.4(1 − p) = p
+0.7p + 0.4 − 0.4p = p ⟹ 0.3p + 0.4 = p ⟹ 0.7p = 0.4 ⟹ p = 4／7 ≈ 0.571
+
+穩定狀態：學餐 4／7、便當 3／7</div>
+      <div class="formula">
+        <div class="formula-title">穩定狀態</div>
+        <span class="big">AX = X，且 X 的各元總和為 1</span>
+      </div>
+      <p class="note">有趣的是，不管今天的比例是多少（全部吃學餐也好、全部吃便當也好），長期都會趨近 4／7 和 3／7。這正是轉移矩陣用來做「長期預測」的原因：天氣、市佔率、人口遷移都能這樣分析。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-linear">
+    <div class="part-kicker"><b>線性變換</b></div>
+    <h2>一個 2 × 2 矩陣，搬動整個平面</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">社徽草圖上有一點 (2, 1)。繪圖軟體要把整個圖案繞原點逆時針旋轉 90°，這個點會跑到哪裡？</p>
+      <p>把點寫成 2 × 1 矩陣，左乘一個 2 × 2 矩陣，就得到新的點。逆時針旋轉 θ 的矩陣是：</p>
+      <div class="formula">
+        <div class="formula-title">旋轉矩陣（繞原點逆時針旋轉 θ）</div>
+        <span class="big">R(θ) = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>cosθ</span><span>−sinθ</span><span>sinθ</span><span>cosθ</span></span></span>
+      </div>
+      <div class="calc">R(90°) = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>−1</span><span>1</span><span>0</span></span>
+<span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>−1</span><span>1</span><span>0</span></span><span class="mat" style="grid-template-columns:repeat(1,auto)"><span>2</span><span>1</span></span> = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>−1</span><span>2</span></span> ⟹ (2, 1) 轉到 (−1, 2)</div>
+      <p class="note">為什麼是這個矩陣？矩陣的第 1 行是 (1, 0) 變換後的位置，第 2 行是 (0, 1) 變換後的位置。(1, 0) 旋轉 θ 後是 (cosθ, sinθ)，(0, 1) 旋轉 θ 後是 (−sinθ, cosθ)——這就是 3A 單位圓上的坐標。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 298 198" role="img" aria-label="點 (2,1) 繞原點逆時針旋轉 90 度，變成 (-1,2)">
+<defs><marker id="ah20-0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="ah20-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--b2)"/></marker></defs>
+<line x1="44.0" y1="184.0" x2="44.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="94.0" y1="184.0" x2="94.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="144.0" y1="184.0" x2="144.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="194.0" y1="184.0" x2="194.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="244.0" y1="184.0" x2="244.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="154.0" x2="284.0" y2="154.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="104.0" x2="284.0" y2="104.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="54.0" x2="284.0" y2="54.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="154.0" x2="284.0" y2="154.0" stroke="var(--ink-muted)" stroke-width="1.1"/>
+<line x1="144.0" y1="184.0" x2="144.0" y2="14.0" stroke="var(--ink-muted)" stroke-width="1.1"/>
+<line x1="144.0" y1="154.0" x2="244.0" y2="104.0" stroke="var(--accent)" stroke-width="2.4" marker-end="url(#ah20-0)"/>
+<line x1="144.0" y1="154.0" x2="94.0" y2="54.0" stroke="var(--b2)" stroke-width="2.4" marker-end="url(#ah20-1)"/>
+<circle cx="244.0" cy="104.0" r="3" fill="var(--accent)"/>
+<text x="250.0" y="108.0" class="svg-label" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(2, 1)</text>
+<circle cx="94.0" cy="54.0" r="3" fill="var(--b2)"/>
+<text x="40.0" y="54.0" class="svg-label" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(−1, 2)</text>
+<text x="171.5" y="116.5" text-anchor="middle" class="svg-label" fill="var(--ink)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">90°</text>
+</svg>
+        <figcaption>(2, 1) 逆時針旋轉 90° 到 (−1, 2)，長度不變</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">常見的變換矩陣</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>變換</th><th>矩陣</th><th>(x, y) 變成</th></tr></thead>
+          <tbody>
+            <tr><td>伸縮（x 方向 a 倍、y 方向 b 倍）</td><td class="f"><span class="mat" style="grid-template-columns:repeat(2,auto)"><span>a</span><span>0</span><span>0</span><span>b</span></span></td><td class="f">(ax, by)</td></tr>
+            <tr><td>對 x 軸鏡射</td><td class="f"><span class="mat" style="grid-template-columns:repeat(2,auto)"><span>1</span><span>0</span><span>0</span><span>−1</span></span></td><td class="f">(x, −y)</td></tr>
+            <tr><td>對 y 軸鏡射</td><td class="f"><span class="mat" style="grid-template-columns:repeat(2,auto)"><span>−1</span><span>0</span><span>0</span><span>1</span></span></td><td class="f">(−x, y)</td></tr>
+            <tr><td>對直線 y = x 鏡射</td><td class="f"><span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>1</span><span>1</span><span>0</span></span></td><td class="f">(y, x)</td></tr>
+            <tr><td>推移（水平方向）</td><td class="f"><span class="mat" style="grid-template-columns:repeat(2,auto)"><span>1</span><span>k</span><span>0</span><span>1</span></span></td><td class="f">(x + ky, y)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">找變換矩陣的通用方法：問「(1, 0) 會變到哪？」寫成第 1 行；「(0, 1) 會變到哪？」寫成第 2 行。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-area">
+    <div class="part-kicker"><b>合成與面積</b></div>
+    <h2>先做這個再做那個 = 矩陣相乘</h2>
+
+    <div class="step">
+      <span class="step-tag">合成變換</span>
+      <p class="quote">社徽先逆時針旋轉 90°，再對 x 軸鏡射。合起來是哪一種變換？</p>
+      <p>先做的變換寫在右邊（離點最近），後做的寫在左邊：</p>
+      <div class="calc">先旋轉 R = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>−1</span><span>1</span><span>0</span></span>，再鏡射 F = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>1</span><span>0</span><span>0</span><span>−1</span></span>
+合成 = FR = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>1</span><span>0</span><span>0</span><span>−1</span></span><span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>−1</span><span>1</span><span>0</span></span> = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>−1</span><span>−1</span><span>0</span></span>
+
+(x, y) ↦ (−y, −x)：這是對直線 y = −x 的鏡射
+若順序反過來：RF = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>1</span><span>1</span><span>0</span></span>，變成對 y = x 的鏡射——順序不同，結果不同</div>
+      <p class="note">這就是 4-2「AB ≠ BA」的幾何意義：先轉再翻，和先翻再轉，通常不一樣。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">行列式 = 面積倍率</span>
+      <p class="quote">社徽的底座原本是邊長 1 的正方形，用推移矩陣 <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>2</span><span>1</span><span>0</span><span>1</span></span> 變換後面積變成多少？</p>
+      <div class="calc">(1, 0) ↦ (2, 0)，(0, 1) ↦ (1, 1)
+正方形變成由 (2, 0)、(1, 1) 張成的平行四邊形
+面積 = |<span class="det"><span>2</span><span>1</span><span>0</span><span>1</span></span>| = |2 − 0| = 2（3A 的二階行列式）</div>
+      <div class="formula">
+        <div class="formula-title">線性變換與面積</div>
+        <span class="big">矩陣 A 把任何圖形的面積變成 |det A| 倍</span>
+        <br>旋轉、鏡射：|det| = 1，面積不變；det &lt; 0 代表圖形被翻面
+      </div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 280 172" role="img" aria-label="單位正方形經過矩陣 [[2,1],[0,1]] 變換成平行四邊形，面積由 1 變成 2">
+<defs><marker id="ah19-0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="ah19-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--b2)"/></marker></defs>
+<line x1="50.0" y1="158.0" x2="50.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="110.0" y1="158.0" x2="110.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="170.0" y1="158.0" x2="170.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="230.0" y1="158.0" x2="230.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="122.0" x2="266.0" y2="122.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="62.0" x2="266.0" y2="62.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="122.0" x2="266.0" y2="122.0" stroke="var(--ink-muted)" stroke-width="1.1"/>
+<line x1="50.0" y1="158.0" x2="50.0" y2="14.0" stroke="var(--ink-muted)" stroke-width="1.1"/>
+<polygon points="50.0,122.0 110.0,122.0 110.0,62.0 50.0,62.0" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
+<polygon points="50.0,122.0 170.0,122.0 230.0,62.0 110.0,62.0" fill="none" stroke="var(--b2)" stroke-width="1.2"/>
+<line x1="50.0" y1="122.0" x2="110.0" y2="122.0" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#ah19-0)"/>
+<line x1="50.0" y1="122.0" x2="50.0" y2="62.0" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#ah19-0)"/>
+<line x1="50.0" y1="122.0" x2="170.0" y2="122.0" stroke="var(--b2)" stroke-width="2.2" stroke-dasharray="5,3" marker-end="url(#ah19-1)"/>
+<line x1="50.0" y1="122.0" x2="110.0" y2="62.0" stroke="var(--b2)" stroke-width="2.2" stroke-dasharray="5,3" marker-end="url(#ah19-1)"/>
+<circle cx="230.0" cy="62.0" r="3" fill="var(--b2)"/>
+<text x="216.0" y="54.0" class="svg-label" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(3, 1)</text>
+<text x="80.0" y="95.0" text-anchor="middle" class="svg-label" fill="var(--ink)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">1</text>
+<text x="170.0" y="95.0" text-anchor="middle" class="svg-label" fill="var(--ink)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2</text>
+</svg>
+        <figcaption>單位正方形（藍）經推移變成平行四邊形（橘虛線），面積 1 → 2 = det</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：4-3 矩陣的應用</h2>
+    <p class="lede-line">轉移矩陣：Xₙ₊₁ = AXₙ，長期看穩定狀態 AX = X。線性變換：矩陣的兩行是 (1,0)、(0,1) 的像，面積倍率是 |det|。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>轉移矩陣</td><td class="f">元為機率，每行和為 1；Xₙ = AⁿX₀</td></tr>
+          <tr><td>穩定狀態</td><td class="f">AX = X，各元總和 1</td></tr>
+          <tr><td>旋轉</td><td class="f"><span class="mat" style="grid-template-columns:repeat(2,auto)"><span>cosθ</span><span>−sinθ</span><span>sinθ</span><span>cosθ</span></span></td></tr>
+          <tr><td>鏡射</td><td class="f">x 軸 <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>1</span><span>0</span><span>0</span><span>−1</span></span>；y = x <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>1</span><span>1</span><span>0</span></span></td></tr>
+          <tr><td>找變換矩陣</td><td class="f">第 1 行 = (1,0) 的像，第 2 行 = (0,1) 的像</td></tr>
+          <tr><td>合成</td><td class="f">先做 A 再做 B ⟹ BA（後做的在左邊）</td></tr>
+          <tr><td>面積</td><td class="f">新面積 = |det A| × 原面積</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">轉移矩陣</span></div>
+        <p>轉移矩陣 A = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0.8</span><span>0.3</span><span>0.2</span><span>0.7</span></span>，初始狀態 <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>0.5</span><span>0.5</span></span>。求一步後的狀態與穩定狀態。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">X₁ = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>0.4 + 0.15</span><span>0.1 + 0.35</span></span> = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>0.55</span><span>0.45</span></span>
+穩定：0.8p + 0.3(1 − p) = p ⟹ 0.3 = 0.5p ⟹ p = 0.6
+穩定狀態 <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>0.6</span><span>0.4</span></span></div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">旋轉</span></div>
+        <p>點 (1, 0) 繞原點逆時針旋轉 120°，得到哪一點？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">(cos120°, sin120°) = (−1／2, √3／2)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">找矩陣</span></div>
+        <p>某線性變換把 (1, 0) 變到 (2, 1)、把 (0, 1) 變到 (−1, 3)。寫出它的矩陣，並求 (3, 2) 的像。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">A = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>2</span><span>−1</span><span>1</span><span>3</span></span>
+A<span class="mat" style="grid-template-columns:repeat(1,auto)"><span>3</span><span>2</span></span> = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>6 − 2</span><span>3 + 6</span></span> = <span class="mat" style="grid-template-columns:repeat(1,auto)"><span>4</span><span>9</span></span></div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">面積</span></div>
+        <p>以 (0, 0)、(1, 0)、(0, 1) 為頂點的三角形，經矩陣 <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>3</span><span>1</span><span>2</span><span>4</span></span> 變換後面積是多少？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">原面積 1／2，det = 12 − 2 = 10
+新面積 = 10 × 1／2 = 5</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">合成</span></div>
+        <p>先對直線 y = x 鏡射，再逆時針旋轉 90°。求合成的矩陣，並說明它是什麼變換。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">先 F = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>1</span><span>1</span><span>0</span></span>，後 R = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>−1</span><span>1</span><span>0</span></span>
+RF = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>−1</span><span>1</span><span>0</span></span><span class="mat" style="grid-template-columns:repeat(2,auto)"><span>0</span><span>1</span><span>1</span><span>0</span></span> = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>−1</span><span>0</span><span>0</span><span>1</span></span>
+(x, y) ↦ (−x, y)：對 y 軸鏡射</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>4A 完成：數A 全部完成</h2>
+      <p>這一冊從空間概念出發，學會空間向量、平面與直線方程式，再到條件機率與貝氏定理，最後用矩陣解方程組、描述變化。從數學1 的數與式一路到這裡，學測數A 的範圍已經全部走完。這些工具彼此相連：內積和矩陣乘法是同一種計算，行列式同時是面積、體積與方程組的判別式，而機率的轉移又回到了矩陣。祝筱葳學測順利！</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第四冊・第四章</span>
+    <span>4-3 矩陣的應用</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

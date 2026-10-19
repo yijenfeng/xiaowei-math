@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-4 外積、體積與行列式｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第四冊・第一章 空間向量・1-4</span>
+    <h1>外積、體積與行列式</h1>
+    <p class="sub">燈光秀的舞台上掛著一面斜放的三角形布幕，燈光師想從「正面」打光，需要一個垂直布幕的方向；道具組則想知道一個歪斜的展示櫃能裝多少東西。這一節學習向量的第二種乘法——外積，它能直接造出垂直向量、算出面積；再把 3A 的二階行列式升級成三階，用來算體積、判斷共平面。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>內積把兩個向量變成一個數，外積則把兩個向量變成<b>一個新的向量</b>：它同時垂直於原本的兩個向量，長度剛好等於兩者張出的平行四邊形面積。外積只在三維空間有意義，它的每個分量都是一個二階行列式；而把外積再和第三個向量做內積，就得到三階行列式——平行六面體的體積。</p>
+    <ul class="toc">
+      <li><a href="#topic-cross"><b>1</b>外積</a></li>
+      <li><a href="#topic-area"><b>2</b>用外積算面積</a></li>
+      <li><a href="#topic-det3"><b>3</b>三階行列式</a></li>
+      <li><a href="#topic-volume"><b>4</b>體積與共平面</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-cross">
+    <div class="part-kicker"><b>外積</b></div>
+    <h2>同時垂直兩個向量的方向</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">布幕上有兩個方向 <span class="vec">a</span> = (1, 2, 0) 與 <span class="vec">b</span> = (0, 1, 3)。燈光要垂直打在布幕上，方向向量 <span class="vec">n</span> = (x, y, z) 是什麼？</p>
+      <p><span class="vec">n</span> 要同時和 <span class="vec">a</span>、<span class="vec">b</span> 垂直：x + 2y = 0 且 y + 3z = 0。兩個方程式、三個未知數，解有無限多組（都互相平行）。一般地解 x₁x + y₁y + z₁z = 0、x₂x + y₂y + z₂z = 0，會得到一組漂亮的解，每個分量都是二階行列式：</p>
+      <div class="formula">
+        <div class="formula-title">外積（<span class="vec">a</span> = (x₁, y₁, z₁)，<span class="vec">b</span> = (x₂, y₂, z₂)）</div>
+        <span class="big"><span class="vec">a</span> × <span class="vec">b</span> = ( <span class="det"><span>y₁</span><span>z₁</span><span>y₂</span><span>z₂</span></span>, <span class="det"><span>z₁</span><span>x₁</span><span>z₂</span><span>x₂</span></span>, <span class="det"><span>x₁</span><span>y₁</span><span>x₂</span><span>y₂</span></span> )</span>
+      </div>
+      <p class="note">記法：把兩個向量上下寫兩列，求第一個分量時蓋住 x 那一行，求第二個分量時蓋住 y 那一行（注意是「z、x」的順序），求第三個分量時蓋住 z 那一行。</p>
+      <div class="calc"><span class="vec">a</span> × <span class="vec">b</span> = (2 × 3 − 0 × 1, 0 × 0 − 1 × 3, 1 × 1 − 2 × 0) = (6, −3, 1)
+
+檢查：(6, −3, 1)・(1, 2, 0) = 6 − 6 = 0 ✓
+　　　(6, −3, 1)・(0, 1, 3) = −3 + 3 = 0 ✓</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">外積的性質</span>
+      <div class="formula">
+        <div class="formula-title">性質</div>
+        <span class="vec">a</span> × <span class="vec">b</span> 同時垂直 <span class="vec">a</span> 與 <span class="vec">b</span>，方向依右手定則（四指由 <span class="vec">a</span> 彎向 <span class="vec">b</span>，拇指方向）
+        <br><span class="big">|<span class="vec">a</span> × <span class="vec">b</span>| = |<span class="vec">a</span>||<span class="vec">b</span>|sinθ</span>
+        <br><span class="vec">b</span> × <span class="vec">a</span> = −(<span class="vec">a</span> × <span class="vec">b</span>)（交換律不成立！）
+        <br><span class="vec">a</span> ∥ <span class="vec">b</span> ⟺ <span class="vec">a</span> × <span class="vec">b</span> = <span class="vec">0</span>
+      </div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 300 200" role="img" aria-label="a 與 b 張成的平行四邊形，外積 a×b 垂直於這個平行四邊形（指向讀者），長度等於它的面積">
+<defs><marker id="a321-0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="a321-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--b2)"/></marker><marker id="a321-2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ab)"/></marker></defs>
+<polygon points="110.0,110.0 218.8,110.0 252.8,48.8 144.0,48.8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2" fill-opacity="0.85"/>
+<line x1="110.0" y1="110.0" x2="218.8" y2="110.0" stroke="var(--accent)" stroke-width="2.4" marker-end="url(#a321-0)"/>
+<line x1="110.0" y1="110.0" x2="144.0" y2="48.8" stroke="var(--b2)" stroke-width="2.4" marker-end="url(#a321-1)"/>
+<line x1="110.0" y1="110.0" x2="71.5" y2="148.5" stroke="var(--ab)" stroke-width="2.6" marker-end="url(#a321-2)"/>
+<text x="174.6" y="125.3" text-anchor="middle" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">a</text>
+<text x="118.5" y="70.9" text-anchor="end" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">b</text>
+<text x="80.0" y="155.3" text-anchor="start" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">a × b</text>
+<text x="183.1" y="81.1" text-anchor="middle" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">面積 = |a × b|</text>
+</svg>
+        <figcaption>a × b 垂直於 a、b 所在的平面，長度等於平行四邊形面積</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-area">
+    <div class="part-kicker"><b>用外積算面積</b></div>
+    <h2>外積的長度，就是平行四邊形的面積</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>3A 學過平行四邊形面積 = |<span class="vec">a</span>||<span class="vec">b</span>|sinθ，而這正好是 |<span class="vec">a</span> × <span class="vec">b</span>|：</p>
+      <div class="formula">
+        <div class="formula-title">空間中的面積</div>
+        <span class="big">平行四邊形面積 = |<span class="vec">a</span> × <span class="vec">b</span>|　　三角形面積 = (1／2)|<span class="vec">a</span> × <span class="vec">b</span>|</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">三角形布幕的三個掛點是 A(1, 0, 0)、B(0, 2, 0)、C(0, 0, 3)（單位：公尺）。布幕面積多大？</p>
+      <div class="calc"><span class="vec">AB</span> = (−1, 2, 0)，<span class="vec">AC</span> = (−1, 0, 3)
+
+<span class="vec">AB</span> × <span class="vec">AC</span> = (2 × 3 − 0 × 0, 0 × (−1) − (−1) × 3, (−1) × 0 − 2 × (−1)) = (6, 3, 2)
+|<span class="vec">AB</span> × <span class="vec">AC</span>| = √(36 + 9 + 4) = 7
+
+布幕面積 = 7／2 = 3.5（平方公尺）</div>
+      <p class="note">同時得到布幕的法向量 (6, 3, 2)——燈光從這個方向打過去就是正面。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-det3">
+    <div class="part-kicker"><b>三階行列式</b></div>
+    <h2>3A 的二階行列式，升級成三階</h2>
+
+    <div class="step">
+      <span class="step-tag">定義</span>
+      <p>三階行列式定義為「沿第一列展開」，每一項都是一個數乘上一個二階行列式：</p>
+      <div class="formula">
+        <div class="formula-title">三階行列式</div>
+        <span class="big"><span class="det det3"><span>a₁</span><span>a₂</span><span>a₃</span><span>b₁</span><span>b₂</span><span>b₃</span><span>c₁</span><span>c₂</span><span>c₃</span></span> = a₁<span class="det"><span>b₂</span><span>b₃</span><span>c₂</span><span>c₃</span></span> − a₂<span class="det"><span>b₁</span><span>b₃</span><span>c₁</span><span>c₃</span></span> + a₃<span class="det"><span>b₁</span><span>b₂</span><span>c₁</span><span>c₂</span></span></span>
+      </div>
+      <p class="note">注意中間那項是<b>減號</b>。另一種常用的算法是「對角線法」：三條右下斜線的乘積相加，減去三條左下斜線的乘積——結果完全一樣，但只適用於三階。</p>
+      <div class="calc"><span class="det det3"><span>1</span><span>2</span><span>3</span><span>0</span><span>1</span><span>4</span><span>5</span><span>6</span><span>0</span></span> = 1(1 × 0 − 4 × 6) − 2(0 × 0 − 4 × 5) + 3(0 × 6 − 1 × 5)
+            = −24 + 40 − 15 = 1</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">性質</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>性質</th><th>效果</th></tr></thead>
+          <tbody>
+            <tr><td>任兩列（或兩行）對調</td><td class="f">值變號</td></tr>
+            <tr><td>某一列乘以 k</td><td class="f">值乘以 k</td></tr>
+            <tr><td>某列加上另一列的倍數</td><td class="f">值不變</td></tr>
+            <tr><td>有兩列相同或成比例</td><td class="f">值為 0</td></tr>
+            <tr><td>行列互換（轉置）</td><td class="f">值不變</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">這些性質和 3A 的二階行列式完全一樣，常用來先把某一行湊出很多 0，再展開，計算會快很多。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-volume">
+    <div class="part-kicker"><b>體積與共平面</b></div>
+    <h2>歪斜的展示櫃能裝多少？</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>三個向量 <span class="vec">a</span>、<span class="vec">b</span>、<span class="vec">c</span> 張出一個<b>平行六面體</b>（每個面都是平行四邊形的「歪斜箱子」）。它的體積 = 底面積 × 高：</p>
+      <div class="calc">底面積 = |<span class="vec">a</span> × <span class="vec">b</span>|
+高 = <span class="vec">c</span> 在 <span class="vec">a</span> × <span class="vec">b</span> 方向上的正射影長 = |<span class="vec">c</span>・(<span class="vec">a</span> × <span class="vec">b</span>)|／|<span class="vec">a</span> × <span class="vec">b</span>|
+
+體積 = |<span class="vec">c</span>・(<span class="vec">a</span> × <span class="vec">b</span>)|</div>
+      <p>把 <span class="vec">c</span>・(<span class="vec">a</span> × <span class="vec">b</span>) 展開，剛好就是以 <span class="vec">a</span>、<span class="vec">b</span>、<span class="vec">c</span> 為三列的三階行列式：</p>
+      <div class="formula">
+        <div class="formula-title">體積公式</div>
+        <span class="big">平行六面體體積 = |<span class="det det3"><span>a₁</span><span>a₂</span><span>a₃</span><span>b₁</span><span>b₂</span><span>b₃</span><span>c₁</span><span>c₂</span><span>c₃</span></span>|</span>
+        <br>四面體體積 = (1／6) × 平行六面體體積
+      </div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 320 190" role="img" aria-label="a、b、c 張成的平行六面體：底面積 |a×b|，高是 c 在 a×b 方向上的正射影長">
+<defs><marker id="a325-0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="a325-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--b2)"/></marker><marker id="a325-2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ab)"/></marker></defs>
+<polygon points="120.0,95.0 228.8,95.0 262.8,33.8 154.0,33.8" fill="var(--accent-soft)" stroke="none" stroke-width="1.2" fill-opacity="0.85"/>
+<line x1="120.0" y1="95.0" x2="228.8" y2="95.0" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="228.8" y1="95.0" x2="262.8" y2="33.8" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="262.8" y1="33.8" x2="154.0" y2="33.8" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="154.0" y1="33.8" x2="120.0" y2="95.0" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="86.3" y1="135.5" x2="195.1" y2="135.5" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="195.1" y1="135.5" x2="229.1" y2="74.3" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="229.1" y1="74.3" x2="120.3" y2="74.3" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="120.3" y1="74.3" x2="86.3" y2="135.5" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="228.8" y1="95.0" x2="195.1" y2="135.5" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="262.8" y1="33.8" x2="229.1" y2="74.3" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="154.0" y1="33.8" x2="120.3" y2="74.3" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="86.3" y1="135.5" x2="140.4" y2="81.4" stroke="var(--ink-muted)" stroke-width="1.3" stroke-dasharray="3,3"/>
+<line x1="120.0" y1="95.0" x2="228.8" y2="95.0" stroke="var(--accent)" stroke-width="2.4" marker-end="url(#a325-0)"/>
+<line x1="120.0" y1="95.0" x2="154.0" y2="33.8" stroke="var(--b2)" stroke-width="2.4" marker-end="url(#a325-1)"/>
+<line x1="120.0" y1="95.0" x2="86.3" y2="135.5" stroke="var(--ab)" stroke-width="2.4" marker-end="url(#a325-2)"/>
+<text x="184.6" y="110.3" text-anchor="middle" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">a</text>
+<text x="128.5" y="55.9" text-anchor="end" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">b</text>
+<text x="92.1" y="129.7" text-anchor="end" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">c</text>
+<text x="122.5" y="101.0" text-anchor="start" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">高</text>
+</svg>
+        <figcaption>底面是 a、b 張出的平行四邊形，高是 c 在垂直底面方向上的影子</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">道具組的展示櫃是一個平行六面體，三條邊向量為 (2, 0, 0)、(1, 3, 0)、(1, 1, 4)（單位：公寸）。容量是多少？</p>
+      <div class="calc"><span class="det det3"><span>2</span><span>0</span><span>0</span><span>1</span><span>3</span><span>0</span><span>1</span><span>1</span><span>4</span></span> = 2(3 × 4 − 0 × 1) − 0 + 0 = 24
+
+體積 = 24 立方公寸 = 24 公升</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：四點共平面</span>
+      <p>三個向量張不出體積，代表它們躺在同一個平面上：</p>
+      <div class="formula">
+        <span class="big"><span class="vec">a</span>、<span class="vec">b</span>、<span class="vec">c</span> 共平面 ⟺ 三階行列式 = 0</span>
+      </div>
+      <p class="quote">(1, 2, 3)、(2, 1, 0)、(3, 3, k) 共平面，求 k。</p>
+      <div class="calc"><span class="det det3"><span>1</span><span>2</span><span>3</span><span>2</span><span>1</span><span>0</span><span>3</span><span>3</span><span>k</span></span> = 1(k − 0) − 2(2k − 0) + 3(6 − 3) = k − 4k + 9 = 9 − 3k = 0
+⟹ k = 3（檢查：(3, 3, 3) = (1, 2, 3) + (2, 1, 0) ✓）</div>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：1-4 外積、體積與行列式</h2>
+    <p class="lede-line">外積造出法向量並給出面積；三階行列式給出體積並判斷共平面——兩者都在下一章找平面方程式時派上用場。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>外積</td><td class="f"><span class="vec">a</span> × <span class="vec">b</span> = (y₁z₂ − z₁y₂, z₁x₂ − x₁z₂, x₁y₂ − y₁x₂)</td></tr>
+          <tr><td>外積性質</td><td class="f">垂直 <span class="vec">a</span>、<span class="vec">b</span>；|<span class="vec">a</span> × <span class="vec">b</span>| = |<span class="vec">a</span>||<span class="vec">b</span>|sinθ；<span class="vec">b</span> × <span class="vec">a</span> = −<span class="vec">a</span> × <span class="vec">b</span></td></tr>
+          <tr><td>面積</td><td class="f">平行四邊形 |<span class="vec">a</span> × <span class="vec">b</span>|；三角形 (1／2)|<span class="vec">a</span> × <span class="vec">b</span>|</td></tr>
+          <tr><td>三階行列式</td><td class="f">沿第一列展開：+ − + 交錯</td></tr>
+          <tr><td>體積</td><td class="f">平行六面體 = |det|；四面體 = |det|／6</td></tr>
+          <tr><td>共平面</td><td class="f">三向量的行列式 = 0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">外積</span></div>
+        <p>求 (1, −1, 2) × (3, 0, 1)，並驗證它和兩個向量都垂直。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">((−1)(1) − 2 × 0, 2 × 3 − 1 × 1, 1 × 0 − (−1) × 3) = (−1, 5, 3)
+(−1, 5, 3)・(1, −1, 2) = −1 − 5 + 6 = 0 ✓
+(−1, 5, 3)・(3, 0, 1) = −3 + 0 + 3 = 0 ✓</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">三角形面積</span></div>
+        <p>A(1, 1, 1)、B(2, 3, 1)、C(1, 2, 4)，求三角形 ABC 的面積。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc"><span class="vec">AB</span> = (1, 2, 0)，<span class="vec">AC</span> = (0, 1, 3)
+<span class="vec">AB</span> × <span class="vec">AC</span> = (6, −3, 1)，長度 √46
+面積 = √46／2</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">三階行列式</span></div>
+        <p>計算 <span class="det det3"><span>2</span><span>1</span><span>0</span><span>1</span><span>3</span><span>1</span><span>0</span><span>1</span><span>2</span></span>。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">= 2(3 × 2 − 1 × 1) − 1(1 × 2 − 1 × 0) + 0 = 10 − 2 = 8</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">四面體體積</span></div>
+        <p>求以 O(0, 0, 0)、A(2, 1, 0)、B(0, 3, 1)、C(1, 0, 2) 為頂點的四面體體積。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc"><span class="det det3"><span>2</span><span>1</span><span>0</span><span>0</span><span>3</span><span>1</span><span>1</span><span>0</span><span>2</span></span> = 2(6 − 0) − 1(0 − 1) + 0 = 13
+四面體體積 = 13／6</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">共平面</span></div>
+        <p>(1, 1, 0)、(0, 1, 1)、(1, k, 1) 共平面，求 k。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc"><span class="det det3"><span>1</span><span>1</span><span>0</span><span>0</span><span>1</span><span>1</span><span>1</span><span>k</span><span>1</span></span> = 1(1 − k) − 1(0 − 1) + 0 = 2 − k = 0 ⟹ k = 2
+（檢查：(1, 2, 1) = (1, 1, 0) + (0, 1, 1) ✓）</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>第一章完成：從空間概念到體積</h2>
+      <p>從 1-1 的點線面關係，到 1-2 的空間坐標、1-3 的內積、這一節的外積與行列式，空間向量的工具已經齊全。下一章要用它們寫出空間中的「平面」和「直線」的方程式。外積在這裡學到的「造出法向量」，正是 2-1「平面方程式」的第一步。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第四冊・第一章</span>
+    <span>1-4 外積、體積與行列式</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
