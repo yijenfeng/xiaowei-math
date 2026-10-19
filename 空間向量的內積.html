@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-3 空間向量的內積｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第四冊・第一章 空間向量・1-3</span>
+    <h1>空間向量的內積</h1>
+    <p class="sub">燈光秀彩排時，導演要求兩道雷射光束在空中「剛好垂直交叉」，還要知道無人機爬升的仰角，才能決定觀眾席放哪裡。這些都是空間中的角度問題。這一節把 3A 的內積推廣到三維，學會求空間向量的夾角、方向餘弦、正射影，並用三維的柯西不等式求最大最小值。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>3A 的內積有兩張臉：幾何上是 |<span class="vec">a</span>||<span class="vec">b</span>|cosθ，代數上是「對應分量相乘再相加」。兩者之所以相等，靠的是餘弦定理——而餘弦定理在空間中照樣成立。所以內積的所有性質，到了三維只要多加一項 z₁z₂ 就好。這一節的新內容只有一個：<b>方向餘弦</b>，用來描述一個向量和三條坐標軸各夾多少角度。</p>
+    <ul class="toc">
+      <li><a href="#topic-dot"><b>1</b>內積與夾角</a></li>
+      <li><a href="#topic-dircos"><b>2</b>方向餘弦</a></li>
+      <li><a href="#topic-proj"><b>3</b>正射影</a></li>
+      <li><a href="#topic-cauchy"><b>4</b>柯西不等式</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-dot">
+    <div class="part-kicker"><b>內積與夾角</b></div>
+    <h2>對應分量相乘再相加，多加一項而已</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula">
+        <div class="formula-title">空間向量的內積（<span class="vec">a</span> = (x₁, y₁, z₁)，<span class="vec">b</span> = (x₂, y₂, z₂)）</div>
+        <span class="big"><span class="vec">a</span>・<span class="vec">b</span> = |<span class="vec">a</span>||<span class="vec">b</span>|cosθ = x₁x₂ + y₁y₂ + z₁z₂</span>
+        <br>夾角：cosθ = (<span class="vec">a</span>・<span class="vec">b</span>)／(|<span class="vec">a</span>||<span class="vec">b</span>|)
+        <br>垂直：<span class="vec">a</span> ⊥ <span class="vec">b</span> ⟺ x₁x₂ + y₁y₂ + z₁z₂ = 0
+      </div>
+      <p class="note">推導方式和 3A 一樣：把 |<span class="vec">a</span> − <span class="vec">b</span>|² 用餘弦定理和坐標各算一次，展開比較就得到。內積的交換律、分配律、|<span class="vec">a</span> ± <span class="vec">b</span>|² = |<span class="vec">a</span>|² ± 2<span class="vec">a</span>・<span class="vec">b</span> + |<span class="vec">b</span>|² 也全部照用。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：兩道雷射</span>
+      <p class="quote">舞台上的兩支雷射從同一點射出，方向分別是 <span class="vec">u</span> = (2, −1, 3) 與 <span class="vec">v</span> = (1, 5, 1)。它們垂直嗎？若把第二支改成 (1, k, 2)，k 要多少才會垂直？</p>
+      <div class="calc"><span class="vec">u</span>・<span class="vec">v</span> = 2 − 5 + 3 = 0 ⟹ 垂直 ✓
+
+(2, −1, 3)・(1, k, 2) = 2 − k + 6 = 0 ⟹ k = 8</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：正方體裡的角度</span>
+      <p class="quote">邊長 1 的正方體，以一個頂點為原點、三條邊為坐標軸。從原點出發的「面對角線」(1, 1, 0) 與「體對角線」(1, 1, 1) 夾角的餘弦是多少？兩條相鄰面的面對角線 (1, 1, 0) 與 (1, 0, 1) 呢？</p>
+      <div class="calc">(1, 1, 0)・(1, 1, 1) = 2，長度 √2、√3 ⟹ cosθ = 2／√6 = √6／3
+
+(1, 1, 0)・(1, 0, 1) = 1，長度都是 √2 ⟹ cosθ = 1／2 ⟹ θ = 60°</div>
+      <p class="note">第二個結果用幾何也看得出來：三條面對角線的端點 (1,1,0)、(1,0,1)、(0,1,1) 兩兩距離都是 √2，連成正三角形，夾角當然是 60°。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-dircos">
+    <div class="part-kicker"><b>方向餘弦</b></div>
+    <h2>一個向量和三條坐標軸各夾幾度</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">無人機從起降點沿 <span class="vec">v</span> = (2, 1, 2) 的方向爬升。它和正東（x 軸）、正北（y 軸）、正上方（z 軸）各夾多少角？爬升的仰角（和地面的夾角）是多少？</p>
+      <p>和 x 軸的夾角 α，就是 <span class="vec">v</span> 和 (1, 0, 0) 的夾角：cosα = (<span class="vec">v</span>・(1,0,0))／|<span class="vec">v</span>| = 2／3。另外兩個同理：</p>
+      <div class="calc">|<span class="vec">v</span>| = √(4 + 1 + 4) = 3
+cosα = 2／3，cosβ = 1／3，cosγ = 2／3
+
+仰角 = 90° − γ，sin(仰角) = cosγ = 2／3 ⟹ 仰角 ≈ 41.8°</div>
+      <div class="formula">
+        <div class="formula-title">方向角與方向餘弦</div>
+        <span class="big"><span class="vec">v</span> = (a, b, c)：cosα = a／|<span class="vec">v</span>|，cosβ = b／|<span class="vec">v</span>|，cosγ = c／|<span class="vec">v</span>|</span>
+        <br>(cosα, cosβ, cosγ) 就是 <span class="vec">v</span> 方向的單位向量
+        <br>cos²α + cos²β + cos²γ = 1
+      </div>
+      <p class="note">檢查：(2／3)² + (1／3)² + (2／3)² = 1 ✓。這條恆等式常用來「已知兩個方向角，求第三個」。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-proj">
+    <div class="part-kicker"><b>正射影</b></div>
+    <h2>斜的向量，在某個方向上「實際走了多少」</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <div class="formula">
+        <div class="formula-title"><span class="vec">a</span> 在 <span class="vec">b</span> 上的正射影（與 3A 相同）</div>
+        <span class="big">正射影向量 = ((<span class="vec">a</span>・<span class="vec">b</span>)／|<span class="vec">b</span>|²)<span class="vec">b</span></span>，正射影長 = |<span class="vec">a</span>・<span class="vec">b</span>|／|<span class="vec">b</span>|
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">一陣風對無人機施加的力為 <span class="vec">F</span> = (1, 2, 3)（牛頓）。無人機正沿水平方向 <span class="vec">d</span> = (1, 1, 0) 前進。風力在前進方向上的分量是多少？</p>
+      <div class="calc"><span class="vec">F</span>・<span class="vec">d</span> = 1 + 2 + 0 = 3，|<span class="vec">d</span>|² = 2
+
+正射影向量 = (3／2)(1, 1, 0) = (3／2, 3／2, 0)
+正射影長 = 3／√2 = 3√2／2 ≈ 2.12（牛頓）——這部分順風在推它前進</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-cauchy">
+    <div class="part-kicker"><b>柯西不等式</b></div>
+    <h2>三個分量的版本</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>|cosθ| ≤ 1 ⟹ |<span class="vec">a</span>・<span class="vec">b</span>| ≤ |<span class="vec">a</span>||<span class="vec">b</span>|，平方後寫成坐標：</p>
+      <div class="formula">
+        <div class="formula-title">柯西不等式（三維）</div>
+        <span class="big">(a₁b₁ + a₂b₂ + a₃b₃)² ≤ (a₁² + a₂² + a₃²)(b₁² + b₂² + b₃²)</span>
+        <br>等號成立 ⟺ (a₁, a₂, a₃) ∥ (b₁, b₂, b₃)
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：最高能飛到哪</span>
+      <p class="quote">無人機被限制在以起降點為中心、半徑 9 公尺的球形範圍內（x² + y² + z² ≤ 81，這裡取邊界 = 81）。燈光評分公式是 x + 2y + 2z，分數最高是多少？此時無人機在哪裡？</p>
+      <div class="calc">(x + 2y + 2z)² ≤ (1² + 2² + 2²)(x² + y² + z²) = 9 × 81 = 729
+⟹ x + 2y + 2z ≤ 27
+
+等號：(x, y, z) = t(1, 2, 2)，代入 9t² = 81 ⟹ t = 3（取正）
+最高分 27，位置 (3, 6, 6)</div>
+      <p class="note">幾何意義：在球面上找一點，使它在 (1, 2, 2) 方向上的正射影最長——答案當然是沿著這個方向直直走到球面。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：1-3 空間向量的內積</h2>
+    <p class="lede-line">內積的公式和性質全部沿用 3A，只多一項 z₁z₂；新增方向餘弦，描述向量和三軸的夾角。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>內積</td><td class="f"><span class="vec">a</span>・<span class="vec">b</span> = x₁x₂ + y₁y₂ + z₁z₂ = |<span class="vec">a</span>||<span class="vec">b</span>|cosθ</td></tr>
+          <tr><td>垂直</td><td class="f"><span class="vec">a</span>・<span class="vec">b</span> = 0</td></tr>
+          <tr><td>方向餘弦</td><td class="f">(a, b, c)／|<span class="vec">v</span>|；cos²α + cos²β + cos²γ = 1</td></tr>
+          <tr><td>仰角</td><td class="f">和 xy 平面的夾角 φ：sinφ = |c|／|<span class="vec">v</span>|</td></tr>
+          <tr><td>正射影</td><td class="f">((<span class="vec">a</span>・<span class="vec">b</span>)／|<span class="vec">b</span>|²)<span class="vec">b</span></td></tr>
+          <tr><td>柯西不等式</td><td class="f">(Σaᵢbᵢ)² ≤ (Σaᵢ²)(Σbᵢ²)，平行時等號成立</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">夾角</span></div>
+        <p><span class="vec">a</span> = (1, −2, 2)，<span class="vec">b</span> = (3, 0, −4)，求兩向量夾角的餘弦值。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc"><span class="vec">a</span>・<span class="vec">b</span> = 3 + 0 − 8 = −5，|<span class="vec">a</span>| = 3，|<span class="vec">b</span>| = 5
+cosθ = −5 ／ 15 = −1／3</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">垂直</span></div>
+        <p>(1, k, 2) 與 (3, −1, k) 垂直，求 k。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">3 − k + 2k = 0 ⟹ k = −3</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">方向餘弦</span></div>
+        <p>求 <span class="vec">v</span> = (2, −3, 6) 的方向餘弦。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">|<span class="vec">v</span>| = 7 ⟹ (cosα, cosβ, cosγ) = (2／7, −3／7, 6／7)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">正射影</span></div>
+        <p>求 (2, 1, −1) 在 (1, 1, 1) 上的正射影向量。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">內積 = 2，|(1,1,1)|² = 3 ⟹ 正射影 = (2／3)(1, 1, 1) = (2／3, 2／3, 2／3)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">柯西不等式</span></div>
+        <p>實數 x、y、z 滿足 2x − y + 2z = 6，求 x² + y² + z² 的最小值與此時的 (x, y, z)。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">36 = (2x − y + 2z)² ≤ (4 + 1 + 4)(x² + y² + z²) ⟹ x² + y² + z² ≥ 4
+等號：(x, y, z) = t(2, −1, 2)，9t = 6 ⟹ t = 2／3
+最小值 4，(x, y, z) = (4／3, −2／3, 4／3)</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：找一個同時垂直兩個向量的方向</h2>
+      <p>舞台上的布幕是一個平面，燈光師想從正面（垂直布幕）打光。已知布幕上兩個方向，怎麼找出垂直它們的方向？內積只能「檢查」垂直，不能直接「造出」垂直。在 1-4「外積、體積與行列式」，我們會學到一種新的向量乘法——外積，它直接造出垂直向量，還順便算出面積與體積。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第四冊・第一章</span>
+    <span>1-3 空間向量的內積</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

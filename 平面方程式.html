@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-1 平面方程式｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第四冊・第二章 空間中的平面與直線・2-1</span>
+    <h1>平面方程式</h1>
+    <p class="sub">燈光秀正式演出前，安全組要確認每台無人機和斜掛的三角布幕保持至少 3 公尺距離。要算「點到布幕的距離」，得先把布幕寫成一個方程式。這一節用 1-4 的法向量寫出平面方程式，學會求兩平面的夾角，以及點到平面的距離。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>平面上的直線可以用 ax + by = c 表示，其中 (a, b) 是它的法向量（數學1學過）。空間中的平面完全比照辦理：ax + by + cz = d，(a, b, c) 是垂直平面的法向量。只要記住「<b>平面方程式的係數就是法向量</b>」，這一節的所有公式都能自己推出來。</p>
+    <ul class="toc">
+      <li><a href="#topic-eq"><b>1</b>點法式與一般式</a></li>
+      <li><a href="#topic-three"><b>2</b>過三點的平面</a></li>
+      <li><a href="#topic-angle"><b>3</b>兩平面的關係與夾角</a></li>
+      <li><a href="#topic-dist"><b>4</b>點到平面的距離</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-eq">
+    <div class="part-kicker"><b>點法式與一般式</b></div>
+    <h2>一個點加一個法向量，就決定一個平面</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>平面 E 過點 P₀(x₀, y₀, z₀)，法向量 <span class="vec">n</span> = (a, b, c)。P(x, y, z) 在 E 上，代表 <span class="vec">P₀P</span> 躺在平面裡，所以和 <span class="vec">n</span> 垂直：</p>
+      <div class="calc"><span class="vec">n</span>・<span class="vec">P₀P</span> = 0 ⟺ a(x − x₀) + b(y − y₀) + c(z − z₀) = 0</div>
+      <div class="formula">
+        <div class="formula-title">平面方程式</div>
+        <span class="big">點法式：a(x − x₀) + b(y − y₀) + c(z − z₀) = 0</span>
+        <br><span class="big">一般式：ax + by + cz = d</span>，法向量 (a, b, c)
+      </div>
+      <p class="quote">舞台地板是 xy 平面，地板上一個斜坡道過點 (2, 0, 0)，法向量為 (1, 0, 2)。寫出斜坡道所在平面的方程式。</p>
+      <div class="calc">1(x − 2) + 0(y − 0) + 2(z − 0) = 0 ⟹ x + 2z = 2</div>
+      <p class="note">缺了 y 不代表錯：方程式裡沒有 y，表示平面和 y 軸平行（沿 y 方向一路延伸）。例如 z = 0 是 xy 平面，x = 3 是垂直於 x 軸的平面。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-three">
+    <div class="part-kicker"><b>過三點的平面</b></div>
+    <h2>先用外積找法向量</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">三角布幕掛在 A(1, 0, 0)、B(0, 2, 0)、C(0, 0, 3) 三點（1-4 算過它的面積）。寫出布幕平面的方程式。</p>
+      <div class="calc">法向量 = <span class="vec">AB</span> × <span class="vec">AC</span> = (−1, 2, 0) × (−1, 0, 3) = (6, 3, 2)
+過 A(1, 0, 0)：6(x − 1) + 3y + 2z = 0 ⟹ 6x + 3y + 2z = 6
+
+檢查 B：0 + 6 + 0 = 6 ✓　檢查 C：0 + 0 + 6 = 6 ✓</div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 300 215" role="img" aria-label="平面 6x+3y+2z=6 與三軸交於 (1,0,0)、(0,2,0)、(0,0,3)，箭頭為法向量 (6,3,2)">
+<defs><marker id="a323-0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-muted)"/></marker><marker id="a323-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--b2)"/></marker></defs>
+<line x1="90.0" y1="170.0" x2="58.9" y2="201.1" stroke="var(--ink-muted)" stroke-width="1.1" marker-end="url(#a323-0)"/>
+<text x="46.9" y="213.1" class="svg-label">x</text>
+<line x1="90.0" y1="170.0" x2="218.0" y2="170.0" stroke="var(--ink-muted)" stroke-width="1.1" marker-end="url(#a323-0)"/>
+<text x="224.0" y="174.0" class="svg-label">y</text>
+<line x1="90.0" y1="170.0" x2="90.0" y2="18.0" stroke="var(--ink-muted)" stroke-width="1.1" marker-end="url(#a323-0)"/>
+<text x="96.0" y="22.0" class="svg-label">z</text>
+<polygon points="75.9,184.1 170.0,170.0 90.0,50.0" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2" fill-opacity="0.85"/>
+<line x1="112.0" y1="134.7" x2="118.5" y2="135.6" stroke="var(--b2)" stroke-width="2.4" marker-end="url(#a323-1)"/>
+<circle cx="75.9" cy="184.1" r="3" fill="var(--ink)"/>
+<text x="83.9" y="200.1" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(1,0,0)</text>
+<circle cx="170.0" cy="170.0" r="3" fill="var(--ink)"/>
+<text x="172.0" y="186.0" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(0,2,0)</text>
+<circle cx="90.0" cy="50.0" r="3" fill="var(--ink)"/>
+<text x="98.0" y="54.0" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(0,0,3)</text>
+<circle cx="112.0" cy="134.7" r="3" fill="var(--b2)"/>
+<text x="119.8" y="135.8" text-anchor="end" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">n</text>
+</svg>
+        <figcaption>布幕平面 6x + 3y + 2z = 6，法向量 (6, 3, 2)</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">截距式</span>
+      <p>把 6x + 3y + 2z = 6 兩邊除以 6，得到 x／1 + y／2 + z／3 = 1——分母剛好是平面和三軸的交點（截距）：</p>
+      <div class="formula">
+        <div class="formula-title">截距式（a、b、c 皆不為 0）</div>
+        <span class="big">x／a + y／b + z／c = 1</span>：平面交三軸於 (a, 0, 0)、(0, b, 0)、(0, 0, c)
+      </div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-angle">
+    <div class="part-kicker"><b>兩平面的關係與夾角</b></div>
+    <h2>看法向量，就知道兩平面的關係</h2>
+
+    <div class="step">
+      <span class="step-tag">規律</span>
+      <div class="formula">
+        <div class="formula-title">兩平面 E₁、E₂（法向量 <span class="vec">n₁</span>、<span class="vec">n₂</span>）</div>
+        <span class="vec">n₁</span> ∥ <span class="vec">n₂</span> ⟹ 平行或重合（再看常數項）
+        <br><span class="vec">n₁</span>・<span class="vec">n₂</span> = 0 ⟹ 兩平面垂直
+        <br>其他情形交於一直線，夾角 θ 滿足 <span class="big">cosθ = ±(<span class="vec">n₁</span>・<span class="vec">n₂</span>)／(|<span class="vec">n₁</span>||<span class="vec">n₂</span>|)</span>
+      </div>
+      <p class="note">兩平面相交會形成兩個互補的二面角（θ 與 180° − θ），所以 cosθ 前面有 ±。題目問「夾角」時，通常兩個都要寫，或依題意取銳角。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">布幕平面 6x + 3y + 2z = 6 和舞台地板 z = 0 的夾角（取銳角）是多少？</p>
+      <div class="calc"><span class="vec">n₁</span> = (6, 3, 2)，<span class="vec">n₂</span> = (0, 0, 1)
+cosθ = 2 ／ (7 × 1) = 2／7 ⟹ θ ≈ 73.4°</div>
+      <p class="note">這和 1-1 用截面求帳篷二面角是同一件事，但這次完全不用找截面——法向量直接給答案。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-dist">
+    <div class="part-kicker"><b>點到平面的距離</b></div>
+    <h2>無人機離布幕夠遠嗎？</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>點 P 到平面 E 的距離，就是 P 到平面上任一點 Q 的向量 <span class="vec">QP</span>，在法向量方向上的正射影長。整理後得到和數學1「點到直線距離」幾乎一樣的公式：</p>
+      <div class="formula">
+        <div class="formula-title">點到平面的距離</div>
+        <span class="big">P(x₀, y₀, z₀) 到 ax + by + cz = d 的距離 = |ax₀ + by₀ + cz₀ − d| ／ √<span class="radicand">(a² + b² + c²)</span></span>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">彩排時 5 號無人機停在 (2, 3, 4)。它和布幕 6x + 3y + 2z = 6 的距離夠 3 公尺嗎？</p>
+      <div class="calc">距離 = |6 × 2 + 3 × 3 + 2 × 4 − 6| ／ √(36 + 9 + 4) = |23| ／ 7 = 23／7 ≈ 3.29（公尺）
+
+3.29 &gt; 3 ⟹ 安全 ✓</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：兩平行平面的距離</span>
+      <p class="quote">布幕前方要再掛一層透光紗，平面為 6x + 3y + 2z = 20。兩層之間相距多遠？</p>
+      <div class="calc">兩平面法向量相同 ⟹ 平行
+在 6x + 3y + 2z = 6 上取一點 (1, 0, 0)，到另一平面的距離：
+|6 − 20| ／ 7 = 2（公尺）</div>
+      <div class="formula">
+        <span class="big">ax + by + cz = d₁ 與 ax + by + cz = d₂ 的距離 = |d₁ − d₂| ／ √(a² + b² + c²)</span>
+      </div>
+      <p class="note">使用前要先把兩個方程式的 a、b、c 調成一模一樣，例如 4x + 2y − 4z = 11 要先除以 2。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：2-1 平面方程式</h2>
+    <p class="lede-line">平面方程式的係數就是法向量。找平面 = 找一個點和一個法向量；過三點時用外積求法向量。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>點法式</td><td class="f">a(x − x₀) + b(y − y₀) + c(z − z₀) = 0</td></tr>
+          <tr><td>一般式</td><td class="f">ax + by + cz = d，法向量 (a, b, c)</td></tr>
+          <tr><td>截距式</td><td class="f">x／a + y／b + z／c = 1</td></tr>
+          <tr><td>過三點</td><td class="f">法向量 = <span class="vec">AB</span> × <span class="vec">AC</span></td></tr>
+          <tr><td>兩平面夾角</td><td class="f">cosθ = ±(<span class="vec">n₁</span>・<span class="vec">n₂</span>)／(|<span class="vec">n₁</span>||<span class="vec">n₂</span>|)</td></tr>
+          <tr><td>點到平面</td><td class="f">|ax₀ + by₀ + cz₀ − d| ／ √(a² + b² + c²)</td></tr>
+          <tr><td>平行平面距離</td><td class="f">|d₁ − d₂| ／ √(a² + b² + c²)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">點法式</span></div>
+        <p>求過點 (1, −2, 3)、法向量為 (2, 1, −1) 的平面方程式。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">2(x − 1) + (y + 2) − (z − 3) = 0 ⟹ 2x + y − z = −3</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">過三點</span></div>
+        <p>求過 A(1, 1, 0)、B(2, 0, 1)、C(0, 1, 2) 的平面方程式。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc"><span class="vec">AB</span> = (1, −1, 1)，<span class="vec">AC</span> = (−1, 0, 2)
+<span class="vec">AB</span> × <span class="vec">AC</span> = ((−1)(2) − 1 × 0, 1 × (−1) − 1 × 2, 1 × 0 − (−1)(−1)) = (−2, −3, −1)
+取法向量 (2, 3, 1)，過 A：2x + 3y + z = 5
+檢查 B：4 + 0 + 1 = 5 ✓，C：0 + 3 + 2 = 5 ✓</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">距離</span></div>
+        <p>求點 (1, 2, 3) 到平面 2x − y + 2z = 10 的距離。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">|2 − 2 + 6 − 10| ／ √(4 + 1 + 4) = 4／3</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">夾角</span></div>
+        <p>求平面 x + z = 1 與 y + z = 2 的夾角。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">法向量 (1, 0, 1)、(0, 1, 1)：cosθ = ±1 ／ (√2 × √2) = ±1／2
+夾角為 60° 或 120°</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">平行平面</span></div>
+        <p>求平面 2x + y − 2z = 1 與 4x + 2y − 4z = 11 的距離。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">第二式除以 2：2x + y − 2z = 11／2
+距離 = |11／2 − 1| ／ √(4 + 1 + 4) = (9／2) ／ 3 = 3／2</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：無人機的直線航線</h2>
+      <p>平面需要一個點和一個法向量；空間中的直線則需要一個點和一個<b>方向向量</b>。在 2-2「空間直線方程式」，我們會寫出無人機直線航線的方程式，求它什麼時候穿過布幕平面，並判斷兩條航線會不會相撞。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第四冊・第二章</span>
+    <span>2-1 平面方程式</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

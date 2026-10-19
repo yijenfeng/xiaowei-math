@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-1 高斯消去法與矩陣｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第四冊・第四章 矩陣・4-1</span>
+    <h1>高斯消去法與矩陣</h1>
+    <p class="sub">園遊會結束，測量社攤位賣了三樣東西：飲料、點心和紀念品。帳本只記了三個總數：一共賣出 150 件、收入 8200 元，而且飲料比點心多賣 30 杯。三樣各賣多少？這是三個未知數的聯立方程式。這一節把方程組寫成一張數字表——矩陣，再用一套固定的步驟「高斯消去法」把它解開，並判斷方程組有唯一解、無解或無限多解。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>解二元一次方程組時，我們用加減消去法消掉一個未知數。三元一次方程組也一樣，只是要消兩輪。<b>高斯消去法</b>把這個過程變成一套標準流程，而且發現：消去時真正在變的只有係數和常數，x、y、z 這些字母只是「位置標籤」。把字母拿掉，只留下數字表格，就是<b>矩陣</b>。</p>
+    <ul class="toc">
+      <li><a href="#topic-matrix"><b>1</b>矩陣與增廣矩陣</a></li>
+      <li><a href="#topic-ops"><b>2</b>列運算</a></li>
+      <li><a href="#topic-gauss"><b>3</b>高斯消去法</a></li>
+      <li><a href="#topic-cases"><b>4</b>解的三種情形</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-matrix">
+    <div class="part-kicker"><b>矩陣與增廣矩陣</b></div>
+    <h2>把字母拿掉，只留數字</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">飲料每杯 40 元、點心每份 60 元、紀念品每個 100 元。設三樣分別賣出 x、y、z 件，列出方程組。</p>
+      <div class="calc">x + y + z = 150
+x − y = 30
+40x + 60y + 100z = 8200　→ 除以 20：2x + 3y + 5z = 410</div>
+      <p>把每個方程式的係數和常數排成一列：</p>
+      <div class="calc">增廣矩陣：<span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>1</span><span>1</span><span class="augc">150</span><span>1</span><span>−1</span><span>0</span><span class="augc">30</span><span>2</span><span>3</span><span>5</span><span class="augc">410</span></span></div>
+      <div class="formula">
+        <div class="formula-title">矩陣名詞</div>
+        由數排成的長方形表格稱為<b>矩陣</b>；橫的叫<b>列</b>，直的叫<b>行</b>
+        <br>m 列 n 行的矩陣稱為 m × n 矩陣；上面的增廣矩陣是 3 × 4
+        <br><b>係數矩陣</b>：只有係數的部分（3 × 3）；<b>增廣矩陣</b>：係數矩陣再加上常數那一行
+      </div>
+      <p class="note">每一列代表一個方程式，每一行代表同一個未知數的係數。第二式沒有 z，要記得補 0。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-ops">
+    <div class="part-kicker"><b>列運算</b></div>
+    <h2>三種不會改變答案的操作</h2>
+
+    <div class="step">
+      <span class="step-tag">規律</span>
+      <p>解方程組時，有三種操作不會改變解：兩式互換、一式乘以非零數、一式加上另一式的倍數。對應到增廣矩陣，就是三種<b>列運算</b>：</p>
+      <div class="formula">
+        <div class="formula-title">基本列運算</div>
+        1. 兩列互換（記作 R₂ ↔ R₃）
+        <br>2. 某列乘以非零數 k（記作 kR₁）
+        <br>3. 某列加上另一列的 k 倍（記作 R₂ + kR₁ → R₂）
+      </div>
+      <p class="note">這和 3A、4A 學過的「行列式性質」很像：第 3 種列運算不改變行列式的值。列運算是之後所有矩陣計算的基本工具。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-gauss">
+    <div class="part-kicker"><b>高斯消去法</b></div>
+    <h2>先消成「階梯形」，再從下往上代回</h2>
+
+    <div class="step">
+      <span class="step-tag">第一輪：消掉第一行下方的數</span>
+      <div class="calc"><span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>1</span><span>1</span><span class="augc">150</span><span>1</span><span>−1</span><span>0</span><span class="augc">30</span><span>2</span><span>3</span><span>5</span><span class="augc">410</span></span>
+R₂ − R₁ → R₂，R₃ − 2R₁ → R₃
+<span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>1</span><span>1</span><span class="augc">150</span><span>0</span><span>−2</span><span>−1</span><span class="augc">−120</span><span>0</span><span>1</span><span>3</span><span class="augc">110</span></span></div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">第二輪：消掉第二行下方的數</span>
+      <div class="calc">R₂ ↔ R₃（讓第二列的領頭數是 1，比較好算）
+<span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>1</span><span>1</span><span class="augc">150</span><span>0</span><span>1</span><span>3</span><span class="augc">110</span><span>0</span><span>−2</span><span>−1</span><span class="augc">−120</span></span>
+R₃ + 2R₂ → R₃
+<span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>1</span><span>1</span><span class="augc">150</span><span>0</span><span>1</span><span>3</span><span class="augc">110</span><span>0</span><span>0</span><span>5</span><span class="augc">100</span></span></div>
+      <p>這種左下角全是 0 的樣子稱為<b>階梯形</b>。最後一列就是 5z = 100。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">代回</span>
+      <div class="calc">5z = 100 ⟹ z = 20
+y + 3z = 110 ⟹ y = 50
+x + y + z = 150 ⟹ x = 80
+
+∴ 飲料 80 杯、點心 50 份、紀念品 20 個
+檢查：80 − 50 = 30 ✓，3200 + 3000 + 2000 = 8200 ✓</div>
+      <p class="note">也可以繼續用列運算，把係數矩陣化成「對角線是 1、其他是 0」的樣子，答案直接出現在最後一行：<span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>0</span><span>0</span><span class="augc">80</span><span>0</span><span>1</span><span>0</span><span class="augc">50</span><span>0</span><span>0</span><span>1</span><span class="augc">20</span></span>——這稱為<b>簡化階梯形</b>。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-cases">
+    <div class="part-kicker"><b>解的三種情形</b></div>
+    <h2>消到最後出現 0 = 0 或 0 = 1</h2>
+
+    <div class="step">
+      <span class="step-tag">無限多解</span>
+      <p class="quote">解 x + y + z = 6、x + 2y + 3z = 14、2x + 3y + 4z = 20。</p>
+      <div class="calc"><span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>1</span><span>1</span><span class="augc">6</span><span>1</span><span>2</span><span>3</span><span class="augc">14</span><span>2</span><span>3</span><span>4</span><span class="augc">20</span></span> → R₂ − R₁、R₃ − 2R₁ → <span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>1</span><span>1</span><span class="augc">6</span><span>0</span><span>1</span><span>2</span><span class="augc">8</span><span>0</span><span>1</span><span>2</span><span class="augc">8</span></span>
+R₃ − R₂ → <span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>1</span><span>1</span><span class="augc">6</span><span>0</span><span>1</span><span>2</span><span class="augc">8</span><span>0</span><span>0</span><span>0</span><span class="augc">0</span></span>
+
+最後一列是 0 = 0（恆成立），只剩兩個有效方程式
+令 z = t：y = 8 − 2t，x = 6 − y − z = −2 + t
+解為 (x, y, z) = (−2 + t, 8 − 2t, t)，t 為任意實數</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">無解</span>
+      <p class="quote">若把第三式改成 2x + 3y + 4z = 21 呢？</p>
+      <div class="calc">同樣的步驟，最後一列變成 <span class="mat" style="grid-template-columns:repeat(4,auto)"><span>0</span><span>0</span><span>0</span><span class="augc">1</span></span>，也就是 0 = 1，矛盾 ⟹ 無解</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">幾何意義</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>階梯形的最後結果</th><th>解</th><th>三個平面（2-1）</th></tr></thead>
+          <tbody>
+            <tr><td>每列都有領頭數</td><td>唯一解</td><td>交於一點</td></tr>
+            <tr><td>出現 0 = 0 的列（無矛盾）</td><td>無限多解</td><td>交於一直線（或重合成一平面）</td></tr>
+            <tr><td>出現 0 = 非零數</td><td>無解</td><td>沒有共同交點</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">每個三元一次方程式都是空間中的一個平面，方程組的解就是三個平面的共同點。無限多解的參數式 (−2 + t, 8 − 2t, t)，正是 2-2 學過的空間直線。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：4-1 高斯消去法與矩陣</h2>
+    <p class="lede-line">寫增廣矩陣 → 列運算消成階梯形 → 看最後一列判斷解的情形 → 由下往上代回。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>增廣矩陣</td><td class="f">每列一個方程式，最後一行是常數；缺項補 0</td></tr>
+          <tr><td>列運算</td><td class="f">互換、乘非零數、加上另一列的倍數</td></tr>
+          <tr><td>階梯形</td><td class="f">左下方全為 0，由最後一列往上代回</td></tr>
+          <tr><td>唯一解</td><td class="f">每列都有領頭數</td></tr>
+          <tr><td>無限多解</td><td class="f">出現 0 = 0，令自由變數為 t</td></tr>
+          <tr><td>無解</td><td class="f">出現 0 = 非零數</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">高斯消去</span></div>
+        <p>用高斯消去法解 x + 2y − z = 3、2x + y + z = 6、x − y + 2z = 3。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc"><span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>2</span><span>−1</span><span class="augc">3</span><span>2</span><span>1</span><span>1</span><span class="augc">6</span><span>1</span><span>−1</span><span>2</span><span class="augc">3</span></span>
+R₂ − 2R₁、R₃ − R₁ → <span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>2</span><span>−1</span><span class="augc">3</span><span>0</span><span>−3</span><span>3</span><span class="augc">0</span><span>0</span><span>−3</span><span>3</span><span class="augc">0</span></span>
+R₃ − R₂ → 最後一列 <span class="mat" style="grid-template-columns:repeat(4,auto)"><span>0</span><span>0</span><span>0</span><span class="augc">0</span></span>
+
+⟹ 無限多解。第二列：−3y + 3z = 0 ⟹ y = z
+令 z = t：y = t，x = 3 − 2t + t = 3 − t
+解 (3 − t, t, t)，t 為任意實數（例如 t = 2 時為 (1, 2, 2)）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">唯一解</span></div>
+        <p>解 x + y + z = 6、x + 2y + 3z = 14、x + 4y + 9z = 36。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">R₂ − R₁、R₃ − R₁ → <span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>1</span><span>1</span><span class="augc">6</span><span>0</span><span>1</span><span>2</span><span class="augc">8</span><span>0</span><span>3</span><span>8</span><span class="augc">30</span></span>
+R₃ − 3R₂ → <span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>1</span><span>1</span><span class="augc">6</span><span>0</span><span>1</span><span>2</span><span class="augc">8</span><span>0</span><span>0</span><span>2</span><span class="augc">6</span></span>
+z = 3，y = 8 − 6 = 2，x = 6 − 2 − 3 = 1</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">依參數判斷</span></div>
+        <p>方程組 x + y + 2z = 4、2x + 3y + 5z = 9、x + 2y + 3z = k 有解，求 k，並寫出解。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">R₂ − 2R₁、R₃ − R₁ → <span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>1</span><span>2</span><span class="augc">4</span><span>0</span><span>1</span><span>1</span><span class="augc">1</span><span>0</span><span>1</span><span>1</span><span class="augc">k−4</span></span>
+R₃ − R₂ → 最後一列 <span class="mat" style="grid-template-columns:repeat(4,auto)"><span>0</span><span>0</span><span>0</span><span class="augc">k−5</span></span>
+有解 ⟺ k = 5（此時無限多解）
+
+令 z = t：y = 1 − t，x = 4 − (1 − t) − 2t = 3 − t
+解 (3 − t, 1 − t, t)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">應用</span></div>
+        <p>社團採購原子筆（每支 10 元）、筆記本（每本 25 元）、尺（每把 15 元）共 20 件，花 300 元，原子筆數量是尺的 2 倍。三樣各買多少？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">x + y + z = 20，10x + 25y + 15z = 300，x − 2z = 0
+x = 2z 代入：3z + y = 20，35z + 25y = 300
+y = 20 − 3z ⟹ 35z + 500 − 75z = 300 ⟹ z = 5
+原子筆 10 支、筆記本 5 本、尺 5 把</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">觀念</span></div>
+        <p>某方程組的增廣矩陣化成階梯形後為 <span class="mat" style="grid-template-columns:repeat(4,auto)"><span>1</span><span>2</span><span>0</span><span class="augc">3</span><span>0</span><span>1</span><span>−1</span><span class="augc">2</span><span>0</span><span>0</span><span>0</span><span class="augc">4</span></span>。這個方程組的解是什麼情形？三個平面的位置關係為何？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">最後一列代表 0 = 4，矛盾 ⟹ 無解
+三個平面沒有共同的交點</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：矩陣本身也能運算</h2>
+      <p>這一節的矩陣只是記帳用的表格。但矩陣也能相加、相乘：兩家分店的銷售量表乘上價目表，就得到各分店的營收。在 4-2「矩陣的運算」，我們會定義矩陣的加法與乘法，並用「反方陣」換一種方式解聯立方程式。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第四冊・第四章</span>
+    <span>4-1 高斯消去法與矩陣</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
