@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-4 面積與二階行列式｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第三冊・第三章 平面向量・3-4</span>
+    <h1>面積與二階行列式</h1>
+    <p class="sub">定向越野結束，測量社要把這次走過的一塊三角形草地畫進校園地圖，並算出面積申請維護經費。手上只有三個角落的坐標，沒有任何角度。這一節用向量直接從坐標算出三角形與平行四邊形的面積，認識二階行列式，最後用它一步解出園遊會的二元一次聯立方程式。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>數學2的面積公式 (1／2)ab・sinC 需要角度，海龍公式需要三邊長（還得開好幾次根號）。如果已知的是坐標，有沒有更直接的方法？有：兩個向量張出的平行四邊形面積，竟然只要四個坐標「交叉相乘再相減」。這個交叉相乘的式子有自己的名字——<b>二階行列式</b>，它在 3-2 判斷平行時已經出現過，這一節還會看到它也能解聯立方程式。</p>
+    <ul class="toc">
+      <li><a href="#topic-area"><b>1</b>向量張出的面積</a></li>
+      <li><a href="#topic-det"><b>2</b>二階行列式</a></li>
+      <li><a href="#topic-cramer"><b>3</b>克拉瑪公式</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-area">
+    <div class="part-kicker"><b>向量張出的面積</b></div>
+    <h2>不用角度，直接從坐標算面積</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">草地的三個角落在地圖上的坐標是 A(1, 1)、B(5, 2)、C(2, 5)（單位：10 公尺）。草地面積是多少？</p>
+      <p>把三角形看成由 <span class="vec">a</span> = <span class="vec">AB</span> = (4, 1) 與 <span class="vec">b</span> = <span class="vec">AC</span> = (1, 4) 張開的形狀。面積公式 (1／2)|<span class="vec">a</span>||<span class="vec">b</span>|sinθ 需要 sinθ，而內積能給 cosθ，用 sin²θ = 1 − cos²θ 接起來：</p>
+      <div class="calc">面積 = (1／2)|<span class="vec">a</span>||<span class="vec">b</span>|sinθ = (1／2)√(|<span class="vec">a</span>|²|<span class="vec">b</span>|² − |<span class="vec">a</span>|²|<span class="vec">b</span>|²cos²θ)
+     = (1／2)√(|<span class="vec">a</span>|²|<span class="vec">b</span>|² − (<span class="vec">a</span>・<span class="vec">b</span>)²)</div>
+      <p>代入坐標 <span class="vec">a</span> = (x₁, y₁)、<span class="vec">b</span> = (x₂, y₂)，根號裡會整理成一個完全平方：</p>
+      <div class="calc">(x₁² + y₁²)(x₂² + y₂²) − (x₁x₂ + y₁y₂)²
+= x₁²y₂² + x₂²y₁² − 2x₁x₂y₁y₂
+= (x₁y₂ − x₂y₁)²</div>
+      <div class="formula">
+        <div class="formula-title">向量張出的面積（<span class="vec">a</span> = (x₁, y₁)，<span class="vec">b</span> = (x₂, y₂)）</div>
+        <span class="big">平行四邊形面積 = |x₁y₂ − x₂y₁|</span>
+        <br><span class="big">三角形面積 = (1／2)|x₁y₂ − x₂y₁|</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc"><span class="vec">AB</span> = (4, 1)，<span class="vec">AC</span> = (1, 4)
+x₁y₂ − x₂y₁ = 4 × 4 − 1 × 1 = 15
+三角形面積 = 15／2 = 7.5（方格）
+
+每格 10 × 10 = 100 平方公尺 ⟹ 草地面積 750 平方公尺</div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 283 283" role="img" aria-label="三角形 ABC，A(1,1)、B(5,2)、C(2,5)，由向量 AB=(4,1) 與 AC=(1,4) 張成，面積是平行四邊形的一半">
+<defs><marker id="ah6-0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="ah6-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--b2)"/></marker></defs>
+<line x1="31.0" y1="269.0" x2="31.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="65.0" y1="269.0" x2="65.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="99.0" y1="269.0" x2="99.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="133.0" y1="269.0" x2="133.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="167.0" y1="269.0" x2="167.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="201.0" y1="269.0" x2="201.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="235.0" y1="269.0" x2="235.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="269.0" y1="269.0" x2="269.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="252.0" x2="269.0" y2="252.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="218.0" x2="269.0" y2="218.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="184.0" x2="269.0" y2="184.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="150.0" x2="269.0" y2="150.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="116.0" x2="269.0" y2="116.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="82.0" x2="269.0" y2="82.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="48.0" x2="269.0" y2="48.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="14.0" x2="269.0" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="252.0" x2="269.0" y2="252.0" stroke="var(--ink-muted)" stroke-width="1.1"/>
+<line x1="31.0" y1="269.0" x2="31.0" y2="14.0" stroke="var(--ink-muted)" stroke-width="1.1"/>
+<polygon points="65.0,218.0 201.0,184.0 235.0,48.0 99.0,82.0" fill="none" stroke="var(--line)" stroke-width="1.2"/>
+<polygon points="65.0,218.0 201.0,184.0 99.0,82.0" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
+<line x1="201.0" y1="184.0" x2="235.0" y2="48.0" stroke="var(--ink-muted)" stroke-width="1.2" stroke-dasharray="3,3"/>
+<line x1="99.0" y1="82.0" x2="235.0" y2="48.0" stroke="var(--ink-muted)" stroke-width="1.2" stroke-dasharray="3,3"/>
+<line x1="65.0" y1="218.0" x2="201.0" y2="184.0" stroke="var(--accent)" stroke-width="2.4" marker-end="url(#ah6-0)"/>
+<line x1="65.0" y1="218.0" x2="99.0" y2="82.0" stroke="var(--b2)" stroke-width="2.4" marker-end="url(#ah6-1)"/>
+<circle cx="65.0" cy="218.0" r="3" fill="var(--ink)"/>
+<text x="55.0" y="236.0" class="svg-label" fill="var(--ink)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">A(1, 1)</text>
+<circle cx="201.0" cy="184.0" r="3" fill="var(--accent)"/>
+<text x="209.0" y="198.0" class="svg-label" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">B(5, 2)</text>
+<circle cx="99.0" cy="82.0" r="3" fill="var(--b2)"/>
+<text x="43.0" y="82.0" class="svg-label" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">C(2, 5)</text>
+<circle cx="235.0" cy="48.0" r="3" fill="var(--ink-muted)"/>
+<text x="139.8" y="214.6" text-anchor="middle" class="svg-label" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(4, 1)</text>
+<text x="75.2" y="136.4" text-anchor="end" class="svg-label" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(1, 4)</text>
+<text x="133.0" y="156.8" text-anchor="middle" class="svg-label" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">7.5</text>
+</svg>
+        <figcaption>三角形 ABC 是 AB、AC 張出的平行四邊形（虛線）的一半</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-det">
+    <div class="part-kicker"><b>二階行列式</b></div>
+    <h2>交叉相乘再相減，換一個記號</h2>
+
+    <div class="step">
+      <span class="step-tag">定義</span>
+      <p>x₁y₂ − x₂y₁ 這個式子出現得太頻繁，數學家給它一個專用記號：</p>
+      <div class="formula">
+        <div class="formula-title">二階行列式</div>
+        <span class="big"><span class="det"><span>a</span><span>b</span><span>c</span><span>d</span></span> = ad − bc</span>
+        <br>左上乘右下，減去右上乘左下
+      </div>
+      <div class="calc"><span class="det"><span>4</span><span>1</span><span>1</span><span>4</span></span> = 16 − 1 = 15　　　<span class="det"><span>3</span><span>−2</span><span>5</span><span>4</span></span> = 12 − (−10) = 22</div>
+      <p>於是兩個向量的平行四邊形面積可以寫成：</p>
+      <div class="formula">
+        <span class="big">平行四邊形面積 = |<span class="det"><span>x₁</span><span>y₁</span><span>x₂</span><span>y₂</span></span>|</span>（外面再取絕對值）
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 性質</span>
+      <p>從「面積」的角度想，很多性質一看就懂：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>性質</th><th>面積的解釋</th></tr></thead>
+          <tbody>
+            <tr><td>兩列對調，值變號</td><td>面積不變，只是方向（順逆時針）相反</td></tr>
+            <tr><td>某列乘 k，值乘 k</td><td>一邊拉長 k 倍，面積也 k 倍</td></tr>
+            <tr><td>某列加上另一列的倍數，值不變</td><td>平行四邊形「推斜」，底和高都沒變</td></tr>
+            <tr><td>值為 0 ⟺ 兩列平行</td><td>兩向量疊在同一直線上，張不出面積</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="calc">對調：<span class="det"><span>3</span><span>6</span><span>1</span><span>4</span></span> = 18 − 6 = 12，<span class="det"><span>1</span><span>4</span><span>3</span><span>6</span></span> = 6 − 18 = −12
+乘 k：<span class="det"><span>2</span><span>8</span><span>3</span><span>6</span></span> = 12 − 24 = −12 = 2 × <span class="det"><span>1</span><span>4</span><span>3</span><span>6</span></span>
+平行：<span class="det"><span>2</span><span>4</span><span>3</span><span>6</span></span> = 12 − 12 = 0（(2, 4) 與 (3, 6) 都是 (1, 2) 的倍數）</div>
+      <p class="note">最後一條就是 3-2 的平行條件 x₁y₂ − x₂y₁ = 0：平行 ⟺ 面積為 0 ⟺ 行列式為 0。行列式的正負號代表方向：<span class="vec">b</span> 在 <span class="vec">a</span> 的逆時針方向時為正，順時針方向時為負。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-cramer">
+    <div class="part-kicker"><b>克拉瑪公式</b></div>
+    <h2>用行列式直接寫出聯立方程式的解</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">園遊會測量社攤位賣飲料（每杯 40 元）和點心（每份 60 元），一共賣出 120 份，收入 5600 元。各賣了多少？</p>
+      <div class="calc">設飲料 x 杯、點心 y 份：
+ x +  y = 120
+40x + 60y = 5600</div>
+      <p>對一般的方程組 a₁x + b₁y = c₁、a₂x + b₂y = c₂，用加減消去法消掉 y：兩式分別乘 b₂、b₁ 再相減，得到 (a₁b₂ − a₂b₁)x = c₁b₂ − c₂b₁。兩邊剛好都是行列式：</p>
+      <div class="formula">
+        <div class="formula-title">克拉瑪公式</div>
+        Δ = <span class="det"><span>a₁</span><span>b₁</span><span>a₂</span><span>b₂</span></span>，Δₓ = <span class="det"><span>c₁</span><span>b₁</span><span>c₂</span><span>b₂</span></span>，Δᵧ = <span class="det"><span>a₁</span><span>c₁</span><span>a₂</span><span>c₂</span></span>
+        <br><span class="big">Δ ≠ 0 時，恰有一組解：x = Δₓ／Δ，y = Δᵧ／Δ</span>
+      </div>
+      <p class="note">Δ 是係數排成的行列式；Δₓ 把「x 那一行」換成常數，Δᵧ 把「y 那一行」換成常數。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">Δ = <span class="det"><span>1</span><span>1</span><span>40</span><span>60</span></span> = 60 − 40 = 20
+Δₓ = <span class="det"><span>120</span><span>1</span><span>5600</span><span>60</span></span> = 7200 − 5600 = 1600
+Δᵧ = <span class="det"><span>1</span><span>120</span><span>40</span><span>5600</span></span> = 5600 − 4800 = 800
+
+x = 1600 ／ 20 = 80，y = 800 ／ 20 = 40
+∴ 飲料 80 杯、點心 40 份（檢查：80 + 40 = 120，3200 + 2400 = 5600 ✓）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">解的情形</span>
+      <p>每個方程式是一條直線，解就是兩直線的交點。Δ 為 0 代表兩條直線的方向（法向量）平行：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>條件</th><th>解的情形</th><th>兩直線</th></tr></thead>
+          <tbody>
+            <tr><td class="f">Δ ≠ 0</td><td>恰有一組解</td><td>交於一點</td></tr>
+            <tr><td class="f">Δ = 0，且 Δₓ、Δᵧ 不全為 0</td><td>無解</td><td>平行不重合</td></tr>
+            <tr><td class="f">Δ = Δₓ = Δᵧ = 0</td><td>無限多組解或無解（需回到原式檢查）</td><td>通常為重合</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：3-4 面積與二階行列式</h2>
+    <p class="lede-line">二階行列式同時是三件事：兩向量張出的有號面積、平行的判別式、聯立方程式的解公式。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>面積（向量）</td><td class="f">三角形 = (1／2)√(|<span class="vec">a</span>|²|<span class="vec">b</span>|² − (<span class="vec">a</span>・<span class="vec">b</span>)²)</td></tr>
+          <tr><td>面積（坐標）</td><td class="f">平行四邊形 = |x₁y₂ − x₂y₁|；三角形為其一半</td></tr>
+          <tr><td>二階行列式</td><td class="f"><span class="det"><span>a</span><span>b</span><span>c</span><span>d</span></span> = ad − bc</td></tr>
+          <tr><td>性質</td><td class="f">對調變號；一列乘 k 值乘 k；加另一列倍數不變；平行 ⟺ 值為 0</td></tr>
+          <tr><td>克拉瑪公式</td><td class="f">x = Δₓ／Δ，y = Δᵧ／Δ（Δ ≠ 0）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">三角形面積</span></div>
+        <p>O(0, 0)、A(3, 1)、B(−1, 4)，求三角形 OAB 的面積。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">面積 = (1／2)|<span class="det"><span>3</span><span>1</span><span>−1</span><span>4</span></span>| = (1／2)|12 + 1| = 13／2</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">三角形面積</span></div>
+        <p>A(2, 1)、B(6, 3)、C(4, 7)，求三角形 ABC 的面積。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc"><span class="vec">AB</span> = (4, 2)，<span class="vec">AC</span> = (2, 6)
+面積 = (1／2)|4 × 6 − 2 × 2| = (1／2) × 20 = 10</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">平行四邊形</span></div>
+        <p>由 <span class="vec">a</span> = (2, 5)、<span class="vec">b</span> = (3, −1) 張成的平行四邊形面積是多少？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">|<span class="det"><span>2</span><span>5</span><span>3</span><span>−1</span></span>| = |−2 − 15| = 17</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">克拉瑪公式</span></div>
+        <p>用克拉瑪公式解 3x + 2y = 7、5x − y = 3。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">Δ = <span class="det"><span>3</span><span>2</span><span>5</span><span>−1</span></span> = −3 − 10 = −13
+Δₓ = <span class="det"><span>7</span><span>2</span><span>3</span><span>−1</span></span> = −7 − 6 = −13
+Δᵧ = <span class="det"><span>3</span><span>7</span><span>5</span><span>3</span></span> = 9 − 35 = −26
+x = 1，y = 2</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">解的情形</span></div>
+        <p>方程組 kx + 2y = 1、2x + ky = k 無解，求 k。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">Δ = k² − 4 = 0 ⟹ k = 2 或 k = −2
+Δₓ = <span class="det"><span>1</span><span>2</span><span>k</span><span>k</span></span> = k − 2k = −k，k = ±2 時 Δₓ ≠ 0
+
+兩個值都會無解：
+k = 2：2x + 2y = 1 與 2x + 2y = 2，平行不重合
+k = −2：−2x + 2y = 1 與 2x − 2y = −2（即 −2x + 2y = 2），平行不重合
+∴ k = 2 或 k = −2</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>3A 完成：三角函數、指數對數、平面向量</h2>
+      <p>這一冊從車輪的弧度出發，畫出會重複的波、會倍增的曲線，最後用向量把方向和大小一起處理。這一節的二階行列式只是開始：4A 會把向量推廣到三維空間，二階行列式升級成三階行列式（算平行六面體的體積），而克拉瑪公式背後「把方程組寫成一個方陣」的想法，就是矩陣的起點。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第三冊・第三章</span>
+    <span>3-4 面積與二階行列式</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

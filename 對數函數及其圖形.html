@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-3 對數函數及其圖形｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數A 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數A 第三冊・第二章 指數與對數函數・2-3</span>
+    <h1>對數函數及其圖形</h1>
+    <p class="sub">學校博物館社去參觀一個考古展，解說牌寫著：「這塊木炭的碳-14 只剩原本的 30%，推估距今約一萬年。」筱葳好奇這個數字怎麼算出來的。這一節把 log 畫成函數圖形，看它和指數函數的鏡像關係，用單調性比較大小與解不等式，最後整理出處理「按比例成長」問題的通用模型。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>指數函數輸入「次數」、輸出「倍數」；對數函數剛好反過來，輸入「倍數」、輸出「次數」。兩者是同一個關係的正反兩面，所以圖形也是彼此的鏡像。對數函數長得很慢——x 從 1 變成 1000，log x 只從 0 變成 3——這正是它適合用來描述地震規模、音量分貝、酸鹼值的原因。</p>
+    <ul class="toc">
+      <li><a href="#topic-graph"><b>1</b>對數函數的圖形</a></li>
+      <li><a href="#topic-inverse"><b>2</b>與指數函數互為反函數</a></li>
+      <li><a href="#topic-compare"><b>3</b>比較大小與不等式</a></li>
+      <li><a href="#topic-model"><b>4</b>按比例成長模型</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-graph">
+    <div class="part-kicker"><b>對數函數的圖形</b></div>
+    <h2>只活在 y 軸右邊，而且都通過 (1, 0)</h2>
+
+    <div class="step">
+      <span class="step-tag">描點</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>x</th><th>1／8</th><th>1／4</th><th>1／2</th><th>1</th><th>2</th><th>4</th><th>8</th></tr></thead>
+          <tbody>
+            <tr><td>log₂x</td><td class="f">−3</td><td class="f">−2</td><td class="f">−1</td><td class="f">0</td><td class="f">1</td><td class="f">2</td><td class="f">3</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">x 每乘 2，log₂x 只加 1：橫軸方向要跑很遠，縱軸才爬一格。這就是「對數成長很慢」的意思。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 320 200" role="img" aria-label="y=log 以 2 為底 x（藍）遞增、y=log 以二分之一為底 x（橘）遞減，都通過 (1,0)">
+<line x1="30.0" y1="164.6" x2="308.0" y2="164.6" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="117.5" x2="308.0" y2="117.5" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="70.5" x2="308.0" y2="70.5" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="23.4" x2="308.0" y2="23.4" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="79.4" y1="174.0" x2="79.4" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="110.3" y1="174.0" x2="110.3" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="172.1" y1="174.0" x2="172.1" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="295.6" y1="174.0" x2="295.6" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="94.0" x2="308.0" y2="94.0" stroke="var(--ink-muted)" stroke-width="1"/>
+<line x1="48.5" y1="174.0" x2="48.5" y2="14.0" stroke="var(--ink-muted)" stroke-width="1"/>
+<text x="79.4" y="107.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">1</text>
+<text x="110.3" y="107.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2</text>
+<text x="172.1" y="107.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">4</text>
+<text x="295.6" y="107.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">8</text>
+<text x="44.5" y="168.1" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">−3</text>
+<text x="44.5" y="121.0" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">−1</text>
+<text x="44.5" y="74.0" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">1</text>
+<text x="44.5" y="26.9" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">3</text>
+<path d="M51.4,175.0 L52.0,168.1 L52.7,162.4 L53.3,157.5 L53.9,153.2 L54.6,149.4 L55.2,146.0 L55.8,142.9 L56.5,140.1 L57.1,137.4 L57.8,135.0 L58.4,132.7 L59.0,130.6 L59.7,128.6 L60.3,126.7 L61.0,124.9 L61.6,123.2 L62.2,121.6 L62.9,120.1 L63.5,118.6 L64.1,117.2 L64.8,115.8 L65.4,114.5 L66.1,113.2 L66.7,112.0 L67.3,110.8 L68.0,109.7 L68.6,108.6 L69.3,107.5 L69.9,106.5 L70.5,105.5 L71.2,104.5 L71.8,103.6 L72.5,102.7 L73.1,101.8 L73.7,100.9 L74.4,100.1 L75.0,99.2 L75.6,98.4 L76.3,97.6 L76.9,96.9 L77.6,96.1 L78.2,95.4 L78.8,94.6 L79.5,93.9 L80.1,93.2 L80.8,92.6 L81.4,91.9 L82.0,91.2 L82.7,90.6 L83.3,90.0 L83.9,89.4 L84.6,88.8 L85.2,88.2 L85.9,87.6 L86.5,87.0 L87.1,86.4 L87.8,85.9 L88.4,85.3 L89.1,84.8 L89.7,84.3 L90.3,83.7 L91.0,83.2 L91.6,82.7 L92.2,82.2 L92.9,81.7 L93.5,81.2 L94.2,80.8 L94.8,80.3 L95.4,79.8 L96.1,79.4 L96.7,78.9 L97.4,78.5 L98.0,78.0 L98.6,77.6 L99.3,77.2 L99.9,76.7 L100.6,76.3 L101.2,75.9 L101.8,75.5 L102.5,75.1 L103.1,74.7 L103.7,74.3 L104.4,73.9 L105.0,73.5 L105.7,73.1 L106.3,72.8 L106.9,72.4 L107.6,72.0 L108.2,71.6 L108.9,71.3 L109.5,70.9 L110.1,70.6 L110.8,70.2 L111.4,69.9 L112.0,69.5 L112.7,69.2 L113.3,68.9 L114.0,68.5 L114.6,68.2 L115.2,67.9 L115.9,67.5 L116.5,67.2 L117.2,66.9 L117.8,66.6 L118.4,66.3 L119.1,66.0 L119.7,65.7 L120.3,65.4 L121.0,65.1 L121.6,64.8 L122.3,64.5 L122.9,64.2 L123.5,63.9 L124.2,63.6 L124.8,63.3 L125.5,63.0 L126.1,62.7 L126.7,62.5 L127.4,62.2 L128.0,61.9 L128.6,61.6 L129.3,61.4 L129.9,61.1 L130.6,60.8 L131.2,60.6 L131.8,60.3 L132.5,60.1 L133.1,59.8 L133.8,59.5 L134.4,59.3 L135.0,59.0 L135.7,58.8 L136.3,58.5 L137.0,58.3 L137.6,58.1 L138.2,57.8 L138.9,57.6 L139.5,57.3 L140.1,57.1 L140.8,56.9 L141.4,56.6 L142.1,56.4 L142.7,56.2 L143.3,55.9 L144.0,55.7 L144.6,55.5 L145.3,55.3 L145.9,55.0 L146.5,54.8 L147.2,54.6 L147.8,54.4 L148.4,54.2 L149.1,53.9 L149.7,53.7 L150.4,53.5 L151.0,53.3 L151.6,53.1 L152.3,52.9 L152.9,52.7 L153.6,52.5 L154.2,52.3 L154.8,52.0 L155.5,51.8 L156.1,51.6 L156.7,51.4 L157.4,51.2 L158.0,51.0 L158.7,50.8 L159.3,50.6 L159.9,50.5 L160.6,50.3 L161.2,50.1 L161.9,49.9 L162.5,49.7 L163.1,49.5 L163.8,49.3 L164.4,49.1 L165.1,48.9 L165.7,48.7 L166.3,48.6 L167.0,48.4 L167.6,48.2 L168.2,48.0 L168.9,47.8 L169.5,47.7 L170.2,47.5 L170.8,47.3 L171.4,47.1 L172.1,46.9 L172.7,46.8 L173.4,46.6 L174.0,46.4 L174.6,46.2 L175.3,46.1 L175.9,45.9 L176.5,45.7 L177.2,45.6 L177.8,45.4 L178.5,45.2 L179.1,45.1 L179.7,44.9 L180.4,44.7 L181.0,44.6 L181.7,44.4 L182.3,44.2 L182.9,44.1 L183.6,43.9 L184.2,43.8 L184.8,43.6 L185.5,43.4 L186.1,43.3 L186.8,43.1 L187.4,43.0 L188.0,42.8 L188.7,42.7 L189.3,42.5 L190.0,42.4 L190.6,42.2 L191.2,42.1 L191.9,41.9 L192.5,41.7 L193.2,41.6 L193.8,41.4 L194.4,41.3 L195.1,41.2 L195.7,41.0 L196.3,40.9 L197.0,40.7 L197.6,40.6 L198.3,40.4 L198.9,40.3 L199.5,40.1 L200.2,40.0 L200.8,39.8 L201.5,39.7 L202.1,39.6 L202.7,39.4 L203.4,39.3 L204.0,39.1 L204.6,39.0 L205.3,38.9 L205.9,38.7 L206.6,38.6 L207.2,38.5 L207.8,38.3 L208.5,38.2 L209.1,38.0 L209.8,37.9 L210.4,37.8 L211.0,37.6 L211.7,37.5 L212.3,37.4 L212.9,37.2 L213.6,37.1 L214.2,37.0 L214.9,36.8 L215.5,36.7 L216.1,36.6 L216.8,36.5 L217.4,36.3 L218.1,36.2 L218.7,36.1 L219.3,35.9 L220.0,35.8 L220.6,35.7 L221.3,35.6 L221.9,35.4 L222.5,35.3 L223.2,35.2 L223.8,35.1 L224.4,34.9 L225.1,34.8 L225.7,34.7 L226.4,34.6 L227.0,34.5 L227.6,34.3 L228.3,34.2 L228.9,34.1 L229.6,34.0 L230.2,33.9 L230.8,33.7 L231.5,33.6 L232.1,33.5 L232.7,33.4 L233.4,33.3 L234.0,33.1 L234.7,33.0 L235.3,32.9 L235.9,32.8 L236.6,32.7 L237.2,32.6 L237.9,32.5 L238.5,32.3 L239.1,32.2 L239.8,32.1 L240.4,32.0 L241.0,31.9 L241.7,31.8 L242.3,31.7 L243.0,31.6 L243.6,31.4 L244.2,31.3 L244.9,31.2 L245.5,31.1 L246.2,31.0 L246.8,30.9 L247.4,30.8 L248.1,30.7 L248.7,30.6 L249.4,30.5 L250.0,30.3 L250.6,30.2 L251.3,30.1 L251.9,30.0 L252.5,29.9 L253.2,29.8 L253.8,29.7 L254.5,29.6 L255.1,29.5 L255.7,29.4 L256.4,29.3 L257.0,29.2 L257.7,29.1 L258.3,29.0 L258.9,28.9 L259.6,28.8 L260.2,28.7 L260.8,28.6 L261.5,28.5 L262.1,28.4 L262.8,28.3 L263.4,28.2 L264.0,28.1 L264.7,28.0 L265.3,27.9 L266.0,27.8 L266.6,27.7 L267.2,27.6 L267.9,27.5 L268.5,27.4 L269.1,27.3 L269.8,27.2 L270.4,27.1 L271.1,27.0 L271.7,26.9 L272.3,26.8 L273.0,26.7 L273.6,26.6 L274.3,26.5 L274.9,26.4 L275.5,26.3 L276.2,26.2 L276.8,26.1 L277.5,26.0 L278.1,25.9 L278.7,25.8 L279.4,25.7 L280.0,25.6 L280.6,25.5 L281.3,25.4 L281.9,25.4 L282.6,25.3 L283.2,25.2 L283.8,25.1 L284.5,25.0 L285.1,24.9 L285.8,24.8 L286.4,24.7 L287.0,24.6 L287.7,24.5 L288.3,24.4 L288.9,24.3 L289.6,24.3 L290.2,24.2 L290.9,24.1 L291.5,24.0 L292.1,23.9 L292.8,23.8 L293.4,23.7 L294.1,23.6 L294.7,23.5 L295.3,23.5 L296.0,23.4 L296.6,23.3 L297.2,23.2 L297.9,23.1 L298.5,23.0 L299.2,22.9 L299.8,22.8 L300.4,22.8 L301.1,22.7 L301.7,22.6 L302.4,22.5 L303.0,22.4 L303.6,22.3 L304.3,22.2 L304.9,22.2" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M51.4,13.0 L52.0,19.9 L52.7,25.6 L53.3,30.5 L53.9,34.8 L54.6,38.6 L55.2,42.0 L55.8,45.1 L56.5,47.9 L57.1,50.6 L57.8,53.0 L58.4,55.3 L59.0,57.4 L59.7,59.4 L60.3,61.3 L61.0,63.1 L61.6,64.8 L62.2,66.4 L62.9,67.9 L63.5,69.4 L64.1,70.8 L64.8,72.2 L65.4,73.5 L66.1,74.8 L66.7,76.0 L67.3,77.2 L68.0,78.3 L68.6,79.4 L69.3,80.5 L69.9,81.5 L70.5,82.5 L71.2,83.5 L71.8,84.4 L72.5,85.3 L73.1,86.2 L73.7,87.1 L74.4,87.9 L75.0,88.8 L75.6,89.6 L76.3,90.4 L76.9,91.1 L77.6,91.9 L78.2,92.6 L78.8,93.4 L79.5,94.1 L80.1,94.8 L80.8,95.4 L81.4,96.1 L82.0,96.8 L82.7,97.4 L83.3,98.0 L83.9,98.6 L84.6,99.2 L85.2,99.8 L85.9,100.4 L86.5,101.0 L87.1,101.6 L87.8,102.1 L88.4,102.7 L89.1,103.2 L89.7,103.7 L90.3,104.3 L91.0,104.8 L91.6,105.3 L92.2,105.8 L92.9,106.3 L93.5,106.8 L94.2,107.2 L94.8,107.7 L95.4,108.2 L96.1,108.6 L96.7,109.1 L97.4,109.5 L98.0,110.0 L98.6,110.4 L99.3,110.8 L99.9,111.3 L100.6,111.7 L101.2,112.1 L101.8,112.5 L102.5,112.9 L103.1,113.3 L103.7,113.7 L104.4,114.1 L105.0,114.5 L105.7,114.9 L106.3,115.2 L106.9,115.6 L107.6,116.0 L108.2,116.4 L108.9,116.7 L109.5,117.1 L110.1,117.4 L110.8,117.8 L111.4,118.1 L112.0,118.5 L112.7,118.8 L113.3,119.1 L114.0,119.5 L114.6,119.8 L115.2,120.1 L115.9,120.5 L116.5,120.8 L117.2,121.1 L117.8,121.4 L118.4,121.7 L119.1,122.0 L119.7,122.3 L120.3,122.6 L121.0,122.9 L121.6,123.2 L122.3,123.5 L122.9,123.8 L123.5,124.1 L124.2,124.4 L124.8,124.7 L125.5,125.0 L126.1,125.3 L126.7,125.5 L127.4,125.8 L128.0,126.1 L128.6,126.4 L129.3,126.6 L129.9,126.9 L130.6,127.2 L131.2,127.4 L131.8,127.7 L132.5,127.9 L133.1,128.2 L133.8,128.5 L134.4,128.7 L135.0,129.0 L135.7,129.2 L136.3,129.5 L137.0,129.7 L137.6,129.9 L138.2,130.2 L138.9,130.4 L139.5,130.7 L140.1,130.9 L140.8,131.1 L141.4,131.4 L142.1,131.6 L142.7,131.8 L143.3,132.1 L144.0,132.3 L144.6,132.5 L145.3,132.7 L145.9,133.0 L146.5,133.2 L147.2,133.4 L147.8,133.6 L148.4,133.8 L149.1,134.1 L149.7,134.3 L150.4,134.5 L151.0,134.7 L151.6,134.9 L152.3,135.1 L152.9,135.3 L153.6,135.5 L154.2,135.7 L154.8,136.0 L155.5,136.2 L156.1,136.4 L156.7,136.6 L157.4,136.8 L158.0,137.0 L158.7,137.2 L159.3,137.4 L159.9,137.5 L160.6,137.7 L161.2,137.9 L161.9,138.1 L162.5,138.3 L163.1,138.5 L163.8,138.7 L164.4,138.9 L165.1,139.1 L165.7,139.3 L166.3,139.4 L167.0,139.6 L167.6,139.8 L168.2,140.0 L168.9,140.2 L169.5,140.3 L170.2,140.5 L170.8,140.7 L171.4,140.9 L172.1,141.1 L172.7,141.2 L173.4,141.4 L174.0,141.6 L174.6,141.8 L175.3,141.9 L175.9,142.1 L176.5,142.3 L177.2,142.4 L177.8,142.6 L178.5,142.8 L179.1,142.9 L179.7,143.1 L180.4,143.3 L181.0,143.4 L181.7,143.6 L182.3,143.8 L182.9,143.9 L183.6,144.1 L184.2,144.2 L184.8,144.4 L185.5,144.6 L186.1,144.7 L186.8,144.9 L187.4,145.0 L188.0,145.2 L188.7,145.3 L189.3,145.5 L190.0,145.6 L190.6,145.8 L191.2,145.9 L191.9,146.1 L192.5,146.3 L193.2,146.4 L193.8,146.6 L194.4,146.7 L195.1,146.8 L195.7,147.0 L196.3,147.1 L197.0,147.3 L197.6,147.4 L198.3,147.6 L198.9,147.7 L199.5,147.9 L200.2,148.0 L200.8,148.2 L201.5,148.3 L202.1,148.4 L202.7,148.6 L203.4,148.7 L204.0,148.9 L204.6,149.0 L205.3,149.1 L205.9,149.3 L206.6,149.4 L207.2,149.5 L207.8,149.7 L208.5,149.8 L209.1,150.0 L209.8,150.1 L210.4,150.2 L211.0,150.4 L211.7,150.5 L212.3,150.6 L212.9,150.8 L213.6,150.9 L214.2,151.0 L214.9,151.2 L215.5,151.3 L216.1,151.4 L216.8,151.5 L217.4,151.7 L218.1,151.8 L218.7,151.9 L219.3,152.1 L220.0,152.2 L220.6,152.3 L221.3,152.4 L221.9,152.6 L222.5,152.7 L223.2,152.8 L223.8,152.9 L224.4,153.1 L225.1,153.2 L225.7,153.3 L226.4,153.4 L227.0,153.5 L227.6,153.7 L228.3,153.8 L228.9,153.9 L229.6,154.0 L230.2,154.1 L230.8,154.3 L231.5,154.4 L232.1,154.5 L232.7,154.6 L233.4,154.7 L234.0,154.9 L234.7,155.0 L235.3,155.1 L235.9,155.2 L236.6,155.3 L237.2,155.4 L237.9,155.5 L238.5,155.7 L239.1,155.8 L239.8,155.9 L240.4,156.0 L241.0,156.1 L241.7,156.2 L242.3,156.3 L243.0,156.4 L243.6,156.6 L244.2,156.7 L244.9,156.8 L245.5,156.9 L246.2,157.0 L246.8,157.1 L247.4,157.2 L248.1,157.3 L248.7,157.4 L249.4,157.5 L250.0,157.7 L250.6,157.8 L251.3,157.9 L251.9,158.0 L252.5,158.1 L253.2,158.2 L253.8,158.3 L254.5,158.4 L255.1,158.5 L255.7,158.6 L256.4,158.7 L257.0,158.8 L257.7,158.9 L258.3,159.0 L258.9,159.1 L259.6,159.2 L260.2,159.3 L260.8,159.4 L261.5,159.5 L262.1,159.6 L262.8,159.7 L263.4,159.8 L264.0,159.9 L264.7,160.0 L265.3,160.1 L266.0,160.2 L266.6,160.3 L267.2,160.4 L267.9,160.5 L268.5,160.6 L269.1,160.7 L269.8,160.8 L270.4,160.9 L271.1,161.0 L271.7,161.1 L272.3,161.2 L273.0,161.3 L273.6,161.4 L274.3,161.5 L274.9,161.6 L275.5,161.7 L276.2,161.8 L276.8,161.9 L277.5,162.0 L278.1,162.1 L278.7,162.2 L279.4,162.3 L280.0,162.4 L280.6,162.5 L281.3,162.6 L281.9,162.6 L282.6,162.7 L283.2,162.8 L283.8,162.9 L284.5,163.0 L285.1,163.1 L285.8,163.2 L286.4,163.3 L287.0,163.4 L287.7,163.5 L288.3,163.6 L288.9,163.7 L289.6,163.7 L290.2,163.8 L290.9,163.9 L291.5,164.0 L292.1,164.1 L292.8,164.2 L293.4,164.3 L294.1,164.4 L294.7,164.5 L295.3,164.5 L296.0,164.6 L296.6,164.7 L297.2,164.8 L297.9,164.9 L298.5,165.0 L299.2,165.1 L299.8,165.2 L300.4,165.2 L301.1,165.3 L301.7,165.4 L302.4,165.5 L303.0,165.6 L303.6,165.7 L304.3,165.8 L304.9,165.8" fill="none" stroke="var(--b2)" stroke-width="2.2" stroke-linejoin="round"/>
+<circle cx="79.4" cy="94.0" r="3" fill="var(--ink)"/>
+<circle cx="264.8" cy="27.9" r="3" fill="var(--accent)"/>
+<text x="254.8" y="19.9" class="svg-label" font-size="10" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">log₂x</text>
+<circle cx="264.8" cy="160.1" r="3" fill="var(--b2)"/>
+<text x="240.8" y="176.1" class="svg-label" font-size="10" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">log₁／₂x</text>
+
+</svg>
+        <figcaption>底數大於 1 遞增、介於 0 與 1 之間遞減；兩條都通過 (1, 0)，且對稱於 x 軸</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">整理性質</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>性質</th><th>a &gt; 1</th><th>0 &lt; a &lt; 1</th></tr></thead>
+          <tbody>
+            <tr><td>定義域／值域</td><td class="f">x &gt; 0／全體實數</td><td class="f">x &gt; 0／全體實數</td></tr>
+            <tr><td>必過點</td><td class="f">(1, 0)</td><td class="f">(1, 0)</td></tr>
+            <tr><td>單調性</td><td class="f">嚴格遞增</td><td class="f">嚴格遞減</td></tr>
+            <tr><td>漸近線</td><td class="f">y 軸（x → 0⁺ 時趨向 −∞）</td><td class="f">y 軸（x → 0⁺ 時趨向 +∞）</td></tr>
+            <tr><td>正負號</td><td class="f">0 &lt; x &lt; 1 時為負，x &gt; 1 時為正</td><td class="f">0 &lt; x &lt; 1 時為正，x &gt; 1 時為負</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">log<sub>1/2</sub>x = −log₂x（換底即得），所以兩條圖形對稱於 x 軸。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-inverse">
+    <div class="part-kicker"><b>與指數函數互為反函數</b></div>
+    <h2>把 x 和 y 對調，就是沿著 y = x 翻過去</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察 → 規律</span>
+      <p>點 (2, 4) 在 y = 2ˣ 上，因為 2² = 4；點 (4, 2) 在 y = log₂x 上，因為 log₂4 = 2。每一點都是坐標對調：</p>
+      <div class="calc">(a, b) 在 y = 2ˣ 上 ⟺ b = 2ᵃ ⟺ a = log₂b ⟺ (b, a) 在 y = log₂x 上</div>
+      <p>點 (a, b) 與 (b, a) 對稱於直線 y = x，所以兩條圖形也對稱於 y = x。像這樣「把輸入、輸出對調」得到的兩個函數，稱為互為<b>反函數</b>。</p>
+      <div class="formula">
+        <div class="formula-title">反函數關係</div>
+        <span class="big">y = aˣ 與 y = logₐx 的圖形對稱於直線 y = x</span>
+      </div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 280 280" role="img" aria-label="y=2^x 與 y=log 以 2 為底 x 的圖形，對稱於直線 y=x">
+<line x1="26.0" y1="220.5" x2="270.0" y2="220.5" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="26.0" y1="134.0" x2="270.0" y2="134.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="26.0" y1="105.2" x2="270.0" y2="105.2" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="26.0" y1="47.5" x2="270.0" y2="47.5" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="62.9" y1="258.0" x2="62.9" y2="10.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="148.0" y1="258.0" x2="148.0" y2="10.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="176.4" y1="258.0" x2="176.4" y2="10.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="233.1" y1="258.0" x2="233.1" y2="10.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="26.0" y1="162.8" x2="270.0" y2="162.8" stroke="var(--ink-muted)" stroke-width="1"/>
+<line x1="119.6" y1="258.0" x2="119.6" y2="10.0" stroke="var(--ink-muted)" stroke-width="1"/>
+<text x="62.9" y="175.8" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">−2</text>
+<text x="148.0" y="175.8" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">1</text>
+<text x="176.4" y="175.8" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2</text>
+<text x="233.1" y="175.8" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">4</text>
+<text x="115.6" y="224.0" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">−2</text>
+<text x="115.6" y="137.5" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">1</text>
+<text x="115.6" y="108.7" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2</text>
+<text x="115.6" y="51.0" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">4</text>
+<path d="M26.0,159.9 L26.6,159.9 L27.2,159.8 L27.8,159.8 L28.4,159.7 L29.0,159.7 L29.7,159.6 L30.3,159.6 L30.9,159.5 L31.5,159.5 L32.1,159.4 L32.7,159.4 L33.3,159.3 L33.9,159.3 L34.5,159.2 L35.1,159.2 L35.8,159.1 L36.4,159.1 L37.0,159.0 L37.6,159.0 L38.2,158.9 L38.8,158.8 L39.4,158.8 L40.0,158.7 L40.6,158.7 L41.2,158.6 L41.9,158.5 L42.5,158.5 L43.1,158.4 L43.7,158.3 L44.3,158.3 L44.9,158.2 L45.5,158.1 L46.1,158.0 L46.7,158.0 L47.3,157.9 L48.0,157.8 L48.6,157.8 L49.2,157.7 L49.8,157.6 L50.4,157.5 L51.0,157.4 L51.6,157.4 L52.2,157.3 L52.8,157.2 L53.5,157.1 L54.1,157.0 L54.7,156.9 L55.3,156.9 L55.9,156.8 L56.5,156.7 L57.1,156.6 L57.7,156.5 L58.3,156.4 L58.9,156.3 L59.6,156.2 L60.2,156.1 L60.8,156.0 L61.4,155.9 L62.0,155.8 L62.6,155.7 L63.2,155.6 L63.8,155.5 L64.4,155.4 L65.0,155.2 L65.7,155.1 L66.3,155.0 L66.9,154.9 L67.5,154.8 L68.1,154.7 L68.7,154.5 L69.3,154.4 L69.9,154.3 L70.5,154.1 L71.1,154.0 L71.8,153.9 L72.4,153.7 L73.0,153.6 L73.6,153.5 L74.2,153.3 L74.8,153.2 L75.4,153.0 L76.0,152.9 L76.6,152.8 L77.2,152.6 L77.8,152.4 L78.5,152.3 L79.1,152.1 L79.7,152.0 L80.3,151.8 L80.9,151.6 L81.5,151.5 L82.1,151.3 L82.7,151.1 L83.3,151.0 L84.0,150.8 L84.6,150.6 L85.2,150.4 L85.8,150.2 L86.4,150.0 L87.0,149.8 L87.6,149.6 L88.2,149.4 L88.8,149.2 L89.4,149.0 L90.0,148.8 L90.7,148.6 L91.3,148.4 L91.9,148.2 L92.5,148.0 L93.1,147.8 L93.7,147.5 L94.3,147.3 L94.9,147.1 L95.5,146.8 L96.2,146.6 L96.8,146.3 L97.4,146.1 L98.0,145.8 L98.6,145.6 L99.2,145.3 L99.8,145.1 L100.4,144.8 L101.0,144.5 L101.6,144.3 L102.2,144.0 L102.9,143.7 L103.5,143.4 L104.1,143.1 L104.7,142.8 L105.3,142.5 L105.9,142.2 L106.5,141.9 L107.1,141.6 L107.7,141.3 L108.3,140.9 L109.0,140.6 L109.6,140.3 L110.2,139.9 L110.8,139.6 L111.4,139.3 L112.0,138.9 L112.6,138.5 L113.2,138.2 L113.8,137.8 L114.5,137.4 L115.1,137.0 L115.7,136.7 L116.3,136.3 L116.9,135.9 L117.5,135.5 L118.1,135.0 L118.7,134.6 L119.3,134.2 L119.9,133.8 L120.5,133.3 L121.2,132.9 L121.8,132.5 L122.4,132.0 L123.0,131.5 L123.6,131.1 L124.2,130.6 L124.8,130.1 L125.4,129.6 L126.0,129.1 L126.7,128.6 L127.3,128.1 L127.9,127.6 L128.5,127.0 L129.1,126.5 L129.7,126.0 L130.3,125.4 L130.9,124.8 L131.5,124.3 L132.1,123.7 L132.8,123.1 L133.4,122.5 L134.0,121.9 L134.6,121.3 L135.2,120.7 L135.8,120.0 L136.4,119.4 L137.0,118.7 L137.6,118.1 L138.2,117.4 L138.9,116.7 L139.5,116.0 L140.1,115.3 L140.7,114.6 L141.3,113.9 L141.9,113.1 L142.5,112.4 L143.1,111.6 L143.7,110.9 L144.3,110.1 L144.9,109.3 L145.6,108.5 L146.2,107.7 L146.8,106.9 L147.4,106.0 L148.0,105.2 L148.6,104.3 L149.2,103.4 L149.8,102.5 L150.4,101.6 L151.1,100.7 L151.7,99.8 L152.3,98.8 L152.9,97.9 L153.5,96.9 L154.1,95.9 L154.7,94.9 L155.3,93.9 L155.9,92.8 L156.5,91.8 L157.2,90.7 L157.8,89.6 L158.4,88.5 L159.0,87.4 L159.6,86.3 L160.2,85.1 L160.8,84.0 L161.4,82.8 L162.0,81.6 L162.6,80.4 L163.2,79.1 L163.9,77.9 L164.5,76.6 L165.1,75.3 L165.7,74.0 L166.3,72.6 L166.9,71.3 L167.5,69.9 L168.1,68.5 L168.7,67.1 L169.4,65.7 L170.0,64.2 L170.6,62.7 L171.2,61.2 L171.8,59.7 L172.4,58.2 L173.0,56.6 L173.6,55.0 L174.2,53.4 L174.8,51.7 L175.5,50.1 L176.1,48.4 L176.7,46.6 L177.3,44.9 L177.9,43.1 L178.5,41.3 L179.1,39.5 L179.7,37.7 L180.3,35.8 L180.9,33.9 L181.6,31.9 L182.2,30.0 L182.8,28.0 L183.4,25.9 L184.0,23.9 L184.6,21.8 L185.2,19.7 L185.8,17.5 L186.4,15.4 L187.0,13.1 L187.7,10.9 L188.3,8.6 L188.9,6.3 L189.5,3.9 L190.1,1.6 L190.7,-0.9" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M122.1,264.9 L122.4,259.0 L122.8,253.8 L123.2,249.1 L123.6,245.0 L123.9,241.2 L124.3,237.7 L124.7,234.5 L125.1,231.6 L125.4,228.8 L125.8,226.2 L126.2,223.8 L126.6,221.5 L126.9,219.3 L127.3,217.2 L127.7,215.2 L128.1,213.3 L128.4,211.5 L128.8,209.8 L129.2,208.1 L129.6,206.5 L129.9,205.0 L130.3,203.5 L130.7,202.1 L131.1,200.7 L131.4,199.3 L131.8,198.0 L132.2,196.8 L132.6,195.5 L132.9,194.4 L133.3,193.2 L133.7,192.1 L134.1,191.0 L134.4,189.9 L134.8,188.9 L135.2,187.9 L135.6,186.9 L135.9,185.9 L136.3,185.0 L136.7,184.0 L137.0,183.1 L137.4,182.2 L137.8,181.4 L138.2,180.5 L138.5,179.7 L138.9,178.9 L139.3,178.1 L139.7,177.3 L140.0,176.5 L140.4,175.8 L140.8,175.0 L141.2,174.3 L141.5,173.6 L141.9,172.9 L142.3,172.2 L142.7,171.5 L143.0,170.8 L143.4,170.2 L143.8,169.5 L144.2,168.9 L144.5,168.3 L144.9,167.6 L145.3,167.0 L145.7,166.4 L146.0,165.8 L146.4,165.2 L146.8,164.7 L147.2,164.1 L147.5,163.5 L147.9,163.0 L148.3,162.4 L148.7,161.9 L149.0,161.3 L149.4,160.8 L149.8,160.3 L150.2,159.8 L150.5,159.3 L150.9,158.8 L151.3,158.3 L151.7,157.8 L152.0,157.3 L152.4,156.8 L152.8,156.4 L153.2,155.9 L153.5,155.4 L153.9,155.0 L154.3,154.5 L154.7,154.1 L155.0,153.6 L155.4,153.2 L155.8,152.8 L156.1,152.3 L156.5,151.9 L156.9,151.5 L157.3,151.1 L157.6,150.7 L158.0,150.3 L158.4,149.8 L158.8,149.4 L159.1,149.1 L159.5,148.7 L159.9,148.3 L160.3,147.9 L160.6,147.5 L161.0,147.1 L161.4,146.8 L161.8,146.4 L162.1,146.0 L162.5,145.6 L162.9,145.3 L163.3,144.9 L163.6,144.6 L164.0,144.2 L164.4,143.9 L164.8,143.5 L165.1,143.2 L165.5,142.8 L165.9,142.5 L166.3,142.2 L166.6,141.8 L167.0,141.5 L167.4,141.2 L167.8,140.8 L168.1,140.5 L168.5,140.2 L168.9,139.9 L169.3,139.6 L169.6,139.3 L170.0,139.0 L170.4,138.6 L170.8,138.3 L171.1,138.0 L171.5,137.7 L171.9,137.4 L172.3,137.1 L172.6,136.8 L173.0,136.5 L173.4,136.3 L173.8,136.0 L174.1,135.7 L174.5,135.4 L174.9,135.1 L175.2,134.8 L175.6,134.6 L176.0,134.3 L176.4,134.0 L176.7,133.7 L177.1,133.5 L177.5,133.2 L177.9,132.9 L178.2,132.6 L178.6,132.4 L179.0,132.1 L179.4,131.9 L179.7,131.6 L180.1,131.3 L180.5,131.1 L180.9,130.8 L181.2,130.6 L181.6,130.3 L182.0,130.1 L182.4,129.8 L182.7,129.6 L183.1,129.3 L183.5,129.1 L183.9,128.8 L184.2,128.6 L184.6,128.4 L185.0,128.1 L185.4,127.9 L185.7,127.6 L186.1,127.4 L186.5,127.2 L186.9,126.9 L187.2,126.7 L187.6,126.5 L188.0,126.3 L188.4,126.0 L188.7,125.8 L189.1,125.6 L189.5,125.4 L189.9,125.1 L190.2,124.9 L190.6,124.7 L191.0,124.5 L191.4,124.3 L191.7,124.0 L192.1,123.8 L192.5,123.6 L192.9,123.4 L193.2,123.2 L193.6,123.0 L194.0,122.8 L194.3,122.6 L194.7,122.3 L195.1,122.1 L195.5,121.9 L195.8,121.7 L196.2,121.5 L196.6,121.3 L197.0,121.1 L197.3,120.9 L197.7,120.7 L198.1,120.5 L198.5,120.3 L198.8,120.1 L199.2,119.9 L199.6,119.7 L200.0,119.5 L200.3,119.3 L200.7,119.1 L201.1,119.0 L201.5,118.8 L201.8,118.6 L202.2,118.4 L202.6,118.2 L203.0,118.0 L203.3,117.8 L203.7,117.6 L204.1,117.5 L204.5,117.3 L204.8,117.1 L205.2,116.9 L205.6,116.7 L206.0,116.5 L206.3,116.4 L206.7,116.2 L207.1,116.0 L207.5,115.8 L207.8,115.6 L208.2,115.5 L208.6,115.3 L209.0,115.1 L209.3,114.9 L209.7,114.8 L210.1,114.6 L210.5,114.4 L210.8,114.3 L211.2,114.1 L211.6,113.9 L212.0,113.8 L212.3,113.6 L212.7,113.4 L213.1,113.2 L213.4,113.1 L213.8,112.9 L214.2,112.7 L214.6,112.6 L214.9,112.4 L215.3,112.3 L215.7,112.1 L216.1,111.9 L216.4,111.8 L216.8,111.6 L217.2,111.5 L217.6,111.3 L217.9,111.1 L218.3,111.0 L218.7,110.8 L219.1,110.7 L219.4,110.5 L219.8,110.3 L220.2,110.2 L220.6,110.0 L220.9,109.9 L221.3,109.7 L221.7,109.6 L222.1,109.4 L222.4,109.3 L222.8,109.1 L223.2,109.0 L223.6,108.8 L223.9,108.7 L224.3,108.5 L224.7,108.4 L225.1,108.2 L225.4,108.1 L225.8,107.9 L226.2,107.8 L226.6,107.6 L226.9,107.5 L227.3,107.3 L227.7,107.2 L228.1,107.1 L228.4,106.9 L228.8,106.8 L229.2,106.6 L229.6,106.5 L229.9,106.3 L230.3,106.2 L230.7,106.1 L231.1,105.9 L231.4,105.8 L231.8,105.6 L232.2,105.5 L232.5,105.4 L232.9,105.2 L233.3,105.1 L233.7,105.0 L234.0,104.8 L234.4,104.7 L234.8,104.6 L235.2,104.4 L235.5,104.3 L235.9,104.1 L236.3,104.0 L236.7,103.9 L237.0,103.7 L237.4,103.6 L237.8,103.5 L238.2,103.4 L238.5,103.2 L238.9,103.1 L239.3,103.0 L239.7,102.8 L240.0,102.7 L240.4,102.6 L240.8,102.4 L241.2,102.3 L241.5,102.2 L241.9,102.1 L242.3,101.9 L242.7,101.8 L243.0,101.7 L243.4,101.6 L243.8,101.4 L244.2,101.3 L244.5,101.2 L244.9,101.1 L245.3,100.9 L245.7,100.8 L246.0,100.7 L246.4,100.6 L246.8,100.4 L247.2,100.3 L247.5,100.2 L247.9,100.1 L248.3,99.9 L248.7,99.8 L249.0,99.7 L249.4,99.6 L249.8,99.5 L250.2,99.3 L250.5,99.2 L250.9,99.1 L251.3,99.0 L251.6,98.9 L252.0,98.8 L252.4,98.6 L252.8,98.5 L253.1,98.4 L253.5,98.3 L253.9,98.2 L254.3,98.1 L254.6,97.9 L255.0,97.8 L255.4,97.7 L255.8,97.6 L256.1,97.5 L256.5,97.4 L256.9,97.2 L257.3,97.1 L257.6,97.0 L258.0,96.9 L258.4,96.8 L258.8,96.7 L259.1,96.6 L259.5,96.5 L259.9,96.4 L260.3,96.2 L260.6,96.1 L261.0,96.0 L261.4,95.9 L261.8,95.8 L262.1,95.7 L262.5,95.6 L262.9,95.5 L263.3,95.4 L263.6,95.3 L264.0,95.1 L264.4,95.0 L264.8,94.9 L265.1,94.8 L265.5,94.7 L265.9,94.6 L266.3,94.5 L266.6,94.4 L267.0,94.3 L267.4,94.2 L267.8,94.1 L268.1,94.0 L268.5,93.9 L268.9,93.8 L269.3,93.7 L269.6,93.6 L270.0,93.5" fill="none" stroke="var(--b2)" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M26.0,258.0 L26.6,257.4 L27.2,256.8 L27.8,256.1 L28.4,255.5 L29.0,254.9 L29.7,254.3 L30.3,253.7 L30.9,253.0 L31.5,252.4 L32.1,251.8 L32.7,251.2 L33.3,250.6 L33.9,249.9 L34.5,249.3 L35.1,248.7 L35.8,248.1 L36.4,247.5 L37.0,246.8 L37.6,246.2 L38.2,245.6 L38.8,245.0 L39.4,244.4 L40.0,243.7 L40.6,243.1 L41.2,242.5 L41.9,241.9 L42.5,241.3 L43.1,240.6 L43.7,240.0 L44.3,239.4 L44.9,238.8 L45.5,238.2 L46.1,237.5 L46.7,236.9 L47.3,236.3 L48.0,235.7 L48.6,235.1 L49.2,234.4 L49.8,233.8 L50.4,233.2 L51.0,232.6 L51.6,232.0 L52.2,231.3 L52.8,230.7 L53.5,230.1 L54.1,229.5 L54.7,228.9 L55.3,228.2 L55.9,227.6 L56.5,227.0 L57.1,226.4 L57.7,225.8 L58.3,225.1 L58.9,224.5 L59.6,223.9 L60.2,223.3 L60.8,222.7 L61.4,222.0 L62.0,221.4 L62.6,220.8 L63.2,220.2 L63.8,219.6 L64.4,218.9 L65.0,218.3 L65.7,217.7 L66.3,217.1 L66.9,216.5 L67.5,215.8 L68.1,215.2 L68.7,214.6 L69.3,214.0 L69.9,213.4 L70.5,212.7 L71.1,212.1 L71.8,211.5 L72.4,210.9 L73.0,210.3 L73.6,209.6 L74.2,209.0 L74.8,208.4 L75.4,207.8 L76.0,207.2 L76.6,206.5 L77.2,205.9 L77.8,205.3 L78.5,204.7 L79.1,204.1 L79.7,203.4 L80.3,202.8 L80.9,202.2 L81.5,201.6 L82.1,201.0 L82.7,200.3 L83.3,199.7 L84.0,199.1 L84.6,198.5 L85.2,197.9 L85.8,197.2 L86.4,196.6 L87.0,196.0 L87.6,195.4 L88.2,194.8 L88.8,194.1 L89.4,193.5 L90.0,192.9 L90.7,192.3 L91.3,191.7 L91.9,191.0 L92.5,190.4 L93.1,189.8 L93.7,189.2 L94.3,188.6 L94.9,187.9 L95.5,187.3 L96.2,186.7 L96.8,186.1 L97.4,185.5 L98.0,184.8 L98.6,184.2 L99.2,183.6 L99.8,183.0 L100.4,182.4 L101.0,181.7 L101.6,181.1 L102.2,180.5 L102.9,179.9 L103.5,179.3 L104.1,178.6 L104.7,178.0 L105.3,177.4 L105.9,176.8 L106.5,176.2 L107.1,175.5 L107.7,174.9 L108.3,174.3 L109.0,173.7 L109.6,173.1 L110.2,172.4 L110.8,171.8 L111.4,171.2 L112.0,170.6 L112.6,170.0 L113.2,169.3 L113.8,168.7 L114.5,168.1 L115.1,167.5 L115.7,166.9 L116.3,166.2 L116.9,165.6 L117.5,165.0 L118.1,164.4 L118.7,163.8 L119.3,163.1 L119.9,162.5 L120.5,161.9 L121.2,161.3 L121.8,160.7 L122.4,160.0 L123.0,159.4 L123.6,158.8 L124.2,158.2 L124.8,157.6 L125.4,156.9 L126.0,156.3 L126.7,155.7 L127.3,155.1 L127.9,154.5 L128.5,153.8 L129.1,153.2 L129.7,152.6 L130.3,152.0 L130.9,151.4 L131.5,150.7 L132.1,150.1 L132.8,149.5 L133.4,148.9 L134.0,148.3 L134.6,147.6 L135.2,147.0 L135.8,146.4 L136.4,145.8 L137.0,145.2 L137.6,144.5 L138.2,143.9 L138.9,143.3 L139.5,142.7 L140.1,142.1 L140.7,141.4 L141.3,140.8 L141.9,140.2 L142.5,139.6 L143.1,139.0 L143.7,138.3 L144.3,137.7 L144.9,137.1 L145.6,136.5 L146.2,135.9 L146.8,135.2 L147.4,134.6 L148.0,134.0 L148.6,133.4 L149.2,132.8 L149.8,132.1 L150.4,131.5 L151.1,130.9 L151.7,130.3 L152.3,129.7 L152.9,129.0 L153.5,128.4 L154.1,127.8 L154.7,127.2 L155.3,126.6 L155.9,125.9 L156.5,125.3 L157.2,124.7 L157.8,124.1 L158.4,123.5 L159.0,122.8 L159.6,122.2 L160.2,121.6 L160.8,121.0 L161.4,120.4 L162.0,119.7 L162.6,119.1 L163.2,118.5 L163.9,117.9 L164.5,117.3 L165.1,116.6 L165.7,116.0 L166.3,115.4 L166.9,114.8 L167.5,114.2 L168.1,113.5 L168.7,112.9 L169.4,112.3 L170.0,111.7 L170.6,111.1 L171.2,110.4 L171.8,109.8 L172.4,109.2 L173.0,108.6 L173.6,108.0 L174.2,107.3 L174.8,106.7 L175.5,106.1 L176.1,105.5 L176.7,104.9 L177.3,104.2 L177.9,103.6 L178.5,103.0 L179.1,102.4 L179.7,101.8 L180.3,101.1 L180.9,100.5 L181.6,99.9 L182.2,99.3 L182.8,98.7 L183.4,98.0 L184.0,97.4 L184.6,96.8 L185.2,96.2 L185.8,95.6 L186.4,94.9 L187.0,94.3 L187.7,93.7 L188.3,93.1 L188.9,92.5 L189.5,91.8 L190.1,91.2 L190.7,90.6 L191.3,90.0 L191.9,89.4 L192.5,88.7 L193.1,88.1 L193.8,87.5 L194.4,86.9 L195.0,86.3 L195.6,85.6 L196.2,85.0 L196.8,84.4 L197.4,83.8 L198.0,83.2 L198.6,82.5 L199.2,81.9 L199.9,81.3 L200.5,80.7 L201.1,80.1 L201.7,79.4 L202.3,78.8 L202.9,78.2 L203.5,77.6 L204.1,77.0 L204.7,76.3 L205.3,75.7 L206.0,75.1 L206.6,74.5 L207.2,73.9 L207.8,73.2 L208.4,72.6 L209.0,72.0 L209.6,71.4 L210.2,70.8 L210.8,70.1 L211.4,69.5 L212.1,68.9 L212.7,68.3 L213.3,67.7 L213.9,67.0 L214.5,66.4 L215.1,65.8 L215.7,65.2 L216.3,64.6 L216.9,63.9 L217.5,63.3 L218.2,62.7 L218.8,62.1 L219.4,61.5 L220.0,60.8 L220.6,60.2 L221.2,59.6 L221.8,59.0 L222.4,58.4 L223.0,57.7 L223.6,57.1 L224.2,56.5 L224.9,55.9 L225.5,55.3 L226.1,54.6 L226.7,54.0 L227.3,53.4 L227.9,52.8 L228.5,52.2 L229.1,51.5 L229.7,50.9 L230.3,50.3 L231.0,49.7 L231.6,49.1 L232.2,48.4 L232.8,47.8 L233.4,47.2 L234.0,46.6 L234.6,46.0 L235.2,45.3 L235.8,44.7 L236.5,44.1 L237.1,43.5 L237.7,42.9 L238.3,42.2 L238.9,41.6 L239.5,41.0 L240.1,40.4 L240.7,39.8 L241.3,39.1 L241.9,38.5 L242.6,37.9 L243.2,37.3 L243.8,36.7 L244.4,36.0 L245.0,35.4 L245.6,34.8 L246.2,34.2 L246.8,33.6 L247.4,32.9 L248.0,32.3 L248.7,31.7 L249.3,31.1 L249.9,30.5 L250.5,29.8 L251.1,29.2 L251.7,28.6 L252.3,28.0 L252.9,27.4 L253.5,26.7 L254.1,26.1 L254.8,25.5 L255.4,24.9 L256.0,24.3 L256.6,23.6 L257.2,23.0 L257.8,22.4 L258.4,21.8 L259.0,21.2 L259.6,20.5 L260.2,19.9 L260.9,19.3 L261.5,18.7 L262.1,18.1 L262.7,17.4 L263.3,16.8 L263.9,16.2 L264.5,15.6 L265.1,15.0 L265.7,14.3 L266.3,13.7 L266.9,13.1 L267.6,12.5 L268.2,11.9 L268.8,11.2 L269.4,10.6 L270.0,10.0" fill="none" stroke="var(--ink-muted)" stroke-width="1" stroke-dasharray="4,3" stroke-linejoin="round"/>
+<circle cx="148.0" cy="105.2" r="3" fill="var(--accent)"/>
+<text x="155.0" y="111.2" class="svg-label" font-size="10" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(1, 2)</text>
+<circle cx="176.4" cy="134.0" r="3" fill="var(--b2)"/>
+<text x="180.4" y="148.0" class="svg-label" font-size="10" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(2, 1)</text>
+<circle cx="176.4" cy="47.5" r="3" fill="var(--accent)"/>
+<text x="183.4" y="53.5" class="svg-label" font-size="10" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(2, 4)</text>
+<circle cx="233.1" cy="105.2" r="3" fill="var(--b2)"/>
+<text x="235.1" y="119.2" class="svg-label" font-size="10" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(4, 2)</text>
+<circle cx="250.1" cy="30.2" r="3" fill="var(--ink-muted)"/>
+<text x="214.1" y="30.2" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">y = x</text>
+
+</svg>
+        <figcaption>藍色 y = 2ˣ、橘色 y = log₂x，沿虛線 y = x 互為鏡像</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">對照</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>y = aˣ</th><th>y = logₐx</th></tr></thead>
+          <tbody>
+            <tr><td>定義域</td><td class="f">全體實數</td><td class="f">x &gt; 0</td></tr>
+            <tr><td>值域</td><td class="f">y &gt; 0</td><td class="f">全體實數</td></tr>
+            <tr><td>必過點</td><td class="f">(0, 1)</td><td class="f">(1, 0)</td></tr>
+            <tr><td>漸近線</td><td class="f">x 軸</td><td class="f">y 軸</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">每一列都是「x、y 對調」：定義域與值域互換、(0, 1) 變 (1, 0)、x 軸漸近線變 y 軸漸近線。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-compare">
+    <div class="part-kicker"><b>比較大小與不等式</b></div>
+    <h2>同底比真數，不同底找一個中間值</h2>
+
+    <div class="step">
+      <span class="step-tag">規律</span>
+      <div class="formula">
+        <div class="formula-title">單調性的應用（M、N &gt; 0）</div>
+        <span class="big">a &gt; 1：logₐM &gt; logₐN ⟺ M &gt; N</span>
+        <br><span class="big">0 &lt; a &lt; 1：logₐM &gt; logₐN ⟺ M &lt; N</span>（不等號反向）
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：不同底數比較</span>
+      <p class="quote">比較 log₂3、log₃5、3／2 的大小。</p>
+      <p>底數不同，不能直接比。技巧是把 3／2 也寫成同底的對數，再兩兩比較：</p>
+      <div class="calc">3／2 = log₂(2^(3／2)) = log₂√<span class="radicand">8</span>，而 3 = √<span class="radicand">9</span> &gt; √<span class="radicand">8</span>
+⟹ log₂3 &gt; 3／2
+
+3／2 = log₃(3^(3／2)) = log₃√<span class="radicand">27</span>，而 5 = √<span class="radicand">25</span> &lt; √<span class="radicand">27</span>
+⟹ log₃5 &lt; 3／2
+
+∴ log₃5 &lt; 3／2 &lt; log₂3</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：對數不等式</span>
+      <p class="quote">解 log<sub>1/2</sub>(x − 1) &gt; −2。</p>
+      <div class="calc">真數限制：x − 1 &gt; 0 ⟹ x &gt; 1
+
+−2 = log<sub>1/2</sub>((1／2)^(−2)) = log<sub>1/2</sub>4
+log<sub>1/2</sub>(x − 1) &gt; log<sub>1/2</sub>4，底數小於 1 不等號反向：x − 1 &lt; 4 ⟹ x &lt; 5
+
+和真數限制取交集：1 &lt; x &lt; 5</div>
+      <p class="note">兩個步驟缺一不可：先寫真數大於 0，再看底數決定不等號方向，最後取交集。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-model">
+    <div class="part-kicker"><b>按比例成長模型</b></div>
+    <h2>知道「多久變幾倍」，就能算任何時刻</h2>
+
+    <div class="step">
+      <span class="step-tag">規律 → 公式</span>
+      <p>「每經過固定時間 T，數量就變成 r 倍」的現象，都可以用同一個式子描述：</p>
+      <div class="formula">
+        <div class="formula-title">按比例成長（衰減）模型</div>
+        <span class="big">y(t) = y₀・r^(t／T)</span>
+        <br>y₀：初始量　r：每經過 T 時間的倍數（r &gt; 1 成長，0 &lt; r &lt; 1 衰減）
+        <br>求時間：t = T・log<sub>r</sub>(y／y₀) = T・log(y／y₀) ／ log r
+      </div>
+      <p class="note">2-1 的咖啡因是 r = 1／2、T = 5 小時；2-2 的追蹤人數是 r = 1.5、T = 1 個月。問「多少」用指數算，問「多久」就用對數算。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：碳-14 定年</span>
+      <p class="quote">生物死亡後，體內碳-14 每 5730 年減半。展場的木炭碳-14 剩下原本的 30%，這塊木炭大約是多久以前的？（log 2 ≈ 0.3010，log 3 ≈ 0.4771）</p>
+      <div class="calc">y／y₀ = (1／2)^(t／5730) = 0.3
+
+t = 5730 × log 0.3 ／ log(1／2)
+log 0.3 = log 3 − 1 ≈ −0.5229
+log(1／2) = −log 2 ≈ −0.3010
+
+t ≈ 5730 × 0.5229 ／ 0.3010 ≈ 5730 × 1.737 ≈ 9950（年）</div>
+      <p>所以解說牌說「約一萬年」是對的。若剩 25%，則剛好是兩個半衰期 11460 年；30% 比 25% 多一點，時間就短一點，合理。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：翻倍要幾年？</span>
+      <p class="quote">某城市人口每年成長 7%。人口大約幾年會翻倍？（log 1.07 ≈ 0.0294）</p>
+      <div class="calc">1.07ⁿ = 2 ⟹ n = log 2 ／ log 1.07 ≈ 0.3010 ／ 0.0294 ≈ 10.2（年）</div>
+      <p class="note">金融業常用的「72 法則」：年成長率 r%，翻倍時間約 72 ÷ r 年（7% 時約 10.3 年）。它就是 n = log 2 ／ log(1 + r%) 的近似值。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：2-3 對數函數及其圖形</h2>
+    <p class="lede-line">對數函數是指數函數的鏡像；在應用題裡，指數回答「變成多少」，對數回答「要多久」。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>圖形</td><td class="f">y = logₐx：定義域 x &gt; 0，過 (1, 0)，y 軸為漸近線</td></tr>
+          <tr><td>單調性</td><td class="f">a &gt; 1 遞增；0 &lt; a &lt; 1 遞減</td></tr>
+          <tr><td>反函數</td><td class="f">y = aˣ 與 y = logₐx 對稱於 y = x</td></tr>
+          <tr><td>不等式</td><td class="f">先寫真數 &gt; 0；底數 &lt; 1 不等號反向；最後取交集</td></tr>
+          <tr><td>比較大小</td><td class="f">不同底數時，找一個中間值（如 3／2）分別比較</td></tr>
+          <tr><td>成長模型</td><td class="f">y = y₀・r^(t／T)；t = T・log(y／y₀)／log r</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">圖形</span></div>
+        <p>函數 y = log₂(x − 3) + 1 的定義域、漸近線、與 x 軸的交點各是什麼？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">定義域：x − 3 &gt; 0 ⟹ x &gt; 3
+漸近線：x = 3（y = log₂x 往右移 3、往上移 1）
+y = 0：log₂(x − 3) = −1 ⟹ x − 3 = 1／2 ⟹ 交點 (7／2, 0)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">比較大小</span></div>
+        <p>比較 a = log₃2、b = log₂3、c = log₄9 的大小。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">c = log₄9 = log<sub>2²</sub>3² = log₂3 = b
+a = log₃2 &lt; log₃3 = 1，b = log₂3 &gt; log₂2 = 1
+
+∴ a &lt; b = c</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">不等式</span></div>
+        <p>解 log₂(x + 2) ≤ 3。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">真數：x + 2 &gt; 0 ⟹ x &gt; −2
+底數 2 &gt; 1：x + 2 ≤ 2³ = 8 ⟹ x ≤ 6
+取交集：−2 &lt; x ≤ 6</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">成長模型</span></div>
+        <p>某培養液中的酵母菌每 3 小時變成 2 倍。從 500 個開始，大約幾小時後會超過 6000 個？（log 2 ≈ 0.3010，log 3 ≈ 0.4771）</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">500 × 2^(t／3) &gt; 6000 ⟹ 2^(t／3) &gt; 12
+t／3 &gt; log 12 ／ log 2 = (2 log 2 + log 3) ／ log 2 ≈ 1.0791 ／ 0.3010 ≈ 3.585
+t &gt; 10.76，大約 10.8 小時後</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">成長模型</span></div>
+        <p>一台新機車價值 9 萬元，每年價值變成前一年的 80%。幾年後價值會首次低於 3 萬元？（log 2 ≈ 0.3010，log 3 ≈ 0.4771）</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">9 × 0.8ⁿ &lt; 3 ⟹ 0.8ⁿ &lt; 1／3
+兩邊取 log（log 0.8 &lt; 0，除過去不等號反向）：
+n &gt; log(1／3) ／ log 0.8 = (−log 3) ／ (3 log 2 − 1)
+  ≈ (−0.4771) ／ (−0.0970) ≈ 4.92
+
+∴ 第 5 年後首次低於 3 萬元</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>第二章完成：從「乘幾次」到「要多久」</h2>
+      <p>2-1 把 aˣ 看成函數，2-2 學會用對數反問「要乘幾次」，這一節則看到兩者互為鏡像，並整理出按比例成長的通用模型。接下來要換一個全新的工具：不只看「多少」，也看「往哪個方向」。在 3-1「平面向量的表示法」，筱葳會參加定向越野，學習用有方向的箭頭描述位移。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數A 第三冊・第二章</span>
+    <span>2-3 對數函數及其圖形</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
