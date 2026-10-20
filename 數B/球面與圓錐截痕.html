@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-3 球面與圓錐截痕｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數B 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數B 第四冊・第一章 空間・1-3</span>
+    <h1>球面與圓錐截痕</h1>
+    <p class="sub">營隊結束後，筱葳在地理課看到地球儀：赤道是最長的一圈，越往北的緯線越短。台北所在的北緯 25° 緯線一圈有多長？另一方面，美術社在做手電筒光影的作品：手電筒的光束是一個圓錐，照在牆上卻會出現圓、橢圓，甚至打開的曲線。這一節用空間坐標描述球面，計算平面截球的截痕與緯線長度，並認識平面截圓錐得到的四種曲線。情境例子為原創設計，地球以半徑 6371 公里的球近似。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>球面和圓錐是空間中最常見的曲面。用一個平面去切它們，切口的形狀稱為<b>截痕</b>。切球永遠切出圓（或一個點）；切圓錐則看切的角度，可能切出圓、橢圓、拋物線或雙曲線。這一節的計算只用到畢氏定理和弧長公式，重點在建立空間的直覺。</p>
+    <ul class="toc">
+      <li><a href="#topic-sphere"><b>1</b>球面</a></li>
+      <li><a href="#topic-cut"><b>2</b>平面截球</a></li>
+      <li><a href="#topic-lat"><b>3</b>經線與緯線</a></li>
+      <li><a href="#topic-cone"><b>4</b>圓錐截痕</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-sphere">
+    <div class="part-kicker"><b>球面</b></div>
+    <h2>和球心距離都相等的點</h2>
+
+    <div class="step">
+      <span class="step-tag">定義</span>
+      <p>空間中所有和定點 C 距離等於 r 的點，組成以 C 為球心、r 為半徑的<b>球面</b>。用 1-2 的距離公式寫出來：</p>
+      <div class="formula">
+        <div class="formula-title">球面方程式</div>
+        <span class="big">(x − a)² + (y − b)² + (z − c)² = r²</span>
+        <br>球心 (a, b, c)，半徑 r
+      </div>
+      <p class="quote">燈光秀規定：所有無人機必須在以控制台 (0, 0, 10) 為中心、半徑 30 公尺的範圍內。P(10, 20, 30) 在範圍內嗎？</p>
+      <div class="calc">P 到控制台的距離² = 10² + 20² + 20² = 900 ⟹ 距離 30
+⟹ 剛好在邊界的球面上</div>
+      <p class="note">距離 &lt; r 在球內，= r 在球面上，&gt; r 在球外。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-cut">
+    <div class="part-kicker"><b>平面截球</b></div>
+    <h2>切口一定是圓</h2>
+
+    <div class="step">
+      <span class="step-tag">觀察</span>
+      <p class="quote">把一顆半徑 5 公分的柳丁，在離中心 3 公分處水平切一刀。切面是半徑多少的圓？</p>
+      <p>從球心向切面作垂線，垂足就是切口圓的圓心。球心、垂足和切口邊緣上一點形成直角三角形：</p>
+      <div class="calc">切口半徑 = √(5² − 3²) = √16 = 4（公分）</div>
+      <div class="formula">
+        <div class="formula-title">平面截球</div>
+        <span class="big">球半徑 R，球心到平面距離 d：截痕半徑 = √<span class="radicand">(R² − d²)</span></span>
+        <br>d &lt; R：截出一個圓；d = R：只碰到一點（相切）；d &gt; R：沒有交集
+      </div>
+      <p class="note">d = 0（通過球心）時截痕半徑最大，等於 R，這種圓稱為<b>大圓</b>。赤道和所有經線所在的圓都是大圓。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-lat">
+    <div class="part-kicker"><b>經線與緯線</b></div>
+    <h2>北緯 25° 的緯線一圈有多長？</h2>
+
+    <div class="step">
+      <span class="step-tag">緯線的半徑</span>
+      <p>緯度 φ 的意思是：從地心看，這個地方和赤道面的夾角是 φ。從側面看地球（大圓切面），緯線是一條水平的弦，它的一半就是緯線圓的半徑：</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 260 220" role="img" aria-label="地球側面切面：半徑 R，緯度 φ 處的緯線圓半徑為 R cosφ">
+          <circle cx="130" cy="110" r="80" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.6"/>
+          <line x1="40" y1="110" x2="220" y2="110" stroke="var(--ink-muted)" stroke-width="1.2" stroke-dasharray="4,3"/>
+          <line x1="130" y1="22" x2="130" y2="198" stroke="var(--ink-muted)" stroke-width="1" stroke-dasharray="2,3"/>
+          <line x1="64.5" y1="64.1" x2="195.5" y2="64.1" stroke="var(--b2)" stroke-width="2.4"/>
+          <line x1="130" y1="110" x2="195.5" y2="64.1" stroke="var(--ink)" stroke-width="1.6"/>
+          <line x1="130" y1="64.1" x2="195.5" y2="64.1" stroke="var(--b2)" stroke-width="3.2"/>
+          <path d="M155,110 A25,25 0 0 0 150.5,95.7" fill="none" stroke="var(--ink)" stroke-width="1.4"/>
+          <circle cx="130" cy="110" r="3" fill="var(--ink)"/>
+          <text x="118" y="126" class="svg-label">O</text>
+          <text x="160" y="104" class="svg-label">φ</text>
+          <text x="152" y="96" class="svg-label">R</text>
+          <text x="140" y="56" class="svg-label">R cosφ</text>
+          <text x="222" y="114" class="svg-label">赤道</text>
+          <text x="200" y="60" class="svg-label">緯線</text>
+          <text x="124" y="16" class="svg-label">北極</text>
+        </svg>
+        <figcaption>緯度 φ 的緯線圓半徑 = R cosφ，越往北 cosφ 越小，緯線越短</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">公式</span>
+      <div class="formula">
+        <div class="formula-title">緯線與經線</div>
+        <span class="big">緯度 φ 的緯線長 = 2πR cosφ</span>
+        <br>同一條經線上，緯度差 Δφ（弧度）的兩地距離 = R・Δφ
+        <br>同一條緯線上，經度差 Δλ（弧度）的兩地沿緯線距離 = R cosφ・Δλ
+      </div>
+      <p class="note">這裡用到 1-1 的弧長公式 s = rθ：經線是大圓，半徑 R；緯線是小圓，半徑 R cosφ。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc">地球半徑 R ≈ 6371 公里
+
+赤道長 = 2π × 6371 ≈ 40030（公里）
+北緯 25°（台北附近）緯線長 = 2π × 6371 × cos25° ≈ 36280（公里）
+北緯 60° 緯線長 = 2π × 6371 × cos60° ≈ 20015（公里）——只有赤道的一半
+
+台北（約北緯 25°）沿經線往南到赤道：
+6371 × (25π／180) ≈ 2780（公里）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：沿緯線飛行</span>
+      <p class="quote">兩座城市都在北緯 25°，經度差 30°。沿著緯線飛，要飛多遠？</p>
+      <div class="calc">30° = π／6
+距離 = 6371 × cos25° × π／6 ≈ 6371 × 0.906 × 0.524 ≈ 3023（公里）</div>
+      <p class="note">實際航線不會沿著緯線飛：兩點間球面上的最短路線是經過它們的「大圓」弧，比沿緯線飛更短。這也是為什麼從台北飛美國的航線會往北繞。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-cone">
+    <div class="part-kicker"><b>圓錐截痕</b></div>
+    <h2>手電筒照在牆上的四種形狀</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">手電筒的光束是一個圓錐。筱葳把手電筒正對牆壁照，牆上是一個圓；慢慢斜過去，圓被拉長成橢圓；斜到某個角度，光斑的一端「打開」再也合不起來。為什麼？</p>
+      <p>牆壁就是一個切圓錐的平面。切出的曲線取決於平面相對於圓錐的傾斜程度：</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 300 230" role="img" aria-label="雙圓錐側視圖與四種截面：水平得圓、略斜得橢圓、與母線平行得拋物線、更陡得雙曲線">
+          <line x1="70" y1="20" x2="230" y2="210" stroke="var(--ink-muted)" stroke-width="1.4"/>
+          <line x1="230" y1="20" x2="70" y2="210" stroke="var(--ink-muted)" stroke-width="1.4"/>
+          <line x1="150" y1="14" x2="150" y2="216" stroke="var(--line)" stroke-width="1" stroke-dasharray="3,3"/>
+          <circle cx="150" cy="115" r="3" fill="var(--ink)"/>
+          <line x1="95.3" y1="180" x2="204.7" y2="180" stroke="var(--accent)" stroke-width="2.4"/>
+          <line x1="115.4" y1="156.1" x2="219.8" y2="197.9" stroke="var(--b2)" stroke-width="2.4"/>
+          <line x1="200" y1="174.4" x2="165" y2="216" stroke="var(--ab)" stroke-width="2.4"/>
+          <line x1="128" y1="22" x2="128" y2="88.9" stroke="var(--ink)" stroke-width="2.2"/>
+          <line x1="128" y1="141.1" x2="128" y2="212" stroke="var(--ink)" stroke-width="2.2"/>
+          <line x1="128" y1="88.9" x2="128" y2="141.1" stroke="var(--ink)" stroke-width="1" stroke-dasharray="2,3"/>
+          <text x="58" y="184" class="svg-label">圓</text>
+          <text x="226" y="202" class="svg-label">橢圓</text>
+          <text x="206" y="168" class="svg-label">拋物線</text>
+          <text x="80" y="40" class="svg-label">雙曲線</text>
+          <text x="156" y="119" class="svg-label">頂點</text>
+        </svg>
+        <figcaption>側視圖：水平切得圓（藍）、略斜切得橢圓（橘）、與母線平行切得拋物線（綠）、垂直切過上下兩錐得雙曲線（黑）</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">整理</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>切面</th><th>截痕</th><th>生活中的例子</th></tr></thead>
+          <tbody>
+            <tr><td>垂直於圓錐的軸</td><td>圓</td><td>手電筒正對牆壁</td></tr>
+            <tr><td>稍微傾斜（比母線平緩）</td><td>橢圓</td><td>手電筒斜照、行星軌道</td></tr>
+            <tr><td>和某條母線平行</td><td>拋物線</td><td>投籃的球軌跡、碟形天線</td></tr>
+            <tr><td>比母線更陡（切到上下兩個圓錐）</td><td>雙曲線</td><td>檯燈照在牆上的光影邊緣</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">這四種曲線合稱<b>圓錐曲線</b>。牆上的光斑什麼時候「打開」？就是牆壁傾斜到和光錐的邊緣（母線）平行時，那一刻是拋物線；再斜一點就是雙曲線。圓錐曲線的方程式是選修數學的內容，這裡只要能辨認形狀與成因。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：1-3 球面與圓錐截痕</h2>
+    <p class="lede-line">截球都是圓，半徑 √(R² − d²)；緯線半徑 R cosφ；切圓錐依角度得圓、橢圓、拋物線、雙曲線。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>球面</td><td class="f">(x − a)² + (y − b)² + (z − c)² = r²</td></tr>
+          <tr><td>平面截球</td><td class="f">截痕半徑 √(R² − d²)；d = 0 時為大圓</td></tr>
+          <tr><td>緯線長</td><td class="f">2πR cosφ</td></tr>
+          <tr><td>經線上距離</td><td class="f">R・Δφ（弧度）</td></tr>
+          <tr><td>緯線上距離</td><td class="f">R cosφ・Δλ（弧度）</td></tr>
+          <tr><td>圓錐截痕</td><td class="f">圓、橢圓、拋物線、雙曲線</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">球面</span></div>
+        <p>寫出球心 (1, −2, 3)、半徑 4 的球面方程式，並判斷點 (3, 0, 5) 在球內、球面上還是球外。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">(x − 1)² + (y + 2)² + (z − 3)² = 16
+點到球心距離² = 4 + 4 + 4 = 12 &lt; 16 ⟹ 在球內</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">截痕</span></div>
+        <p>半徑 10 的球，被距離球心 6 的平面所截，截痕圓的半徑與周長各是多少？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">半徑 √(100 − 36) = 8，周長 16π</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">緯線</span></div>
+        <p>以地球半徑 R 表示，北緯 30° 的緯線長是赤道長的幾倍？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">2πR cos30° ／ 2πR = cos30° = √3／2 ≈ 0.866 倍</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">經線距離</span></div>
+        <p>A 城在北緯 40°、B 城在北緯 10°，兩城在同一條經線上。沿經線的距離約多少公里？（R ≈ 6400，π ≈ 3.14）</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">緯度差 30° = π／6
+距離 = 6400 × 3.14／6 ≈ 3349（公里）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">圓錐截痕</span></div>
+        <p>把一個圓錐形的甜筒斜切一刀，切面沒有碰到底部的圓、也和甜筒的側邊（母線）不平行。切口是什麼形狀？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">切面比母線平緩、且封閉在圓錐的一側 ⟹ 橢圓</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>第一章完成：空間的直覺</h2>
+      <p>從點線面的位置關係、表面最短路徑，到空間坐標、球面與圓錐截痕，我們建立了描述三維世界的基本工具。下一章回到數字：社團的帳越來越複雜，筱葳要用一種新的表格工具來整理——在 2-1「矩陣的運算」，我們會把資料表變成可以加減的矩陣。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數B 第四冊・第一章</span>
+    <span>1-3 球面與圓錐截痕</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

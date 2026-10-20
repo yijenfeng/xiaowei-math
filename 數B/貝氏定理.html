@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-2 貝氏定理｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數B 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數B 第四冊・第三章 機率・3-2</span>
+    <h1>貝氏定理</h1>
+    <p class="sub">健康中心的護理師在講座上說了一件讓大家很意外的事：某種篩檢「準確率 95%」，但驗出陽性的人，真的有病的機率只有約 16%。這怎麼可能？這一節用樹狀圖和列聯表，學習全機率與貝氏定理——由觀察到的結果，回推原因的機率——並看看主觀機率如何隨著新證據更新。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>上一節的乘法原理是「由因推果」：已知有沒有病，算篩檢陽性的機率。貝氏定理則是「由果推因」：看到陽性之後，回頭判斷有病的機率。它是醫學診斷、垃圾郵件過濾、天氣預報修正的共同基礎。計算只需要一張樹狀圖，或一張換成人數的列聯表。</p>
+    <ul class="toc">
+      <li><a href="#topic-total"><b>1</b>全機率</a></li>
+      <li><a href="#topic-bayes"><b>2</b>貝氏定理</a></li>
+      <li><a href="#topic-table"><b>3</b>換成人數更好懂</a></li>
+      <li><a href="#topic-update"><b>4</b>更新主觀機率</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-total">
+    <div class="part-kicker"><b>全機率</b></div>
+    <h2>分成兩條路，各算再相加</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">某疾病盛行率 1%。篩檢對有病的人 95% 會驗出陽性；對沒病的人，5% 會被誤判為陽性。隨機一人驗出陽性的機率是多少？</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 360 200" role="img" aria-label="篩檢樹狀圖：有病 0.01 再分陽性 0.95、陰性 0.05；沒病 0.99 再分陽性 0.05、陰性 0.95">
+          <line x1="20" y1="100" x2="120" y2="50" stroke="var(--b2)" stroke-width="2"/>
+          <line x1="20" y1="100" x2="120" y2="150" stroke="var(--ink-muted)" stroke-width="1.5"/>
+          <line x1="150" y1="50" x2="235" y2="25" stroke="var(--b2)" stroke-width="2"/>
+          <line x1="150" y1="50" x2="235" y2="75" stroke="var(--ink-muted)" stroke-width="1.2"/>
+          <line x1="150" y1="150" x2="235" y2="125" stroke="var(--accent)" stroke-width="2"/>
+          <line x1="150" y1="150" x2="235" y2="175" stroke="var(--ink-muted)" stroke-width="1.2"/>
+          <circle cx="20" cy="100" r="3.5" fill="var(--ink)"/>
+          <text x="122" y="54" class="svg-label">有病</text>
+          <text x="122" y="154" class="svg-label">沒病</text>
+          <text x="52" y="66" class="svg-label">0.01</text>
+          <text x="52" y="144" class="svg-label">0.99</text>
+          <text x="178" y="30" class="svg-label">0.95</text>
+          <text x="178" y="76" class="svg-label">0.05</text>
+          <text x="178" y="130" class="svg-label">0.05</text>
+          <text x="178" y="176" class="svg-label">0.95</text>
+          <text x="240" y="29" class="svg-label">陽性 0.0095</text>
+          <text x="240" y="79" class="svg-label">陰性 0.0005</text>
+          <text x="240" y="129" class="svg-label">陽性 0.0495</text>
+          <text x="240" y="179" class="svg-label">陰性 0.9405</text>
+        </svg>
+        <figcaption>陽性的兩條路：真陽性 0.0095（橘）與假陽性 0.0495（藍）</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">計算</span>
+      <div class="calc">P(陽性) = P(有病)P(陽性 | 有病) + P(沒病)P(陽性 | 沒病)
+       = 0.01 × 0.95 + 0.99 × 0.05
+       = 0.0095 + 0.0495 = 0.059</div>
+      <div class="formula">
+        <div class="formula-title">全機率（A 與 A' 把所有情況分成兩類）</div>
+        <span class="big">P(B) = P(A)P(B | A) + P(A')P(B | A')</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-bayes">
+    <div class="part-kicker"><b>貝氏定理</b></div>
+    <h2>陽性的人，真的有病嗎？</h2>
+
+    <div class="step">
+      <span class="step-tag">計算</span>
+      <div class="calc">P(有病 | 陽性) = P(有病 ∩ 陽性) ／ P(陽性)
+              = 0.0095 ／ 0.059 ≈ 0.161</div>
+      <div class="formula">
+        <div class="formula-title">貝氏定理（兩類情形）</div>
+        <span class="big">P(A | B) = P(A)P(B | A) ／ [P(A)P(B | A) + P(A')P(B | A')]</span>
+        <br>分子：目標那一條路；分母：所有通往結果 B 的路
+      </div>
+      <p class="note">「有病的人 95% 陽性」是 P(陽性 | 有病)；「陽性的人有病」是 P(有病 | 陽性)。兩者差很多——這正是 3-1 提醒過的，條件不同、分母就不同。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-table">
+    <div class="part-kicker"><b>換成人數更好懂</b></div>
+    <h2>想像一萬個人</h2>
+
+    <div class="step">
+      <span class="step-tag">列聯表</span>
+      <p>把機率換成 10000 人的人數，做成列聯表：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>陽性</th><th>陰性</th><th>合計</th></tr></thead>
+          <tbody>
+            <tr><td>有病</td><td class="f">95</td><td class="f">5</td><td class="f">100</td></tr>
+            <tr><td>沒病</td><td class="f">495</td><td class="f">9405</td><td class="f">9900</td></tr>
+            <tr><td>合計</td><td class="f">590</td><td class="f">9410</td><td class="f">10000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="calc">陽性 590 人中，真的有病的只有 95 人 ⟹ 95／590 ≈ 16.1%</div>
+      <p class="note">原因是疾病很罕見：沒病的人有 9900 位，即使只有 5% 誤判，也有 495 人，遠多於真正有病又驗出陽性的 95 人。所以篩檢陽性之後，還需要更精確的確診檢查。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-update">
+    <div class="part-kicker"><b>更新主觀機率</b></div>
+    <h2>每多一份證據，就修正一次</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">那位陽性的人再做一次獨立的同款篩檢，又是陽性。現在有病的機率是多少？</p>
+      <p>第一次之後的 16.1% 成為新的「事前機率」，再套一次貝氏定理：</p>
+      <div class="calc">P(有病 | 兩次陽性) = 0.161 × 0.95 ／ (0.161 × 0.95 + 0.839 × 0.05)
+                  ≈ 0.153 ／ (0.153 + 0.042) ≈ 0.785</div>
+      <p class="note">1% → 16% → 約 78%。這就是「主觀機率」的更新：一開始根據盛行率判斷，每得到一份新證據，就用貝氏定理修正一次。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：天氣預報</span>
+      <p class="quote">某地 30% 的日子會下雨。下雨的日子裡，前一晚有 80% 會起霧；不下雨的日子裡，前一晚有 20% 會起霧。今晚起霧了，明天下雨的機率是多少？</p>
+      <div class="calc">P(起霧) = 0.3 × 0.8 + 0.7 × 0.2 = 0.24 + 0.14 = 0.38
+P(下雨 | 起霧) = 0.24 ／ 0.38 ≈ 0.63</div>
+      <p class="note">看到起霧之後，下雨機率從 30% 提高到約 63%。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：3-2 貝氏定理</h2>
+    <p class="lede-line">畫樹狀圖或做成人數列聯表：全機率 = 所有通往結果的路相加；貝氏 = 目標路 ÷ 全部路。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>全機率</td><td class="f">P(B) = P(A)P(B | A) + P(A')P(B | A')</td></tr>
+          <tr><td>貝氏定理</td><td class="f">P(A | B) = P(A)P(B | A) ／ P(B)</td></tr>
+          <tr><td>人數法</td><td class="f">換成 10000 人的列聯表，直接數</td></tr>
+          <tr><td>更新</td><td class="f">上一次的結果當作下一次的事前機率</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">全機率</span></div>
+        <p>甲班 40 人、乙班 60 人，近視率分別 50%、30%。從兩班隨機抽一人，近視的機率是多少？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">0.4 × 0.5 + 0.6 × 0.3 = 0.2 + 0.18 = 0.38</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">貝氏</span></div>
+        <p>承上題，已知抽到的人近視，他是甲班的機率？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">0.2 ／ 0.38 = 10／19</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">篩檢</span></div>
+        <p>某疾病盛行率 2%，篩檢對有病者陽性率 90%，對沒病者誤判陽性率 10%。驗出陽性時真的有病的機率是多少？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">真陽性 0.02 × 0.9 = 0.018；假陽性 0.98 × 0.1 = 0.098
+0.018 ／ 0.116 = 9／58 ≈ 0.155</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">猜題</span></div>
+        <p>四選一的題目，某生有 60% 的機率真的會；不會時就隨機猜。已知他答對了，他真的會的機率？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">P(答對) = 0.6 + 0.4 × 1／4 = 0.7
+P(會 | 答對) = 0.6 ／ 0.7 = 6／7</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">垃圾郵件</span></div>
+        <p>40% 的郵件是垃圾郵件。「限時免費」出現在 30% 的垃圾郵件、2% 的正常郵件中。含這個詞的郵件是垃圾郵件的機率？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">0.4 × 0.3 = 0.12；0.6 × 0.02 = 0.012
+0.12 ／ 0.132 = 10／11 ≈ 0.91</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>4B 完成：數B 全部完成</h2>
+      <p>這一冊從空間概念、空間坐標、球面與圓錐截痕，到把資料表變成矩陣，最後用條件機率與貝氏定理處理不確定性。加上 3B 的週期模型、指數對數與平面向量，以及數學1、數學2，學測數B 的範圍已經全部走完。祝筱葳學測順利！</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數B 第四冊・第三章</span>
+    <span>3-2 貝氏定理</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

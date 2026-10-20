@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1-2 空間坐標｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數B 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數B 第四冊・第一章 空間・1-2</span>
+    <h1>空間坐標</h1>
+    <p class="sub">營隊最後一晚有無人機燈光秀，測量社負責寫定位指令。每台無人機的位置只能用三個數字：往東幾公尺、往北幾公尺、往上幾公尺。這一節建立空間坐標系，學會空間中兩點的距離公式、中點，以及點在坐標平面和坐標軸上的投影與對稱。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>平面上一個點用 (x, y) 表示；空間中要多一個方向「上下」，所以用 (x, y, z)。距離公式也是平面版本多一項：本質上是連用兩次畢氏定理。</p>
+    <ul class="toc">
+      <li><a href="#topic-system"><b>1</b>空間坐標系</a></li>
+      <li><a href="#topic-distance"><b>2</b>距離與中點</a></li>
+      <li><a href="#topic-proj"><b>3</b>投影與對稱</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-system">
+    <div class="part-kicker"><b>空間坐標系</b></div>
+    <h2>三條互相垂直的數線</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">以起降平台為原點 O，x 軸朝東、y 軸朝北、z 軸朝上。1 號無人機收到指令「(3, 4, 3)」，它要飛到哪裡？</p>
+      <p>先往東 3、往北 4，到達地面上的 Q(3, 4, 0)；再往上 3，就是 P(3, 4, 3)。</p>
+      <div class="formula">
+        <div class="formula-title">空間坐標系</div>
+        三軸兩兩垂直，交於原點 O
+        <br>三個<b>坐標平面</b>：xy 平面（z = 0，地面）、yz 平面（x = 0）、xz 平面（y = 0）
+        <br>三個坐標平面把空間分成 8 個<b>卦限</b>
+      </div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 320 230" role="img" aria-label="空間坐標系中的點 P(3,4,3)，虛線為它到 xy 平面的投影 Q(3,4,0)，以及 Q 到 x 軸、y 軸的垂線">
+<defs><marker id="a314-0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-muted)"/></marker><marker id="a314-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<line x1="80.0" y1="180.0" x2="19.9" y2="240.1" stroke="var(--ink-muted)" stroke-width="1.1" marker-end="url(#a314-0)"/>
+<text x="7.9" y="252.1" class="svg-label">x</text>
+<line x1="80.0" y1="180.0" x2="284.0" y2="180.0" stroke="var(--ink-muted)" stroke-width="1.1" marker-end="url(#a314-0)"/>
+<text x="290.0" y="184.0" class="svg-label">y</text>
+<line x1="80.0" y1="180.0" x2="80.0" y2="27.0" stroke="var(--ink-muted)" stroke-width="1.1" marker-end="url(#a314-0)"/>
+<text x="86.0" y="31.0" class="svg-label">z</text>
+<line x1="179.9" y1="114.1" x2="179.9" y2="216.1" stroke="var(--ink-muted)" stroke-width="1.2" stroke-dasharray="3,3"/>
+<line x1="179.9" y1="216.1" x2="43.9" y2="216.1" stroke="var(--ink-muted)" stroke-width="1.2" stroke-dasharray="3,3"/>
+<line x1="179.9" y1="216.1" x2="216.0" y2="180.0" stroke="var(--ink-muted)" stroke-width="1.2" stroke-dasharray="3,3"/>
+<line x1="179.9" y1="114.1" x2="80.0" y2="78.0" stroke="var(--ink-muted)" stroke-width="1" stroke-dasharray="2,3"/>
+<line x1="80.0" y1="180.0" x2="179.9" y2="114.1" stroke="var(--accent)" stroke-width="2.4" marker-end="url(#a314-1)"/>
+<circle cx="179.9" cy="114.1" r="3" fill="var(--accent)"/>
+<text x="185.9" y="110.1" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">P(3, 4, 3)</text>
+<circle cx="179.9" cy="216.1" r="3" fill="var(--ink)"/>
+<text x="185.9" y="230.1" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">Q(3, 4, 0)</text>
+<circle cx="43.9" cy="216.1" r="3" fill="var(--ink)"/>
+<text x="31.9" y="224.1" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">3</text>
+<circle cx="216.0" cy="180.0" r="3" fill="var(--ink)"/>
+<text x="214.0" y="172.0" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">4</text>
+<circle cx="80.0" cy="78.0" r="3" fill="var(--ink)"/>
+<text x="66.0" y="82.0" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">3</text>
+<text x="80.0" y="195.3" text-anchor="end" class="svg-label" stroke="var(--surface)" stroke-width="3" paint-order="stroke">O</text>
+</svg>
+        <figcaption>P(3, 4, 3)：先在地面找到 Q(3, 4, 0)，再往上 3</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-distance">
+    <div class="part-kicker"><b>距離與中點</b></div>
+    <h2>兩次畢氏定理</h2>
+
+    <div class="step">
+      <span class="step-tag">推導</span>
+      <div class="calc">OQ（地面上）= √(3² + 4²) = 5
+OP = √(OQ² + 3²) = √(25 + 9) = √34</div>
+      <div class="formula">
+        <div class="formula-title">兩點距離與中點</div>
+        <span class="big">AB = √<span class="radicand">((x₂−x₁)² + (y₂−y₁)² + (z₂−z₁)²)</span></span>
+        <br>中點 = ((x₁+x₂)／2, (y₁+y₂)／2, (z₁+z₂)／2)
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">2 號無人機在 A(1, 2, 3)，3 號在 B(4, 6, 15)。兩台相距多遠？若 4 號要停在兩台正中間，位置是哪裡？</p>
+      <div class="calc">AB = √(3² + 4² + 12²) = √169 = 13（公尺）
+中點 = (2.5, 4, 9)</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：安全距離</span>
+      <p class="quote">規定兩台無人機至少相距 5 公尺。C(2, 1, 4) 和 D(5, 3, 6) 符合規定嗎？</p>
+      <div class="calc">CD = √(9 + 4 + 4) = √17 ≈ 4.12 &lt; 5 ⟹ 太近，不符合</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-proj">
+    <div class="part-kicker"><b>投影與對稱</b></div>
+    <h2>保留哪些坐標、改掉哪些坐標</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">地面投射燈要打在 P(3, −2, 5) 的正下方。正下方是哪一點？P 離地多高？離起降平台的垂直桿（z 軸）多遠？</p>
+      <div class="calc">正下方（投影到 xy 平面）：(3, −2, 0)
+離地高度 = |z| = 5
+離 z 軸的距離 = √(3² + (−2)²) = √13 ≈ 3.61</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">整理</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>P(a, b, c) 的</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td>投影到 xy 平面</td><td class="f">(a, b, 0)；P 到 xy 平面距離 |c|</td></tr>
+            <tr><td>投影到 x 軸</td><td class="f">(a, 0, 0)；P 到 x 軸距離 √(b² + c²)</td></tr>
+            <tr><td>對 xy 平面對稱</td><td class="f">(a, b, −c)</td></tr>
+            <tr><td>對 x 軸對稱</td><td class="f">(a, −b, −c)</td></tr>
+            <tr><td>對原點對稱</td><td class="f">(−a, −b, −c)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">口訣：<b>投影到哪裡，就保留那裡的坐標，其餘改 0；對哪裡對稱，就保留那裡的坐標，其餘變號。</b></p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：1-2 空間坐標</h2>
+    <p class="lede-line">空間坐標 = 平面坐標多一個 z；距離公式多一項平方。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>距離</td><td class="f">√((Δx)² + (Δy)² + (Δz)²)</td></tr>
+          <tr><td>中點</td><td class="f">各坐標取平均</td></tr>
+          <tr><td>到原點</td><td class="f">√(a² + b² + c²)</td></tr>
+          <tr><td>到坐標平面</td><td class="f">缺的那個坐標取絕對值</td></tr>
+          <tr><td>到坐標軸</td><td class="f">另外兩個坐標的平方和開根號</td></tr>
+          <tr><td>投影／對稱</td><td class="f">保留相關坐標，其餘改 0／變號</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">距離</span></div>
+        <p>求 A(1, −2, 3) 與 B(3, 1, −3) 的距離與中點。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">√(4 + 9 + 36) = 7；中點 (2, −1／2, 0)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">投影</span></div>
+        <p>P(2, −3, 6) 在 yz 平面上的投影點是什麼？P 到 y 軸的距離是多少？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">投影 (0, −3, 6)
+到 y 軸：√(2² + 6²) = √40 = 2√10</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">對稱</span></div>
+        <p>P(1, 2, −4) 對 xz 平面、對 z 軸的對稱點各是什麼？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">對 xz 平面：(1, −2, −4)
+對 z 軸：(−1, −2, −4)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">等距點</span></div>
+        <p>x 軸上一點 P 到 A(1, 2, 2) 和 B(3, 0, 1) 的距離相等，求 P。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">P(t, 0, 0)：(t − 1)² + 4 + 4 = (t − 3)² + 0 + 1
+t² − 2t + 9 = t² − 6t + 10 ⟹ 4t = 1 ⟹ t = 1／4
+P(1／4, 0, 0)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">應用</span></div>
+        <p>房間長 4、寬 3、高 2.4（公尺）。以一個牆角為原點建坐標，天花板最遠的角落坐標是什麼？兩點距離多少？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">(4, 3, 2.4)；√(16 + 9 + 5.76) = √30.76 ≈ 5.55（公尺）</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：球面</h2>
+      <p>「到某一點距離都相等的點」在平面上是圓，在空間中就是球面。地球近似一個球，經線和緯線就畫在球面上。在 1-3「球面與圓錐截痕」，我們會用空間坐標寫出球面，算出緯線的長度，並看看用平面切圓錐會切出哪些曲線。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數B 第四冊・第一章</span>
+    <span>1-2 空間坐標</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

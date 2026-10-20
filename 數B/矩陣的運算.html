@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-1 矩陣的運算｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數B 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數B 第四冊・第二章 矩陣・2-1</span>
+    <h1>矩陣的運算</h1>
+    <p class="sub">學生會讓測量社在兩個校區各擺一個飲料攤，筱葳負責記帳。每天的銷售量是一張表：兩個攤位、三種飲料。要算兩天合計、比較兩天差多少、預估下學期銷量變成 1.2 倍——如果把表格當成一個整體來運算，就會簡單很多。這一節認識矩陣，學會矩陣的加減與係數積。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>把一群數字排成長方形的表格，就是<b>矩陣</b>。表格在生活中到處都是：課表、成績單、銷售報表、營養成分表。矩陣的好處是能把整張表當作一個東西來加減乘，不用一格一格算。這一節先學最直觀的運算：加減和係數積。</p>
+    <ul class="toc">
+      <li><a href="#topic-def"><b>1</b>矩陣的意義</a></li>
+      <li><a href="#topic-add"><b>2</b>加法與減法</a></li>
+      <li><a href="#topic-scalar"><b>3</b>係數積</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-def">
+    <div class="part-kicker"><b>矩陣的意義</b></div>
+    <h2>把表格的數字框起來</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">第一天兩個攤位的銷售量（杯）：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>紅茶</th><th>奶茶</th><th>檸檬汁</th></tr></thead>
+          <tbody>
+            <tr><td>A 攤</td><td class="f">30</td><td class="f">20</td><td class="f">10</td></tr>
+            <tr><td>B 攤</td><td class="f">25</td><td class="f">35</td><td class="f">15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>只保留數字，記成矩陣：</p>
+      <div class="calc">P = <span class="mat" style="grid-template-columns:repeat(3,auto)"><span>30</span><span>20</span><span>10</span><span>25</span><span>35</span><span>15</span></span></div>
+      <div class="formula">
+        <div class="formula-title">矩陣的名詞</div>
+        橫的叫<b>列</b>，直的叫<b>行</b>；m 列 n 行稱為 <b>m × n 矩陣</b>（P 是 2 × 3）
+        <br>第 i 列第 j 行的數稱為 <b>(i, j) 元</b>，記作 aᵢⱼ
+        <br>列數等於行數的矩陣稱為<b>方陣</b>
+      </div>
+      <p class="note">P 的 (2, 3) 元是 15：B 攤第一天賣出 15 杯檸檬汁。讀矩陣時一定要記得「列代表什麼、行代表什麼」。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">相等</span>
+      <div class="formula">
+        兩個矩陣<b>相等</b> ⟺ 大小相同，而且每個對應位置的數都相等
+      </div>
+      <p class="quote">若 <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>x + 1</span><span>3</span><span>4</span><span>y</span></span> = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>5</span><span>3</span><span>4</span><span>−2</span></span>，求 x、y。</p>
+      <div class="calc">x + 1 = 5 ⟹ x = 4；y = −2</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-add">
+    <div class="part-kicker"><b>加法與減法</b></div>
+    <h2>對應位置相加減</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">第二天的銷售量是 Q = <span class="mat" style="grid-template-columns:repeat(3,auto)"><span>40</span><span>30</span><span>10</span><span>35</span><span>25</span><span>25</span></span>。兩天合計各賣多少？第二天比第一天多賣多少？</p>
+      <div class="calc">P + Q = <span class="mat" style="grid-template-columns:repeat(3,auto)"><span>30+40</span><span>20+30</span><span>10+10</span><span>25+35</span><span>35+25</span><span>15+25</span></span> = <span class="mat" style="grid-template-columns:repeat(3,auto)"><span>70</span><span>50</span><span>20</span><span>60</span><span>60</span><span>40</span></span>
+
+Q − P = <span class="mat" style="grid-template-columns:repeat(3,auto)"><span>10</span><span>10</span><span>0</span><span>10</span><span>−10</span><span>10</span></span></div>
+      <p>Q − P 的 (2, 2) 元是 −10：B 攤的奶茶第二天少賣 10 杯。</p>
+      <div class="formula">
+        <div class="formula-title">矩陣的加減</div>
+        <span class="big">大小相同的矩陣才能相加減：對應位置的數相加減</span>
+      </div>
+      <p class="note">2 × 3 的矩陣不能和 3 × 2 的矩陣相加——就像兩張欄位不同的報表不能直接相加。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">性質</span>
+      <div class="formula">
+        交換律 A + B = B + A；結合律 (A + B) + C = A + (B + C)
+        <br>所有元都是 0 的矩陣稱為<b>零矩陣</b> O：A + O = A
+      </div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-scalar">
+    <div class="part-kicker"><b>係數積</b></div>
+    <h2>整張表乘上同一個倍數</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">學生會預估下學期每天的銷量都會是第一天的 1.2 倍。預估表是什麼？</p>
+      <div class="calc">1.2P = <span class="mat" style="grid-template-columns:repeat(3,auto)"><span>36</span><span>24</span><span>12</span><span>30</span><span>42</span><span>18</span></span></div>
+      <div class="formula">
+        <div class="formula-title">係數積</div>
+        <span class="big">kA：每個元都乘以 k</span>
+        <br>k(A + B) = kA + kB；(k + h)A = kA + hA
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：平均</span>
+      <p class="quote">兩天平均每天各賣多少？</p>
+      <div class="calc">(1／2)(P + Q) = (1／2)<span class="mat" style="grid-template-columns:repeat(3,auto)"><span>70</span><span>50</span><span>20</span><span>60</span><span>60</span><span>40</span></span> = <span class="mat" style="grid-template-columns:repeat(3,auto)"><span>35</span><span>25</span><span>10</span><span>30</span><span>30</span><span>20</span></span></div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：解矩陣方程式</span>
+      <p class="quote">若 2X + A = B，A = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>1</span><span>2</span><span>3</span><span>4</span></span>、B = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>5</span><span>6</span><span>7</span><span>10</span></span>，求 X。</p>
+      <div class="calc">2X = B − A = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>4</span><span>4</span><span>4</span><span>6</span></span> ⟹ X = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>2</span><span>2</span><span>2</span><span>3</span></span></div>
+      <p class="note">矩陣的加減和係數積遵守和數字一樣的規則，所以可以像解一元一次方程式那樣移項。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：2-1 矩陣的運算</h2>
+    <p class="lede-line">矩陣就是資料表；加減要同大小、對應位置算；係數積是每個元都乘。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>大小</td><td class="f">m 列 n 行 ⟹ m × n 矩陣</td></tr>
+          <tr><td>(i, j) 元</td><td class="f">第 i 列第 j 行</td></tr>
+          <tr><td>相等</td><td class="f">大小相同且對應元相等</td></tr>
+          <tr><td>加減</td><td class="f">同大小，對應元相加減</td></tr>
+          <tr><td>係數積</td><td class="f">每個元乘以 k</td></tr>
+          <tr><td>零矩陣</td><td class="f">A + O = A</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">讀矩陣</span></div>
+        <p>A = <span class="mat" style="grid-template-columns:repeat(3,auto)"><span>3</span><span>0</span><span>−1</span><span>2</span><span>5</span><span>4</span></span> 是幾 × 幾的矩陣？a₂₃ 是多少？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">2 × 3；a₂₃ = 4</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">運算</span></div>
+        <p>A = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>1</span><span>−2</span><span>3</span><span>0</span></span>、B = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>4</span><span>1</span><span>−1</span><span>2</span></span>，求 2A − B。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc"><span class="mat" style="grid-template-columns:repeat(2,auto)"><span>2</span><span>−4</span><span>6</span><span>0</span></span> − <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>4</span><span>1</span><span>−1</span><span>2</span></span> = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>−2</span><span>−5</span><span>7</span><span>−2</span></span></div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">相等</span></div>
+        <p><span class="mat" style="grid-template-columns:repeat(2,auto)"><span>x + y</span><span>3</span><span>2</span><span>x − y</span></span> = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>7</span><span>3</span><span>2</span><span>1</span></span>，求 x、y。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">x + y = 7，x − y = 1 ⟹ x = 4，y = 3</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">應用</span></div>
+        <p>某班期中考兩科（國文、數學）成績：甲 <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>80</span><span>72</span></span>、乙 <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>65</span><span>90</span></span>。期末各科都加 5 分。寫出期中成績矩陣（列：甲、乙；行：國文、數學）與期末成績矩陣。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">期中 M = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>80</span><span>72</span><span>65</span><span>90</span></span>
+期末 = M + <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>5</span><span>5</span><span>5</span><span>5</span></span> = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>85</span><span>77</span><span>70</span><span>95</span></span></div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">解方程式</span></div>
+        <p>3X − <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>1</span><span>2</span><span>0</span><span>−3</span></span> = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>5</span><span>1</span><span>6</span><span>0</span></span>，求 X。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">3X = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>6</span><span>3</span><span>6</span><span>−3</span></span> ⟹ X = <span class="mat" style="grid-template-columns:repeat(2,auto)"><span>2</span><span>1</span><span>2</span><span>−1</span></span></div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：銷售量乘以價格</h2>
+      <p>知道各攤位賣了幾杯，再知道每種飲料的價格，就能算出營收：數量乘價格再加總。在 2-2「矩陣的乘法運算與反矩陣」，這個計算會變成矩陣乘法，並學會用反矩陣「還原」被編碼的訊息。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數B 第四冊・第二章</span>
+    <span>2-1 矩陣的運算</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
