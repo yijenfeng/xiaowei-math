@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-1 指數函數｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數B 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數B 第三冊・第二章 指數與對數函數・2-1</span>
+    <h1>指數函數</h1>
+    <p class="sub">筱葳把園遊會分到的 10000 元存進銀行，行員介紹了兩種方案：「年利率 5%、每年計息一次」和「年利率 5%、每月計息一次」。哪個比較划算？如果每天、每秒都計息呢？這一節從存款出發，認識指數函數的圖形與性質，再看「越算越頻繁」的複利最後會趨近一個特別的數——e。情境例子為原創設計，利率為示意。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>數學1 學過指數 aˣ 的意義：x 可以是整數、分數，甚至無理數。把 x 當成變數，y = aˣ 就是一個函數。它描述的是「每過一段時間，就乘上同一個倍數」的變化：存款複利、人口成長、藥物代謝都是。這一節還會認識自然界和金融中最常出現的底數 e ≈ 2.718。</p>
+    <ul class="toc">
+      <li><a href="#topic-def"><b>1</b>指數函數與圖形</a></li>
+      <li><a href="#topic-use"><b>2</b>比較大小與應用</a></li>
+      <li><a href="#topic-compound"><b>3</b>複利與連續複利</a></li>
+      <li><a href="#topic-e"><b>4</b>自然指數 eˣ</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-def">
+    <div class="part-kicker"><b>指數函數與圖形</b></div>
+    <h2>每過一段時間，乘上同一個倍數</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">10000 元，年利率 5%，每年計息一次（利息滾入本金）。x 年後本利和是多少？</p>
+      <div class="calc">1 年後：10000 × 1.05
+2 年後：10000 × 1.05²
+x 年後：10000 × 1.05ˣ
+
+3 年後：10000 × 1.157625 ≈ 11576（元）</div>
+      <div class="formula">
+        <div class="formula-title">指數函數</div>
+        <span class="big">y = aˣ（a &gt; 0，a ≠ 1），定義域為全體實數</span>
+      </div>
+      <p class="note">底數不能是負數（像 (−2)^(1／2) 不是實數），也不能是 1（1ˣ 永遠是 1，沒有變化）。</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 320 200" role="img" aria-label="y=2^x（藍）、y=(1/2)^x（橘）與 y=3^x（虛線）的圖形，都通過 (0,1)，且都在 x 軸上方">
+<line x1="30.0" y1="145.9" x2="308.0" y2="145.9" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="128.3" x2="308.0" y2="128.3" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="93.1" x2="308.0" y2="93.1" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="22.8" x2="308.0" y2="22.8" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="42.6" y1="174.0" x2="42.6" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="84.8" y1="174.0" x2="84.8" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="126.9" y1="174.0" x2="126.9" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="211.1" y1="174.0" x2="211.1" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="253.2" y1="174.0" x2="253.2" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="295.4" y1="174.0" x2="295.4" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="163.5" x2="308.0" y2="163.5" stroke="var(--ink-muted)" stroke-width="1"/>
+<line x1="169.0" y1="174.0" x2="169.0" y2="14.0" stroke="var(--ink-muted)" stroke-width="1"/>
+<text x="42.6" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">−3</text>
+<text x="84.8" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">−2</text>
+<text x="126.9" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">−1</text>
+<text x="211.1" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">1</text>
+<text x="253.2" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2</text>
+<text x="295.4" y="176.5" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">3</text>
+<text x="165.0" y="149.4" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">1</text>
+<text x="165.0" y="131.8" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2</text>
+<text x="165.0" y="96.6" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">4</text>
+<text x="165.0" y="26.3" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">8</text>
+<path d="M30.0,161.7 L30.7,161.6 L31.4,161.6 L32.1,161.6 L32.8,161.6 L33.5,161.6 L34.2,161.5 L34.9,161.5 L35.6,161.5 L36.3,161.5 L37.0,161.4 L37.6,161.4 L38.3,161.4 L39.0,161.4 L39.7,161.4 L40.4,161.3 L41.1,161.3 L41.8,161.3 L42.5,161.3 L43.2,161.2 L43.9,161.2 L44.6,161.2 L45.3,161.2 L46.0,161.1 L46.7,161.1 L47.4,161.1 L48.1,161.0 L48.8,161.0 L49.5,161.0 L50.2,161.0 L50.9,160.9 L51.5,160.9 L52.2,160.9 L52.9,160.8 L53.6,160.8 L54.3,160.8 L55.0,160.8 L55.7,160.7 L56.4,160.7 L57.1,160.7 L57.8,160.6 L58.5,160.6 L59.2,160.6 L59.9,160.5 L60.6,160.5 L61.3,160.5 L62.0,160.4 L62.7,160.4 L63.4,160.4 L64.1,160.3 L64.8,160.3 L65.4,160.3 L66.1,160.2 L66.8,160.2 L67.5,160.1 L68.2,160.1 L68.9,160.1 L69.6,160.0 L70.3,160.0 L71.0,159.9 L71.7,159.9 L72.4,159.9 L73.1,159.8 L73.8,159.8 L74.5,159.7 L75.2,159.7 L75.9,159.7 L76.6,159.6 L77.3,159.6 L78.0,159.5 L78.7,159.5 L79.3,159.4 L80.0,159.4 L80.7,159.3 L81.4,159.3 L82.1,159.2 L82.8,159.2 L83.5,159.1 L84.2,159.1 L84.9,159.0 L85.6,159.0 L86.3,158.9 L87.0,158.9 L87.7,158.8 L88.4,158.8 L89.1,158.7 L89.8,158.7 L90.5,158.6 L91.2,158.6 L91.9,158.5 L92.6,158.5 L93.2,158.4 L93.9,158.3 L94.6,158.3 L95.3,158.2 L96.0,158.2 L96.7,158.1 L97.4,158.0 L98.1,158.0 L98.8,157.9 L99.5,157.8 L100.2,157.8 L100.9,157.7 L101.6,157.7 L102.3,157.6 L103.0,157.5 L103.7,157.5 L104.4,157.4 L105.1,157.3 L105.8,157.2 L106.5,157.2 L107.1,157.1 L107.8,157.0 L108.5,157.0 L109.2,156.9 L109.9,156.8 L110.6,156.7 L111.3,156.6 L112.0,156.6 L112.7,156.5 L113.4,156.4 L114.1,156.3 L114.8,156.2 L115.5,156.2 L116.2,156.1 L116.9,156.0 L117.6,155.9 L118.3,155.8 L119.0,155.7 L119.7,155.6 L120.4,155.6 L121.0,155.5 L121.7,155.4 L122.4,155.3 L123.1,155.2 L123.8,155.1 L124.5,155.0 L125.2,154.9 L125.9,154.8 L126.6,154.7 L127.3,154.6 L128.0,154.5 L128.7,154.4 L129.4,154.3 L130.1,154.2 L130.8,154.1 L131.5,154.0 L132.2,153.9 L132.9,153.8 L133.6,153.6 L134.2,153.5 L134.9,153.4 L135.6,153.3 L136.3,153.2 L137.0,153.1 L137.7,152.9 L138.4,152.8 L139.1,152.7 L139.8,152.6 L140.5,152.4 L141.2,152.3 L141.9,152.2 L142.6,152.1 L143.3,151.9 L144.0,151.8 L144.7,151.7 L145.4,151.5 L146.1,151.4 L146.8,151.3 L147.5,151.1 L148.2,151.0 L148.8,150.8 L149.5,150.7 L150.2,150.5 L150.9,150.4 L151.6,150.2 L152.3,150.1 L153.0,149.9 L153.7,149.8 L154.4,149.6 L155.1,149.5 L155.8,149.3 L156.5,149.1 L157.2,149.0 L157.9,148.8 L158.6,148.6 L159.3,148.5 L160.0,148.3 L160.7,148.1 L161.4,147.9 L162.1,147.8 L162.7,147.6 L163.4,147.4 L164.1,147.2 L164.8,147.0 L165.5,146.8 L166.2,146.7 L166.9,146.5 L167.6,146.3 L168.3,146.1 L169.0,145.9 L169.7,145.7 L170.4,145.5 L171.1,145.3 L171.8,145.0 L172.5,144.8 L173.2,144.6 L173.9,144.4 L174.6,144.2 L175.3,144.0 L176.0,143.7 L176.6,143.5 L177.3,143.3 L178.0,143.0 L178.7,142.8 L179.4,142.6 L180.1,142.3 L180.8,142.1 L181.5,141.8 L182.2,141.6 L182.9,141.3 L183.6,141.1 L184.3,140.8 L185.0,140.6 L185.7,140.3 L186.4,140.0 L187.1,139.8 L187.8,139.5 L188.5,139.2 L189.2,139.0 L189.9,138.7 L190.5,138.4 L191.2,138.1 L191.9,137.8 L192.6,137.5 L193.3,137.2 L194.0,136.9 L194.7,136.6 L195.4,136.3 L196.1,136.0 L196.8,135.7 L197.5,135.3 L198.2,135.0 L198.9,134.7 L199.6,134.4 L200.3,134.0 L201.0,133.7 L201.7,133.4 L202.4,133.0 L203.1,132.7 L203.8,132.3 L204.4,131.9 L205.1,131.6 L205.8,131.2 L206.5,130.8 L207.2,130.5 L207.9,130.1 L208.6,129.7 L209.3,129.3 L210.0,128.9 L210.7,128.5 L211.4,128.1 L212.1,127.7 L212.8,127.3 L213.5,126.9 L214.2,126.5 L214.9,126.0 L215.6,125.6 L216.3,125.2 L217.0,124.7 L217.7,124.3 L218.3,123.8 L219.0,123.4 L219.7,122.9 L220.4,122.5 L221.1,122.0 L221.8,121.5 L222.5,121.0 L223.2,120.5 L223.9,120.1 L224.6,119.6 L225.3,119.0 L226.0,118.5 L226.7,118.0 L227.4,117.5 L228.1,117.0 L228.8,116.4 L229.5,115.9 L230.2,115.3 L230.9,114.8 L231.6,114.2 L232.2,113.7 L232.9,113.1 L233.6,112.5 L234.3,111.9 L235.0,111.3 L235.7,110.7 L236.4,110.1 L237.1,109.5 L237.8,108.9 L238.5,108.3 L239.2,107.6 L239.9,107.0 L240.6,106.3 L241.3,105.7 L242.0,105.0 L242.7,104.4 L243.4,103.7 L244.1,103.0 L244.8,102.3 L245.5,101.6 L246.1,100.9 L246.8,100.2 L247.5,99.4 L248.2,98.7 L248.9,97.9 L249.6,97.2 L250.3,96.4 L251.0,95.7 L251.7,94.9 L252.4,94.1 L253.1,93.3 L253.8,92.5 L254.5,91.7 L255.2,90.8 L255.9,90.0 L256.6,89.2 L257.3,88.3 L258.0,87.4 L258.7,86.6 L259.4,85.7 L260.0,84.8 L260.7,83.9 L261.4,83.0 L262.1,82.0 L262.8,81.1 L263.5,80.2 L264.2,79.2 L264.9,78.2 L265.6,77.3 L266.3,76.3 L267.0,75.3 L267.7,74.2 L268.4,73.2 L269.1,72.2 L269.8,71.1 L270.5,70.1 L271.2,69.0 L271.9,67.9 L272.6,66.8 L273.2,65.7 L273.9,64.6 L274.6,63.4 L275.3,62.3 L276.0,61.1 L276.7,59.9 L277.4,58.8 L278.1,57.6 L278.8,56.3 L279.5,55.1 L280.2,53.9 L280.9,52.6 L281.6,51.3 L282.3,50.0 L283.0,48.7 L283.7,47.4 L284.4,46.1 L285.1,44.7 L285.8,43.4 L286.5,42.0 L287.2,40.6 L287.8,39.2 L288.5,37.7 L289.2,36.3 L289.9,34.8 L290.6,33.3 L291.3,31.8 L292.0,30.3 L292.7,28.8 L293.4,27.3 L294.1,25.7 L294.8,24.1 L295.5,22.5 L296.2,20.9 L296.9,19.2 L297.6,17.6 L298.3,15.9 L299.0,14.2 L299.7,12.5 L300.4,10.7 L301.1,9.0 L301.7,7.2" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M36.3,7.2 L37.0,9.0 L37.6,10.7 L38.3,12.5 L39.0,14.2 L39.7,15.9 L40.4,17.6 L41.1,19.2 L41.8,20.9 L42.5,22.5 L43.2,24.1 L43.9,25.7 L44.6,27.3 L45.3,28.8 L46.0,30.3 L46.7,31.8 L47.4,33.3 L48.1,34.8 L48.8,36.3 L49.5,37.7 L50.2,39.2 L50.9,40.6 L51.5,42.0 L52.2,43.4 L52.9,44.7 L53.6,46.1 L54.3,47.4 L55.0,48.7 L55.7,50.0 L56.4,51.3 L57.1,52.6 L57.8,53.9 L58.5,55.1 L59.2,56.3 L59.9,57.6 L60.6,58.8 L61.3,59.9 L62.0,61.1 L62.7,62.3 L63.4,63.4 L64.1,64.6 L64.8,65.7 L65.4,66.8 L66.1,67.9 L66.8,69.0 L67.5,70.1 L68.2,71.1 L68.9,72.2 L69.6,73.2 L70.3,74.2 L71.0,75.3 L71.7,76.3 L72.4,77.3 L73.1,78.2 L73.8,79.2 L74.5,80.2 L75.2,81.1 L75.9,82.0 L76.6,83.0 L77.3,83.9 L78.0,84.8 L78.7,85.7 L79.3,86.6 L80.0,87.4 L80.7,88.3 L81.4,89.2 L82.1,90.0 L82.8,90.8 L83.5,91.7 L84.2,92.5 L84.9,93.3 L85.6,94.1 L86.3,94.9 L87.0,95.7 L87.7,96.4 L88.4,97.2 L89.1,97.9 L89.8,98.7 L90.5,99.4 L91.2,100.2 L91.9,100.9 L92.6,101.6 L93.2,102.3 L93.9,103.0 L94.6,103.7 L95.3,104.4 L96.0,105.0 L96.7,105.7 L97.4,106.3 L98.1,107.0 L98.8,107.6 L99.5,108.3 L100.2,108.9 L100.9,109.5 L101.6,110.1 L102.3,110.7 L103.0,111.3 L103.7,111.9 L104.4,112.5 L105.1,113.1 L105.8,113.7 L106.5,114.2 L107.1,114.8 L107.8,115.3 L108.5,115.9 L109.2,116.4 L109.9,117.0 L110.6,117.5 L111.3,118.0 L112.0,118.5 L112.7,119.0 L113.4,119.6 L114.1,120.1 L114.8,120.5 L115.5,121.0 L116.2,121.5 L116.9,122.0 L117.6,122.5 L118.3,122.9 L119.0,123.4 L119.7,123.8 L120.4,124.3 L121.0,124.7 L121.7,125.2 L122.4,125.6 L123.1,126.0 L123.8,126.5 L124.5,126.9 L125.2,127.3 L125.9,127.7 L126.6,128.1 L127.3,128.5 L128.0,128.9 L128.7,129.3 L129.4,129.7 L130.1,130.1 L130.8,130.5 L131.5,130.8 L132.2,131.2 L132.9,131.6 L133.6,131.9 L134.2,132.3 L134.9,132.7 L135.6,133.0 L136.3,133.4 L137.0,133.7 L137.7,134.0 L138.4,134.4 L139.1,134.7 L139.8,135.0 L140.5,135.3 L141.2,135.7 L141.9,136.0 L142.6,136.3 L143.3,136.6 L144.0,136.9 L144.7,137.2 L145.4,137.5 L146.1,137.8 L146.8,138.1 L147.5,138.4 L148.2,138.7 L148.8,139.0 L149.5,139.2 L150.2,139.5 L150.9,139.8 L151.6,140.0 L152.3,140.3 L153.0,140.6 L153.7,140.8 L154.4,141.1 L155.1,141.3 L155.8,141.6 L156.5,141.8 L157.2,142.1 L157.9,142.3 L158.6,142.6 L159.3,142.8 L160.0,143.0 L160.7,143.3 L161.4,143.5 L162.1,143.7 L162.7,144.0 L163.4,144.2 L164.1,144.4 L164.8,144.6 L165.5,144.8 L166.2,145.0 L166.9,145.3 L167.6,145.5 L168.3,145.7 L169.0,145.9 L169.7,146.1 L170.4,146.3 L171.1,146.5 L171.8,146.7 L172.5,146.8 L173.2,147.0 L173.9,147.2 L174.6,147.4 L175.3,147.6 L176.0,147.8 L176.6,147.9 L177.3,148.1 L178.0,148.3 L178.7,148.5 L179.4,148.6 L180.1,148.8 L180.8,149.0 L181.5,149.1 L182.2,149.3 L182.9,149.5 L183.6,149.6 L184.3,149.8 L185.0,149.9 L185.7,150.1 L186.4,150.2 L187.1,150.4 L187.8,150.5 L188.5,150.7 L189.2,150.8 L189.9,151.0 L190.5,151.1 L191.2,151.3 L191.9,151.4 L192.6,151.5 L193.3,151.7 L194.0,151.8 L194.7,151.9 L195.4,152.1 L196.1,152.2 L196.8,152.3 L197.5,152.4 L198.2,152.6 L198.9,152.7 L199.6,152.8 L200.3,152.9 L201.0,153.1 L201.7,153.2 L202.4,153.3 L203.1,153.4 L203.8,153.5 L204.4,153.6 L205.1,153.8 L205.8,153.9 L206.5,154.0 L207.2,154.1 L207.9,154.2 L208.6,154.3 L209.3,154.4 L210.0,154.5 L210.7,154.6 L211.4,154.7 L212.1,154.8 L212.8,154.9 L213.5,155.0 L214.2,155.1 L214.9,155.2 L215.6,155.3 L216.3,155.4 L217.0,155.5 L217.7,155.6 L218.3,155.6 L219.0,155.7 L219.7,155.8 L220.4,155.9 L221.1,156.0 L221.8,156.1 L222.5,156.2 L223.2,156.2 L223.9,156.3 L224.6,156.4 L225.3,156.5 L226.0,156.6 L226.7,156.6 L227.4,156.7 L228.1,156.8 L228.8,156.9 L229.5,157.0 L230.2,157.0 L230.9,157.1 L231.6,157.2 L232.2,157.2 L232.9,157.3 L233.6,157.4 L234.3,157.5 L235.0,157.5 L235.7,157.6 L236.4,157.7 L237.1,157.7 L237.8,157.8 L238.5,157.8 L239.2,157.9 L239.9,158.0 L240.6,158.0 L241.3,158.1 L242.0,158.2 L242.7,158.2 L243.4,158.3 L244.1,158.3 L244.8,158.4 L245.5,158.5 L246.1,158.5 L246.8,158.6 L247.5,158.6 L248.2,158.7 L248.9,158.7 L249.6,158.8 L250.3,158.8 L251.0,158.9 L251.7,158.9 L252.4,159.0 L253.1,159.0 L253.8,159.1 L254.5,159.1 L255.2,159.2 L255.9,159.2 L256.6,159.3 L257.3,159.3 L258.0,159.4 L258.7,159.4 L259.4,159.5 L260.0,159.5 L260.7,159.6 L261.4,159.6 L262.1,159.7 L262.8,159.7 L263.5,159.7 L264.2,159.8 L264.9,159.8 L265.6,159.9 L266.3,159.9 L267.0,159.9 L267.7,160.0 L268.4,160.0 L269.1,160.1 L269.8,160.1 L270.5,160.1 L271.2,160.2 L271.9,160.2 L272.6,160.3 L273.2,160.3 L273.9,160.3 L274.6,160.4 L275.3,160.4 L276.0,160.4 L276.7,160.5 L277.4,160.5 L278.1,160.5 L278.8,160.6 L279.5,160.6 L280.2,160.6 L280.9,160.7 L281.6,160.7 L282.3,160.7 L283.0,160.8 L283.7,160.8 L284.4,160.8 L285.1,160.8 L285.8,160.9 L286.5,160.9 L287.2,160.9 L287.8,161.0 L288.5,161.0 L289.2,161.0 L289.9,161.0 L290.6,161.1 L291.3,161.1 L292.0,161.1 L292.7,161.2 L293.4,161.2 L294.1,161.2 L294.8,161.2 L295.5,161.3 L296.2,161.3 L296.9,161.3 L297.6,161.3 L298.3,161.4 L299.0,161.4 L299.7,161.4 L300.4,161.4 L301.1,161.4 L301.7,161.5 L302.4,161.5 L303.1,161.5 L303.8,161.5 L304.5,161.6 L305.2,161.6 L305.9,161.6 L306.6,161.6 L307.3,161.6 L308.0,161.7" fill="none" stroke="var(--b2)" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M30.0,163.0 L30.7,163.0 L31.4,163.0 L32.1,163.0 L32.8,162.9 L33.5,162.9 L34.2,162.9 L34.9,162.9 L35.6,162.9 L36.3,162.9 L37.0,162.9 L37.6,162.9 L38.3,162.9 L39.0,162.9 L39.7,162.8 L40.4,162.8 L41.1,162.8 L41.8,162.8 L42.5,162.8 L43.2,162.8 L43.9,162.8 L44.6,162.8 L45.3,162.8 L46.0,162.7 L46.7,162.7 L47.4,162.7 L48.1,162.7 L48.8,162.7 L49.5,162.7 L50.2,162.7 L50.9,162.6 L51.5,162.6 L52.2,162.6 L52.9,162.6 L53.6,162.6 L54.3,162.6 L55.0,162.6 L55.7,162.5 L56.4,162.5 L57.1,162.5 L57.8,162.5 L58.5,162.5 L59.2,162.4 L59.9,162.4 L60.6,162.4 L61.3,162.4 L62.0,162.4 L62.7,162.4 L63.4,162.3 L64.1,162.3 L64.8,162.3 L65.4,162.3 L66.1,162.2 L66.8,162.2 L67.5,162.2 L68.2,162.2 L68.9,162.2 L69.6,162.1 L70.3,162.1 L71.0,162.1 L71.7,162.1 L72.4,162.0 L73.1,162.0 L73.8,162.0 L74.5,162.0 L75.2,161.9 L75.9,161.9 L76.6,161.9 L77.3,161.8 L78.0,161.8 L78.7,161.8 L79.3,161.8 L80.0,161.7 L80.7,161.7 L81.4,161.7 L82.1,161.6 L82.8,161.6 L83.5,161.6 L84.2,161.5 L84.9,161.5 L85.6,161.5 L86.3,161.4 L87.0,161.4 L87.7,161.3 L88.4,161.3 L89.1,161.3 L89.8,161.2 L90.5,161.2 L91.2,161.1 L91.9,161.1 L92.6,161.1 L93.2,161.0 L93.9,161.0 L94.6,160.9 L95.3,160.9 L96.0,160.8 L96.7,160.8 L97.4,160.7 L98.1,160.7 L98.8,160.6 L99.5,160.6 L100.2,160.5 L100.9,160.5 L101.6,160.4 L102.3,160.4 L103.0,160.3 L103.7,160.3 L104.4,160.2 L105.1,160.1 L105.8,160.1 L106.5,160.0 L107.1,159.9 L107.8,159.9 L108.5,159.8 L109.2,159.8 L109.9,159.7 L110.6,159.6 L111.3,159.5 L112.0,159.5 L112.7,159.4 L113.4,159.3 L114.1,159.3 L114.8,159.2 L115.5,159.1 L116.2,159.0 L116.9,158.9 L117.6,158.9 L118.3,158.8 L119.0,158.7 L119.7,158.6 L120.4,158.5 L121.0,158.4 L121.7,158.3 L122.4,158.2 L123.1,158.1 L123.8,158.0 L124.5,157.9 L125.2,157.8 L125.9,157.7 L126.6,157.6 L127.3,157.5 L128.0,157.4 L128.7,157.3 L129.4,157.2 L130.1,157.1 L130.8,157.0 L131.5,156.8 L132.2,156.7 L132.9,156.6 L133.6,156.5 L134.2,156.3 L134.9,156.2 L135.6,156.1 L136.3,156.0 L137.0,155.8 L137.7,155.7 L138.4,155.5 L139.1,155.4 L139.8,155.2 L140.5,155.1 L141.2,154.9 L141.9,154.8 L142.6,154.6 L143.3,154.5 L144.0,154.3 L144.7,154.1 L145.4,154.0 L146.1,153.8 L146.8,153.6 L147.5,153.4 L148.2,153.2 L148.8,153.1 L149.5,152.9 L150.2,152.7 L150.9,152.5 L151.6,152.3 L152.3,152.1 L153.0,151.9 L153.7,151.7 L154.4,151.4 L155.1,151.2 L155.8,151.0 L156.5,150.8 L157.2,150.5 L157.9,150.3 L158.6,150.1 L159.3,149.8 L160.0,149.6 L160.7,149.3 L161.4,149.0 L162.1,148.8 L162.7,148.5 L163.4,148.2 L164.1,148.0 L164.8,147.7 L165.5,147.4 L166.2,147.1 L166.9,146.8 L167.6,146.5 L168.3,146.2 L169.0,145.9 L169.7,145.5 L170.4,145.2 L171.1,144.9 L171.8,144.5 L172.5,144.2 L173.2,143.8 L173.9,143.5 L174.6,143.1 L175.3,142.8 L176.0,142.4 L176.6,142.0 L177.3,141.6 L178.0,141.2 L178.7,140.8 L179.4,140.4 L180.1,140.0 L180.8,139.5 L181.5,139.1 L182.2,138.6 L182.9,138.2 L183.6,137.7 L184.3,137.3 L185.0,136.8 L185.7,136.3 L186.4,135.8 L187.1,135.3 L187.8,134.8 L188.5,134.2 L189.2,133.7 L189.9,133.2 L190.5,132.6 L191.2,132.0 L191.9,131.5 L192.6,130.9 L193.3,130.3 L194.0,129.7 L194.7,129.1 L195.4,128.4 L196.1,127.8 L196.8,127.1 L197.5,126.5 L198.2,125.8 L198.9,125.1 L199.6,124.4 L200.3,123.7 L201.0,123.0 L201.7,122.2 L202.4,121.5 L203.1,120.7 L203.8,119.9 L204.4,119.1 L205.1,118.3 L205.8,117.5 L206.5,116.7 L207.2,115.8 L207.9,114.9 L208.6,114.0 L209.3,113.1 L210.0,112.2 L210.7,111.3 L211.4,110.3 L212.1,109.4 L212.8,108.4 L213.5,107.4 L214.2,106.3 L214.9,105.3 L215.6,104.2 L216.3,103.1 L217.0,102.0 L217.7,100.9 L218.3,99.8 L219.0,98.6 L219.7,97.4 L220.4,96.2 L221.1,95.0 L221.8,93.7 L222.5,92.5 L223.2,91.2 L223.9,89.8 L224.6,88.5 L225.3,87.1 L226.0,85.7 L226.7,84.3 L227.4,82.8 L228.1,81.4 L228.8,79.9 L229.5,78.3 L230.2,76.8 L230.9,75.2 L231.6,73.6 L232.2,71.9 L232.9,70.3 L233.6,68.6 L234.3,66.8 L235.0,65.1 L235.7,63.3 L236.4,61.4 L237.1,59.6 L237.8,57.7 L238.5,55.7 L239.2,53.8 L239.9,51.7 L240.6,49.7 L241.3,47.6 L242.0,45.5 L242.7,43.3 L243.4,41.1 L244.1,38.9 L244.8,36.6 L245.5,34.3 L246.1,32.0 L246.8,29.5 L247.5,27.1 L248.2,24.6 L248.9,22.1 L249.6,19.5 L250.3,16.8 L251.0,14.2 L251.7,11.4 L252.4,8.6" fill="none" stroke="var(--a2)" stroke-width="1.4" stroke-dasharray="4,3" stroke-linejoin="round"/>
+<circle cx="169.0" cy="145.9" r="3" fill="var(--ink)"/>
+<text x="174.0" y="159.9" class="svg-label" font-size="10" fill="var(--ink)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(0, 1)</text>
+<circle cx="284.8" cy="45.2" r="3" fill="var(--accent)"/>
+<text x="290.8" y="49.2" class="svg-label" font-size="10" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2ˣ</text>
+<circle cx="53.2" cy="45.2" r="3" fill="var(--b2)"/>
+<text x="49.2" y="37.2" class="svg-label" font-size="10" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">(1／2)ˣ</text>
+<circle cx="242.7" cy="43.2" r="3" fill="var(--a2)"/>
+<text x="220.7" y="43.2" class="svg-label" font-size="10" fill="var(--a2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">3ˣ</text>
+
+</svg>
+        <figcaption>底數大於 1 往右上升，介於 0 與 1 之間往右下降；都通過 (0, 1)</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">性質</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>性質</th><th>a &gt; 1</th><th>0 &lt; a &lt; 1</th></tr></thead>
+          <tbody>
+            <tr><td>必過點</td><td class="f">(0, 1)</td><td class="f">(0, 1)</td></tr>
+            <tr><td>值域</td><td class="f">y &gt; 0</td><td class="f">y &gt; 0</td></tr>
+            <tr><td>增減</td><td class="f">遞增（成長）</td><td class="f">遞減（衰減）</td></tr>
+            <tr><td>貼近 x 軸</td><td class="f">往左邊</td><td class="f">往右邊</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">y = 2ˣ 和 y = (1／2)ˣ 的圖形對稱於 y 軸，因為 (1／2)ˣ = 2^(−x)。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-use">
+    <div class="part-kicker"><b>比較大小與應用</b></div>
+    <h2>化成同底，比指數就好</h2>
+
+    <div class="step">
+      <span class="step-tag">規律</span>
+      <div class="formula">
+        <div class="formula-title">遞增／遞減的應用</div>
+        a &gt; 1：aᵐ &gt; aⁿ ⟺ m &gt; n
+        <br>0 &lt; a &lt; 1：aᵐ &gt; aⁿ ⟺ m &lt; n（反過來）
+      </div>
+      <p class="quote">比較 4^0.3、8^0.2、2^0.5 的大小。</p>
+      <div class="calc">4^0.3 = 2^0.6，8^0.2 = 2^0.6，2^0.5
+底數 2 &gt; 1：0.5 &lt; 0.6 ⟹ 2^0.5 &lt; 4^0.3 = 8^0.2</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：藥物代謝</span>
+      <p class="quote">某感冒藥服用後，體內有效成分每 4 小時減半。服用 400 毫克，幾小時後會降到 50 毫克？</p>
+      <div class="calc">400 × (1／2)^(t／4) = 50 ⟹ (1／2)^(t／4) = 1／8 = (1／2)³
+t／4 = 3 ⟹ t = 12（小時）</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-compound">
+    <div class="part-kicker"><b>複利與連續複利</b></div>
+    <h2>計息越頻繁，錢越多——但有上限</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">年利率 5%，若每月計息一次，每期利率是 5%／12；一年計息 12 次。3 年後 10000 元會變多少？和每年計息比較呢？</p>
+      <div class="calc">每年計息：10000 × 1.05³ ≈ 11576
+每月計息：10000 × (1 + 0.05／12)^(12×3) = 10000 × (1.0041667)³⁶ ≈ 11615</div>
+      <div class="formula">
+        <div class="formula-title">複利公式</div>
+        <span class="big">本利和 = P(1 + r／n)^(nt)</span>
+        <br>P：本金，r：年利率，n：每年計息次數，t：年數
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">觀察：越算越頻繁會怎樣？</span>
+      <p>用最誇張的例子看：年利率 100%，本金 1 元，存 1 年。每年計息 n 次，本利和是 (1 + 1／n)ⁿ：</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>計息方式</th><th>n</th><th>(1 + 1／n)ⁿ</th></tr></thead>
+          <tbody>
+            <tr><td>每年</td><td class="f">1</td><td class="f">2</td></tr>
+            <tr><td>每半年</td><td class="f">2</td><td class="f">2.25</td></tr>
+            <tr><td>每季</td><td class="f">4</td><td class="f">2.4414</td></tr>
+            <tr><td>每月</td><td class="f">12</td><td class="f">2.6130</td></tr>
+            <tr><td>每天</td><td class="f">365</td><td class="f">2.7146</td></tr>
+            <tr><td>每秒</td><td class="f">31536000</td><td class="f">2.71828…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>本利和一直增加，但越來越慢，最後停在一個固定的數附近。這個數就是 <b>e</b>：</p>
+      <div class="formula">
+        <div class="formula-title">自然常數 e</div>
+        <span class="big">n 越來越大時，(1 + 1／n)ⁿ 會越來越接近 e ≈ 2.71828</span>
+        <br>e 和 π 一樣是無理數
+      </div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 320 190" role="img" aria-label="(1+1/n)^n 隨 n 增加而上升，越來越接近 e≈2.718，但永遠不超過">
+<line x1="30.0" y1="136.7" x2="308.0" y2="136.7" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="68.5" x2="308.0" y2="68.5" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="38.8" x2="308.0" y2="38.8" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="41.1" y1="164.0" x2="41.1" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="74.5" y1="164.0" x2="74.5" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="163.4" y1="164.0" x2="163.4" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="296.9" y1="164.0" x2="296.9" y2="14.0" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="2,3"/>
+<line x1="30.0" y1="164.0" x2="308.0" y2="164.0" stroke="var(--ink-muted)" stroke-width="1"/>
+<line x1="30.0" y1="164.0" x2="30.0" y2="14.0" stroke="var(--ink-muted)" stroke-width="1"/>
+<text x="41.1" y="177.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">1</text>
+<text x="74.5" y="177.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">4</text>
+<text x="163.4" y="177.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">12</text>
+<text x="296.9" y="177.0" text-anchor="middle" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">24</text>
+<text x="26.0" y="140.2" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2</text>
+<text x="26.0" y="72.0" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">2.5</text>
+<text x="26.0" y="42.3" text-anchor="end" class="svg-label" font-size="10" fill="var(--ink-muted)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">e</text>
+<line x1="30.0" y1="38.8" x2="308.0" y2="38.8" stroke="var(--b2)" stroke-width="1" stroke-dasharray="4,3"/>
+<path d="M41.1,136.7 L41.8,133.8 L42.4,131.0 L43.0,128.4 L43.7,126.0 L44.3,123.6 L45.0,121.4 L45.6,119.4 L46.2,117.4 L46.9,115.5 L47.5,113.7 L48.2,112.0 L48.8,110.3 L49.4,108.8 L50.1,107.3 L50.7,105.8 L51.4,104.5 L52.0,103.1 L52.6,101.9 L53.3,100.7 L53.9,99.5 L54.5,98.4 L55.2,97.3 L55.8,96.2 L56.5,95.2 L57.1,94.2 L57.7,93.3 L58.4,92.4 L59.0,91.5 L59.7,90.7 L60.3,89.8 L60.9,89.0 L61.6,88.3 L62.2,87.5 L62.9,86.8 L63.5,86.1 L64.1,85.4 L64.8,84.7 L65.4,84.1 L66.1,83.4 L66.7,82.8 L67.3,82.2 L68.0,81.7 L68.6,81.1 L69.3,80.5 L69.9,80.0 L70.5,79.5 L71.2,79.0 L71.8,78.5 L72.5,78.0 L73.1,77.5 L73.7,77.1 L74.4,76.6 L75.0,76.2 L75.6,75.7 L76.3,75.3 L76.9,74.9 L77.6,74.5 L78.2,74.1 L78.8,73.7 L79.5,73.4 L80.1,73.0 L80.8,72.6 L81.4,72.3 L82.0,71.9 L82.7,71.6 L83.3,71.3 L84.0,70.9 L84.6,70.6 L85.2,70.3 L85.9,70.0 L86.5,69.7 L87.2,69.4 L87.8,69.1 L88.4,68.8 L89.1,68.6 L89.7,68.3 L90.4,68.0 L91.0,67.8 L91.6,67.5 L92.3,67.2 L92.9,67.0 L93.6,66.8 L94.2,66.5 L94.8,66.3 L95.5,66.0 L96.1,65.8 L96.7,65.6 L97.4,65.4 L98.0,65.1 L98.7,64.9 L99.3,64.7 L99.9,64.5 L100.6,64.3 L101.2,64.1 L101.9,63.9 L102.5,63.7 L103.1,63.5 L103.8,63.3 L104.4,63.2 L105.1,63.0 L105.7,62.8 L106.3,62.6 L107.0,62.4 L107.6,62.3 L108.3,62.1 L108.9,61.9 L109.5,61.8 L110.2,61.6 L110.8,61.4 L111.5,61.3 L112.1,61.1 L112.7,61.0 L113.4,60.8 L114.0,60.7 L114.7,60.5 L115.3,60.4 L115.9,60.2 L116.6,60.1 L117.2,59.9 L117.8,59.8 L118.5,59.7 L119.1,59.5 L119.8,59.4 L120.4,59.3 L121.0,59.1 L121.7,59.0 L122.3,58.9 L123.0,58.8 L123.6,58.6 L124.2,58.5 L124.9,58.4 L125.5,58.3 L126.2,58.2 L126.8,58.0 L127.4,57.9 L128.1,57.8 L128.7,57.7 L129.4,57.6 L130.0,57.5 L130.6,57.4 L131.3,57.3 L131.9,57.2 L132.6,57.1 L133.2,57.0 L133.8,56.9 L134.5,56.8 L135.1,56.7 L135.8,56.6 L136.4,56.5 L137.0,56.4 L137.7,56.3 L138.3,56.2 L138.9,56.1 L139.6,56.0 L140.2,55.9 L140.9,55.8 L141.5,55.7 L142.1,55.6 L142.8,55.5 L143.4,55.5 L144.1,55.4 L144.7,55.3 L145.3,55.2 L146.0,55.1 L146.6,55.0 L147.3,55.0 L147.9,54.9 L148.5,54.8 L149.2,54.7 L149.8,54.6 L150.5,54.6 L151.1,54.5 L151.7,54.4 L152.4,54.3 L153.0,54.3 L153.7,54.2 L154.3,54.1 L154.9,54.0 L155.6,54.0 L156.2,53.9 L156.9,53.8 L157.5,53.8 L158.1,53.7 L158.8,53.6 L159.4,53.5 L160.0,53.5 L160.7,53.4 L161.3,53.3 L162.0,53.3 L162.6,53.2 L163.2,53.2 L163.9,53.1 L164.5,53.0 L165.2,53.0 L165.8,52.9 L166.4,52.8 L167.1,52.8 L167.7,52.7 L168.4,52.7 L169.0,52.6 L169.6,52.5 L170.3,52.5 L170.9,52.4 L171.6,52.4 L172.2,52.3 L172.8,52.2 L173.5,52.2 L174.1,52.1 L174.8,52.1 L175.4,52.0 L176.0,52.0 L176.7,51.9 L177.3,51.9 L178.0,51.8 L178.6,51.8 L179.2,51.7 L179.9,51.7 L180.5,51.6 L181.1,51.6 L181.8,51.5 L182.4,51.5 L183.1,51.4 L183.7,51.4 L184.3,51.3 L185.0,51.3 L185.6,51.2 L186.3,51.2 L186.9,51.1 L187.5,51.1 L188.2,51.0 L188.8,51.0 L189.5,50.9 L190.1,50.9 L190.7,50.8 L191.4,50.8 L192.0,50.7 L192.7,50.7 L193.3,50.7 L193.9,50.6 L194.6,50.6 L195.2,50.5 L195.9,50.5 L196.5,50.4 L197.1,50.4 L197.8,50.4 L198.4,50.3 L199.1,50.3 L199.7,50.2 L200.3,50.2 L201.0,50.2 L201.6,50.1 L202.2,50.1 L202.9,50.0 L203.5,50.0 L204.2,50.0 L204.8,49.9 L205.4,49.9 L206.1,49.8 L206.7,49.8 L207.4,49.8 L208.0,49.7 L208.6,49.7 L209.3,49.7 L209.9,49.6 L210.6,49.6 L211.2,49.5 L211.8,49.5 L212.5,49.5 L213.1,49.4 L213.8,49.4 L214.4,49.4 L215.0,49.3 L215.7,49.3 L216.3,49.3 L217.0,49.2 L217.6,49.2 L218.2,49.2 L218.9,49.1 L219.5,49.1 L220.2,49.1 L220.8,49.0 L221.4,49.0 L222.1,49.0 L222.7,48.9 L223.3,48.9 L224.0,48.9 L224.6,48.8 L225.3,48.8 L225.9,48.8 L226.5,48.7 L227.2,48.7 L227.8,48.7 L228.5,48.7 L229.1,48.6 L229.7,48.6 L230.4,48.6 L231.0,48.5 L231.7,48.5 L232.3,48.5 L232.9,48.5 L233.6,48.4 L234.2,48.4 L234.9,48.4 L235.5,48.3 L236.1,48.3 L236.8,48.3 L237.4,48.3 L238.1,48.2 L238.7,48.2 L239.3,48.2 L240.0,48.1 L240.6,48.1 L241.3,48.1 L241.9,48.1 L242.5,48.0 L243.2,48.0 L243.8,48.0 L244.4,48.0 L245.1,47.9 L245.7,47.9 L246.4,47.9 L247.0,47.9 L247.6,47.8 L248.3,47.8 L248.9,47.8 L249.6,47.8 L250.2,47.7 L250.8,47.7 L251.5,47.7 L252.1,47.7 L252.8,47.6 L253.4,47.6 L254.0,47.6 L254.7,47.6 L255.3,47.5 L256.0,47.5 L256.6,47.5 L257.2,47.5 L257.9,47.4 L258.5,47.4 L259.2,47.4 L259.8,47.4 L260.4,47.3 L261.1,47.3 L261.7,47.3 L262.4,47.3 L263.0,47.3 L263.6,47.2 L264.3,47.2 L264.9,47.2 L265.5,47.2 L266.2,47.1 L266.8,47.1 L267.5,47.1 L268.1,47.1 L268.7,47.1 L269.4,47.0 L270.0,47.0 L270.7,47.0 L271.3,47.0 L271.9,47.0 L272.6,46.9 L273.2,46.9 L273.9,46.9 L274.5,46.9 L275.1,46.9 L275.8,46.8 L276.4,46.8 L277.1,46.8 L277.7,46.8 L278.3,46.8 L279.0,46.7 L279.6,46.7 L280.3,46.7 L280.9,46.7 L281.5,46.7 L282.2,46.6 L282.8,46.6 L283.5,46.6 L284.1,46.6 L284.7,46.6 L285.4,46.5 L286.0,46.5 L286.6,46.5 L287.3,46.5 L287.9,46.5 L288.6,46.4 L289.2,46.4 L289.8,46.4 L290.5,46.4 L291.1,46.4 L291.8,46.4 L292.4,46.3 L293.0,46.3 L293.7,46.3 L294.3,46.3 L295.0,46.3 L295.6,46.3 L296.2,46.2 L296.9,46.2" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+<circle cx="41.1" cy="136.7" r="3" fill="var(--accent)"/>
+<text x="47.1" y="150.7" class="svg-label" font-size="10" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">n=1：2</text>
+<circle cx="74.5" cy="76.5" r="3" fill="var(--accent)"/>
+<circle cx="163.4" cy="53.1" r="3" fill="var(--accent)"/>
+<text x="143.4" y="69.1" class="svg-label" font-size="10" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">n=12：2.613</text>
+
+</svg>
+        <figcaption>(1 + 1／n)ⁿ 隨 n 增加而上升，趨近 e（橘色虛線）</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">連續複利</span>
+      <p>「每一瞬間都計息」稱為<b>連續複利</b>。年利率 r、存 t 年，本利和會趨近：</p>
+      <div class="formula">
+        <div class="formula-title">連續複利</div>
+        <span class="big">本利和 = P・e^(rt)</span>
+      </div>
+      <div class="calc">10000 元，年利率 5%，連續複利 3 年：
+10000 × e^(0.15) ≈ 10000 × 1.1618 ≈ 11618（元）
+
+比較：每年 11576 → 每月 11615 → 連續 11618</div>
+      <p class="note">從每月計息改成連續計息，3 年只多了 3 元。計息頻率提高的效果有上限，上限就是連續複利。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-e">
+    <div class="part-kicker"><b>自然指數 eˣ</b></div>
+    <h2>以 e 為底的指數函數</h2>
+
+    <div class="step">
+      <span class="step-tag">性質</span>
+      <p>y = eˣ 是底數大於 1 的指數函數，圖形和 y = 2ˣ、y = 3ˣ 長得很像（e 介於 2 和 3 之間，所以曲線也夾在兩者之間）。它在科學中最常出現，例如：</p>
+      <div class="calc">細菌連續繁殖：N(t) = N₀e^(kt)（k &gt; 0）
+放射性衰變：N(t) = N₀e^(−kt)（k &gt; 0）
+熱咖啡冷卻：溫度差 = 初始溫度差 × e^(−kt)</div>
+      <p class="note">e 之所以「自然」，是因為它描述的是「每一瞬間都按比例變化」的過程。自然界的成長和衰減大多是連續發生的，不是一年結算一次。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：2-1 指數函數</h2>
+    <p class="lede-line">指數函數 = 每段時間乘上固定倍數。計息越頻繁，本利和趨近 P・e^(rt)。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>定義</td><td class="f">y = aˣ，a &gt; 0 且 a ≠ 1</td></tr>
+          <tr><td>圖形</td><td class="f">過 (0, 1)；y &gt; 0；a &gt; 1 遞增，0 &lt; a &lt; 1 遞減</td></tr>
+          <tr><td>比較大小</td><td class="f">化成同底；底數小於 1 時大小關係反過來</td></tr>
+          <tr><td>複利</td><td class="f">P(1 + r／n)^(nt)</td></tr>
+          <tr><td>e</td><td class="f">(1 + 1／n)ⁿ 的極限，e ≈ 2.71828</td></tr>
+          <tr><td>連續複利</td><td class="f">P・e^(rt)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">比較大小</span></div>
+        <p>比較 (1／2)^(−3)、(1／2)^2、1 的大小。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">(1／2)^(−3) = 8，(1／2)² = 1／4
+∴ (1／2)² &lt; 1 &lt; (1／2)^(−3)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">方程式</span></div>
+        <p>解 9ˣ = 27。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">3^(2x) = 3³ ⟹ 2x = 3 ⟹ x = 3／2</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">複利</span></div>
+        <p>本金 50000 元，年利率 4%，每半年計息一次，2 年後本利和是多少？（列式即可，並估算到元）</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">50000 × (1 + 0.04／2)^(2×2) = 50000 × 1.02⁴
+1.02⁴ ≈ 1.0824 ⟹ 約 54122 元</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">衰減</span></div>
+        <p>某放射性物質每 30 年減半。現有 80 克，90 年後剩多少？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">90 ÷ 30 = 3 個半衰期 ⟹ 80 × (1／2)³ = 10（克）</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">連續複利</span></div>
+        <p>1000 元以年利率 10% 連續複利存 10 年，本利和是多少？（e ≈ 2.718）</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">1000 × e^(0.1 × 10) = 1000e ≈ 2718（元）</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：反過來問「要幾年？」</h2>
+      <p>知道利率，可以算出 n 年後有多少錢。但如果問「年利率 5%，幾年後存款會翻倍？」就要解 1.05ⁿ = 2——這需要對數。在 2-2「對數與對數律」，我們會把數學1 的常用對數推廣到任何底數，並學會對數的運算規則。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數B 第三冊・第二章</span>
+    <span>2-1 指數函數</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

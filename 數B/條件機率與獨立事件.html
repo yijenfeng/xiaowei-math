@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-1 條件機率與獨立事件｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數B 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數B 第四冊・第三章 機率・3-1</span>
+    <h1>條件機率與獨立事件</h1>
+    <p class="sub">學生會做了一份健康問卷，筱葳負責整理：200 位同學中，誰每天運動、誰睡眠充足。主任問：「有運動的人，睡眠比較充足嗎？」要回答這個問題，得先學會在「已知某件事」的前提下算機率。這一節用列聯表和文氏圖整理資料，學習條件機率、乘法原理，並判斷兩件事是否獨立。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>數學2 的機率是在「全部的人」裡面算比例。但很多問題會先給一個條件：「已知他有運動」「已知今天下雨」。這時要算比例的範圍縮小了，這就是<b>條件機率</b>。如果加上條件之後機率完全沒變，就說兩件事<b>獨立</b>——彼此不影響。</p>
+    <ul class="toc">
+      <li><a href="#topic-kind"><b>1</b>主觀機率與客觀機率</a></li>
+      <li><a href="#topic-table"><b>2</b>列聯表與文氏圖</a></li>
+      <li><a href="#topic-cond"><b>3</b>條件機率與乘法原理</a></li>
+      <li><a href="#topic-indep"><b>4</b>獨立事件</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-kind">
+    <div class="part-kicker"><b>主觀機率與客觀機率</b></div>
+    <h2>機率從哪裡來？</h2>
+
+    <div class="step">
+      <span class="step-tag">比較</span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>類型</th><th>來源</th><th>例子</th></tr></thead>
+          <tbody>
+            <tr><td>客觀機率（古典）</td><td>每種結果出現機會相等，用數的</td><td>擲公正骰子出現 6 點：1／6</td></tr>
+            <tr><td>客觀機率（統計）</td><td>大量重複觀察的相對次數</td><td>問卷中每天運動的比例 80／200 = 0.4</td></tr>
+            <tr><td>主觀機率</td><td>根據經驗與資訊的判斷</td><td>「我覺得明天社團活動會順利辦成的機率是 90%」</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">主觀機率不是亂猜：氣象預報的降雨機率、醫師對病情的判斷，都是根據資料和經驗做的主觀機率，並且會隨著新資訊修正（3-2 的貝氏定理就是修正的方法）。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-table">
+    <div class="part-kicker"><b>列聯表與文氏圖</b></div>
+    <h2>兩個問題的資料，排成一張表</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">問卷結果：200 人中，每天運動的 80 人，其中睡眠充足 60 人；沒有每天運動的 120 人，其中睡眠充足 60 人。</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>睡眠充足</th><th>睡眠不足</th><th>合計</th></tr></thead>
+          <tbody>
+            <tr><td>每天運動</td><td class="f">60</td><td class="f">20</td><td class="f">80</td></tr>
+            <tr><td>沒每天運動</td><td class="f">60</td><td class="f">60</td><td class="f">120</td></tr>
+            <tr><td>合計</td><td class="f">120</td><td class="f">80</td><td class="f">200</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>這種同時按兩個問題分類的表格叫<b>列聯表</b>。同一份資料也能畫成文氏圖：</p>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 300 180" role="img" aria-label="文氏圖：運動 A 共 80 人，睡眠充足 B 共 120 人，兩者交集 60 人，兩者都不是 60 人">
+          <rect x="10" y="10" width="280" height="160" rx="6" fill="none" stroke="var(--line)" stroke-width="1.4"/>
+          <circle cx="115" cy="90" r="55" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.8" fill-opacity="0.8"/>
+          <circle cx="185" cy="90" r="62" fill="var(--surface-2)" stroke="var(--b2)" stroke-width="1.8" fill-opacity="0.6"/>
+          <text x="82" y="94" class="svg-label">20</text>
+          <text x="144" y="94" class="svg-label">60</text>
+          <text x="210" y="94" class="svg-label">60</text>
+          <text x="248" y="160" class="svg-label">60</text>
+          <text x="70" y="32" class="svg-label">運動 A（80）</text>
+          <text x="180" y="22" class="svg-label">睡眠充足 B（120）</text>
+        </svg>
+        <figcaption>交集 A ∩ B 有 60 人；外面（兩者都不是）也有 60 人</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">對照</span>
+      <div class="calc">P(A) = 80／200 = 0.4　　P(B) = 120／200 = 0.6
+P(A ∩ B) = 60／200 = 0.3
+P(A ∪ B) = P(A) + P(B) − P(A ∩ B) = 0.4 + 0.6 − 0.3 = 0.7</div>
+      <p class="note">列聯表的每一格對應文氏圖的一塊：左上格是交集，「合計」列和行是兩個圓各自的大小。</p>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-cond">
+    <div class="part-kicker"><b>條件機率與乘法原理</b></div>
+    <h2>已知某件事發生，只看那一部分</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">從 200 人中隨機抽一人。(1) 已知他每天運動，他睡眠充足的機率？(2) 已知他睡眠充足，他每天運動的機率？</p>
+      <div class="calc">(1) 只看「每天運動」那一列（80 人）：60／80 = 0.75
+(2) 只看「睡眠充足」那一行（120 人）：60／120 = 0.5</div>
+      <div class="formula">
+        <div class="formula-title">條件機率（P(A) &gt; 0）</div>
+        <span class="big">P(B | A) = P(A ∩ B) ／ P(A)</span>
+        <br>讀作「在 A 發生的條件下，B 發生的機率」
+      </div>
+      <p class="note">P(B | A) = 0.75 和 P(A | B) = 0.5 不一樣：條件不同，分母就不同。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">乘法原理</span>
+      <div class="formula">
+        <span class="big">P(A ∩ B) = P(A)・P(B | A)</span>
+      </div>
+      <p class="quote">社團抽 2 位代表，8 位候選人中有 3 位是高二。不放回地依序抽，兩位都是高二的機率？</p>
+      <div class="calc">P(第 1 位高二) = 3／8
+P(第 2 位高二 | 第 1 位高二) = 2／7
+P(兩位都高二) = (3／8)(2／7) = 3／28</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-indep">
+    <div class="part-kicker"><b>獨立事件</b></div>
+    <h2>加上條件，機率沒變</h2>
+
+    <div class="step">
+      <span class="step-tag">定義</span>
+      <div class="formula">
+        <div class="formula-title">獨立事件</div>
+        <span class="big">A、B 獨立 ⟺ P(A ∩ B) = P(A)・P(B)</span>
+        <br>（等價於 P(B | A) = P(B)）
+      </div>
+      <p class="quote">回到問卷：「每天運動」和「睡眠充足」獨立嗎？</p>
+      <div class="calc">P(B) = 0.6，P(B | A) = 0.75 ≠ 0.6 ⟹ 不獨立
+
+或檢查：P(A)・P(B) = 0.4 × 0.6 = 0.24 ≠ 0.3 = P(A ∩ B)</div>
+      <p>有運動的人睡眠充足的比例（75%）高於整體（60%），兩者有關聯。不過這只說明「有關」，不能直接說「運動造成睡眠充足」——也可能是其他原因（例如作息規律）同時影響兩者。</p>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：獨立的列聯表</span>
+      <p class="quote">另一份問卷：100 人中，喜歡貓的 40 人、戴眼鏡的 50 人，喜歡貓又戴眼鏡的 20 人。兩者獨立嗎？</p>
+      <div class="calc">P(貓)・P(眼鏡) = 0.4 × 0.5 = 0.2 = P(貓 ∩ 眼鏡) ⟹ 獨立
+（喜歡貓的人中戴眼鏡比例 20／40 = 50%，和整體一樣）</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">獨立的應用</span>
+      <p class="quote">週六下雨機率 0.3，週日下雨機率 0.4，兩天互相獨立。週末兩天都不下雨的機率？至少一天下雨的機率？</p>
+      <div class="calc">都不下雨：0.7 × 0.6 = 0.42
+至少一天下雨：1 − 0.42 = 0.58</div>
+      <p class="note"><b>獨立 ≠ 互斥</b>。互斥是「不可能同時發生」；兩件事機率都大於 0 時，互斥就一定不獨立（知道 A 發生，B 就確定不會發生）。</p>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：3-1 條件機率與獨立事件</h2>
+    <p class="lede-line">列聯表的一列或一行就是「條件」；條件機率 = 那一格 ÷ 那一列（行）的合計。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>主觀／客觀機率</td><td class="f">客觀：計數或相對次數；主觀：依經驗資訊判斷</td></tr>
+          <tr><td>聯集</td><td class="f">P(A ∪ B) = P(A) + P(B) − P(A ∩ B)</td></tr>
+          <tr><td>條件機率</td><td class="f">P(B | A) = P(A ∩ B)／P(A)</td></tr>
+          <tr><td>乘法原理</td><td class="f">P(A ∩ B) = P(A)・P(B | A)</td></tr>
+          <tr><td>獨立</td><td class="f">P(A ∩ B) = P(A)・P(B) ⟺ P(B | A) = P(B)</td></tr>
+          <tr><td>有關 ≠ 因果</td><td class="f">不獨立只代表有關聯</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">讀表</span></div>
+        <p>用本節的運動與睡眠列聯表，求「已知睡眠不足，他每天運動」的機率。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">睡眠不足 80 人，其中每天運動 20 人 ⟹ 20／80 = 1／4</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag alg">公式</span></div>
+        <p>P(A) = 0.5，P(B) = 0.4，P(A ∪ B) = 0.7。求 P(A | B)，並判斷是否獨立。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">P(A ∩ B) = 0.5 + 0.4 − 0.7 = 0.2
+P(A | B) = 0.2／0.4 = 0.5 = P(A) ⟹ 獨立</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag">乘法原理</span></div>
+        <p>袋中 5 紅球、3 白球，不放回地取 2 球，求先紅後白的機率。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">(5／8)(3／7) = 15／56</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag alg">列聯表</span></div>
+        <p>某班 40 人，戴眼鏡 24 人；男生 20 人，其中戴眼鏡 12 人。「男生」和「戴眼鏡」獨立嗎？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">P(男) = 0.5，P(眼鏡) = 0.6，P(男 ∩ 眼鏡) = 12／40 = 0.3
+0.5 × 0.6 = 0.3 ⟹ 獨立</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag">獨立</span></div>
+        <p>筱葳投籃命中率 0.6，各次獨立。投 3 次全部沒中的機率？至少中一次的機率？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">全沒中：0.4³ = 0.064
+至少中一次：1 − 0.064 = 0.936</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：由結果回推原因</h2>
+      <p>P(B | A) 和 P(A | B) 可以差很多。生活中常常知道其中一個、想求另一個：已知「有病的人篩檢會陽性」的機率，想知道「篩檢陽性的人真的有病」的機率。在 3-2「貝氏定理」，我們會學會這種反推。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數B 第四冊・第三章</span>
+    <span>3-1 條件機率與獨立事件</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

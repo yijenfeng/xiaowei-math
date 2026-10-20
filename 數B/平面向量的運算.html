@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-2 平面向量的運算｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到數B 學習地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">數B 第三冊・第三章 平面向量・3-2</span>
+    <h1>平面向量的運算</h1>
+    <p class="sub">定向越野結束，筱葳拖著器材行李箱走回社辦。拉桿越斜，手越累，箱子卻沒有走得比較快。物理老師說：只有順著前進方向的那部分力才真的在做功。這一節把這個想法變成向量的內積，用它算兩個向量的夾角、判斷垂直，並求一個向量在另一個方向上的正射影。情境例子為原創設計。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <p>上一節的向量可以加減、可以乘一個數。這一節介紹兩個向量之間的一種「乘法」——<b>內積</b>。它的結果是一個數，同時反映兩個向量的長度和夾角。內積最常用的三件事：算夾角、判斷垂直、求正射影。</p>
+    <ul class="toc">
+      <li><a href="#topic-def"><b>1</b>內積的意義</a></li>
+      <li><a href="#topic-coord"><b>2</b>坐標算法與夾角</a></li>
+      <li><a href="#topic-proj"><b>3</b>正射影</a></li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="topic-def">
+    <div class="part-kicker"><b>內積的意義</b></div>
+    <h2>長度乘長度，再乘夾角的 cos</h2>
+
+    <div class="step">
+      <span class="step-tag">情境</span>
+      <p class="quote">筱葳用 50 牛頓的力拉箱子，拉桿和地面夾 60°，往前走了 20 公尺。她做了多少功？</p>
+      <div class="calc">沿地面方向的力 = 50 × cos60° = 25（牛頓）
+功 = 25 × 20 = 500（焦耳）
+
+一般地：功 = |<span class="vec">F</span>| × |<span class="vec">d</span>| × cosθ</div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 286 225" role="img" aria-label="拉行李箱：拉力 50 牛頓與前進方向夾 60 度，只有水平分量 25 牛頓在做功">
+<defs><marker id="ah4-0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="ah4-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ab)"/></marker><marker id="ah4-2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--b2)"/></marker></defs>
+<line x1="34.4" y1="211.2" x2="34.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="68.4" y1="211.2" x2="68.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="102.4" y1="211.2" x2="102.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="136.4" y1="211.2" x2="136.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="170.4" y1="211.2" x2="170.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="204.4" y1="211.2" x2="204.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="238.4" y1="211.2" x2="238.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="272.4" y1="211.2" x2="272.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="184.0" x2="272.4" y2="184.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="150.0" x2="272.4" y2="150.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="116.0" x2="272.4" y2="116.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="82.0" x2="272.4" y2="82.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="48.0" x2="272.4" y2="48.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="14.0" x2="272.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="119.4" y1="36.8" x2="119.4" y2="184.0" stroke="var(--ink-muted)" stroke-width="1.2" stroke-dasharray="3,3"/>
+<line x1="34.4" y1="184.0" x2="119.4" y2="36.8" stroke="var(--accent)" stroke-width="2.6" marker-end="url(#ah4-0)"/>
+<line x1="34.4" y1="184.0" x2="255.4" y2="184.0" stroke="var(--ab)" stroke-width="2" marker-end="url(#ah4-1)"/>
+<line x1="34.4" y1="184.0" x2="119.4" y2="184.0" stroke="var(--b2)" stroke-width="3" marker-end="url(#ah4-2)"/>
+<text x="68.4" y="85.4" text-anchor="end" class="svg-label" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">F</text>
+<text x="224.8" y="199.3" text-anchor="middle" class="svg-label" fill="var(--ab)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">前進方向</text>
+<text x="76.9" y="199.3" text-anchor="middle" class="svg-label" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">|F|cos60°</text>
+<text x="59.9" y="169.7" text-anchor="start" class="svg-label" fill="var(--ink)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">60°</text>
+</svg>
+        <figcaption>拉力 F 只有水平分量 |F|cos60° 在幫箱子前進</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">定義</span>
+      <div class="formula">
+        <div class="formula-title">內積（θ 為兩向量夾角，0° ≤ θ ≤ 180°）</div>
+        <span class="big"><span class="vec">a</span>・<span class="vec">b</span> = |<span class="vec">a</span>||<span class="vec">b</span>|cosθ</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>夾角</th><th>內積</th><th>意義</th></tr></thead>
+          <tbody>
+            <tr><td>銳角</td><td class="f">正</td><td>方向大致相同</td></tr>
+            <tr><td>直角</td><td class="f">0</td><td>互相垂直</td></tr>
+            <tr><td>鈍角</td><td class="f">負</td><td>方向大致相反</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-coord">
+    <div class="part-kicker"><b>坐標算法與夾角</b></div>
+    <h2>對應分量相乘再相加</h2>
+
+    <div class="step">
+      <span class="step-tag">公式</span>
+      <p>有坐標時，不用量角度就能算內積（推導用到數學2 的餘弦定理）：</p>
+      <div class="formula">
+        <div class="formula-title">內積的坐標算法</div>
+        <span class="big">(x₁, y₁)・(x₂, y₂) = x₁x₂ + y₁y₂</span>
+        <br>夾角：cosθ = (<span class="vec">a</span>・<span class="vec">b</span>)／(|<span class="vec">a</span>||<span class="vec">b</span>|)
+        <br>垂直：<span class="vec">a</span> ⊥ <span class="vec">b</span> ⟺ x₁x₂ + y₁y₂ = 0
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：夾角</span>
+      <p class="quote">兩條步道的方向分別是 (1, 1) 和 (0, 2)，夾角是多少？</p>
+      <div class="calc">內積 = 0 + 2 = 2，長度 √2 和 2
+cosθ = 2 ／ (2√2) = √2／2 ⟹ θ = 45°</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用：垂直</span>
+      <p class="quote">兩條步道方向 (k, 2) 和 (3, −6) 互相垂直，k 是多少？</p>
+      <div class="calc">3k − 12 = 0 ⟹ k = 4</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">內積與長度</span>
+      <div class="formula">
+        <span class="big"><span class="vec">a</span>・<span class="vec">a</span> = |<span class="vec">a</span>|²</span>
+        <br>|<span class="vec">a</span> + <span class="vec">b</span>|² = |<span class="vec">a</span>|² + 2<span class="vec">a</span>・<span class="vec">b</span> + |<span class="vec">b</span>|²
+      </div>
+      <p class="quote">兩人合力拉一台推車，一人 3 牛頓、一人 2 牛頓，兩力夾 60°。合力多大？</p>
+      <div class="calc">|合力|² = 9 + 2 × (3 × 2 × cos60°) + 4 = 9 + 6 + 4 = 19
+|合力| = √19 ≈ 4.36（牛頓）</div>
+    </div>
+  </section>
+
+  <section class="part prose" id="topic-proj">
+    <div class="part-kicker"><b>正射影</b></div>
+    <h2>一個向量投在另一個方向上的影子</h2>
+
+    <div class="step">
+      <span class="step-tag">公式</span>
+      <div class="formula">
+        <div class="formula-title"><span class="vec">a</span> 在 <span class="vec">b</span> 方向上的正射影</div>
+        <span class="big">正射影向量 = ((<span class="vec">a</span>・<span class="vec">b</span>)／|<span class="vec">b</span>|²)<span class="vec">b</span></span>
+        <br>正射影長 = |<span class="vec">a</span>・<span class="vec">b</span>|／|<span class="vec">b</span>|
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">用一用</span>
+      <div class="calc"><span class="vec">a</span> = (2, 4)，<span class="vec">b</span> = (6, 2)
+<span class="vec">a</span>・<span class="vec">b</span> = 20，|<span class="vec">b</span>|² = 40
+正射影 = (20／40)(6, 2) = (3, 1)，長度 √10</div>
+    </div>
+
+    <div class="fig-grid">
+      <figure class="figure-card">
+        <svg viewBox="0 0 286 218" role="img" aria-label="向量 a=(2,4) 在向量 b=(6,2) 上的正射影為 (3,1)">
+<defs><marker id="ah5-0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="ah5-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ab)"/></marker><marker id="ah5-2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--b2)"/></marker></defs>
+<line x1="34.4" y1="204.4" x2="34.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="68.4" y1="204.4" x2="68.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="102.4" y1="204.4" x2="102.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="136.4" y1="204.4" x2="136.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="170.4" y1="204.4" x2="170.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="204.4" y1="204.4" x2="204.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="238.4" y1="204.4" x2="238.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="272.4" y1="204.4" x2="272.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="184.0" x2="272.4" y2="184.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="150.0" x2="272.4" y2="150.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="116.0" x2="272.4" y2="116.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="82.0" x2="272.4" y2="82.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="48.0" x2="272.4" y2="48.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="14.0" y1="14.0" x2="272.4" y2="14.0" stroke="var(--line)" stroke-width="0.6"/>
+<line x1="102.4" y1="48.0" x2="136.4" y2="150.0" stroke="var(--ink-muted)" stroke-width="1.2" stroke-dasharray="3,3"/>
+<line x1="34.4" y1="184.0" x2="102.4" y2="48.0" stroke="var(--accent)" stroke-width="2.4" marker-end="url(#ah5-0)"/>
+<line x1="34.4" y1="184.0" x2="238.4" y2="116.0" stroke="var(--ab)" stroke-width="2.4" marker-end="url(#ah5-1)"/>
+<line x1="34.4" y1="184.0" x2="136.4" y2="150.0" stroke="var(--b2)" stroke-width="3" marker-end="url(#ah5-2)"/>
+<circle cx="136.4" cy="150.0" r="3" fill="var(--b2)"/>
+<text x="109.2" y="39.5" text-anchor="start" class="svg-label" fill="var(--accent)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">a = (2, 4)</text>
+<text x="238.4" y="102.4" text-anchor="end" class="svg-label" fill="var(--ab)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">b = (6, 2)</text>
+<text x="143.2" y="172.1" text-anchor="start" class="svg-label" fill="var(--b2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">正射影 (3, 1)</text>
+</svg>
+        <figcaption>從 a 的終點垂直落到 b 上，落點就是正射影 (3, 1)</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">情境：順風逆風</span>
+      <p class="quote">單車社練習時，風對車的作用力是 (3, −1)（牛頓），車子往 (1, 0) 的方向（正東）騎。風在前進方向的分量是多少？是順風還是逆風？</p>
+      <div class="calc">正射影長 = (3, −1)・(1, 0) ／ 1 = 3
+內積為正 ⟹ 順風，在前進方向上推了 3 牛頓</div>
+    </div>
+  </section>
+
+  <section class="toolbox prose" id="toolbox">
+    <h2>收進工具箱：3-2 平面向量的運算</h2>
+    <p class="lede-line">內積同時有幾何定義（長度與夾角）和坐標算法，兩者互換就能解題。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名稱</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>內積</td><td class="f"><span class="vec">a</span>・<span class="vec">b</span> = |<span class="vec">a</span>||<span class="vec">b</span>|cosθ = x₁x₂ + y₁y₂</td></tr>
+          <tr><td>夾角</td><td class="f">cosθ = <span class="vec">a</span>・<span class="vec">b</span>／(|<span class="vec">a</span>||<span class="vec">b</span>|)</td></tr>
+          <tr><td>垂直</td><td class="f"><span class="vec">a</span>・<span class="vec">b</span> = 0</td></tr>
+          <tr><td>長度</td><td class="f">|<span class="vec">a</span>|² = <span class="vec">a</span>・<span class="vec">a</span></td></tr>
+          <tr><td>正射影</td><td class="f">((<span class="vec">a</span>・<span class="vec">b</span>)／|<span class="vec">b</span>|²)<span class="vec">b</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">1</span><span class="qtag">內積與夾角</span></div>
+        <p><span class="vec">a</span> = (1, √3)、<span class="vec">b</span> = (√3, 1)，求內積與夾角。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">內積 = 2√3，長度都是 2
+cosθ = 2√3／4 = √3／2 ⟹ θ = 30°</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">2</span><span class="qtag">垂直</span></div>
+        <p>(2, k) 與 (k − 3, 4) 垂直，求 k。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">2(k − 3) + 4k = 0 ⟹ 6k = 6 ⟹ k = 1</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">3</span><span class="qtag alg">長度</span></div>
+        <p>|<span class="vec">a</span>| = 2、|<span class="vec">b</span>| = 3，夾角 120°。求 <span class="vec">a</span>・<span class="vec">b</span> 與 |<span class="vec">a</span> + <span class="vec">b</span>|。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc"><span class="vec">a</span>・<span class="vec">b</span> = 2 × 3 × (−1／2) = −3
+|<span class="vec">a</span> + <span class="vec">b</span>|² = 4 − 6 + 9 = 7 ⟹ √7</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">4</span><span class="qtag">正射影</span></div>
+        <p>求 (4, 2) 在 (1, 1) 方向上的正射影向量。</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">內積 6，|(1, 1)|² = 2 ⟹ 3(1, 1) = (3, 3)</div>
+        </div></details>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="qnum">5</span><span class="qtag alg">功</span></div>
+        <p>力 <span class="vec">F</span> = (5, 2)（牛頓）把物體從 (0, 0) 移到 (4, −1)（公尺），做了多少功？</p>
+        <details><summary>參考答案</summary><div class="ans">
+          <div class="calc">功 = <span class="vec">F</span>・<span class="vec">d</span> = 5 × 4 + 2 × (−1) = 18（焦耳）</div>
+        </div></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>下一步：用向量看聯立方程式</h2>
+      <p>3-1 用兩張提示卡湊出檢查點，其實就是在解一組二元一次聯立方程式。在 3-3「二元一次聯立方程式」，我們會從「線性組合」的角度重新看聯立方程式：什麼時候恰有一組解、什麼時候無解或有無限多解。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・數B 第三冊・第三章</span>
+    <span>3-2 平面向量的運算</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
