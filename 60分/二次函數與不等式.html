@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>二次函數與多項式不等式｜筱葳學測數學</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F1F4F8;
+    --surface:#FFFFFF;
+    --surface-2:#E7EDF4;
+    --ink:#1E2A38;
+    --ink-muted:#5B6B7C;
+    --line:#CBD6E1;
+    --accent:#2A5DA8;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEE9F6;
+    --a2:#6E9FD8;      --a2-ink:#0F2038;
+    --ab:#4E9C8C;      --ab-ink:#0B241F;
+    --b2:#E0973C;      --b2-ink:#3A2306;
+    --grid-line: rgba(42,93,168,0.07);
+    --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1621;
+      --surface:#17202D;
+      --surface-2:#1C2634;
+      --ink:#E7ECF3;
+      --ink-muted:#93A2B4;
+      --line:#2B3648;
+      --accent:#86AEE6;
+      --accent-ink:#0B1521;
+      --accent-soft:#20304A;
+      --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+      --ab:#3E8776;      --ab-ink:#E7F5F1;
+      --b2:#C97E2E;      --b2-ink:#2A1A05;
+      --grid-line: rgba(134,174,230,0.07);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1621;
+    --surface:#17202D;
+    --surface-2:#1C2634;
+    --ink:#E7ECF3;
+    --ink-muted:#93A2B4;
+    --line:#2B3648;
+    --accent:#86AEE6;
+    --accent-ink:#0B1521;
+    --accent-soft:#20304A;
+    --a2:#3E6DA6;      --a2-ink:#EAF1FB;
+    --ab:#3E8776;      --ab-ink:#E7F5F1;
+    --b2:#C97E2E;      --b2-ink:#2A1A05;
+    --grid-line: rgba(134,174,230,0.07);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  a{ color:var(--accent); }
+  .mono{ font-family:'JetBrains Mono','Cascadia Code',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:880px; margin:0 auto; padding:0 1.25rem 5rem; }
+  .prose{ max-width:680px; margin-inline:auto; }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .hero{ padding:4rem 0 2.5rem; text-align:left; }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:clamp(2rem,5vw,2.7rem); line-height:1.25; margin-bottom:0.9rem; }
+  .hero p.sub{ color:var(--ink-muted); font-size:1.08rem; max-width:640px; }
+  .hero-rule{ height:1px; background:linear-gradient(90deg, var(--accent) 0, var(--line) 30%, transparent 70%); margin-top:2.2rem; }
+
+  .lede{ padding:0.5rem 0 2.5rem; color:var(--ink); }
+  .lede p{ margin:0 0 1rem; }
+  .toc{ list-style:none; margin:1.2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.5rem; }
+  .toc li{ font-size:0.92rem; }
+  .toc a{ text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:0.55rem 0.8rem; display:block; }
+  .toc a b{ color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:0.4rem; }
+
+  .part{ padding:2.2rem 0 3rem; }
+  .part-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin-bottom:0.5rem;
+  }
+  .part-kicker b{ color:var(--accent); }
+  .part h2{ font-size:1.65rem; margin-bottom:1.6rem; }
+
+  .step{
+    position:relative;
+    padding:0 0 0 1.4rem;
+    margin-bottom:1.9rem;
+    border-left:2px solid var(--line);
+  }
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-5px; top:0.35rem;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .step-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.6rem;
+  }
+  .step p{ margin:0 0 0.85rem; }
+  .step p:last-child{ margin-bottom:0; }
+  .quote{
+    font-family:'Noto Serif TC',serif;
+    font-size:1.05rem;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:1rem 1.2rem;
+    box-shadow:var(--shadow);
+    margin:0 0 0.9rem;
+  }
+
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:0.9rem 1.1rem;
+    margin:0.9rem 0;
+    font-size:1.02rem;
+    overflow-x:auto;
+  }
+  .formula .big{ font-size:1.15rem; font-weight:700; color:var(--accent); }
+  .formula-title{ font-family:'Noto Sans TC',sans-serif; font-size:0.78rem; letter-spacing:0.02em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .calc{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-muted);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:0.85rem 1.1rem;
+    margin:0.9rem 0;
+    overflow-x:auto;
+    white-space:pre;
+    font-size:0.95rem;
+  }
+  .note{
+    font-size:0.92rem;
+    color:var(--ink-muted);
+    border-left:3px solid var(--b2);
+    padding:0.15rem 0 0.15rem 0.9rem;
+    margin:0.9rem 0;
+  }
+
+  figure{ margin:1.6rem 0; }
+  .figure-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.1rem;
+    box-shadow:var(--shadow);
+  }
+  figure svg{ display:block; width:100%; height:auto; max-width:100%; }
+  figcaption{
+    margin-top:0.9rem;
+    font-size:0.88rem;
+    color:var(--ink-muted);
+    text-align:center;
+  }
+  .fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.6rem;
+    margin:1.6rem 0;
+  }
+  .fig-grid figure{ margin:0; }
+  .svg-label{ font-family:'JetBrains Mono',monospace; font-size:12px; fill:currentColor; }
+  .svg-label-lg{ font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; }
+
+  .toolbox{ padding:1rem 0 3rem; }
+  .toolbox h2{ font-size:1.5rem; margin-bottom:0.5rem; }
+  .toolbox .lede-line{ color:var(--ink-muted); margin-bottom:1.4rem; }
+  .toolbox h3{ font-size:1.05rem; margin:1.6rem 0 0.6rem; color:var(--accent); }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:480px; }
+  th,td{ text-align:left; padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); }
+  thead th{ font-family:'Noto Sans TC',sans-serif; font-size:0.82rem; letter-spacing:0.03em; color:var(--ink-muted); background:var(--surface-2); }
+  td.f{ font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-size:0.98rem; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .practice{ padding:1rem 0 3rem; }
+  .practice h2{ font-size:1.5rem; margin-bottom:1.4rem; }
+  .qlist{ display:flex; flex-direction:column; gap:1rem; }
+  .qcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.3rem;
+    box-shadow:var(--shadow);
+  }
+  .qcard .qhead{ display:flex; align-items:baseline; gap:0.6rem; margin-bottom:0.4rem; }
+  .qtag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--ab-ink);
+    background:var(--ab);
+    padding:0.1rem 0.5rem;
+    border-radius:4px;
+    flex:none;
+  }
+  .qtag.alg{ color:var(--b2-ink); background:var(--b2); }
+  .qnum{ font-family:'JetBrains Mono',monospace; color:var(--ink-muted); font-size:0.9rem; }
+  details{ margin-top:0.6rem; }
+  summary{
+    cursor:pointer;
+    font-size:0.9rem;
+    color:var(--accent);
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:0.75rem; transition:transform .15s ease; }
+  details[open] summary::before{ transform:rotate(90deg); }
+  summary:focus-visible, a:focus-visible, details summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  .ans{
+    margin-top:0.6rem;
+    padding:0.75rem 1rem;
+    background:var(--surface-2);
+    border-radius:6px;
+    font-size:0.95rem;
+  }
+  .ans .calc{ margin:0.5rem 0 0; }
+
+  .closing{ padding:1rem 0 2rem; }
+  .closing .figure-card{ background:var(--accent-soft); border-color:var(--line); }
+  .closing h2{ font-size:1.3rem; margin-bottom:0.8rem; }
+  .closing p{ margin:0 0 0.8rem; color:var(--ink); }
+  .closing p:last-child{ margin-bottom:0; }
+
+  footer{
+    padding-top:2rem; margin-top:1rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-muted);
+    font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+  }
+
+  .site-nav{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 0; }
+  .site-nav a{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-muted); }
+  .site-nav a:hover{ color:var(--accent); }
+  .radicand{ border-top:1.4px solid currentColor; padding:0.02em 0.14em 0 0.06em; margin-left:0.02em; display:inline-block; line-height:1; vertical-align:0.05em; }
+  .ol{ text-decoration:overline; text-decoration-thickness:1.4px; }
+  .vec{ display:inline-block; position:relative; padding-top:0.42em; line-height:1; white-space:nowrap; }
+  .vec::before{ content:""; position:absolute; top:0.12em; left:0; right:0.12em; min-width:0.5em; border-top:1.3px solid currentColor; }
+  .vec::after{ content:""; position:absolute; top:-0.06em; right:0.08em; border-left:0.38em solid currentColor; border-top:0.2em solid transparent; border-bottom:0.2em solid transparent; }
+  .chapter-nav{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin:0 auto 2rem; font-size:0.9rem; }
+  .chapter-nav a{ text-decoration:none; }
+  .fig-grid > figure:only-child svg{ max-width:440px; margin-inline:auto; }
+  .det{ display:inline-grid; grid-template-columns:auto auto; column-gap:0.8em; border-left:1.5px solid currentColor; border-right:1.5px solid currentColor; padding:0 0.45em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.35; text-align:center; white-space:nowrap; }
+  .det3{ grid-template-columns:auto auto auto; }
+  .mat{ display:inline-grid; column-gap:0.9em; border-left:1.6px solid currentColor; border-right:1.6px solid currentColor; border-radius:7px; padding:0.05em 0.55em; margin:0.15em 0.2em; vertical-align:middle; line-height:1.4; text-align:center; white-space:nowrap; }
+  .mat .augc{ border-left:1px dashed currentColor; padding-left:0.7em; }
+  .badges{ display:flex; flex-wrap:wrap; gap:0.45rem; margin:0 0 1rem; }
+  .badge{ font-family:'JetBrains Mono',monospace; font-size:0.74rem; padding:0.2rem 0.6rem; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); }
+  .badge.hot{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  .learn{ margin:0.4rem 0 0; padding-left:1.2rem; }
+  .learn li{ margin:0.15rem 0; }
+  ol.how{ margin:0.4rem 0 0.9rem; padding-left:1.4rem; }
+  ol.how li{ margin:0.3rem 0; }
+  .trap{ background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--b2); border-radius:6px; padding:0.8rem 1rem; margin:0.9rem 0; font-size:0.95rem; }
+  .trap b{ color:var(--ink); }
+  .trap ul{ margin:0.3rem 0 0; padding-left:1.2rem; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><a href="index.html">← 回到 60 分基礎地圖</a></nav>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">60 分基礎版・共同核心・題型 6</span>
+    <h1>二次函數與多項式不等式</h1>
+    <p class="sub">飲料一杯定價 x 元，利潤是 −(x − 50)² + 900——定價多少賺最多？這一頁練兩件事：用配方找二次函數的最大最小值，以及用「找根、畫數線」解多項式不等式。</p>
+    <div class="hero-rule"></div>
+  </header>
+
+  <section class="lede prose">
+    <div class="badges"><span class="badge hot">多項式函數：114 數A 第 13 題（易）</span><span class="badge">114、115 數A 各 2 題</span><span class="badge">115 數B 2 題</span></div>
+    <p>這一頁要學會：</p>
+    <ul class="learn">
+      <li>配方求頂點、最大值或最小值（含有範圍限制時）</li>
+      <li>判別式判斷圖形和 x 軸的交點數</li>
+      <li>解二次與高次不等式</li>
+    </ul>
+  </section>
+
+  <section class="part prose" id="formula">
+    <div class="part-kicker"><b>必背</b></div>
+    <h2>頂點、判別式、數線</h2>
+    <div class="formula">
+      <div class="formula-title">二次函數 y = ax² + bx + c</div>
+      <span class="big">配方：y = a(x − h)² + k，頂點 (h, k)，h = −b／2a</span>
+      <br>a &gt; 0 開口向上，頂點是最小值；a &lt; 0 開口向下，頂點是最大值
+      <br>判別式 D = b² − 4ac：D &gt; 0 交 x 軸兩點；D = 0 相切；D &lt; 0 不相交
+    </div>
+    <div class="formula">
+      <div class="formula-title">解不等式（首項係數為正）</div>
+      <span class="big">(x − α)(x − β) &lt; 0 ⟺ α &lt; x &lt; β</span>（夾在兩根中間）
+      <br><span class="big">(x − α)(x − β) &gt; 0 ⟺ x &lt; α 或 x &gt; β</span>（兩根外面），α &lt; β
+    </div>
+  </section>
+
+  <section class="part prose" id="steps">
+    <div class="part-kicker"><b>解題步驟</b></div>
+    <h2>例題</h2>
+
+    <div class="step">
+      <span class="step-tag">例 1：有範圍的最大最小值</span>
+      <p class="quote">求 f(x) = x² − 4x + 1 在 0 ≤ x ≤ 5 的最大值與最小值。</p>
+      <ol class="how">
+        <li>配方：f(x) = (x − 2)² − 3，頂點 (2, −3)，開口向上</li>
+        <li>頂點 x = 2 在範圍內 ⟹ 最小值 −3</li>
+        <li>最大值在離頂點最遠的端點：x = 5（離 2 有 3）比 x = 0（離 2 有 2）遠</li>
+      </ol>
+      <div class="calc">最小值 f(2) = −3，最大值 f(5) = 25 − 20 + 1 = 6</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">例 2：二次不等式</span>
+      <p class="quote">解 x² − x − 6 ≤ 0。</p>
+      <div class="calc">(x − 3)(x + 2) ≤ 0，兩根 −2、3，要「≤ 0」⟹ 夾在中間
+−2 ≤ x ≤ 3</div>
+    </div>
+
+    <div class="step">
+      <span class="step-tag">例 3：高次不等式</span>
+      <p class="quote">解 (x + 1)(x − 2)(x − 4) &gt; 0。</p>
+      <ol class="how">
+        <li>根由小到大：−1、2、4，標在數線上</li>
+        <li>最右邊（x &gt; 4）一定是正的，往左每過一個根就變號：＋、−、＋、−</li>
+        <li>取正的區間</li>
+      </ol>
+      <div class="calc">x &gt; 4：＋　2 &lt; x &lt; 4：−　−1 &lt; x &lt; 2：＋　x &lt; −1：−
+解：−1 &lt; x &lt; 2 或 x &gt; 4</div>
+    </div>
+
+    <div class="trap">
+      <b>常見陷阱</b>
+      <ul>
+        <li>首項係數是負的，先兩邊乘 −1（不等號變向）再解。</li>
+        <li>有範圍時，最小值不一定在頂點——頂點不在範圍內就看端點。</li>
+        <li>重根（例如 (x − 1)²）經過時不變號。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="practice prose" id="practice">
+    <h2>練習題</h2>
+    <div class="qlist">
+      <div class="qcard"><div class="qhead"><span class="qnum">1</span><span class="qtag">頂點</span></div>
+        <p>求 y = −2x² + 8x − 3 的頂點與最大值。</p>
+        <details><summary>參考答案</summary><div class="ans"><div class="calc">y = −2(x − 2)² + 5 ⟹ 頂點 (2, 5)，最大值 5</div></div></details></div>
+      <div class="qcard"><div class="qhead"><span class="qnum">2</span><span class="qtag">判別式</span></div>
+        <p>y = x² + kx + 4 的圖形和 x 軸相切，求 k。</p>
+        <details><summary>參考答案</summary><div class="ans"><div class="calc">D = k² − 16 = 0 ⟹ k = 4 或 −4</div></div></details></div>
+      <div class="qcard"><div class="qhead"><span class="qnum">3</span><span class="qtag">二次不等式</span></div>
+        <p>解 2x² − 5x − 3 &gt; 0。</p>
+        <details><summary>參考答案</summary><div class="ans"><div class="calc">(2x + 1)(x − 3) &gt; 0 ⟹ x &lt; −1／2 或 x &gt; 3</div></div></details></div>
+      <div class="qcard"><div class="qhead"><span class="qnum">4</span><span class="qtag alg">應用</span></div>
+        <p>利潤 P(x) = −x² + 100x − 1600（x 為定價），定價多少時利潤最大？最大利潤是多少？</p>
+        <details><summary>參考答案</summary><div class="ans"><div class="calc">P = −(x − 50)² + 900 ⟹ 定價 50 元，最大利潤 900 元</div></div></details></div>
+      <div class="qcard"><div class="qhead"><span class="qnum">5</span><span class="qtag alg">高次不等式</span></div>
+        <p>解 x(x − 3)(x + 2) ≤ 0。</p>
+        <details><summary>參考答案</summary><div class="ans"><div class="calc">根 −2、0、3；由右往左：＋、−、＋、−
+≤ 0：x ≤ −2 或 0 ≤ x ≤ 3</div></div></details></div>
+    </div>
+  </section>
+
+  <section class="closing prose" id="closing">
+    <div class="figure-card">
+      <h2>想看更完整的說明？</h2>
+      <p>這一頁對應完整教材的 <a href="../簡單多項式函數及其圖形.html">3-2 簡單多項式函數及其圖形</a> 與 <a href="../多項式函數的圖形與多項式不等式.html">3-3 多項式函數的圖形與多項式不等式</a>。</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>筱葳學測數學・60 分基礎版・共同核心</span>
+    <span>二次函數與多項式不等式</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
